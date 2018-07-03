@@ -15,21 +15,20 @@ export class Home extends PureComponent {
   }
 
   goToLearningPage = () => {
-    const { history } = this.props
+    const {history} = this.props
     history.push('/learning')
   }
 
   render() {
-    const { username, onChangeUsername } = this.props
+    const {username, onChangeUsername} = this.props
     return (
       <div className="d-flex flex-column mt-4">
         <p className="d-flex justify-content-center">
           This is simple react app!
-          <br />
           Please type your name:
         </p>
         <div className="d-flex justify-content-center mb-4">
-          <Input value={username} onChange={onChangeUsername} />
+          <Input value={username} onChange={onChangeUsername}/>
         </div>
         <div className="d-flex justify-content-center">
           <button type="button" onClick={this.goToLearningPage}>
