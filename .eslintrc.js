@@ -28,12 +28,8 @@ module.exports = {
             "as-needed",
         ],
         "class-methods-use-this": 0,
-        "comma-dangle": [
-            2,
-            "always-multiline",
-        ],
+        "comma-dangle": 0,
         "no-console": 1,
-        "prefer-template": 2,
         "indent": [
             2,
             2,
@@ -56,10 +52,15 @@ module.exports = {
         "jsx-a11y/role-supports-aria-props": 2,
         "react/jsx-filename-extension": 0,
         "react/require-extension": 0,
+        "react/destructuring-assignment": 0,
         "react/require-default-props": 0,
+        "react/require-render-return": 0,
         "react/jsx-tag-spacing": 0,
         "react/jsx-indent": 0,
+        "react/button-has-type": 0,
+        "react/prop-types": 0,
         "react/jsx-one-expression-per-line": 0,
+        "prefer-template": 0,
         "react/prefer-stateless-function": [
             0, {
                 "ignorePureComponents": true

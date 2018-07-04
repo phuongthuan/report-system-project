@@ -7,6 +7,7 @@ import LearningDocuments from 'components/LearningDocuments'
 import {
   selectKeyword, selectValidKeywords, selectLoading, selectError,
 } from './selectors'
+
 import { setKeyword, fetchKeywords } from './actions'
 
 export class Learning extends PureComponent {

@@ -1,0 +1,28 @@
+{
+  "users": [
+    {
+      "id": 0,
+      "username": "member",
+      "password": "123456",
+      "role": "member"
+    },
+    {
+      "id": 1,
+      "username": "teamleader",
+      "password": "123456",
+      "role": "teamleader"
+    },
+    {
+      "id": 2,
+      "username": "groupleader",
+      "password": "123456",
+      "role": "groupleader"
+    },
+    {
+      "username": "aloha",
+      "password": "123456",
+      "role": "member",
+      "id": 3
+    }
+  ]
+}

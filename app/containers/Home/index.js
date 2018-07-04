@@ -5,6 +5,9 @@ import Input from 'components/Input'
 import { setUsername } from 'containers/App/actions'
 import { selectUsername } from 'containers/App/selectors'
 
+import { Button } from 'reactstrap'
+
+
 export class Home extends PureComponent {
   static propTypes = {
     history: PropTypes.shape({
@@ -15,26 +18,44 @@ export class Home extends PureComponent {
   }
 
   goToLearningPage = () => {
-    const {history} = this.props
+    const { history } = this.props;
     history.push('/learning')
   }
 
+  goReportPage = () => {
+    const { history } = this.props;
+    history.push('/report');
+  }
+
   render() {
-    const {username, onChangeUsername} = this.props
+    const { username, onChangeUsername } = this.props
     return (
       <div className="d-flex flex-column mt-4">
         <p className="d-flex justify-content-center">
           This is simple react app!
+          <br />
           Please type your name:
         </p>
         <div className="d-flex justify-content-center mb-4">
-          <Input value={username} onChange={onChangeUsername}/>
+          <Input value={username} onChange={onChangeUsername} />
         </div>
+
         <div className="d-flex justify-content-center">
           <button type="button" onClick={this.goToLearningPage}>
             Go to Learning Page
           </button>
         </div>
+
+        <div className="d-flex justify-content-center">
+          <Button
+            className="mt-2"
+            onClick={this.goReportPage}
+            color="primary"
+          >
+            Write Report
+          </Button>
+        </div>
+
       </div>
     )
   }
