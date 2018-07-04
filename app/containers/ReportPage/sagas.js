@@ -24,7 +24,7 @@ export function* fetchReports() {
 // USER CREATE A NEW REPORT.
 export function* createReport(action) {
   try {
-    const newReport = yield call(callCreateReport, action.payload);
+    const newReport = yield call(callCreateReport, action.report);
     yield put(createReportSucceeded(newReport));
   } catch (error) {
     yield put(createReportFailed(error));
