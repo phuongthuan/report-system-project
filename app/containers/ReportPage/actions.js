@@ -42,3 +42,6 @@ export const createReportFailed = (error) => ({
   type: CREATE_REPORT_FAILED,
   error
 });
+
+// UPDATE REPORT ACTIONS:
+
