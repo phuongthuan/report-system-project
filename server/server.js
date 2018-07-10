@@ -1,11 +1,15 @@
 const fs = require('fs')
 const jsonServer = require('json-server')
+const bodyParser = require('body-parser')
 const jwt = require('jsonwebtoken')
 
 const server = jsonServer.create()
 const router = jsonServer.router('./server/db.json')
-const userdb = JSON.parse(fs.readFileSync('./server/users.json', 'UTF-8'))
+const userdb = JSON.parse(fs.readFileSync('./server/db.json', 'UTF-8'))
 
+
+server.use(bodyParser.urlencoded({extended: true}))
+server.use(bodyParser.json())
 server.use(jsonServer.defaults());
 
 const SECRET_KEY = '123456789'
@@ -23,20 +27,27 @@ function verifyToken(token){
 }
 
 // Check if the user exists in database
-function isAuthenticated({email, password}){
-  return userdb.users.findIndex(user => user.email === email && user.password === password) !== -1
+function getAuthenticated({email, password}){
+  return userdb.users.find(user =>
+    (user.email === email && user.password === password)
+      ? user
+      : null
+  )
 }
 
 server.post('/auth/login', (req, res) => {
   const {email, password} = req.body
-  if (isAuthenticated({email, password}) === false) {
+  if (!getAuthenticated({email, password})) {
     const status = 401
     const message = 'Incorrect email or password'
     res.status(status).json({status, message})
     return
   }
   const access_token = createToken({email, password})
-  res.status(200).json({access_token})
+  res.status(200).json({
+    access_token: access_token,
+    user: getAuthenticated({email, password})
+  })
 })
 
 server.use(/^(?!\/auth).*$/,  (req, res, next) => {

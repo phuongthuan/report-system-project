@@ -10,7 +10,7 @@ import {
 } from 'reactstrap'
 import styled from 'styled-components'
 import img from '../../assests/images/fancycrave-248220-unsplash.jpg';
-import { callSearchUsername } from '../../requests';
+import { callLogin, callSearchUsername } from '../../requests';
 
 
 const LoginWrapper = styled.div`
@@ -31,7 +31,7 @@ class LoginPage extends Component {
     super(props);
     this.state = {
       user: {},
-      username: '',
+      email: '',
       password: ''
     }
   }
@@ -43,8 +43,8 @@ class LoginPage extends Component {
   //   });
   // }
 
-  onHandleUsernameInput = (e) => {
-    this.setState({username: e.target.value});
+  onHandleEmailInput = (e) => {
+    this.setState({email: e.target.value});
   }
 
   onHandlePasswordInput = (e) => {
@@ -53,8 +53,12 @@ class LoginPage extends Component {
 
   onSubmitForm = (e) => {
     e.preventDefault();
-    const { username, password, user } = this.state;
-    callSearchUsername(username)
+    const { email, password } = this.state;
+    const payload = {
+      email,
+      password
+    }
+    callLogin(payload)
       .then(response => console.log(response));
   }
 
@@ -71,10 +75,10 @@ class LoginPage extends Component {
                 <Input
                   type="text"
                   autoComplete="off"
-                  name="username"
+                  name="email"
                   bsSize="sm"
-                  value={this.state.username}
-                  onChange={this.onHandleUsernameInput}
+                  value={this.state.email}
+                  onChange={this.onHandleEmailInput}
                   required
                 />
               </FormGroup>

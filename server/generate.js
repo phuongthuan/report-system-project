@@ -40,18 +40,19 @@ module.exports = () => {
       role: faker.random.arrayElement(userTypes)
     })),
 
-    // reports: _.times(40, (n) => ({
-    //   id: (n+1),
-    //   memberId: getRandomInt(1, 20),
-    //   title: faker.lorem.sentence(),
-    //   date: faker.date.weekday(),
-    //   achievement: faker.lorem.sentence(),
-    //   plan: faker.lorem.sentences(), // Plan for next day.
-    //   issues: issues,
-    //   description: faker.lorem.paragraphs(),
-    //   comment: faker.lorem.sentences()
-    // })),
+    reports: _.times(40, (n) => ({
+      id: (n+1),
+      memberId: getRandomInt(1, 20),
+      title: faker.lorem.sentence(),
+      date: faker.date.weekday(),
+      achievement: faker.lorem.sentence(),
+      plan: faker.lorem.sentences(), // Plan for next day.
+      issues: issues,
+      description: faker.lorem.paragraphs(),
+      comment: faker.lorem.sentences()
+    })),
   }
 }
+
 
 
