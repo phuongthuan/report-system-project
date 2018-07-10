@@ -16,9 +16,7 @@ import {
   CardTitle,
   CardFooter
 } from 'reactstrap';
-
 import * as actionsType from '../../containers/ReportPage/actions';
-
 
 const issues_type = [
   {value: 1, label: 'Hard for Debugging'},
@@ -30,19 +28,16 @@ const issues_type = [
 
 class ReportForm extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      numberSelectBox: 0,
-      report : {
-        memberId: 1,
-        title: '',
-        achievement: '',
-        plan: '',
-        issues: [],
-        description: '',
-        comment: ''
-      }
+  state = {
+    numberSelectBox: 0,
+    report : {
+      memberId: 1,
+      title: '',
+      achievement: '',
+      plan: '',
+      issues: [],
+      description: '',
+      comment: ''
     }
   }
 
@@ -54,7 +49,8 @@ class ReportForm extends Component {
   onSubmitForm = (e) => {
     e.preventDefault();
     const { report } = this.state;
-    this.props.createReport(report);
+    const { createReport: dispatchCreateReport } = this.props;
+    dispatchCreateReport(report);
   };
 
   onSelectedIssueHandleChange = (selectedValue) => {
