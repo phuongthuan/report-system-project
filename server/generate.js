@@ -29,7 +29,7 @@ module.exports = () => {
   return {
     users: _.times(30, (n) => ({
       id: (n + 1),
-      username: faker.random.arrayElement(userTypes) + (n + 1),
+      email: faker.random.arrayElement(userTypes) + (n + 1) + '@gmail.com',
       firstName: faker.name.prefix() + ' ' + faker.name.firstName(),
       lastName: faker.name.lastName(),
       avatar: faker.image.avatar(),
@@ -40,17 +40,17 @@ module.exports = () => {
       role: faker.random.arrayElement(userTypes)
     })),
 
-    reports: _.times(40, (n) => ({
-      id: (n+1),
-      memberId: getRandomInt(1, 20),
-      title: faker.lorem.sentence(),
-      date: faker.date.weekday(),
-      achievement: faker.lorem.sentence(),
-      plan: faker.lorem.sentences(), // Plan for next day.
-      issues: issues,
-      description: faker.lorem.paragraphs(),
-      comment: faker.lorem.sentences()
-    })),
+    // reports: _.times(40, (n) => ({
+    //   id: (n+1),
+    //   memberId: getRandomInt(1, 20),
+    //   title: faker.lorem.sentence(),
+    //   date: faker.date.weekday(),
+    //   achievement: faker.lorem.sentence(),
+    //   plan: faker.lorem.sentences(), // Plan for next day.
+    //   issues: issues,
+    //   description: faker.lorem.paragraphs(),
+    //   comment: faker.lorem.sentences()
+    // })),
   }
 }
 
