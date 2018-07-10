@@ -27,7 +27,7 @@
 - [**React Redux**](https://redux.js.org/basics/usage-with-react): Redux is a predictable state container for JavaScript apps. It helps you write applications that behave consistently, run in different environments (client, server, and native), and are easy to test.
 
 ## Redux saga
-- [**Redux saga**](https://redux-sagas.js.org/): redux-saga is a library that aims to make application side effects (i.e. asynchronous things like data fetching and impure things like accessing the browser cache) easier to manage, more efficient to execute, simple to test, and better at handling failures.
+- [**Redux saga**](https://redux-saga.js.org/): redux-saga is a library that aims to make application side effects (i.e. asynchronous things like data fetching and impure things like accessing the browser cache) easier to manage, more efficient to execute, simple to test, and better at handling failures.
 
 ## Bootstrap v4
 - [**Bootstrap v4**](https://getbootstrap.com/docs/4.0/getting-started/introduction/): The world’s most popular framework for building responsive, mobile-first sites, with BootstrapCDN and a template starter page.
