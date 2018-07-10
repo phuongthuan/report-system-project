@@ -3,10 +3,15 @@ function getRandomInt(min, max) {
 }
 
 module.exports = () => {
-
   var faker = require("faker");
   var _ = require("lodash");
-  var division = ['Front End Group 1', 'Front End Group 2', 'Front End Group 3'];
+
+  var division = [
+    'Front End Group 1',
+    'Front End Group 2',
+    'Front End Group 3'
+  ];
+
   var issues = [
     'Hard for Debugging',
     'Keeping up with Technology',
@@ -15,10 +20,16 @@ module.exports = () => {
     'Security Threats'
   ];
 
+  var userTypes = [
+    'member',
+    'team_leader',
+    'group_leader'
+  ];
+
   return {
-    members: _.times(20, (n) => ({
+    users: _.times(30, (n) => ({
       id: (n + 1),
-      username: 'member' + (n + 1),
+      username: faker.random.arrayElement(userTypes) + (n + 1),
       firstName: faker.name.prefix() + ' ' + faker.name.firstName(),
       lastName: faker.name.lastName(),
       avatar: faker.image.avatar(),
@@ -26,7 +37,7 @@ module.exports = () => {
       phone: faker.phone.phoneNumberFormat(),
       division: faker.random.arrayElement(division),
       password: "123456",
-      role: "member"
+      role: faker.random.arrayElement(userTypes)
     })),
 
     reports: _.times(40, (n) => ({
@@ -39,30 +50,6 @@ module.exports = () => {
       issues: issues,
       description: faker.lorem.paragraphs(),
       comment: faker.lorem.sentences()
-    })),
-
-    team_leaders: _.times(6, (n) => ({
-      id: (n + 1),
-      username: "teamleader" + (n + 1),
-      firstName: faker.name.prefix() + ' ' + faker.name.firstName(),
-      lastName: faker.name.lastName(),
-      avatar: faker.image.avatar(),
-      address: faker.address.streetAddress("###") + ' ' + faker.address.city() + ' ' + faker.address.county(),
-      phone: faker.phone.phoneNumberFormat(),
-      password: "123456",
-      role: "teamleader"
-    })),
-
-    group_leaders: _.times(2, (n) => ({
-      id: (n + 1),
-      username: "groupleader" + (n + 1),
-      firstName: faker.name.prefix() + ' ' + faker.name.firstName(),
-      lastName: faker.name.lastName(),
-      avatar: faker.image.avatar(),
-      address: faker.address.streetAddress("###") + ' ' + faker.address.city() + ' ' + faker.address.county(),
-      phone: faker.phone.phoneNumberFormat(),
-      password: "123456",
-      role: "groupleader"
     })),
   }
 }

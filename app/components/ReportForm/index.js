@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types';
-
 import IssueSelect from 'components/IssueSelect';
 import { connect } from 'react-redux';
 import Select from 'react-select';
@@ -43,7 +43,11 @@ class ReportForm extends Component {
 
   onHandleFormChange = (e) => {
     const { report } = this.state;
-    this.setState({report: {...report, [e.target.name]: e.target.value }});
+    this.setState({
+      report: {
+        ...report,
+        [e.target.name]: e.target.value }
+    });
   }
 
   onSubmitForm = (e) => {
@@ -51,6 +55,7 @@ class ReportForm extends Component {
     const { report } = this.state;
     const { createReport: dispatchCreateReport } = this.props;
     dispatchCreateReport(report);
+    history.push('/report');
   };
 
   onSelectedIssueHandleChange = (selectedValue) => {
@@ -97,94 +102,108 @@ class ReportForm extends Component {
     }
 
     return (
-      <div className="col-md-8">
-        <Form onSubmit={this.onSubmitForm}>
-          <Card>
-            <CardHeader>
-              <FormGroup>
-                <Input
-                  type="text"
-                  name="title"
-                  bsSize="lg"
-                  autoComplete="off"
-                  value={report.title}
-                  placeholder="Title"
-                  onChange={this.onHandleFormChange}
-                />
-              </FormGroup>
-            </CardHeader>
+      <div className="container mt-5 mb-5">
+        <div className="col-md-8">
+          <Form onSubmit={this.onSubmitForm}>
+            <Card>
+              <CardHeader>
+                <FormGroup>
+                  <Input
+                    type="text"
+                    name="title"
+                    bsSize="lg"
+                    autoComplete="off"
+                    value={report.title}
+                    placeholder="Title"
+                    onChange={this.onHandleFormChange}
+                  />
+                </FormGroup>
+              </CardHeader>
 
-            <CardBody>
+              <CardBody>
 
-              <CardTitle>Today Achievement</CardTitle>
-              <FormGroup>
-                <Input
-                  type="textarea"
-                  name="achievement"
-                  placeholder="What achievement did you get today ?"
-                  value={report.achievement}
-                  bsSize="sm"
-                  onChange={this.onHandleFormChange}
-                />
-              </FormGroup>
+                <CardTitle>Today Achievement</CardTitle>
+                <FormGroup>
+                  <Input
+                    type="textarea"
+                    name="achievement"
+                    placeholder="What achievement did you get today ?"
+                    value={report.achievement}
+                    bsSize="sm"
+                    onChange={this.onHandleFormChange}
+                  />
+                </FormGroup>
 
-              <CardTitle>Planing for next day</CardTitle>
-              <FormGroup>
-                <Input
-                  type="textarea"
-                  name="plan"
-                  value={report.plan}
-                  placeholder="Tomorrow I'll bla bla ..."
-                  bsSize="sm"
-                  onChange={this.onHandleFormChange}
-                />
-              </FormGroup>
+                <CardTitle>Planing for next day</CardTitle>
+                <FormGroup>
+                  <Input
+                    type="textarea"
+                    name="plan"
+                    value={report.plan}
+                    placeholder="Tomorrow I'll bla bla ..."
+                    bsSize="sm"
+                    onChange={this.onHandleFormChange}
+                  />
+                </FormGroup>
 
-              {/*Issue Select Box*/}
-              <IssueSelect addSelectBox={this.onAddSelectBox} >
-                {children}
-              </IssueSelect>
+                {/*Issue Select Box*/}
+                <IssueSelect addSelectBox={this.onAddSelectBox} >
+                  {children}
+                </IssueSelect>
 
 
-              <CardTitle>Description</CardTitle>
-              <FormGroup>
-                <Input
-                  type="textarea"
-                  name="description"
-                  bsSize="sm"
-                  placeholder="More info ..."
-                  onChange={this.onHandleFormChange}
-                />
-              </FormGroup>
+                <CardTitle>Description</CardTitle>
+                <FormGroup>
+                  <Input
+                    type="textarea"
+                    name="description"
+                    bsSize="sm"
+                    placeholder="More info ..."
+                    onChange={this.onHandleFormChange}
+                  />
+                </FormGroup>
 
-              <CardTitle>Comment</CardTitle>
-              <FormGroup>
-                <Input
-                  type="textarea"
-                  name="comment"
-                  bsSize="sm"
-                  placeholder="Leave a comment ..."
-                  onChange={this.onHandleFormChange}
-                />
-              </FormGroup>
-            </CardBody>
+                <CardTitle>Comment</CardTitle>
+                <FormGroup>
+                  <Input
+                    type="textarea"
+                    name="comment"
+                    bsSize="sm"
+                    placeholder="Leave a comment ..."
+                    onChange={this.onHandleFormChange}
+                  />
+                </FormGroup>
+              </CardBody>
 
-            <CardFooter>
-              <Button
-                color="success"
-                type="submit"
-              >
-                Submit new report
-              </Button>
-            </CardFooter>
-          </Card>
-        </Form>
+              <CardFooter>
+                <Button
+                  color="success"
+                  type="submit"
+                >
+                  Submit new report
+                </Button>
+
+                <Link to="/report">
+                  <Button
+                    color="danger"
+                    type="submit"
+                  >
+                    Back to Report Page
+                  </Button>
+                </Link>
+              </CardFooter>
+            </Card>
+          </Form>
+        </div>
       </div>
     );
   }
 }
 
 ReportForm.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }),
   createReport: PropTypes.func,
 };
 
