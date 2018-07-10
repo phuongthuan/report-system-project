@@ -29,7 +29,7 @@ module.exports = () => {
   return {
     users: _.times(30, (n) => ({
       id: (n + 1),
-      username: faker.random.arrayElement(userTypes) + (n + 1),
+      email: faker.random.arrayElement(userTypes) + (n + 1) + '@gmail.com',
       firstName: faker.name.prefix() + ' ' + faker.name.firstName(),
       lastName: faker.name.lastName(),
       avatar: faker.image.avatar(),
@@ -53,5 +53,6 @@ module.exports = () => {
     })),
   }
 }
+
 
 

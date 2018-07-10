@@ -7,6 +7,7 @@ import {
   CREATE_REPORT_SUCCEEDED,
   CREATE_REPORT_FAILED,
 
+  UPDATE_REPORT,
   UPDATE_REPORT_SUCCEEDED,
   UPDATE_REPORT_FAILED
 
@@ -44,4 +45,13 @@ export const createReportFailed = (error) => ({
 });
 
 // UPDATE REPORT ACTIONS:
+export const updateReport = (id, report) => ({
+  type: UPDATE_REPORT,
+  report
+}) ;
+
+export const updateReportSucceeded = (report) => ({
+  type: UPDATE_REPORT_SUCCEEDED,
+  report
+})
 
