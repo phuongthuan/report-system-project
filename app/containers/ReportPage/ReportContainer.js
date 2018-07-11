@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Button from 'components/Button'
-import ReportForm from 'components/ReportForm'
 import ReportsList from 'components/ReportsList'
 
 import * as ReportPageActions from './actions';
+import { selectError, selectLoading, selectReports } from "./selectors";
 
 class ReportContainer extends PureComponent {
 
@@ -24,8 +24,7 @@ class ReportContainer extends PureComponent {
             Create new Report
           </Button>
         </Link>
-        <div className="row">
-          {/*<ReportForm />*/}
+        <div className="row mt-2">
           <ReportsList reportsList={reports} />
         </div>
       </div>
@@ -35,12 +34,18 @@ class ReportContainer extends PureComponent {
 
 ReportContainer.propTypes = {
   fetchReports: PropTypes.func,
+  loading: PropTypes.bool,
+  error: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.bool,
+  ]),
+  reports: PropTypes.arrayOf(PropTypes.object)
 };
 
 export const mapStateToProps = state => ({
-  reports: state.reportpage.data,
-  loading: state.reportpage.loading,
-  error: state.reportpage.error,
+  reports: selectReports(state),
+  loading: selectLoading(state),
+  error: selectError(state),
 });
 
 export const mapDispatchToProps = dispatch => ({

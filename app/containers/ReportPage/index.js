@@ -10,6 +10,7 @@ class ReportPage extends Component {
       <Switch>
         <Route exact path="/report" component={ReportContainer} />
         <Route path="/report/create" component={ReportForm} />
+        <Route path="/report/update/:id" component={ReportForm} />
       </Switch>
     );
   }
