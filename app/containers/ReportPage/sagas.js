@@ -32,7 +32,6 @@ export function* createReport(action) {
 }
 
 export default function* reportPageSaga() {
-  // yield takeLatest(FETCH_REPORTS_PENDING, fetchReports);
   yield takeEvery(FETCH_REPORTS, fetchReports)
   yield takeEvery(CREATE_REPORT, createReport)
 }

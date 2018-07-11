@@ -13,5 +13,5 @@ export const callFetchKeywords = () => request('get', GET_KEYWORDS);
 export const callFetchReports = () => request('get', GET_REPORTS);
 export const callCreateReport = report => request('post', CREATE_REPORT, report);
 
-export const callSearchUsername = (username) => request('get', `${SEARCH_USERNAME}?q=${username}`);
-export const callLogin = (payload) => request('post', LOGIN, payload);
+export const callSearchUsername = username => request('get', `${SEARCH_USERNAME}?q=${username}`);
+export const callLogin = options => request('post', LOGIN, options);

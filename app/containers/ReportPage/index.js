@@ -6,6 +6,7 @@ import ReportForm from "../../components/ReportForm";
 
 class ReportPage extends Component {
   render() {
+
     return (
       <Switch>
         <Route exact path="/report" component={ReportContainer} />

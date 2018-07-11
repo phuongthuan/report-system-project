@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types'
+
 import {
   Form,
   FormGroup,
@@ -10,8 +13,9 @@ import {
 } from 'reactstrap'
 import styled from 'styled-components'
 import img from '../../assests/images/fancycrave-248220-unsplash.jpg';
-import { callLogin, callSearchUsername } from '../../requests';
-
+import { callLogin } from '../../requests';
+import * as actionsType from './actions'
+import { selectToken, selectUser, selectError } from "./selectors";
 
 const LoginWrapper = styled.div`
   background-image: url(${img});
@@ -54,15 +58,17 @@ class LoginPage extends Component {
   onSubmitForm = (e) => {
     e.preventDefault();
     const { email, password } = this.state;
-    const payload = {
-      email,
-      password
-    }
-    callLogin(payload)
-      .then(response => console.log(response));
+    // const { loginAction: dispatchLogin } = this.props;
+    // callLogin({email, password});
+    // dispatchLogin(email, password);
+
+    // this.props.loginAction(email, password);
+    console.log('Form Submitted!', email, password);
   }
 
   render() {
+
+    console.log(this.props);
 
     return (
       <LoginWrapper>
@@ -111,4 +117,23 @@ class LoginPage extends Component {
   }
 }
 
-export default LoginPage;
+LoginPage.propTypes = {
+  email: PropTypes.string,
+  password: PropTypes.string,
+  loginAction: PropTypes.func
+}
+
+const mapStateToProps = (state) => ({
+  token: selectToken(state),
+  user: selectUser(state),
+  error: selectError(state)
+});
+
+const mapDispatchToProps = dispatch => ({
+  loginAction: (email, password) => dispatch(actionsType.login(email, password))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LoginPage);
