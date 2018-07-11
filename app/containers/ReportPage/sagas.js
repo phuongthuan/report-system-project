@@ -1,27 +1,45 @@
-import { call, put, takeLatest, takeEvery } from 'redux-saga/effects'
-import { callFetchReports, callCreateReport } from '../../requests';
+import { call, put, takeEvery } from 'redux-saga/effects'
+import {
+  callFetchReports,
+  callCreateReport,
+  callUpdateReport,
+  callFetchAReport
+} from '../../requests';
 import {
   fetchReportsSucceeded,
   fetchReportsFailed,
-
   createReportSucceeded,
-  createReportFailed
+  createReportFailed,
+  updateReportFailed,
+  updateReportSucceeded,
+  fetchAReportSucceeded,
+  fetchAReportFailed
 } from './actions';
 
-import { CREATE_REPORT, FETCH_REPORTS } from './constants';
+import {
+  CREATE_REPORT,
+  UPDATE_REPORT,
+  FETCH_REPORTS, FETCH_A_REPORT
+} from './constants';
 
-
-// FETCH ALL REPORTS OF SPECIFIED USER.
 export function* fetchReports() {
   try {
-    const data = yield call(callFetchReports);
-    yield put(fetchReportsSucceeded(data));
+    const reports = yield call(callFetchReports);
+    yield put(fetchReportsSucceeded(reports));
   } catch (error) {
     yield put(fetchReportsFailed(error));
   }
 }
 
-// USER CREATE A NEW REPORT.
+export function* fetchAReport(action) {
+  try {
+    const report = yield call(callFetchAReport, action.id);
+    yield put(fetchAReportSucceeded(report));
+  } catch (error) {
+    yield put(fetchAReportFailed(error));
+  }
+}
+
 export function* createReport(action) {
   try {
     const newReport = yield call(callCreateReport, action.report);
@@ -31,8 +49,18 @@ export function* createReport(action) {
   }
 }
 
+export function* updateReport(action) {
+  try {
+    const updatedReport = yield call(callUpdateReport, action.id, action.payload);
+    yield put(updateReportSucceeded(updatedReport));
+  } catch (error) {
+    yield put(updateReportFailed(error));
+  }
+}
+
 export default function* reportPageSaga() {
-  // yield takeLatest(FETCH_REPORTS_PENDING, fetchReports);
   yield takeEvery(FETCH_REPORTS, fetchReports)
+  yield takeEvery(FETCH_A_REPORT, fetchAReport)
   yield takeEvery(CREATE_REPORT, createReport)
+  yield takeEvery(UPDATE_REPORT, updateReport)
 }
