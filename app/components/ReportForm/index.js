@@ -46,14 +46,15 @@ class ReportForm extends Component {
     this.setState({
       report: {
         ...report,
-        [e.target.name]: e.target.value }
+        [e.target.name]: e.target.value
+      }
     });
   }
 
   onSubmitForm = (e) => {
     e.preventDefault();
     const { report } = this.state;
-    const { createReport: dispatchCreateReport } = this.props;
+    const { createReport: dispatchCreateReport, history } = this.props;
     dispatchCreateReport(report);
     history.push('/report');
   };
@@ -62,7 +63,14 @@ class ReportForm extends Component {
     if (selectedValue) {
       let issue = selectedValue.label.toString().toLowerCase();
       const { report } = this.state;
-      this.setState({ report: {...report, issues: [...report.issues, issue]} });
+      this.setState({
+        report: {
+          ...report,
+          issues: [
+            ...report.issues,
+            issue
+          ]}
+      });
     }
   }
 
@@ -204,6 +212,16 @@ ReportForm.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func,
   }),
+  report: PropTypes.shape({
+    memberId: PropTypes.number,
+    title: PropTypes.string,
+    achievement: PropTypes.string,
+    plan: PropTypes.string,
+    issues: PropTypes.arrayOf(PropTypes.string),
+    description: PropTypes.string,
+    comment: PropTypes.string,
+  }),
+
   createReport: PropTypes.func,
 };
 

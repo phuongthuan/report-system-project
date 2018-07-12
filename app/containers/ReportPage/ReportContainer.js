@@ -6,6 +6,7 @@ import Button from 'components/Button'
 import ReportsList from 'components/ReportsList'
 
 import * as ReportPageActions from './actions';
+import { selectError, selectLoading, selectReports } from "./selectors";
 
 class ReportContainer extends PureComponent {
 
@@ -16,7 +17,7 @@ class ReportContainer extends PureComponent {
 
   render() {
     console.log(localStorage.getItem('token'));
-    const {reports, match} = this.props;
+    const {reports, deleteReport, updateReport, match} = this.props;
     return (
       <div className="container mt-5 mb-5">
         <Link to={`${match.url}/create`}>
@@ -24,8 +25,12 @@ class ReportContainer extends PureComponent {
             Create new Report
           </Button>
         </Link>
-        <div className="row">
-          <ReportsList reportsList={reports} />
+        <div className="row mt-2">
+          <ReportsList
+            updateAction={updateReport}
+            deleteAction={deleteReport}
+            reportsList={reports}
+          />
         </div>
       </div>
     );
@@ -34,16 +39,25 @@ class ReportContainer extends PureComponent {
 
 ReportContainer.propTypes = {
   fetchReports: PropTypes.func,
+  loading: PropTypes.bool,
+  error: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.bool,
+  ]),
+  reports: PropTypes.arrayOf(PropTypes.object)
 };
 
 export const mapStateToProps = state => ({
-  reports: state.reportpage.data,
-  loading: state.reportpage.loading,
-  error: state.reportpage.error,
+  reports: selectReports(state),
+  loading: selectLoading(state),
+  error: selectError(state),
 });
 
 export const mapDispatchToProps = dispatch => ({
-  fetchReports: () => dispatch(ReportPageActions.fetchReports())
+  fetchReports: () => dispatch(ReportPageActions.fetchReports()),
+  createReport: (report) => dispatch(ReportPageActions.createReport(report)),
+  updateReport: (report) => dispatch(ReportPageActions.updateReport(report)),
+  deleteReport: (reportId) => dispatch(ReportPageActions.deleteReport(reportId))
 });
 
 export default connect(

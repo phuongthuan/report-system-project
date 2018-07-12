@@ -2,16 +2,14 @@ import {
   FETCH_REPORTS,
   FETCH_REPORTS_SUCCEEDED,
   FETCH_REPORTS_FAILED,
-
   CREATE_REPORT,
   CREATE_REPORT_SUCCEEDED,
-  CREATE_REPORT_FAILED
+  CREATE_REPORT_FAILED, UPDATE_REPORT_SUCCEEDED, UPDATE_REPORT_FAILED, DELETE_REPORT_SUCCEEDED, DELETE_REPORT_FAILED
 
 } from './constants';
 
-
 const initState = {
-  data: [],
+  reports: [],
   loading: false,
   error: false
 }
@@ -28,24 +26,47 @@ function reportReducer(state = initState, action) {
     case FETCH_REPORTS_SUCCEEDED:
       return {
         ...state,
-        data: action.reports,
+        reports: action.reportsReceived,
         loading: false,
       }
 
     case CREATE_REPORT_SUCCEEDED:
       return {
         ...state,
-        data: [...state.data, action.report],
+        reports: [
+          ...state.reports,
+          action.newReportReceived
+        ],
+        loading: false
+      }
+
+    case UPDATE_REPORT_SUCCEEDED:
+      return {
+        ...state,
+        reports: state.reports.map(report =>
+          report.id === action.reportUpdated.id
+            ? action.reportUpdated
+            : report
+        ),
+        loading: false
+      }
+
+    case DELETE_REPORT_SUCCEEDED:
+      return {
+        ...state,
+        reports: state.reports.filter(report => report.id !== action.reportId),
         loading: false
       }
 
     case FETCH_REPORTS_FAILED:
     case CREATE_REPORT_FAILED:
+    case UPDATE_REPORT_FAILED:
+    case DELETE_REPORT_FAILED:
       return {
         ...state,
-        error: action.error,
+        error: true,
         loading: false,
-        data: []
+        reports: []
       }
     default:
       return state;
