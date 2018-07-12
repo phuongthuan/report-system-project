@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
-import { Button, Card, CardBody, CardTitle, CardText, CardFooter} from 'reactstrap'
+import { Button, ButtonGroup, Card, CardBody, CardTitle, CardText, CardFooter} from 'reactstrap'
 
 const Report = ({ report, deleteAction }) => (
   <Card className="mb-4" key={report.id}>
@@ -13,19 +13,26 @@ const Report = ({ report, deleteAction }) => (
       </CardText>
     </CardBody>
     <CardFooter>
-      <Link to={`/report/update/${report.id}`}>
+      <ButtonGroup>
         <Button size="sm">
-          Edit
+          <Link
+            style={{
+              textDecoration: 'none',
+              color: '#fff'
+            }}
+            to={`/report/update/${report.id}`}
+          >
+            Edit
+          </Link>
         </Button>
-      </Link>
-      <Button
-        onClick={() => deleteAction(report.id)}
-        size="sm"
-        color="danger"
-        className="ml-2"
-      >
-        Delete
-      </Button>
+        <Button
+          onClick={() => deleteAction(report.id)}
+          size="sm"
+          color="danger"
+        >
+          Delete
+        </Button>
+      </ButtonGroup>
     </CardFooter>
   </Card>
 );

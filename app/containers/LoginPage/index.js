@@ -64,7 +64,7 @@ class LoginPage extends Component {
       password
     }
     dispatchLogin(payload);
-    history.push('/report');
+    history.push('/profile');
   }
 
   render() {
