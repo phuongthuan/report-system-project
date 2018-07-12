@@ -1,10 +1,10 @@
 import React from 'react';
-import Report from 'components/Report';
+import Report from "../Report";
 
 const ReportsList = (props) => {
   const { reportsList, deleteAction, updateAction } = props;
   return (
-    <div className="col-md-8">
+    <div>
       {reportsList.map(report =>
         (
           <Report
