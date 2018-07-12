@@ -3,7 +3,7 @@ export const GET_KEYWORDS = `${BASE_URL}keywords`;
 
 
 const API_ROOT = 'http://localhost:3000/';
-export const GET_REPORTS = `${API_ROOT}reports?_page=1`;
+export const GET_REPORTS = `${API_ROOT}reports`;
 export const GET_A_REPORT = `${API_ROOT}reports`;
 export const CREATE_REPORT = `${API_ROOT}reports`;
 export const UPDATE_REPORT = `${API_ROOT}reports`

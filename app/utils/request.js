@@ -1,5 +1,13 @@
 import axios from 'axios';
 
+const token = localStorage.getItem('token');
+
+const defaultOptions = {
+  headers: {
+    'Authorization': token ? `Bearer ${token}` : '',
+  }
+}
+
 function parseJSON(response) {
   if (response.status === 204 || response.status === 205) {
     return null;
@@ -18,7 +26,7 @@ function checkStatus(response) {
 }
 
 export default function request(type, url, options) {
-  return axios[type](url, options)
+  return axios[type](url,{ ...defaultOptions, ...options })
     .then(checkStatus)
     .then(parseJSON);
 }
