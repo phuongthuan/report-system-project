@@ -16,7 +16,7 @@ class ReportContainer extends PureComponent {
   }
 
   render() {
-    const {reports, match} = this.props;
+    const {reports, deleteReport, updateReport, match} = this.props;
     return (
       <div className="container mt-5 mb-5">
         <Link to={`${match.url}/create`}>
@@ -25,7 +25,11 @@ class ReportContainer extends PureComponent {
           </Button>
         </Link>
         <div className="row mt-2">
-          <ReportsList reportsList={reports} />
+          <ReportsList
+            updateAction={updateReport}
+            deleteAction={deleteReport}
+            reportsList={reports}
+          />
         </div>
       </div>
     );
@@ -49,7 +53,10 @@ export const mapStateToProps = state => ({
 });
 
 export const mapDispatchToProps = dispatch => ({
-  fetchReports: () => dispatch(ReportPageActions.fetchReports())
+  fetchReports: () => dispatch(ReportPageActions.fetchReports()),
+  createReport: (report) => dispatch(ReportPageActions.createReport(report)),
+  updateReport: (report) => dispatch(ReportPageActions.updateReport(report)),
+  deleteReport: (reportId) => dispatch(ReportPageActions.deleteReport(reportId))
 });
 
 export default connect(

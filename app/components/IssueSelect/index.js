@@ -8,6 +8,7 @@ import {
 
 const IssueSelect = ({addSelectBox, children}) => {
 
+  console.log(children);
   return (
     <Fragment>
       <CardTitle>Issues</CardTitle>

@@ -2,10 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom'
 import { Button, Card, CardBody, CardTitle, CardText, CardFooter} from 'reactstrap'
 
-const Report = ({ report }) => (
+const Report = ({ report, deleteAction }) => (
   <Card className="mb-4" key={report.id}>
     <CardBody>
-      <CardTitle>{report.title}</CardTitle>
+      <CardTitle>Id: {report.id} - {report.title}</CardTitle>
       <CardText>{report.achievement}</CardText>
       <CardText>Member: {report.memberId}</CardText>
       <CardText>
@@ -18,6 +18,14 @@ const Report = ({ report }) => (
           Edit
         </Button>
       </Link>
+      <Button
+        onClick={() => deleteAction(report.id)}
+        size="sm"
+        color="danger"
+        className="ml-2"
+      >
+        Delete
+      </Button>
     </CardFooter>
   </Card>
 );
