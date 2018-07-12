@@ -2,6 +2,9 @@ import {
   FETCH_REPORTS,
   FETCH_REPORTS_SUCCEEDED,
   FETCH_REPORTS_FAILED,
+  FETCH_ALL_REPORTS_OF_USER,
+  FETCH_ALL_REPORTS_OF_USER_SUCCEEDED,
+  FETCH_ALL_REPORTS_OF_USER_FAILED,
   FETCH_A_REPORT,
   FETCH_A_REPORT_SUCCEEDED,
   FETCH_A_REPORT_FAILED,
@@ -33,6 +36,23 @@ export const fetchReportsFailed = error => ({
   error
 });
 
+/*===========================================
+ FETCH ALL REPORTS
+ ===========================================*/
+export const fetchAllReportsOfUser = (id) => ({
+  type: FETCH_ALL_REPORTS_OF_USER,
+  id
+});
+
+export const fetchAllReportsOfUserSucceeded = reportsReceived => ({
+  type: FETCH_ALL_REPORTS_OF_USER_SUCCEEDED,
+  reportsReceived
+});
+
+export const fetchAllReportsOfUserFailed = error => ({
+  type: FETCH_ALL_REPORTS_OF_USER_FAILED,
+  error
+});
 
 /*===========================================
  FETCH A REPORT

@@ -3,7 +3,7 @@ import {
   callFetchReports,
   callCreateReport,
   callUpdateReport,
-  callFetchAReport, callDeleteReport
+  callFetchAReport, callDeleteReport, callFetchAllReportsOfUser
 } from '../../requests';
 import {
   fetchReportsSucceeded,
@@ -13,7 +13,7 @@ import {
   updateReportFailed,
   updateReportSucceeded,
   fetchAReportSucceeded,
-  fetchAReportFailed, deleteReportSucceeded, deleteReportFailed
+  fetchAReportFailed, deleteReportSucceeded, deleteReportFailed, fetchAllReportsOfUserFailed
 } from './actions';
 
 import {
@@ -21,7 +21,7 @@ import {
   UPDATE_REPORT,
   FETCH_REPORTS,
   FETCH_A_REPORT,
-  DELETE_REPORT
+  DELETE_REPORT, FETCH_ALL_REPORTS_OF_USER
 } from './constants';
 
 export function* fetchReports() {
@@ -30,6 +30,15 @@ export function* fetchReports() {
     yield put(fetchReportsSucceeded(reports));
   } catch (error) {
     yield put(fetchReportsFailed(error));
+  }
+}
+
+export function* fetchAllReportsOfUser(action) {
+  try {
+    const reports = yield call(callFetchAllReportsOfUser(action.id));
+    yield put(fetchAReportSucceeded(reports));
+  } catch (error) {
+    yield put(fetchAllReportsOfUserFailed(error));
   }
 }
 
@@ -76,6 +85,10 @@ export function* watchFetchReports() {
   yield takeLatest(FETCH_REPORTS, fetchReports);
 }
 
+export function* watchFetchAllReportsOfUser() {
+  yield takeLatest(FETCH_ALL_REPORTS_OF_USER, fetchAllReportsOfUser);
+}
+
 export function* watchCreateReport() {
   yield takeLatest(CREATE_REPORT, createReport);
 }
@@ -92,6 +105,7 @@ export default function* reportPageSaga() {
     fork(watchFetchReports),
     fork(watchCreateReport),
     fork(watchUpdateReport),
-    fork(watchDeleteReport)
+    fork(watchDeleteReport),
+    fork(watchFetchAllReportsOfUser)
   ];
 }

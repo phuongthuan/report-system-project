@@ -5,7 +5,7 @@ import Input from 'components/Input'
 import Button from 'components/Button'
 import { setUsername } from 'containers/App/actions'
 import { selectUsername } from 'containers/App/selectors'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import img from '../../assests/images/loginbackground.jpg';
 
 const HomeWrapper = styled.div`
@@ -91,4 +91,7 @@ export const mapDispatchToProps = dispatch => ({
   onChangeUsername: value => dispatch(setUsername(value)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Home)

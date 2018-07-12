@@ -3,16 +3,18 @@ import { Route, Switch } from 'react-router-dom'
 
 import ReportContainer from "./ReportContainer";
 import ReportForm from "../../components/ReportForm";
+import CreateReportContainer from "./CreateReportContainer";
 
 class ReportPage extends Component {
   render() {
-
     return (
-      <Switch>
-        <Route exact path="/report" component={ReportContainer} />
-        <Route path="/report/create" component={ReportForm} />
-        <Route path="/report/update/:id" component={ReportForm} />
-      </Switch>
+      <div className="container">
+        <Switch>
+          <Route exact path="/report" component={ReportContainer} />
+          <Route path="/report/create" component={CreateReportContainer} />
+          <Route path="/report/update/:id" component={ReportForm} />
+        </Switch>
+      </div>
     );
   }
 }

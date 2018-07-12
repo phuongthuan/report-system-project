@@ -2,8 +2,8 @@ import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Button from 'components/Button'
-import ReportsList from 'components/ReportsList'
+import ReportsList from '../../components/ReportsList'
+import SideBar from '../../components/SideBar'
 
 import * as ReportPageActions from './actions';
 import { selectError, selectLoading, selectReports } from "./selectors";
@@ -16,21 +16,20 @@ class ReportContainer extends PureComponent {
   }
 
   render() {
-    console.log(localStorage.getItem('token'));
-    const {reports, deleteReport, updateReport, match} = this.props;
+    const {reports, deleteReport, updateReport } = this.props;
     return (
-      <div className="container mt-5 mb-5">
-        <Link to={`${match.url}/create`}>
-          <Button primary>
-            Create new Report
-          </Button>
-        </Link>
-        <div className="row mt-2">
-          <ReportsList
-            updateAction={updateReport}
-            deleteAction={deleteReport}
-            reportsList={reports}
-          />
+      <div className="row mt-5 mb-5">
+        <div className="col-md-4">
+          <SideBar />
+        </div>
+        <div className="col-md-8">
+          <div className="row">
+            <ReportsList
+              updateAction={updateReport}
+              deleteAction={deleteReport}
+              reportsList={reports}
+            />
+          </div>
         </div>
       </div>
     );
