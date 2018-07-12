@@ -20,5 +20,5 @@ export const callCreateReport = report => request('post', CREATE_REPORT, report)
 export const callUpdateReport = report => request('put', `${UPDATE_REPORT}/${report.id}`, report)
 export const callDeleteReport = (id) => request('delete', `${DELETE_REPORT}/${id}`)
 
-export const callSearchUsername = (username) => request('get', `${SEARCH_USERNAME}?q=${username}`);
-export const callLogin = (payload) => request('post', LOGIN, payload);
+export const callSearchUsername = username => request('get', `${SEARCH_USERNAME}?q=${username}`);
+export const callLogin = options => request('post', LOGIN, options);

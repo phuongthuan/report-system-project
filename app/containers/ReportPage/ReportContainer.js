@@ -16,6 +16,7 @@ class ReportContainer extends PureComponent {
   }
 
   render() {
+    console.log(localStorage.getItem('token'));
     const {reports, deleteReport, updateReport, match} = this.props;
     return (
       <div className="container mt-5 mb-5">
