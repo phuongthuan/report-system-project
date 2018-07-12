@@ -14,8 +14,8 @@ function loginReducer(state = initState, action) {
     case LOGIN_SUCCEEDED:
       return {
         ...state,
-        token: action.payload.access_token,
-        user: action.payload.user
+        token: action.userResponse.access_token,
+        user: action.userResponse.user
       }
     case LOGIN_FAILED:
       return {

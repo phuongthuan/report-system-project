@@ -4,17 +4,17 @@ import {
   LOGIN_FAILED
 } from './constants'
 
-export function login(email, password) {
+export function login(payload) {
   return {
     type: LOGIN_REQUEST,
-    payload: { email, password }
+    payload
   }
 }
 
-export function loginSucceeded(payload) {
+export function loginSucceeded(userResponse) {
   return {
     type: LOGIN_SUCCEEDED,
-    payload
+    userResponse
   }
 }
 

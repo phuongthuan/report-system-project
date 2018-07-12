@@ -58,18 +58,16 @@ class LoginPage extends Component {
   onSubmitForm = (e) => {
     e.preventDefault();
     const { email, password } = this.state;
-    // const { loginAction: dispatchLogin } = this.props;
-    // callLogin({email, password});
-    // dispatchLogin(email, password);
-
-    // this.props.loginAction(email, password);
-    console.log('Form Submitted!', email, password);
+    const { loginAction: dispatchLogin, history } = this.props;
+    const payload = {
+      email,
+      password
+    }
+    dispatchLogin(payload);
+    history.push('/report');
   }
 
   render() {
-
-    console.log(this.props);
-
     return (
       <LoginWrapper>
         <Form onSubmit={this.onSubmitForm}>
@@ -118,6 +116,9 @@ class LoginPage extends Component {
 }
 
 LoginPage.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func
+  }),
   email: PropTypes.string,
   password: PropTypes.string,
   loginAction: PropTypes.func
@@ -130,7 +131,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  loginAction: (email, password) => dispatch(actionsType.login(email, password))
+  loginAction: (payload) => dispatch(actionsType.login(payload))
 });
 
 export default connect(

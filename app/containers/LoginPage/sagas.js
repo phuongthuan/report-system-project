@@ -10,16 +10,17 @@ import {
 
 import { callLogin } from '../../requests'
 
-export function* login({email, password}) {
+export function* login(action) {
+
   const options = {
-    email: email,
-    password: password
+    email: action.payload.email,
+    password: action.payload.password
   };
 
   try {
-    const payload = yield call(callLogin, options);
-    const { access_token } = payload;
-    yield put(loginSucceeded(payload));
+    const responseUser = yield call(callLogin, options);
+    const { access_token } = responseUser;
+    yield put(loginSucceeded(responseUser));
     localStorage.setItem('token', access_token);
   } catch (error) {
     yield put(loginFailed(error));
@@ -27,8 +28,12 @@ export function* login({email, password}) {
   }
 }
 
-export default function* loginPageSaga() {
+export function* watchLogin() {
   yield takeLatest(LOGIN_REQUEST, login);
+}
+
+export default function* loginPageSaga() {
+  yield call(watchLogin);
 }
 
 
