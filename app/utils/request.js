@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 const token = localStorage.getItem('token');
-
 const defaultOptions = {
   headers: {
     'Authorization': token ? `Bearer ${token}` : '',

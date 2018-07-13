@@ -13,11 +13,10 @@ import {
 } from 'reactstrap'
 import styled from 'styled-components'
 import img from '../../assests/images/fancycrave-248220-unsplash.jpg';
-import { callLogin } from '../../requests';
-import * as actionsType from './actions'
+import * as AuthActions from './actions'
 import { selectToken, selectUser, selectError } from "./selectors";
 
-const LoginWrapper = styled.div`
+const AuthWrapper = styled.div`
   background-image: url(${img});
   background-repeat: no-repeat;
   background-size: cover;
@@ -29,7 +28,7 @@ const LoginWrapper = styled.div`
   justify-content: center;
 `;
 
-class LoginPage extends Component {
+class Auth extends Component {
 
   constructor(props) {
     super(props);
@@ -56,12 +55,12 @@ class LoginPage extends Component {
       password
     }
     dispatchLogin(payload);
-    history.push('/profile');
+    history.push('/profile/edit');
   }
 
   render() {
     return (
-      <LoginWrapper>
+      <AuthWrapper>
         <Form onSubmit={this.onSubmitForm}>
           <Card>
             <CardBody>
@@ -102,12 +101,12 @@ class LoginPage extends Component {
             </CardBody>
           </Card>
         </Form>
-      </LoginWrapper>
+      </AuthWrapper>
     );
   }
 }
 
-LoginPage.propTypes = {
+Auth.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func
   }),
@@ -117,16 +116,15 @@ LoginPage.propTypes = {
 }
 
 const mapStateToProps = (state) => ({
-  token: selectToken(state),
   user: selectUser(state),
   error: selectError(state)
 });
 
 const mapDispatchToProps = dispatch => ({
-  loginAction: (payload) => dispatch(actionsType.login(payload))
+  loginAction: (payload) => dispatch(AuthActions.login(payload))
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(LoginPage);
+)(Auth);

@@ -117,9 +117,9 @@ export const deleteReport = (reportId) => ({
   reportId
 });
 
-export const deleteReportSucceeded = (message) => ({
+export const deleteReportSucceeded = (reportId) => ({
   type: DELETE_REPORT_SUCCEEDED,
-  message
+  reportId
 });
 
 export const deleteReportFailed = (error) => ({

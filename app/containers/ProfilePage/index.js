@@ -6,7 +6,7 @@ class ReportPage extends Component {
   render() {
     return (
       <Switch>
-        <Route exact path="/profile" component={ProfileContainer} />
+        <Route exact path="/profile/edit" component={ProfileContainer} />
       </Switch>
     );
   }

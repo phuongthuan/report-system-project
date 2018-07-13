@@ -7,7 +7,7 @@ const Report = ({ report, deleteAction }) => (
     <CardBody>
       <CardTitle>Id: {report.id} - {report.title}</CardTitle>
       <CardText>{report.achievement}</CardText>
-      <CardText>Member: {report.memberId}</CardText>
+      <CardText>Member: {report.userId}</CardText>
       <CardText>
         <small className="text-muted">{report.date}</small>
       </CardText>

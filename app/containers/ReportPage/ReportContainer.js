@@ -1,34 +1,40 @@
 import React, { PureComponent } from 'react';
-import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import ReportsList from '../../components/ReportsList'
 import SideBar from '../../components/SideBar'
 
 import * as ReportPageActions from './actions';
 import { selectError, selectLoading, selectReports } from "./selectors";
+import { selectUser } from "../Auth/selectors";
 
 class ReportContainer extends PureComponent {
 
   componentDidMount() {
-    const {fetchReports: getReports} = this.props;
-    getReports();
+    const {fetchAllReportsOfUser: getReports, user} = this.props;
+    getReports(1);
   }
 
   render() {
-    const {reports, deleteReport, updateReport } = this.props;
+    const {reports, deleteReport, updateReport, loading, user } = this.props;
+    console.log(user);
     return (
       <div className="row mt-5 mb-5">
         <div className="col-md-4">
-          <SideBar />
+          <SideBar user={user} />
         </div>
         <div className="col-md-8">
           <div className="row">
-            <ReportsList
-              updateAction={updateReport}
-              deleteAction={deleteReport}
-              reportsList={reports}
-            />
+            {loading ? (
+              <FontAwesomeIcon icon="spinner" size="lg" spin />
+            ) : (
+              <ReportsList
+                updateAction={updateReport}
+                deleteAction={deleteReport}
+                reportsList={reports}
+              />
+            )}
           </div>
         </div>
       </div>
@@ -37,7 +43,7 @@ class ReportContainer extends PureComponent {
 }
 
 ReportContainer.propTypes = {
-  fetchReports: PropTypes.func,
+  fetchAllReportsOfUser: PropTypes.func,
   loading: PropTypes.bool,
   error: PropTypes.oneOfType([
     PropTypes.object,
@@ -50,10 +56,11 @@ export const mapStateToProps = state => ({
   reports: selectReports(state),
   loading: selectLoading(state),
   error: selectError(state),
+  user: selectUser(state),
 });
 
 export const mapDispatchToProps = dispatch => ({
-  fetchReports: () => dispatch(ReportPageActions.fetchReports()),
+  fetchAllReportsOfUser: (userId) => dispatch(ReportPageActions.fetchAllReportsOfUser(userId)),
   createReport: (report) => dispatch(ReportPageActions.createReport(report)),
   updateReport: (report) => dispatch(ReportPageActions.updateReport(report)),
   deleteReport: (reportId) => dispatch(ReportPageActions.deleteReport(reportId))
