@@ -51,7 +51,7 @@ class ProfileForm extends Component {
   render() {
     const { user } = this.state;
     return (
-      <Form onSubmit={this.onSubmitForm}>
+      <Form>
         <Card>
           <CardBody>
             <FormGroup>

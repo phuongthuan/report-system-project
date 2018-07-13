@@ -15,7 +15,7 @@ import styled from 'styled-components'
 import img from '../../assests/images/fancycrave-248220-unsplash.jpg';
 import * as AuthActions from './actions'
 import { selectUser } from "./selectors";
-import { callLogin } from '../../requests'
+
 
 const AuthWrapper = styled.div`
   background-image: url(${img});
@@ -49,19 +49,17 @@ class Auth extends Component {
   onSubmitForm = (e) => {
     e.preventDefault();
     const { email, password } = this.state;
+
     const {
       loginAction: dispatchLogin,
       history
     } = this.props;
+
     const payload = {
       email,
       password
     }
-    // callLogin(payload)
-    //   .then(response => {
-    //     localStorage.setItem('auth', JSON.stringify(response));
-    //     dispatchSetCurrentUser(response.user);
-    //   });
+
     dispatchLogin(payload);
     history.push('/report');
   }
@@ -120,8 +118,7 @@ Auth.propTypes = {
   }),
   email: PropTypes.string,
   password: PropTypes.string,
-  loginAction: PropTypes.func,
-  setCurrentUser: PropTypes.func
+  loginAction: PropTypes.func
 }
 
 const mapStateToProps = (state) => ({

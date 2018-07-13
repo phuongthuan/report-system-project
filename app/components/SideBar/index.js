@@ -77,4 +77,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(SideBar);
-

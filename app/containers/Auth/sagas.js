@@ -1,4 +1,5 @@
 import { call, put, takeLatest } from 'redux-saga/effects'
+
 import {
   AUTH_REQUEST
 } from './constants'
@@ -23,7 +24,6 @@ export function* login(action) {
     localStorage.setItem('token', access_token);
     localStorage.setItem('user', JSON.stringify(user));
     yield put(loginSucceeded(user));
-    console.log('Saga', responseUser);
   } catch (error) {
     yield put(loginFailed(error));
     localStorage.removeItem('token');
