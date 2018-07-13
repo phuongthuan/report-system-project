@@ -40,19 +40,11 @@ class LoginPage extends Component {
     }
   }
 
-  // onHandleInputChange = (e) => {
-  //   const target = e.target;
-  //   this.setState({
-  //     [target.name]: target.value
-  //   });
-  // }
-
-  onHandleEmailInput = (e) => {
-    this.setState({email: e.target.value});
-  }
-
-  onHandlePasswordInput = (e) => {
-    this.setState({password: e.target.value});
+  onHandleInputChange = (e) => {
+    const target = e.target;
+    this.setState({
+      [target.name]: target.value
+    });
   }
 
   onSubmitForm = (e) => {
@@ -82,7 +74,7 @@ class LoginPage extends Component {
                   name="email"
                   bsSize="sm"
                   value={this.state.email}
-                  onChange={this.onHandleEmailInput}
+                  onChange={this.onHandleInputChange}
                   required
                 />
               </FormGroup>
@@ -94,7 +86,7 @@ class LoginPage extends Component {
                   name="password"
                   bsSize="sm"
                   value={this.state.password}
-                  onChange={this.onHandlePasswordInput}
+                  onChange={this.onHandleInputChange}
                   required
                 />
               </FormGroup>

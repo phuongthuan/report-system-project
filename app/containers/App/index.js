@@ -9,15 +9,13 @@ import ProfileContainer from "../ProfilePage/ProfileContainer";
 export default class App extends Component {
   render() {
     return (
-      <div className="container">
-        <Switch>
-          <Route exact path="/" component={Home}/>
-          <Route path="/learning" component={Learning}/>
-          <Route path="/report" component={ReportPage}/>
-          <Route path="/login" component={LoginPage}/>
-          <Route path="/profile" component={ProfileContainer}/>
-        </Switch>
-      </div>
+      <Switch>
+        <Route exact path="/" component={Home}/>
+        <Route path="/learning" component={Learning}/>
+        <Route path="/report" component={ReportPage}/>
+        <Route path="/login" component={LoginPage}/>
+        <Route path="/profile" component={ProfileContainer}/>
+      </Switch>
     )
   }
 }

@@ -76,7 +76,7 @@ database.users.push({
 for (let i=1; i<=400; i++) {
   database.reports.push({
     id: i,
-    memberId: getRandomInt(1, 40),
+    userId: getRandomInt(1, 40),
     title: faker.lorem.sentence(),
     date: faker.date.weekday(),
     achievement: faker.lorem.sentence(),

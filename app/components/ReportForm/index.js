@@ -14,7 +14,8 @@ import {
   CardHeader,
   CardBody,
   CardTitle,
-  CardFooter
+  CardFooter,
+  ButtonGroup
 } from 'reactstrap';
 import * as actionsType from '../../containers/ReportPage/actions';
 
@@ -31,7 +32,7 @@ class ReportForm extends Component {
   state = {
     numberSelectBox: 0,
     report : {
-      memberId: 1,
+      userId: 1,
       title: '',
       achievement: '',
       plan: '',
@@ -109,101 +110,102 @@ class ReportForm extends Component {
       );
     }
 
+
     return (
-      <div className="container mt-5 mb-5">
-        <div className="col-md-8">
-          <Form onSubmit={this.onSubmitForm}>
-            <Card>
-              <CardHeader>
-                <FormGroup>
-                  <Input
-                    type="text"
-                    name="title"
-                    bsSize="lg"
-                    autoComplete="off"
-                    value={report.title}
-                    placeholder="Title"
-                    onChange={this.onHandleFormChange}
-                  />
-                </FormGroup>
-              </CardHeader>
+      <Form onSubmit={this.onSubmitForm}>
+        <Card>
+          <CardHeader>
+            <FormGroup>
+              <Input
+                type="text"
+                name="title"
+                bsSize="lg"
+                autoComplete="off"
+                value={report.title}
+                placeholder="Title"
+                onChange={this.onHandleFormChange}
+              />
+            </FormGroup>
+          </CardHeader>
 
-              <CardBody>
+          <CardBody>
 
-                <CardTitle>Today Achievement</CardTitle>
-                <FormGroup>
-                  <Input
-                    type="textarea"
-                    name="achievement"
-                    placeholder="What achievement did you get today ?"
-                    value={report.achievement}
-                    bsSize="sm"
-                    onChange={this.onHandleFormChange}
-                  />
-                </FormGroup>
+            <CardTitle>Today Achievement</CardTitle>
+            <FormGroup>
+              <Input
+                type="textarea"
+                name="achievement"
+                placeholder="What achievement did you get today ?"
+                value={report.achievement}
+                bsSize="sm"
+                onChange={this.onHandleFormChange}
+              />
+            </FormGroup>
 
-                <CardTitle>Planing for next day</CardTitle>
-                <FormGroup>
-                  <Input
-                    type="textarea"
-                    name="plan"
-                    value={report.plan}
-                    placeholder="Tomorrow I'll bla bla ..."
-                    bsSize="sm"
-                    onChange={this.onHandleFormChange}
-                  />
-                </FormGroup>
+            <CardTitle>Planing for next day</CardTitle>
+            <FormGroup>
+              <Input
+                type="textarea"
+                name="plan"
+                value={report.plan}
+                placeholder="Tomorrow I'll bla bla ..."
+                bsSize="sm"
+                onChange={this.onHandleFormChange}
+              />
+            </FormGroup>
 
-                {/*Issue Select Box*/}
-                <IssueSelect addSelectBox={this.onAddSelectBox} >
-                  {children}
-                </IssueSelect>
+            {/*Issue Select Box*/}
+            <IssueSelect addSelectBox={this.onAddSelectBox} >
+              {children}
+            </IssueSelect>
 
 
-                <CardTitle>Description</CardTitle>
-                <FormGroup>
-                  <Input
-                    type="textarea"
-                    name="description"
-                    bsSize="sm"
-                    placeholder="More info ..."
-                    onChange={this.onHandleFormChange}
-                  />
-                </FormGroup>
+            <CardTitle>Description</CardTitle>
+            <FormGroup>
+              <Input
+                type="textarea"
+                name="description"
+                bsSize="sm"
+                placeholder="More info ..."
+                onChange={this.onHandleFormChange}
+              />
+            </FormGroup>
 
-                <CardTitle>Comment</CardTitle>
-                <FormGroup>
-                  <Input
-                    type="textarea"
-                    name="comment"
-                    bsSize="sm"
-                    placeholder="Leave a comment ..."
-                    onChange={this.onHandleFormChange}
-                  />
-                </FormGroup>
-              </CardBody>
+            <CardTitle>Comment</CardTitle>
+            <FormGroup>
+              <Input
+                type="textarea"
+                name="comment"
+                bsSize="sm"
+                placeholder="Leave a comment ..."
+                onChange={this.onHandleFormChange}
+              />
+            </FormGroup>
+          </CardBody>
 
-              <CardFooter>
-                <Button
-                  color="success"
-                  type="submit"
+          <CardFooter>
+            <ButtonGroup>
+              <Button
+                color="success"
+                type="submit"
+              >
+                Submit new report
+              </Button>
+              <Button size="sm">
+                <Link
+                  style={{
+                    textDecoration: 'none',
+                    color: '#fff'
+                  }}
+                  to="/report"
                 >
-                  Submit new report
-                </Button>
-
-                <Link to="/report">
-                  <Button
-                    color="danger"
-                    type="submit"
-                  >
-                    Back to Report Page
-                  </Button>
+                  Back to Report Page
                 </Link>
-              </CardFooter>
-            </Card>
-          </Form>
-        </div>
-      </div>
+              </Button>
+            </ButtonGroup>
+          </CardFooter>
+        </Card>
+      </Form>
     );
   }
 }
@@ -213,7 +215,7 @@ ReportForm.propTypes = {
     push: PropTypes.func,
   }),
   report: PropTypes.shape({
-    memberId: PropTypes.number,
+    userId: PropTypes.number,
     title: PropTypes.string,
     achievement: PropTypes.string,
     plan: PropTypes.string,
