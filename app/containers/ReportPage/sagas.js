@@ -1,4 +1,5 @@
 import { call, put, fork ,takeLatest } from 'redux-saga/effects'
+import { delay } from 'redux-saga'
 import {
   callFetchReports,
   callCreateReport,
@@ -42,6 +43,7 @@ export function* fetchReports() {
 export function* fetchAllReportsOfUser(action) {
   try {
     const reports = yield call(callFetchAllReportsOfUser, action.id);
+    yield delay(1000);
     yield put(fetchAllReportsOfUserSucceeded(reports));
   } catch (error) {
     yield put(fetchAllReportsOfUserFailed(error));

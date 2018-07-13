@@ -3,11 +3,11 @@ import {
   AUTH_FAILED
 } from './constants'
 
-const initState = {
-  isAuthenticated: false,
-  user: {},
-  error: false
-}
+let user = JSON.parse(localStorage.getItem('user'));
+
+const initState = user
+  ? { isAuthenticated: false, user, error: false }
+  : {}
 
 function authReducer(state = initState, action) {
   switch (action.type) {

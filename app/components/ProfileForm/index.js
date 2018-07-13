@@ -16,8 +16,15 @@ import {
 import { selectUser } from "../../containers/Auth/selectors";
 
 class ProfileForm extends Component {
+
   state = {
-    user: {}
+    user: {
+      firstName: '',
+      lastName: '',
+      address: '',
+      phone: '',
+      division: ''
+    }
   }
 
   componentDidMount() {
@@ -35,9 +42,14 @@ class ProfileForm extends Component {
     });
   }
 
+  onSubmitForm = (e) => {
+    e.preventDefault();
+    const { user } = this.state;
+    console.log('Form submitted!', user);
+  };
+
   render() {
     const { user } = this.state;
-    console.log(user);
     return (
       <Form>
         <Card>
@@ -45,8 +57,9 @@ class ProfileForm extends Component {
             <FormGroup>
               <InputGroup>
                 <Input
-                  autoComplete="off"
                   type="text"
+                  name="firstName"
+                  autoComplete="off"
                   bsSize="sm"
                   value={user.firstName}
                   onChange={this.onHandleFormChange}
@@ -59,6 +72,7 @@ class ProfileForm extends Component {
                 <Input
                   autoComplete="off"
                   type="text"
+                  name="lastName"
                   bsSize="sm"
                   value={user.lastName}
                   onChange={this.onHandleFormChange}
@@ -70,8 +84,9 @@ class ProfileForm extends Component {
             <FormGroup>
               <InputGroup>
                 <Input
-                  autoComplete="off"
                   type="text"
+                  name="address"
+                  autoComplete="off"
                   bsSize="sm"
                   value={user.address}
                   onChange={this.onHandleFormChange}
@@ -83,9 +98,10 @@ class ProfileForm extends Component {
             <FormGroup>
               <InputGroup>
                 <Input
-                  autoComplete="off"
                   type="text"
+                  name="phone"
                   bsSize="sm"
+                  autoComplete="off"
                   value={user.phone}
                   onChange={this.onHandleFormChange}
                 />
@@ -96,9 +112,10 @@ class ProfileForm extends Component {
             <FormGroup>
               <InputGroup>
                 <Input
-                  autoComplete="off"
                   type="text"
+                  name="division"
                   bsSize="sm"
+                  autoComplete="off"
                   value={user.division}
                   onChange={this.onHandleFormChange}
                 />

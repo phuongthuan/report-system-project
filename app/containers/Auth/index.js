@@ -14,7 +14,8 @@ import {
 import styled from 'styled-components'
 import img from '../../assests/images/fancycrave-248220-unsplash.jpg';
 import * as AuthActions from './actions'
-import { selectToken, selectUser, selectError } from "./selectors";
+import { selectUser } from "./selectors";
+
 
 const AuthWrapper = styled.div`
   background-image: url(${img});
@@ -33,7 +34,6 @@ class Auth extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: {},
       email: '',
       password: ''
     }
@@ -49,13 +49,19 @@ class Auth extends Component {
   onSubmitForm = (e) => {
     e.preventDefault();
     const { email, password } = this.state;
-    const { loginAction: dispatchLogin, history } = this.props;
+
+    const {
+      loginAction: dispatchLogin,
+      history
+    } = this.props;
+
     const payload = {
       email,
       password
     }
+
     dispatchLogin(payload);
-    history.push('/profile/edit');
+    history.push('/report');
   }
 
   render() {
@@ -116,8 +122,7 @@ Auth.propTypes = {
 }
 
 const mapStateToProps = (state) => ({
-  user: selectUser(state),
-  error: selectError(state)
+  user: selectUser(state)
 });
 
 const mapDispatchToProps = dispatch => ({

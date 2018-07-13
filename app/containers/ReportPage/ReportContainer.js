@@ -13,12 +13,11 @@ class ReportContainer extends PureComponent {
 
   componentDidMount() {
     const {fetchAllReportsOfUser: getReports, user} = this.props;
-    getReports(1);
+    getReports(user.id);
   }
 
   render() {
     const {reports, deleteReport, updateReport, loading, user } = this.props;
-    console.log(user);
     return (
       <div className="row mt-5 mb-5">
         <div className="col-md-4">

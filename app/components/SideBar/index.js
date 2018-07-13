@@ -14,11 +14,10 @@ import { Link } from 'react-router-dom'
 import imageProfile from '../../assests/images/Gabe_newell.png';
 import { selectUser } from "../../containers/Auth/selectors";
 
-
 class SideBar extends Component {
   render() {
     const { user } = this.props;
-    const avatar = user.avatar ? user.avatar : imageProfile;
+    const avatar = user ? user.avatar : imageProfile;
     return (
       <ListGroup className="shadow-sm">
         <ListGroupItem className="justify-content-between text-center">
@@ -78,4 +77,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(SideBar);
-

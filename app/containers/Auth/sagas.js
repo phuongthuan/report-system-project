@@ -22,6 +22,7 @@ export function* login(action) {
     const responseUser = yield call(callLogin, options);
     const { access_token, user } = responseUser;
     localStorage.setItem('token', access_token);
+    localStorage.setItem('user', JSON.stringify(user));
     yield put(loginSucceeded(user));
   } catch (error) {
     yield put(loginFailed(error));

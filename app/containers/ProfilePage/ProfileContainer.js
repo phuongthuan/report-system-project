@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from "react-redux";
 import SideBar from '../../components/SideBar'
 import ProfileForm from "../../components/ProfileForm";
+import { selectCurrentUser } from "../App/selectors";
 
 class ProfileContainer extends Component {
   render() {
@@ -11,7 +13,7 @@ class ProfileContainer extends Component {
             <SideBar />
           </div>
           <div className="col-md-8">
-            <ProfileForm />
+            <ProfileForm user={this.props.user} />
           </div>
         </div>
       </div>
@@ -19,4 +21,14 @@ class ProfileContainer extends Component {
   }
 }
 
-export default ProfileContainer;
+export const mapStateToProps = state => ({
+  user: selectCurrentUser(state),
+});
+
+export const mapDispatchToProps = dispatch => ({
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ProfileContainer);
