@@ -12,8 +12,6 @@ import {
   CardFooter
 } from 'reactstrap';
 
-import PropTypes from 'prop-types';
-
 class ProfileForm extends Component {
   render() {
     return (
@@ -78,7 +76,5 @@ class ProfileForm extends Component {
     );
   }
 }
-
-ProfileForm.propTypes = {};
 
 export default ProfileForm;
