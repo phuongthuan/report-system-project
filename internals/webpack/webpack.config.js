@@ -47,6 +47,7 @@ module.exports = {
   output: {
     path: path.join(process.cwd(), '/build'),
     filename: 'bundle.js',
+    publicPath: '/'
   },
   devServer: {
     contentBase: parentDir,

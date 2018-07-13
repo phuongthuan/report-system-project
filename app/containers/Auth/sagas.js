@@ -1,6 +1,6 @@
 import { call, put, takeLatest } from 'redux-saga/effects'
 import {
-  LOGIN_REQUEST
+  AUTH_REQUEST
 } from './constants'
 
 import {
@@ -19,9 +19,11 @@ export function* login(action) {
 
   try {
     const responseUser = yield call(callLogin, options);
-    const { access_token } = responseUser;
-    yield put(loginSucceeded(responseUser));
+    const { access_token, user } = responseUser;
     localStorage.setItem('token', access_token);
+    localStorage.setItem('user', JSON.stringify(user));
+    yield put(loginSucceeded(user));
+    console.log('Saga', responseUser);
   } catch (error) {
     yield put(loginFailed(error));
     localStorage.removeItem('token');
@@ -29,10 +31,10 @@ export function* login(action) {
 }
 
 export function* watchLogin() {
-  yield takeLatest(LOGIN_REQUEST, login);
+  yield takeLatest(AUTH_REQUEST, login);
 }
 
-export default function* loginPageSaga() {
+export default function* authPageSaga() {
   yield call(watchLogin);
 }
 

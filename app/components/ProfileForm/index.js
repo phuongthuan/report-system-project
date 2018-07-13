@@ -1,80 +1,155 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types';
+
 import {
   Form,
   FormGroup,
   Button,
   Input,
-  Col,
+  InputGroup,
   Card,
-  CardHeader,
   CardBody,
-  CardTitle,
-  CardFooter
+  CardFooter,
+  InputGroupAddon
 } from 'reactstrap';
+import { selectUser } from "../../containers/Auth/selectors";
 
 class ProfileForm extends Component {
+
+  state = {
+    user: {
+      firstName: '',
+      lastName: '',
+      address: '',
+      phone: '',
+      division: ''
+    }
+  }
+
+  componentDidMount() {
+    const { user } = this.props;
+    this.setState({user});
+  }
+
+  onHandleFormChange = (e) => {
+    const { user } = this.state;
+    this.setState({
+      user: {
+        ...user,
+        [e.target.name]: e.target.value
+      }
+    });
+  }
+
+  onSubmitForm = (e) => {
+    e.preventDefault();
+    const { user } = this.state;
+    console.log('Form submitted!', user);
+  };
+
   render() {
+    const { user } = this.state;
     return (
       <Form onSubmit={this.onSubmitForm}>
         <Card>
-          <CardHeader>
-            <FormGroup>
-              <Input
-                type="text"
-                name="title"
-                bsSize="lg"
-                autoComplete="off"
-                placeholder="Title"
-              />
-            </FormGroup>
-          </CardHeader>
-
           <CardBody>
-
-            <CardTitle>Today Achievement</CardTitle>
             <FormGroup>
-              <Input
-                type="textarea"
-                name="achievement"
-                placeholder="What achievement did you get today ?"
-                bsSize="sm"
-              />
+              <InputGroup>
+                <Input
+                  type="text"
+                  name="firstName"
+                  autoComplete="off"
+                  bsSize="sm"
+                  value={user.firstName}
+                  onChange={this.onHandleFormChange}
+                />
+                <InputGroupAddon addonType="prepend">@First name</InputGroupAddon>
+              </InputGroup>
+            </FormGroup>
+            <FormGroup>
+              <InputGroup>
+                <Input
+                  autoComplete="off"
+                  type="text"
+                  name="lastName"
+                  bsSize="sm"
+                  value={user.lastName}
+                  onChange={this.onHandleFormChange}
+                />
+                <InputGroupAddon addonType="prepend">@Last name</InputGroupAddon>
+              </InputGroup>
             </FormGroup>
 
-            <CardTitle>Planing for next day</CardTitle>
             <FormGroup>
-              <Input
-                type="textarea"
-                name="plan"
-                placeholder="Tomorrow I'll bla bla ..."
-                bsSize="sm"
-              />
+              <InputGroup>
+                <Input
+                  type="text"
+                  name="address"
+                  autoComplete="off"
+                  bsSize="sm"
+                  value={user.address}
+                  onChange={this.onHandleFormChange}
+                />
+                <InputGroupAddon addonType="prepend">@Address</InputGroupAddon>
+              </InputGroup>
             </FormGroup>
 
-            <CardTitle>Description</CardTitle>
             <FormGroup>
-              <Input
-                type="textarea"
-                name="description"
-                bsSize="sm"
-                placeholder="More info ..."
-              />
+              <InputGroup>
+                <Input
+                  type="text"
+                  name="phone"
+                  bsSize="sm"
+                  autoComplete="off"
+                  value={user.phone}
+                  onChange={this.onHandleFormChange}
+                />
+                <InputGroupAddon addonType="prepend">@Phone</InputGroupAddon>
+              </InputGroup>
             </FormGroup>
 
-            <CardTitle>Comment</CardTitle>
             <FormGroup>
-              <Input
-                type="textarea"
-                name="comment"
-                bsSize="sm"
-                placeholder="Leave a comment ..."
-              />
+              <InputGroup>
+                <Input
+                  type="text"
+                  name="division"
+                  bsSize="sm"
+                  autoComplete="off"
+                  value={user.division}
+                  onChange={this.onHandleFormChange}
+                />
+                <InputGroupAddon addonType="prepend">@Division</InputGroupAddon>
+              </InputGroup>
             </FormGroup>
           </CardBody>
+          <CardFooter>
+            <Button
+              color="primary"
+              type="submit"
+            >
+              Save
+            </Button>
+          </CardFooter>
         </Card>
       </Form>
     );
   }
 }
 
-export default ProfileForm;
+ProfileForm.propTypes = {
+  user: PropTypes.object
+}
+
+const mapStateToProps = state => ({
+  user: selectUser(state)
+});
+
+const mapDispatchToProps = dispatch => ({
+
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ProfileForm);

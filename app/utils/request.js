@@ -1,12 +1,13 @@
 import axios from 'axios';
 
-const token = localStorage.getItem('token');
-
-const defaultOptions = {
-  headers: {
-    'Authorization': token ? `Bearer ${token}` : '',
+(function() {
+  const  token = localStorage.getItem('token');
+  if (token) {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  } else {
+    axios.defaults.headers.common['Authorization'] = null;
   }
-}
+})();
 
 function parseJSON(response) {
   if (response.status === 204 || response.status === 205) {
@@ -26,7 +27,7 @@ function checkStatus(response) {
 }
 
 export default function request(type, url, options) {
-  return axios[type](url,{ ...defaultOptions, ...options })
+  return axios[type](url, options)
     .then(checkStatus)
     .then(parseJSON);
 }

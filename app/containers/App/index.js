@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router-dom'
 import Learning from 'containers/Learning'
 import Home from 'containers/Home'
 import ReportPage from 'containers/ReportPage';
-import LoginPage from "containers/LoginPage";
+import Auth from "containers/Auth";
 import ProfileContainer from "../ProfilePage/ProfileContainer";
 
 export default class App extends Component {
@@ -13,7 +13,7 @@ export default class App extends Component {
         <Route exact path="/" component={Home}/>
         <Route path="/learning" component={Learning}/>
         <Route path="/report" component={ReportPage}/>
-        <Route path="/login" component={LoginPage}/>
+        <Route path="/login" component={Auth}/>
         <Route path="/profile" component={ProfileContainer}/>
       </Switch>
     )

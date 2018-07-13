@@ -1,9 +1,12 @@
 import { call, put, fork ,takeLatest } from 'redux-saga/effects'
+import { delay } from 'redux-saga'
 import {
   callFetchReports,
   callCreateReport,
   callUpdateReport,
-  callFetchAReport, callDeleteReport, callFetchAllReportsOfUser
+  callFetchAReport,
+  callDeleteReport,
+  callFetchAllReportsOfUser
 } from '../../requests';
 import {
   fetchReportsSucceeded,
@@ -13,7 +16,11 @@ import {
   updateReportFailed,
   updateReportSucceeded,
   fetchAReportSucceeded,
-  fetchAReportFailed, deleteReportSucceeded, deleteReportFailed, fetchAllReportsOfUserFailed
+  fetchAReportFailed,
+  deleteReportSucceeded,
+  deleteReportFailed,
+  fetchAllReportsOfUserFailed,
+  fetchAllReportsOfUserSucceeded
 } from './actions';
 
 import {
@@ -35,8 +42,9 @@ export function* fetchReports() {
 
 export function* fetchAllReportsOfUser(action) {
   try {
-    const reports = yield call(callFetchAllReportsOfUser(action.id));
-    yield put(fetchAReportSucceeded(reports));
+    const reports = yield call(callFetchAllReportsOfUser, action.id);
+    yield delay(1000);
+    yield put(fetchAllReportsOfUserSucceeded(reports));
   } catch (error) {
     yield put(fetchAllReportsOfUserFailed(error));
   }
@@ -71,8 +79,8 @@ export function* updateReport(action) {
 
 export function* deleteReport(action) {
   try {
-    const result = yield call(callDeleteReport, action.reportId);
-    yield put(deleteReportSucceeded(result));
+    yield call(callDeleteReport, action.reportId);
+    yield put(deleteReportSucceeded(action.reportId));
   } catch (error) {
     yield put(deleteReportFailed(error));
   }
@@ -81,12 +89,12 @@ export function* deleteReport(action) {
 /*===========================================
  WATCH ALL ACTIONS
  ===========================================*/
-export function* watchFetchReports() {
-  yield takeLatest(FETCH_REPORTS, fetchReports);
-}
-
 export function* watchFetchAllReportsOfUser() {
   yield takeLatest(FETCH_ALL_REPORTS_OF_USER, fetchAllReportsOfUser);
+}
+
+export function* watchFetchReports() {
+  yield takeLatest(FETCH_REPORTS, fetchReports);
 }
 
 export function* watchCreateReport() {
@@ -102,10 +110,10 @@ export function* watchDeleteReport() {
 
 export default function* reportPageSaga() {
   yield [
+    fork(watchFetchAllReportsOfUser),
     fork(watchFetchReports),
     fork(watchCreateReport),
     fork(watchUpdateReport),
     fork(watchDeleteReport),
-    fork(watchFetchAllReportsOfUser)
   ];
 }

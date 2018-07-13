@@ -10,7 +10,7 @@ class CreateReportContainer extends Component {
           <SideBar />
         </div>
         <div className="col-md-8">
-          <ReportForm />
+          <ReportForm {...this.props} />
         </div>
       </div>
     );

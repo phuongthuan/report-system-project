@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch, Redirect } from 'react-router-dom'
 import ProfileContainer from "./ProfileContainer";
 
 class ReportPage extends Component {
   render() {
     return (
       <Switch>
-        <Route exact path="/profile" component={ProfileContainer} />
+        <Route exact path="/profile/edit" component={ProfileContainer} />
       </Switch>
     );
   }

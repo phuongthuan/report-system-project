@@ -13,11 +13,11 @@ import {
 } from 'reactstrap'
 import styled from 'styled-components'
 import img from '../../assests/images/fancycrave-248220-unsplash.jpg';
-import { callLogin } from '../../requests';
-import * as actionsType from './actions'
-import { selectToken, selectUser, selectError } from "./selectors";
+import * as AuthActions from './actions'
+import { selectUser } from "./selectors";
+import { callLogin } from '../../requests'
 
-const LoginWrapper = styled.div`
+const AuthWrapper = styled.div`
   background-image: url(${img});
   background-repeat: no-repeat;
   background-size: cover;
@@ -29,12 +29,11 @@ const LoginWrapper = styled.div`
   justify-content: center;
 `;
 
-class LoginPage extends Component {
+class Auth extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      user: {},
       email: '',
       password: ''
     }
@@ -50,18 +49,26 @@ class LoginPage extends Component {
   onSubmitForm = (e) => {
     e.preventDefault();
     const { email, password } = this.state;
-    const { loginAction: dispatchLogin, history } = this.props;
+    const {
+      loginAction: dispatchLogin,
+      history
+    } = this.props;
     const payload = {
       email,
       password
     }
+    // callLogin(payload)
+    //   .then(response => {
+    //     localStorage.setItem('auth', JSON.stringify(response));
+    //     dispatchSetCurrentUser(response.user);
+    //   });
     dispatchLogin(payload);
-    history.push('/profile');
+    history.push('/report');
   }
 
   render() {
     return (
-      <LoginWrapper>
+      <AuthWrapper>
         <Form onSubmit={this.onSubmitForm}>
           <Card>
             <CardBody>
@@ -102,31 +109,30 @@ class LoginPage extends Component {
             </CardBody>
           </Card>
         </Form>
-      </LoginWrapper>
+      </AuthWrapper>
     );
   }
 }
 
-LoginPage.propTypes = {
+Auth.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func
   }),
   email: PropTypes.string,
   password: PropTypes.string,
-  loginAction: PropTypes.func
+  loginAction: PropTypes.func,
+  setCurrentUser: PropTypes.func
 }
 
 const mapStateToProps = (state) => ({
-  token: selectToken(state),
-  user: selectUser(state),
-  error: selectError(state)
+  user: selectUser(state)
 });
 
 const mapDispatchToProps = dispatch => ({
-  loginAction: (payload) => dispatch(actionsType.login(payload))
+  loginAction: (payload) => dispatch(AuthActions.login(payload))
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(LoginPage);
+)(Auth);

@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router-dom'
 import ReportContainer from "./ReportContainer";
 import ReportForm from "../../components/ReportForm";
 import CreateReportContainer from "./CreateReportContainer";
+import UpdateReportContainer from "./UpdateReportContainer";
 
 class ReportPage extends Component {
   render() {
@@ -12,7 +13,7 @@ class ReportPage extends Component {
         <Switch>
           <Route exact path="/report" component={ReportContainer} />
           <Route path="/report/create" component={CreateReportContainer} />
-          <Route path="/report/update/:id" component={ReportForm} />
+          <Route path="/report/update/:id" component={UpdateReportContainer} />
         </Switch>
       </div>
     );

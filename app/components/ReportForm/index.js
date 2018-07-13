@@ -110,7 +110,6 @@ class ReportForm extends Component {
       );
     }
 
-
     return (
       <Form onSubmit={this.onSubmitForm}>
         <Card>
