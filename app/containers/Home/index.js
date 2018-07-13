@@ -31,9 +31,6 @@ export class Home extends PureComponent {
     onChangeUsername: PropTypes.func,
   }
 
-  componentDidMount() {
-    this.props.dispatch(userActions.getAll());
-  }
 
   constructor(props) {
     super(props);
