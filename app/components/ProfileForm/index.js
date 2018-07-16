@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import {
@@ -13,7 +13,6 @@ import {
   CardFooter,
   InputGroupAddon
 } from 'reactstrap';
-import { selectUser } from "../../containers/Auth/selectors";
 
 class ProfileForm extends Component {
 
@@ -29,8 +28,9 @@ class ProfileForm extends Component {
   }
 
   componentDidMount() {
-    const { user } = this.props;
-    this.setState({user});
+    const { profile } = this.props;
+    this.setState({user: profile});
+    console.log('ProfileForm DidMount', profile);
   }
 
   onHandleFormChange = (e) => {
@@ -46,12 +46,16 @@ class ProfileForm extends Component {
   onSubmitForm = (e) => {
     e.preventDefault();
     const { user } = this.state;
+    const { updateProfile, history } = this.props;
+    updateProfile(user);
+    console.log('Update Profile Submitted!', user);
+    history.push('/report')
   };
 
   render() {
     const { user } = this.state;
     return (
-      <Form>
+      <Form onSubmit={this.onSubmitForm}>
         <Card>
           <CardBody>
             <FormGroup>
@@ -139,7 +143,7 @@ class ProfileForm extends Component {
           </CardBody>
           <CardFooter>
             <Button
-              color="primary"
+              color="secondary"
               type="submit"
             >
               Save
@@ -155,15 +159,4 @@ ProfileForm.propTypes = {
   user: PropTypes.object
 }
 
-const mapStateToProps = state => ({
-  user: selectUser(state)
-});
-
-const mapDispatchToProps = dispatch => ({
-
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ProfileForm);
+export default withRouter(ProfileForm);

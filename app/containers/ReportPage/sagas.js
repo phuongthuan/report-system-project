@@ -43,7 +43,7 @@ export function* fetchReports() {
 export function* fetchAllReportsOfUser(action) {
   try {
     const reports = yield call(callFetchAllReportsOfUser, action.id);
-    yield delay(1000);
+    yield delay(700);
     yield put(fetchAllReportsOfUserSucceeded(reports));
   } catch (error) {
     yield put(fetchAllReportsOfUserFailed(error));
@@ -70,8 +70,8 @@ export function* createReport(action) {
 
 export function* updateReport(action) {
   try {
-    const reportUpdatedReceived = yield call(callUpdateReport, action.reportUpdated);
-    yield put(updateReportSucceeded(reportUpdatedReceived));
+    const newReport = yield call(callUpdateReport, action.reportUpdated);
+    yield put(updateReportSucceeded(newReport));
   } catch (error) {
     yield put(updateReportFailed(error));
   }

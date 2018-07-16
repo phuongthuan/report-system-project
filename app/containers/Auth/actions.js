@@ -3,6 +3,10 @@ import {
   AUTH_LOGIN_SUCCEEDED,
   AUTH_LOGIN_FAILED, AUTH_LOGOUT_REQUEST, AUTH_LOGOUT_SUCCEEDED, AUTH_LOGOUT_FAILED
 } from './constants'
+import {
+  UPDATE_USER_PROFILE, UPDATE_USER_PROFILE_FAILED,
+  UPDATE_USER_PROFILE_SUCCEEDED
+} from "../ProfilePage/constants";
 
 export function login(payload) {
   return {
@@ -44,3 +48,21 @@ export function logoutFailed(error) {
     error
   }
 }
+
+/*===========================================
+ UPDATE PROFILE
+ ===========================================*/
+export const updateProfile = (profileUpdated) => ({
+  type: UPDATE_USER_PROFILE,
+  profileUpdated
+});
+
+export const updateProfileSucceeded = (profileUpdatedReceived) => ({
+  type: UPDATE_USER_PROFILE_SUCCEEDED,
+  profileUpdatedReceived
+});
+
+export const updateProfileFailed = (error) => ({
+  type: UPDATE_USER_PROFILE_FAILED,
+  error
+});

@@ -15,9 +15,13 @@ import {
 import imageProfile from '../../assests/images/Gabe_newell.png';
 import { selectUser } from "../../containers/Auth/selectors";
 import * as AuthPageActions from '../../containers/Auth/actions'
-
+import { selectProfile } from "../../containers/ProfilePage/selectors";
 
 class SideBar extends Component {
+
+  componentDidMount() {
+    console.log('SideBar DidMount', this.props.user);
+  }
 
   logout = (e) => {
     const {history} = this.props;
@@ -29,6 +33,7 @@ class SideBar extends Component {
   render() {
     const {user} = this.props;
     const avatar = user ? user.avatar : imageProfile;
+    console.log('SideBar Render', user);
     return (
       <ListGroup className="shadow-sm">
         <ListGroupItem className="justify-content-between text-center">
