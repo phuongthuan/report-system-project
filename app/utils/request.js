@@ -1,7 +1,12 @@
 import axios from 'axios';
 
 (function() {
-  const  token = localStorage.getItem('token');
+  const auth = JSON.parse(localStorage.getItem('auth'));
+
+  const token = auth
+    ? auth.access_token
+    : null;
+
   if (token) {
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
   } else {

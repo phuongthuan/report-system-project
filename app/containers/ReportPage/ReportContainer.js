@@ -7,7 +7,7 @@ import SideBar from '../../components/SideBar'
 
 import * as ReportPageActions from './actions';
 import { selectError, selectLoading, selectReports } from "./selectors";
-import { selectUser } from "../Auth/selectors";
+import { selectIsAuthenticated, selectUser } from "../Auth/selectors";
 
 class ReportContainer extends PureComponent {
 
@@ -48,7 +48,8 @@ ReportContainer.propTypes = {
     PropTypes.object,
     PropTypes.bool,
   ]),
-  reports: PropTypes.arrayOf(PropTypes.object)
+  reports: PropTypes.arrayOf(PropTypes.object),
+  user: PropTypes.object,
 };
 
 export const mapStateToProps = state => ({
@@ -56,6 +57,7 @@ export const mapStateToProps = state => ({
   loading: selectLoading(state),
   error: selectError(state),
   user: selectUser(state),
+  isLogin: selectIsAuthenticated(state)
 });
 
 export const mapDispatchToProps = dispatch => ({
