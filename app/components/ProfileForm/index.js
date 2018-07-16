@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import {
@@ -13,7 +13,6 @@ import {
   CardFooter,
   InputGroupAddon
 } from 'reactstrap';
-import { selectUser } from "../../containers/Auth/selectors";
 
 class ProfileForm extends Component {
 
@@ -30,7 +29,8 @@ class ProfileForm extends Component {
 
   componentDidMount() {
     const { profile } = this.props;
-    this.setState({user: profile})
+    this.setState({user: profile});
+    console.log('ProfileForm DidMount', profile);
   }
 
   onHandleFormChange = (e) => {
@@ -46,9 +46,10 @@ class ProfileForm extends Component {
   onSubmitForm = (e) => {
     e.preventDefault();
     const { user } = this.state;
-    const { updateProfile } = this.props;
+    const { updateProfile, history } = this.props;
     updateProfile(user);
     console.log('Update Profile Submitted!', user);
+    history.push('/report')
   };
 
   render() {
@@ -158,4 +159,4 @@ ProfileForm.propTypes = {
   user: PropTypes.object
 }
 
-export default ProfileForm;
+export default withRouter(ProfileForm);

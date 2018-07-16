@@ -39,8 +39,7 @@ class Auth extends Component {
 
     this.state = {
       email: '',
-      password: '',
-      redirectToReferrer: false
+      password: ''
     }
   }
 
@@ -60,14 +59,11 @@ class Auth extends Component {
     } = this.props;
 
     dispatchLogin({ email, password });
-    this.setState({redirectToReferrer:true});
     history.push('/profile/edit');
   }
 
   render() {
-    const { redirectToReferrer } = this.state;
-
-    console.log('Auth', this.props.location);
+    const { email, password } = this.state;
     return (
       <AuthWrapper>
         <Form onSubmit={this.onSubmitForm}>
@@ -81,7 +77,7 @@ class Auth extends Component {
                   autoComplete="off"
                   name="email"
                   bsSize="sm"
-                  value={this.state.email}
+                  value={email}
                   onChange={this.onHandleInputChange}
                   required
                 />
@@ -93,7 +89,7 @@ class Auth extends Component {
                   autoComplete="off"
                   name="password"
                   bsSize="sm"
-                  value={this.state.password}
+                  value={password}
                   onChange={this.onHandleInputChange}
                   required
                 />

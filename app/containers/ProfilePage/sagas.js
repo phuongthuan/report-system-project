@@ -1,4 +1,6 @@
 import { call, put, takeLatest, fork } from 'redux-saga/effects'
+import { delay } from 'redux-saga'
+
 import {
   callGetProfile,
   callUpdateProfile
@@ -14,6 +16,7 @@ import { GET_USER_PROFILE, UPDATE_USER_PROFILE } from "./constants";
 export function* getProfile(action) {
   try {
     const userProfile = yield call(callGetProfile, action.id);
+    yield delay(700);
     yield put(getUserProfileSucceeded(userProfile));
   } catch (error) {
     yield put(getUserProfileFailed(error.message));

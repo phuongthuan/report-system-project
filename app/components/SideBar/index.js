@@ -19,6 +19,10 @@ import { selectProfile } from "../../containers/ProfilePage/selectors";
 
 class SideBar extends Component {
 
+  componentDidMount() {
+    console.log('SideBar DidMount', this.props.user);
+  }
+
   logout = (e) => {
     const {history} = this.props;
     e.preventDefault();
@@ -29,6 +33,7 @@ class SideBar extends Component {
   render() {
     const {user} = this.props;
     const avatar = user ? user.avatar : imageProfile;
+    console.log('SideBar Render', user);
     return (
       <ListGroup className="shadow-sm">
         <ListGroupItem className="justify-content-between text-center">
@@ -149,7 +154,7 @@ SideBar.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  user: selectProfile(state)
+  user: selectUser(state)
 });
 
 const mapDispatchToProps = dispatch => ({

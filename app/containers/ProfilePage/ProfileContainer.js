@@ -1,29 +1,41 @@
 import React, { Component } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import PropTypes from 'prop-types';
+import isEmpty from 'lodash/isEmpty';
 import { connect } from "react-redux";
 import SideBar from '../../components/SideBar'
 import ProfileForm from "../../components/ProfileForm";
 import * as ProfilePageActionsType from './actions'
-import { selectProfile } from "./selectors";
+import { selectUser } from "../Auth/selectors";
+import { selectLoading, selectProfile } from "./selectors";
+
 
 class ProfileContainer extends Component {
 
+  componentDidMount() {
+    const {getProfile: getUserProfile, user} = this.props;
+    getUserProfile(user.id);
+  }
+
   render() {
-    const { profile, updateProfile } = this.props;
-    console.log('Profile Container', profile);
+    const {updateProfile, profile, loading} = this.props;
     return (
       <div className="container">
         <div className="row mt-5 mb-5">
           <div className="col-md-4">
-            <SideBar />
+            <SideBar/>
           </div>
           <div className="col-md-8">
-            <div className="shadow-sm">
-              <ProfileForm
-                profile={profile}
-                updateProfile={updateProfile}
-              />
-            </div>
+            {loading && isEmpty(profile) ? (
+              <FontAwesomeIcon icon="spinner" size="lg" spin/>
+            ) : (
+              <div className="shadow-sm">
+                <ProfileForm
+                  profile={profile}
+                  updateProfile={updateProfile}
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -32,13 +44,16 @@ class ProfileContainer extends Component {
 }
 
 ProfileContainer.propTypes = {
+  user: PropTypes.object,
   profile: PropTypes.object,
   getProfile: PropTypes.func,
   updateProfile: PropTypes.func,
 }
 
 export const mapStateToProps = state => ({
-  profile: selectProfile(state)
+  profile: selectProfile(state),
+  user: selectUser(state),
+  loading: selectLoading(state)
 });
 
 export const mapDispatchToProps = dispatch => ({

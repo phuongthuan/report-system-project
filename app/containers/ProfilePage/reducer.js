@@ -1,26 +1,33 @@
 import {
+  GET_USER_PROFILE,
   GET_USER_PROFILE_FAILED,
   GET_USER_PROFILE_SUCCEEDED,
+  UPDATE_USER_PROFILE,
   UPDATE_USER_PROFILE_FAILED,
   UPDATE_USER_PROFILE_SUCCEEDED
 } from "./constants";
 
-const auth = JSON.parse(localStorage.getItem('auth'));
-
-const profile = auth ? auth.user : undefined;
-
 const initState = {
-  profile,
-  error: false
+  profile: {},
+  error: false,
+  loading: false
 }
 
 export function profileReducer(state = initState, action) {
   switch (action.type) {
 
+    case GET_USER_PROFILE:
+    case UPDATE_USER_PROFILE:
+      return {
+        ...state,
+        loading: true
+      }
+
     case GET_USER_PROFILE_SUCCEEDED:
       return {
         ...state,
         profile: action.profileReceived,
+        loading: false,
         error: false
       }
 
@@ -28,7 +35,8 @@ export function profileReducer(state = initState, action) {
       return {
         ...state,
         profile: action.profileUpdated,
-        error: false
+        error: false,
+        loading: false
       }
 
     case GET_USER_PROFILE_FAILED:
@@ -36,7 +44,8 @@ export function profileReducer(state = initState, action) {
       return {
         ...state,
         profile: {},
-        error: true
+        error: true,
+        loading: false
       }
 
     default:
