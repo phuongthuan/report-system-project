@@ -33,9 +33,14 @@ class Auth extends Component {
 
   constructor(props) {
     super(props);
+
+    // Reset login status:
+    this.props.logoutAction();
+
     this.state = {
       email: '',
-      password: ''
+      password: '',
+      redirectToReferrer: false
     }
   }
 
@@ -49,22 +54,20 @@ class Auth extends Component {
   onSubmitForm = (e) => {
     e.preventDefault();
     const { email, password } = this.state;
-
     const {
       loginAction: dispatchLogin,
       history
     } = this.props;
 
-    const payload = {
-      email,
-      password
-    }
-
-    dispatchLogin(payload);
-    history.push('/report');
+    dispatchLogin({ email, password });
+    this.setState({redirectToReferrer:true});
+    history.push('/profile/edit');
   }
 
   render() {
+    const { redirectToReferrer } = this.state;
+
+    console.log('Auth', this.props.location);
     return (
       <AuthWrapper>
         <Form onSubmit={this.onSubmitForm}>
@@ -118,7 +121,8 @@ Auth.propTypes = {
   }),
   email: PropTypes.string,
   password: PropTypes.string,
-  loginAction: PropTypes.func
+  loginAction: PropTypes.func,
+  logoutAction: PropTypes.func,
 }
 
 const mapStateToProps = (state) => ({
@@ -126,7 +130,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  loginAction: (payload) => dispatch(AuthActions.login(payload))
+  loginAction: (payload) => dispatch(AuthActions.login(payload)),
+  logoutAction: () => dispatch(AuthActions.logout()),
 });
 
 export default connect(

@@ -23,3 +23,5 @@ export const callDeleteReport = id => request('delete', `${DELETE_REPORT}/${id}`
 
 export const callSearchUsername = username => request('get', `${SEARCH_USERNAME}?q=${username}`);
 export const callLogin = options => request('post', LOGIN, options);
+export const callLogout = () => localStorage.removeItem('auth');
+

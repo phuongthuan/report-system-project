@@ -1,17 +1,17 @@
-import { call, put, takeLatest } from 'redux-saga/effects'
+import { take, call, put, takeLatest, fork } from 'redux-saga/effects'
 
 import {
-  AUTH_REQUEST
+  AUTH_LOGIN_REQUEST, AUTH_LOGOUT_REQUEST
 } from './constants'
 
 import {
   loginSucceeded,
-  loginFailed
+  loginFailed, logoutSucceeded, logoutFailed
 } from './actions'
 
-import { callLogin } from '../../requests'
+import { callLogin, callLogout } from '../../requests'
 
-export function* login(action) {
+export function* loginFlow(action) {
 
   const options = {
     email: action.payload.email,
@@ -20,22 +20,33 @@ export function* login(action) {
 
   try {
     const responseUser = yield call(callLogin, options);
-    const { access_token, user } = responseUser;
-    localStorage.setItem('token', access_token);
-    localStorage.setItem('user', JSON.stringify(user));
+    const { user } = responseUser;
+    localStorage.setItem('auth', JSON.stringify(responseUser));
     yield put(loginSucceeded(user));
   } catch (error) {
-    yield put(loginFailed(error));
+    yield put(loginFailed(error.message));
     localStorage.removeItem('token');
   }
 }
 
+export function* logoutFlow() {
+  try {
+    yield callLogout(callLogout);
+    yield put(logoutSucceeded({}));
+  } catch (error) {
+    yield put(logoutFailed(error.message));
+  }
+}
+
 export function* watchLogin() {
-  yield takeLatest(AUTH_REQUEST, login);
+  yield takeLatest(AUTH_LOGIN_REQUEST, loginFlow);
+}
+
+export function* watchLogout() {
+  yield takeLatest(AUTH_LOGOUT_REQUEST, logoutFlow);
 }
 
 export default function* authPageSaga() {
-  yield call(watchLogin);
+  yield fork(watchLogin);
+  yield fork(watchLogout);
 }
-
-

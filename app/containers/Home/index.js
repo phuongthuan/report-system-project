@@ -20,17 +20,13 @@ const HomeWrapper = styled.div`
   justify-content: center;
 `;
 
-
 export class Home extends PureComponent {
 
   static propTypes = {
     history: PropTypes.shape({
       push: PropTypes.func,
-    }),
-    username: PropTypes.string,
-    onChangeUsername: PropTypes.func,
+    })
   }
-
 
   constructor(props) {
     super(props);
@@ -39,38 +35,18 @@ export class Home extends PureComponent {
     }
   }
 
-  goToLearningPage = () => {
-    const { history } = this.props;
-    const { isLogin } = this.state;
-    if (isLogin) history.push('/learning');
-    history.push('/login');
-  }
-
   goToReportPage = () => {
     const { history } = this.props;
     const { isLogin } = this.state;
-    if (isLogin) history.push('/report');
+    if (isLogin) history.push('/profile/edit');
     history.push('/login');
   }
 
-
   render() {
-    const { username, onChangeUsername } = this.props
     return (
-
       <HomeWrapper>
         <div className="container">
           <div className="d-flex flex-column align-items-center">
-            {/*<Input*/}
-              {/*value={username}*/}
-              {/*onChange={onChangeUsername}*/}
-            <Button
-              className="mt-3"
-              onClick={this.goToLearningPage}
-            >
-              LEARNING
-            </Button>
-
             <Button
               className="mt-3"
               onClick={this.goToReportPage}
@@ -84,15 +60,4 @@ export class Home extends PureComponent {
   }
 }
 
-export const mapStateToProps = state => ({
-  username: selectUsername(state),
-});
-
-export const mapDispatchToProps = dispatch => ({
-  onChangeUsername: value => dispatch(setUsername(value)),
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Home)
+export default Home;

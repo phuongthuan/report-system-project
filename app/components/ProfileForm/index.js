@@ -21,6 +21,7 @@ class ProfileForm extends Component {
     user: {
       firstName: '',
       lastName: '',
+      avatar: '',
       address: '',
       phone: '',
       division: ''
@@ -45,7 +46,6 @@ class ProfileForm extends Component {
   onSubmitForm = (e) => {
     e.preventDefault();
     const { user } = this.state;
-    console.log('Form submitted!', user);
   };
 
   render() {
@@ -64,7 +64,7 @@ class ProfileForm extends Component {
                   value={user.firstName}
                   onChange={this.onHandleFormChange}
                 />
-                <InputGroupAddon addonType="prepend">@First name</InputGroupAddon>
+                <InputGroupAddon addonType="prepend">First name</InputGroupAddon>
               </InputGroup>
             </FormGroup>
             <FormGroup>
@@ -77,7 +77,21 @@ class ProfileForm extends Component {
                   value={user.lastName}
                   onChange={this.onHandleFormChange}
                 />
-                <InputGroupAddon addonType="prepend">@Last name</InputGroupAddon>
+                <InputGroupAddon addonType="prepend">Last name</InputGroupAddon>
+              </InputGroup>
+            </FormGroup>
+
+            <FormGroup>
+              <InputGroup>
+                <Input
+                  autoComplete="off"
+                  type="text"
+                  name="lastName"
+                  bsSize="sm"
+                  value={user.avatar}
+                  onChange={this.onHandleFormChange}
+                />
+                <InputGroupAddon addonType="prepend">Avatar</InputGroupAddon>
               </InputGroup>
             </FormGroup>
 
@@ -91,7 +105,7 @@ class ProfileForm extends Component {
                   value={user.address}
                   onChange={this.onHandleFormChange}
                 />
-                <InputGroupAddon addonType="prepend">@Address</InputGroupAddon>
+                <InputGroupAddon addonType="prepend">Address</InputGroupAddon>
               </InputGroup>
             </FormGroup>
 
@@ -105,7 +119,7 @@ class ProfileForm extends Component {
                   value={user.phone}
                   onChange={this.onHandleFormChange}
                 />
-                <InputGroupAddon addonType="prepend">@Phone</InputGroupAddon>
+                <InputGroupAddon addonType="prepend">Phone</InputGroupAddon>
               </InputGroup>
             </FormGroup>
 
@@ -119,7 +133,7 @@ class ProfileForm extends Component {
                   value={user.division}
                   onChange={this.onHandleFormChange}
                 />
-                <InputGroupAddon addonType="prepend">@Division</InputGroupAddon>
+                <InputGroupAddon addonType="prepend">Division</InputGroupAddon>
               </InputGroup>
             </FormGroup>
           </CardBody>

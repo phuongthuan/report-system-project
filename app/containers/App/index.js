@@ -2,19 +2,24 @@ import React, { Component } from 'react'
 import { Switch, Route } from 'react-router-dom'
 import Learning from 'containers/Learning'
 import Home from 'containers/Home'
-import ReportPage from 'containers/ReportPage';
 import Auth from "containers/Auth";
+import ReportPage from 'containers/ReportPage';
 import ProfileContainer from "../ProfilePage/ProfileContainer";
+import NoMatch from "../../utils/NoMatch";
+import PrivateRoute from '../../utils/PrivateRoute'
+import StatisticPage from "../StatisticPage";
 
 export default class App extends Component {
   render() {
     return (
       <Switch>
         <Route exact path="/" component={Home}/>
-        <Route path="/learning" component={Learning}/>
-        <Route path="/report" component={ReportPage}/>
         <Route path="/login" component={Auth}/>
-        <Route path="/profile" component={ProfileContainer}/>
+        <PrivateRoute path="/learning" component={Learning}/>
+        <PrivateRoute path="/report" component={ReportPage} />
+        <PrivateRoute path="/statistic" component={StatisticPage} />
+        <PrivateRoute path="/profile" component={ProfileContainer}/>
+        <Route component={NoMatch}/>
       </Switch>
     )
   }
