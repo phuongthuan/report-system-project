@@ -15,7 +15,7 @@ import {
 import imageProfile from '../../assests/images/Gabe_newell.png';
 import { selectUser } from "../../containers/Auth/selectors";
 import * as AuthPageActions from '../../containers/Auth/actions'
-
+import { selectProfile } from "../../containers/ProfilePage/selectors";
 
 class SideBar extends Component {
 
@@ -149,7 +149,7 @@ SideBar.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  user: selectUser(state)
+  user: selectProfile(state)
 });
 
 const mapDispatchToProps = dispatch => ({

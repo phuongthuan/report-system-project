@@ -70,8 +70,8 @@ export function* createReport(action) {
 
 export function* updateReport(action) {
   try {
-    const reportUpdatedReceived = yield call(callUpdateReport, action.reportUpdated);
-    yield put(updateReportSucceeded(reportUpdatedReceived));
+    const newReport = yield call(callUpdateReport, action.reportUpdated);
+    yield put(updateReportSucceeded(newReport));
   } catch (error) {
     yield put(updateReportFailed(error));
   }

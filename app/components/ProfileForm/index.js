@@ -29,8 +29,8 @@ class ProfileForm extends Component {
   }
 
   componentDidMount() {
-    const { user } = this.props;
-    this.setState({user});
+    const { profile } = this.props;
+    this.setState({user: profile})
   }
 
   onHandleFormChange = (e) => {
@@ -46,12 +46,15 @@ class ProfileForm extends Component {
   onSubmitForm = (e) => {
     e.preventDefault();
     const { user } = this.state;
+    const { updateProfile } = this.props;
+    updateProfile(user);
+    console.log('Update Profile Submitted!', user);
   };
 
   render() {
     const { user } = this.state;
     return (
-      <Form>
+      <Form onSubmit={this.onSubmitForm}>
         <Card>
           <CardBody>
             <FormGroup>
@@ -139,7 +142,7 @@ class ProfileForm extends Component {
           </CardBody>
           <CardFooter>
             <Button
-              color="primary"
+              color="secondary"
               type="submit"
             >
               Save
@@ -155,15 +158,4 @@ ProfileForm.propTypes = {
   user: PropTypes.object
 }
 
-const mapStateToProps = state => ({
-  user: selectUser(state)
-});
-
-const mapDispatchToProps = dispatch => ({
-
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ProfileForm);
+export default ProfileForm;
