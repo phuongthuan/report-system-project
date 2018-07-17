@@ -6,9 +6,15 @@ import { selectFlashMessage } from "../../containers/FlashMessage/selectors";
 import FlashMessage from "./FlashMessage";
 
 class FlashMessageList extends Component {
+
+  static propTypes = {
+    messages: PropTypes.array.isRequired,
+    deleteFlashMessage: PropTypes.func.isRequired
+  };
+
   render() {
-    const { deleteFlashMessage } = this.props;
-    const messages = this.props.messages.map(message => (
+    const { deleteFlashMessage, messages } = this.props;
+    const flashMessages = messages.map(message => (
       <FlashMessage
         key={message.id}
         message={message}
@@ -16,15 +22,12 @@ class FlashMessageList extends Component {
       />
     ));
     return (
-      {messages}
+      <div>
+        {flashMessages}
+      </div>
     );
   }
 }
-
-FlashMessageList.propTypes = {
-  // flashMessage: PropTypes.array.isRequired,
-  deleteFlashMessage: PropTypes.func.isRequired
-};
 
 const mapStateToProps = state => ({
   messages: selectFlashMessage(state)

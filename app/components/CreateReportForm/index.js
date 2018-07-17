@@ -26,24 +26,19 @@ const issues_type = [
   {value: 5, label: 'Security Threats'}
 ]
 
-
-
 class CreateReportForm extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      numberSelectBox: 0,
-      report : {
-        date: new Date().toString(),
-        userId: this.props.user.id,
-        title: '',
-        achievement: '',
-        plan: '',
-        issues: [],
-        description: '',
-        comment: ''
-      }
+  state = {
+    numberSelectBox: 0,
+    report : {
+      date: new Date().toString(),
+      userId: this.props.user.id,
+      title: '',
+      achievement: '',
+      plan: '',
+      issues: [],
+      description: '',
+      comment: ''
     }
   }
 
@@ -64,7 +59,7 @@ class CreateReportForm extends Component {
     createReport(report);
     addFlashMessage({
       type: 'success',
-      text: ''
+      text: 'Create Successful!'
     })
     history.push('/report');
   };

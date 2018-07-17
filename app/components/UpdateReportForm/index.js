@@ -28,12 +28,22 @@ class UpdateReportForm extends Component {
 
   componentDidMount() {
     const {report} = this.props;
-    const numberSelectBox = report.issues ? report.issues.length : undefined;
+    const numberSelectBox = report.issues ? report.issues.length : 0;
     this.setState({
       report,
       numberSelectBox
     });
   }
+
+  onSubmitForm = (e) => {
+    e.preventDefault();
+    const {report} = this.state;
+    const {updateReport, history} = this.props;
+    updateReport(report);
+    console.log('Update Submitted!', report);
+    history.push('/report');
+  };
+
 
   onHandleFormChange = (e) => {
     const {report} = this.state;
@@ -44,15 +54,6 @@ class UpdateReportForm extends Component {
       }
     });
   }
-
-  onSubmitForm = (e) => {
-    e.preventDefault();
-    const {report} = this.state;
-    const {updateReport, history} = this.props;
-    updateReport(report);
-    history.push('/report');
-  };
-
   onAddSelectBox = () => {
     const {numberSelectBox} = this.state;
     this.setState({numberSelectBox: numberSelectBox + 1});
@@ -75,7 +76,7 @@ class UpdateReportForm extends Component {
   }
 
   render() {
-    const {report, numberSelectBox} = this.state;
+    const {report} = this.state;
     const issues_type = this.convertToSelectObject();
     const children = [];
 
@@ -96,6 +97,7 @@ class UpdateReportForm extends Component {
         </FormGroup>
       );
     }
+    console.log('Update Report Form', report);
 
     return (
       <Form onSubmit={this.onSubmitForm}>

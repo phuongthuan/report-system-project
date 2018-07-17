@@ -64,8 +64,8 @@ function reportReducer(state = initState, action) {
       return {
         ...state,
         reports: state.reports.map(report =>
-          report.id === action.reportUpdated.id
-            ? action.reportUpdated
+          report.id === action.reportUpdatedReceived.id
+            ? action.reportUpdatedReceived
             : report
         ),
         loading: false
