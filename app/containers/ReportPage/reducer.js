@@ -7,12 +7,14 @@ import {
   UPDATE_REPORT_SUCCEEDED,
   UPDATE_REPORT_FAILED,
   DELETE_REPORT_SUCCEEDED,
-  DELETE_REPORT_FAILED, FETCH_ALL_REPORTS_OF_USER, FETCH_ALL_REPORTS_OF_USER_SUCCEEDED, FETCH_ALL_REPORTS_OF_USER_FAILED
+  DELETE_REPORT_FAILED, FETCH_ALL_REPORTS_OF_USER, FETCH_ALL_REPORTS_OF_USER_SUCCEEDED,
+  FETCH_ALL_REPORTS_OF_USER_FAILED, FETCH_A_REPORT, FETCH_A_REPORT_SUCCEEDED, FETCH_A_REPORT_FAILED
 
 } from './constants';
 
 const initState = {
   reports: [],
+  report: {},
   loading: false,
   error: false
 }
@@ -21,6 +23,7 @@ function reportReducer(state = initState, action) {
   switch (action.type) {
     case CREATE_REPORT:
     case FETCH_ALL_REPORTS_OF_USER:
+    case FETCH_A_REPORT:
       return {
         ...state,
         loading: true
@@ -38,6 +41,14 @@ function reportReducer(state = initState, action) {
         ...state,
         reports: action.reportsReceived,
         loading: false,
+      }
+
+    case FETCH_A_REPORT_SUCCEEDED:
+      console.log(action.reportReceived);
+      return {
+        ...state,
+        report: action.reportReceived,
+        loading: false
       }
 
     case CREATE_REPORT_SUCCEEDED:
@@ -69,15 +80,17 @@ function reportReducer(state = initState, action) {
       }
 
     case FETCH_REPORTS_FAILED:
+    case FETCH_A_REPORT_FAILED:
+    case FETCH_ALL_REPORTS_OF_USER_FAILED:
     case CREATE_REPORT_FAILED:
     case UPDATE_REPORT_FAILED:
     case DELETE_REPORT_FAILED:
-    case FETCH_ALL_REPORTS_OF_USER_FAILED:
       return {
         ...state,
         error: true,
         loading: false,
-        reports: []
+        reports: [],
+        report: {}
       }
     default:
       return state;

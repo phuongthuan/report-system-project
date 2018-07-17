@@ -53,6 +53,7 @@ export function* fetchAllReportsOfUser(action) {
 export function* fetchAReport(action) {
   try {
     const report = yield call(callFetchAReport, action.id);
+    yield delay(700);
     yield put(fetchAReportSucceeded(report));
   } catch (error) {
     yield put(fetchAReportFailed(error));
@@ -97,6 +98,10 @@ export function* watchFetchReports() {
   yield takeLatest(FETCH_REPORTS, fetchReports);
 }
 
+export function* watchFetchAReport() {
+  yield takeLatest(FETCH_A_REPORT, fetchAReport);
+}
+
 export function* watchCreateReport() {
   yield takeLatest(CREATE_REPORT, createReport);
 }
@@ -112,6 +117,7 @@ export default function* reportPageSaga() {
   yield [
     fork(watchFetchAllReportsOfUser),
     fork(watchFetchReports),
+    fork(watchFetchAReport),
     fork(watchCreateReport),
     fork(watchUpdateReport),
     fork(watchDeleteReport),

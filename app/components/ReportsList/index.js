@@ -8,8 +8,8 @@ const ReportsList = (props) => {
       {reportsList.map(report =>
         (
           <Report
-            deleteAction={deleteAction}
-            updateAction={updateAction}
+            deleteReport={deleteAction}
+            updateReport={updateAction}
             key={report.id}
             report={report}
           />

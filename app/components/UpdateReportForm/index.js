@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types';
+import uuidv1 from 'uuid/v1'
 import IssueSelect from 'components/IssueSelect';
-import { connect } from 'react-redux';
 import Select from 'react-select';
 import {
   Form,
@@ -17,33 +17,25 @@ import {
   CardFooter,
   ButtonGroup
 } from 'reactstrap';
-import * as actionsType from '../../containers/ReportPage/actions';
 
-const issues_type = [
-  {value: 1, label: 'Hard for Debugging'},
-  {value: 2, label: 'Keeping up with Technology'},
-  {value: 3, label: 'Communication with others'},
-  {value: 4, label: 'Time Estimation'},
-  {value: 5, label: 'Security Threats'}
-]
-
-class ReportForm extends Component {
+class UpdateReportForm extends Component {
 
   state = {
-    numberSelectBox: 0,
-    report : {
-      userId: 1,
-      title: '',
-      achievement: '',
-      plan: '',
-      issues: [],
-      description: '',
-      comment: ''
-    }
+    report: {},
+    numberSelectBox: 0
+  }
+
+  componentDidMount() {
+    const {report} = this.props;
+    const numberSelectBox = report.issues ? report.issues.length : undefined;
+    this.setState({
+      report,
+      numberSelectBox
+    });
   }
 
   onHandleFormChange = (e) => {
-    const { report } = this.state;
+    const {report} = this.state;
     this.setState({
       report: {
         ...report,
@@ -54,46 +46,39 @@ class ReportForm extends Component {
 
   onSubmitForm = (e) => {
     e.preventDefault();
-    const { report } = this.state;
-    const { createReport: dispatchCreateReport, history } = this.props;
-    dispatchCreateReport(report);
+    const {report} = this.state;
+    const {updateReport, history} = this.props;
+    console.log('Update Form Submitted!', report);
     history.push('/report');
   };
 
-  onSelectedIssueHandleChange = (selectedValue) => {
-    if (selectedValue) {
-      let issue = selectedValue.label.toString().toLowerCase();
-      const { report } = this.state;
-      this.setState({
-        report: {
-          ...report,
-          issues: [
-            ...report.issues,
-            issue
-          ]}
-      });
-    }
-  }
-
   onAddSelectBox = () => {
-    const { numberSelectBox } = this.state;
-    this.setState({ numberSelectBox: numberSelectBox + 1});
+    const {numberSelectBox} = this.state;
+    this.setState({numberSelectBox: numberSelectBox + 1});
+  }
+  onRemoveSelectBox = () => {
+    const {numberSelectBox} = this.state;
+    this.setState({numberSelectBox: numberSelectBox - 1});
   }
 
-  onRemoveSelectBox = () => {
-    const { numberSelectBox } = this.state;
-    this.setState({ numberSelectBox: numberSelectBox - 1});
+  convertToSelectObject = () => {
+    var issues_type = [];
+    const {report} = this.state;
+    if (report.issues && report.issues.constructor === Array) {
+      issues_type = report.issues.map(issue => ({
+        value: uuidv1(),
+        label: issue
+      }));
+    }
+    return issues_type;
   }
 
   render() {
-    const {
-      numberSelectBox,
-      report
-    } = this.state;
-
+    const {report, numberSelectBox} = this.state;
+    const issues_type = this.convertToSelectObject();
     const children = [];
 
-    for (var i = 0; i < numberSelectBox; i += 1) {
+    for (let i = 0; i < numberSelectBox; i++) {
       children.push(
         <FormGroup key={i} row>
           <Col sm={8}>
@@ -101,6 +86,7 @@ class ReportForm extends Component {
               className="issue-select"
               classNamePrefix="report-system"
               placeholder="Select Issue"
+              // value={issues_type[i]}
               options={issues_type}
               onChange={this.onSelectedIssueHandleChange}
             />
@@ -153,17 +139,16 @@ class ReportForm extends Component {
               />
             </FormGroup>
 
-            {/*Issue Select Box*/}
-            <IssueSelect addSelectBox={this.onAddSelectBox} >
+            <IssueSelect addSelectBox={this.onAddSelectBox}>
               {children}
             </IssueSelect>
-
 
             <CardTitle>Description</CardTitle>
             <FormGroup>
               <Input
                 type="textarea"
                 name="description"
+                value={report.description}
                 bsSize="sm"
                 placeholder="More info ..."
                 onChange={this.onHandleFormChange}
@@ -175,6 +160,7 @@ class ReportForm extends Component {
               <Input
                 type="textarea"
                 name="comment"
+                value={report.comment}
                 bsSize="sm"
                 placeholder="Leave a comment ..."
                 onChange={this.onHandleFormChange}
@@ -185,10 +171,10 @@ class ReportForm extends Component {
           <CardFooter>
             <ButtonGroup>
               <Button
-                color="success"
+                color="primary"
                 type="submit"
               >
-                Submit new report
+                Update report
               </Button>
               <Button size="sm">
                 <Link
@@ -209,30 +195,12 @@ class ReportForm extends Component {
   }
 }
 
-ReportForm.propTypes = {
+UpdateReportForm.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func,
   }),
-  report: PropTypes.shape({
-    userId: PropTypes.number,
-    title: PropTypes.string,
-    achievement: PropTypes.string,
-    plan: PropTypes.string,
-    issues: PropTypes.arrayOf(PropTypes.string),
-    description: PropTypes.string,
-    comment: PropTypes.string,
-  }),
-  createReport: PropTypes.func,
+  report: PropTypes.object,
   updateReport: PropTypes.func,
 };
 
-export const mapDispatchToProps = dispatch => ({
-  createReport: payload => dispatch(actionsType.createReport(payload)),
-});
-
-export default connect(
-  null,
-  mapDispatchToProps
-)(ReportForm);
-
-
+export default UpdateReportForm;
