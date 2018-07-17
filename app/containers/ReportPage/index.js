@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom'
 import ReportContainer from "./ReportContainer";
 import CreateReportContainer from "./CreateReportContainer";
 import UpdateReportContainer from "./UpdateReportContainer";
+import FlashMessageList from "../../components/FlashMessageList/index";
 
 class ReportPage extends Component {
   render() {
@@ -14,6 +15,7 @@ class ReportPage extends Component {
           <Route path="/report/create" component={CreateReportContainer}/>
           <Route path="/report/update/:id" component={UpdateReportContainer}/>
         </Switch>
+        {/*<FlashMessageList />*/}
       </div>
     );
   }
