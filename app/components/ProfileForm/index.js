@@ -30,7 +30,6 @@ class ProfileForm extends Component {
   componentDidMount() {
     const { profile } = this.props;
     this.setState({user: profile});
-    console.log('ProfileForm DidMount', profile);
   }
 
   onHandleFormChange = (e) => {
@@ -49,7 +48,6 @@ class ProfileForm extends Component {
     const { updateProfile, history } = this.props;
     updateProfile(user);
     console.log('Update Profile Submitted!', user);
-    history.push('/report')
   };
 
   render() {
@@ -156,7 +154,8 @@ class ProfileForm extends Component {
 }
 
 ProfileForm.propTypes = {
-  user: PropTypes.object
+  user: PropTypes.object,
+  profile: PropTypes.object,
 }
 
 export default withRouter(ProfileForm);

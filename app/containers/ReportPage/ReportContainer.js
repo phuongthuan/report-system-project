@@ -29,8 +29,8 @@ class ReportContainer extends PureComponent {
               <FontAwesomeIcon icon="spinner" size="lg" spin />
             ) : (
               <ReportsList
-                updateAction={updateReport}
-                deleteAction={deleteReport}
+                updateReport={updateReport}
+                deleteReport={deleteReport}
                 reportsList={reports}
               />
             )}
