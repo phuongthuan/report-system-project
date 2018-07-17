@@ -44,7 +44,6 @@ function reportReducer(state = initState, action) {
       }
 
     case FETCH_A_REPORT_SUCCEEDED:
-      console.log(action.reportReceived);
       return {
         ...state,
         report: action.reportReceived,

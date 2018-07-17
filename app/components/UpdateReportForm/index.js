@@ -48,7 +48,7 @@ class UpdateReportForm extends Component {
     e.preventDefault();
     const {report} = this.state;
     const {updateReport, history} = this.props;
-    console.log('Update Form Submitted!', report);
+    updateReport(report);
     history.push('/report');
   };
 
