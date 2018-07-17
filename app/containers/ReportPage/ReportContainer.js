@@ -1,9 +1,11 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import isEmpty from 'lodash/isEmpty'
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import ReportsList from '../../components/ReportsList'
 import SideBar from '../../components/SideBar'
+
 
 import * as ReportPageActions from './actions';
 import { selectError, selectLoading, selectReports } from "./selectors";
@@ -12,12 +14,13 @@ import { selectUser } from "../Auth/selectors";
 class ReportContainer extends PureComponent {
 
   componentDidMount() {
-    const {fetchAllReportsOfUser: getReports, user} = this.props;
-    getReports(user.id);
+    const {fetchAllReportsOfUser, user} = this.props;
+    fetchAllReportsOfUser(user.id);
   }
 
   render() {
-    const {reports, deleteReport, updateReport, loading } = this.props;
+    const {reports, deleteReport, loading } = this.props;
+    console.log('Report Container', reports);
     return (
       <div className="row mt-5 mb-5">
         <div className="col-md-4">
@@ -25,11 +28,10 @@ class ReportContainer extends PureComponent {
         </div>
         <div className="col-md-8">
           <div className="row">
-            {loading ? (
+            {loading && isEmpty(reports) ? (
               <FontAwesomeIcon icon="spinner" size="lg" spin />
             ) : (
               <ReportsList
-                updateReport={updateReport}
                 deleteReport={deleteReport}
                 reportsList={reports}
               />
@@ -43,6 +45,7 @@ class ReportContainer extends PureComponent {
 
 ReportContainer.propTypes = {
   fetchAllReportsOfUser: PropTypes.func,
+  deleteReport: PropTypes.func,
   loading: PropTypes.bool,
   error: PropTypes.oneOfType([
     PropTypes.object,
@@ -60,10 +63,8 @@ export const mapStateToProps = state => ({
 });
 
 export const mapDispatchToProps = dispatch => ({
-  fetchAllReportsOfUser: (userId) => dispatch(ReportPageActions.fetchAllReportsOfUser(userId)),
-  createReport: (report) => dispatch(ReportPageActions.createReport(report)),
-  updateReport: (report) => dispatch(ReportPageActions.updateReport(report)),
-  deleteReport: (reportId) => dispatch(ReportPageActions.deleteReport(reportId))
+  fetchAllReportsOfUser: userId => dispatch(ReportPageActions.fetchAllReportsOfUser(userId)),
+  deleteReport: reportId => dispatch(ReportPageActions.deleteReport(reportId))
 });
 
 export default connect(

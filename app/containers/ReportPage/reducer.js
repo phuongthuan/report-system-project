@@ -64,8 +64,8 @@ function reportReducer(state = initState, action) {
       return {
         ...state,
         reports: state.reports.map(report =>
-          report.id === action.reportUpdated.id
-            ? action.reportUpdated
+          report.id === action.reportUpdatedReceived.id
+            ? action.reportUpdatedReceived
             : report
         ),
         loading: false
@@ -74,7 +74,9 @@ function reportReducer(state = initState, action) {
     case DELETE_REPORT_SUCCEEDED:
       return {
         ...state,
-        reports: state.reports.filter(report => report.id !== action.reportId),
+        reports: state.reports.filter(report =>
+          report.id !== action.reportId
+        ),
         loading: false
       }
 

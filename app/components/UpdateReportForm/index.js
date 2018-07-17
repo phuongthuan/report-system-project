@@ -14,6 +14,7 @@ import {
   CardHeader,
   CardBody,
   CardTitle,
+  CardSubtitle,
   CardFooter,
   ButtonGroup
 } from 'reactstrap';
@@ -27,12 +28,22 @@ class UpdateReportForm extends Component {
 
   componentDidMount() {
     const {report} = this.props;
-    const numberSelectBox = report.issues ? report.issues.length : undefined;
+    const numberSelectBox = report.issues ? report.issues.length : 0;
     this.setState({
       report,
       numberSelectBox
     });
   }
+
+  onSubmitForm = (e) => {
+    e.preventDefault();
+    const {report} = this.state;
+    const {updateReport, history} = this.props;
+    updateReport(report);
+    console.log('Update Submitted!', report);
+    history.push('/report');
+  };
+
 
   onHandleFormChange = (e) => {
     const {report} = this.state;
@@ -43,15 +54,6 @@ class UpdateReportForm extends Component {
       }
     });
   }
-
-  onSubmitForm = (e) => {
-    e.preventDefault();
-    const {report} = this.state;
-    const {updateReport, history} = this.props;
-    updateReport(report);
-    history.push('/report');
-  };
-
   onAddSelectBox = () => {
     const {numberSelectBox} = this.state;
     this.setState({numberSelectBox: numberSelectBox + 1});
@@ -74,11 +76,11 @@ class UpdateReportForm extends Component {
   }
 
   render() {
-    const {report, numberSelectBox} = this.state;
+    const {report} = this.state;
     const issues_type = this.convertToSelectObject();
     const children = [];
 
-    for (let i = 0; i < numberSelectBox; i++) {
+    for (let i = 0; i < issues_type.length; i++) {
       children.push(
         <FormGroup key={i} row>
           <Col sm={8}>
@@ -86,7 +88,7 @@ class UpdateReportForm extends Component {
               className="issue-select"
               classNamePrefix="report-system"
               placeholder="Select Issue"
-              // value={issues_type[i]}
+              value={issues_type[i]}
               options={issues_type}
               onChange={this.onSelectedIssueHandleChange}
             />
@@ -95,29 +97,37 @@ class UpdateReportForm extends Component {
         </FormGroup>
       );
     }
+    console.log('Update Report Form', report);
 
     return (
       <Form onSubmit={this.onSubmitForm}>
         <Card>
           <CardHeader>
+            <CardTitle>Update Daily Report</CardTitle>
+            <CardSubtitle>
+              Today is: {new Date().toString()}
+            </CardSubtitle>
+          </CardHeader>
+
+          <CardBody>
+
+            <CardSubtitle>Title</CardSubtitle>
             <FormGroup>
               <Input
                 type="text"
                 name="title"
-                bsSize="lg"
+                bsSize="sm"
                 autoComplete="off"
                 value={report.title}
                 placeholder="Title"
                 onChange={this.onHandleFormChange}
               />
             </FormGroup>
-          </CardHeader>
 
-          <CardBody>
-
-            <CardTitle>Today Achievement</CardTitle>
+            <CardSubtitle>Today Achievement</CardSubtitle>
             <FormGroup>
               <Input
+                style={{height: '100px'}}
                 type="textarea"
                 name="achievement"
                 placeholder="What achievement did you get today ?"
@@ -127,9 +137,10 @@ class UpdateReportForm extends Component {
               />
             </FormGroup>
 
-            <CardTitle>Planing for next day</CardTitle>
+            <CardSubtitle>Planing for next day</CardSubtitle>
             <FormGroup>
               <Input
+                style={{height: '100px'}}
                 type="textarea"
                 name="plan"
                 value={report.plan}
@@ -139,13 +150,16 @@ class UpdateReportForm extends Component {
               />
             </FormGroup>
 
-            <IssueSelect addSelectBox={this.onAddSelectBox}>
+            {/*Issue Select Box*/}
+            <IssueSelect addSelectBox={this.onAddSelectBox} >
               {children}
             </IssueSelect>
 
-            <CardTitle>Description</CardTitle>
+
+            <CardSubtitle>Description</CardSubtitle>
             <FormGroup>
               <Input
+                style={{height: '100px'}}
                 type="textarea"
                 name="description"
                 value={report.description}
@@ -155,9 +169,10 @@ class UpdateReportForm extends Component {
               />
             </FormGroup>
 
-            <CardTitle>Comment</CardTitle>
+            <CardSubtitle>Comment</CardSubtitle>
             <FormGroup>
               <Input
+                style={{height: '100px'}}
                 type="textarea"
                 name="comment"
                 value={report.comment}

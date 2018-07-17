@@ -25,7 +25,6 @@ export function* loginFlow(action) {
     yield put(loginSucceeded(user));
   } catch (error) {
     yield put(loginFailed(error.message));
-    localStorage.removeItem('token');
   }
 }
 

@@ -23,7 +23,7 @@ class ProfileContainer extends Component {
       <div className="container">
         <div className="row mt-5 mb-5">
           <div className="col-md-4">
-            <SideBar/>
+            <SideBar />
           </div>
           <div className="col-md-8">
             {loading && isEmpty(profile) ? (

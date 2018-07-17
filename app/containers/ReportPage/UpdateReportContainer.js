@@ -18,6 +18,7 @@ class UpdateReportContainer extends Component {
 
   render() {
     const {updateReport, report, loading} = this.props;
+    console.log('UpdateReportContainer', report);
     return (
       <div className="row mt-5 mb-5">
         <div className="col-md-4">

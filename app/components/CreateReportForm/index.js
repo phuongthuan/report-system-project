@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types';
 import IssueSelect from 'components/IssueSelect';
-import { connect } from 'react-redux';
 import Select from 'react-select';
 import {
   Form,
@@ -10,6 +9,7 @@ import {
   Button,
   Input,
   Col,
+  CardSubtitle,
   Card,
   CardHeader,
   CardBody,
@@ -17,7 +17,6 @@ import {
   CardFooter,
   ButtonGroup
 } from 'reactstrap';
-import * as actionsType from '../../containers/ReportPage/actions';
 
 const issues_type = [
   {value: 1, label: 'Hard for Debugging'},
@@ -27,12 +26,13 @@ const issues_type = [
   {value: 5, label: 'Security Threats'}
 ]
 
-class ReportForm extends Component {
+class CreateReportForm extends Component {
 
   state = {
     numberSelectBox: 0,
     report : {
-      userId: 1,
+      date: new Date().toString(),
+      userId: this.props.user.id,
       title: '',
       achievement: '',
       plan: '',
@@ -55,8 +55,12 @@ class ReportForm extends Component {
   onSubmitForm = (e) => {
     e.preventDefault();
     const { report } = this.state;
-    const { createReport: dispatchCreateReport, history } = this.props;
-    dispatchCreateReport(report);
+    const { addFlashMessage, createReport, history } = this.props;
+    createReport(report);
+    addFlashMessage({
+      type: 'success',
+      text: 'Create Successful!'
+    })
     history.push('/report');
   };
 
@@ -79,20 +83,14 @@ class ReportForm extends Component {
     const { numberSelectBox } = this.state;
     this.setState({ numberSelectBox: numberSelectBox + 1});
   }
-
   onRemoveSelectBox = () => {
     const { numberSelectBox } = this.state;
     this.setState({ numberSelectBox: numberSelectBox - 1});
   }
 
   render() {
-    const {
-      numberSelectBox,
-      report
-    } = this.state;
-
+    const { numberSelectBox, report } = this.state;
     const children = [];
-
     for (var i = 0; i < numberSelectBox; i += 1) {
       children.push(
         <FormGroup key={i} row>
@@ -114,24 +112,31 @@ class ReportForm extends Component {
       <Form onSubmit={this.onSubmitForm}>
         <Card>
           <CardHeader>
+            <CardTitle>Write Daily Report</CardTitle>
+            <CardSubtitle>
+              Today is: {report.date}
+            </CardSubtitle>
+          </CardHeader>
+
+          <CardBody>
+
+            <CardSubtitle>Title</CardSubtitle>
             <FormGroup>
               <Input
                 type="text"
                 name="title"
-                bsSize="lg"
+                bsSize="sm"
                 autoComplete="off"
                 value={report.title}
                 placeholder="Title"
                 onChange={this.onHandleFormChange}
               />
             </FormGroup>
-          </CardHeader>
 
-          <CardBody>
-
-            <CardTitle>Today Achievement</CardTitle>
+            <CardSubtitle>Today Achievement</CardSubtitle>
             <FormGroup>
               <Input
+                style={{height: '100px'}}
                 type="textarea"
                 name="achievement"
                 placeholder="What achievement did you get today ?"
@@ -141,9 +146,10 @@ class ReportForm extends Component {
               />
             </FormGroup>
 
-            <CardTitle>Planing for next day</CardTitle>
+            <CardSubtitle>Planing for next day</CardSubtitle>
             <FormGroup>
               <Input
+                style={{height: '100px'}}
                 type="textarea"
                 name="plan"
                 value={report.plan}
@@ -159,9 +165,10 @@ class ReportForm extends Component {
             </IssueSelect>
 
 
-            <CardTitle>Description</CardTitle>
+            <CardSubtitle>Description</CardSubtitle>
             <FormGroup>
               <Input
+                style={{height: '100px'}}
                 type="textarea"
                 name="description"
                 bsSize="sm"
@@ -170,9 +177,10 @@ class ReportForm extends Component {
               />
             </FormGroup>
 
-            <CardTitle>Comment</CardTitle>
+            <CardSubtitle>Comment</CardSubtitle>
             <FormGroup>
               <Input
+                style={{height: '100px'}}
                 type="textarea"
                 name="comment"
                 bsSize="sm"
@@ -209,7 +217,7 @@ class ReportForm extends Component {
   }
 }
 
-ReportForm.propTypes = {
+CreateReportForm.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func,
   }),
@@ -221,18 +229,9 @@ ReportForm.propTypes = {
     issues: PropTypes.arrayOf(PropTypes.string),
     description: PropTypes.string,
     comment: PropTypes.string,
-  }),
-  createReport: PropTypes.func,
-  updateReport: PropTypes.func,
+  })
 };
 
-export const mapDispatchToProps = dispatch => ({
-  createReport: payload => dispatch(actionsType.createReport(payload)),
-});
-
-export default connect(
-  null,
-  mapDispatchToProps
-)(ReportForm);
+export default CreateReportForm;
 
 
