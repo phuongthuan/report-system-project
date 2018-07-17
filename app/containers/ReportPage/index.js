@@ -12,7 +12,6 @@ class ReportPage extends Component {
     return (
       <div className="container">
         <FlashMessageList />
-        {/*<FlashMessage />*/}
         <Switch location={location}>
           <Route exact path="/report" component={ReportContainer}/>
           <Route path="/report/create" component={CreateReportContainer}/>
