@@ -1,15 +1,14 @@
-import React, { Fragment } from 'react';
+import React  from 'react';
 import Report from "../Report";
 
 const ReportsList = (props) => {
-  const { reportsList, deleteAction, updateAction } = props;
+  const { reportsList, deleteReport } = props;
   return (
     <div>
       {reportsList.map(report =>
         (
           <Report
-            deleteReport={deleteAction}
-            updateReport={updateAction}
+            deleteReport={deleteReport}
             key={report.id}
             report={report}
           />

@@ -23,7 +23,9 @@ class SideBar extends Component {
 
   componentDidMount() {
     const {getProfile, user} = this.props;
-    getProfile(user.id);
+    if (user) {
+      getProfile(user.id);
+    }
   }
 
   logout = (e) => {

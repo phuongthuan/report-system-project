@@ -1,21 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
-
-import {
-  Form,
-  FormGroup,
-  Input,
-  Card,
-  CardBody,
-  CardTitle,
-  Button
-} from 'reactstrap'
 import styled from 'styled-components'
 import img from '../../assests/images/fancycrave-248220-unsplash.jpg';
 import * as AuthActions from './actions'
+import * as FlashMessageActions from '../FlashMessage/actions'
 import { selectUser } from "./selectors";
-
+import LoginForm from "../../components/LoginForm";
 
 const AuthWrapper = styled.div`
   background-image: url(${img});
@@ -31,94 +22,23 @@ const AuthWrapper = styled.div`
 
 class Auth extends Component {
 
-  constructor(props) {
-    super(props);
-
-    // Reset login status:
-    this.props.logoutAction();
-
-    this.state = {
-      email: '',
-      password: ''
-    }
-  }
-
-  onHandleInputChange = (e) => {
-    const target = e.target;
-    this.setState({
-      [target.name]: target.value
-    });
-  }
-
-  onSubmitForm = (e) => {
-    e.preventDefault();
-    const { email, password } = this.state;
-    const {
-      loginAction: dispatchLogin,
-      history
-    } = this.props;
-
-    dispatchLogin({ email, password });
-    history.push('/profile/edit');
-  }
-
   render() {
-    const { email, password } = this.state;
+    const { addFlashMessage, loginAction } = this.props;
     return (
       <AuthWrapper>
-        <Form onSubmit={this.onSubmitForm}>
-          <Card>
-            <CardBody>
-              <CardTitle>Login</CardTitle>
-
-              <FormGroup>
-                <Input
-                  type="text"
-                  autoComplete="off"
-                  name="email"
-                  bsSize="sm"
-                  value={email}
-                  onChange={this.onHandleInputChange}
-                  required
-                />
-              </FormGroup>
-
-              <FormGroup>
-                <Input
-                  type="password"
-                  autoComplete="off"
-                  name="password"
-                  bsSize="sm"
-                  value={password}
-                  onChange={this.onHandleInputChange}
-                  required
-                />
-              </FormGroup>
-
-              <Button
-                color="primary"
-                className="w-100"
-                size="sm"
-                type="submit"
-              >
-                Login
-              </Button>
-            </CardBody>
-          </Card>
-        </Form>
+        <LoginForm
+          {...this.props}
+          loginAction={loginAction}
+          addFlashMessage={addFlashMessage}
+        />
       </AuthWrapper>
     );
   }
 }
 
 Auth.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func
-  }),
-  email: PropTypes.string,
-  password: PropTypes.string,
-  loginAction: PropTypes.func,
-  logoutAction: PropTypes.func,
+  loginAction: PropTypes.func.isRequired,
+  addFlashMessage: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({
@@ -126,8 +46,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  loginAction: (payload) => dispatch(AuthActions.login(payload)),
-  logoutAction: () => dispatch(AuthActions.logout()),
+  loginAction: payload => dispatch(AuthActions.login(payload)),
+  addFlashMessage: message => dispatch(FlashMessageActions.addFLashMessage(message))
 });
 
 export default connect(
