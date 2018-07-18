@@ -21,10 +21,19 @@ import {
 
 class UpdateReportForm extends Component {
 
+  static propTypes = {
+    history: PropTypes.shape({
+      push: PropTypes.func,
+    }),
+    report: PropTypes.object,
+    updateReport: PropTypes.func,
+    addFlashMessage: PropTypes.func
+  };
+
   state = {
     report: {},
     numberSelectBox: 0
-  }
+  };
 
   componentDidMount() {
     const {report} = this.props;
@@ -38,9 +47,12 @@ class UpdateReportForm extends Component {
   onSubmitForm = (e) => {
     e.preventDefault();
     const {report} = this.state;
-    const {updateReport, history} = this.props;
+    const {updateReport, history, addFlashMessage} = this.props;
     updateReport(report);
-    console.log('Update Submitted!', report);
+    addFlashMessage({
+      type: 'success',
+      text: 'Update Report Success'
+    });
     history.push('/report');
   };
 
@@ -97,7 +109,6 @@ class UpdateReportForm extends Component {
         </FormGroup>
       );
     }
-    console.log('Update Report Form', report);
 
     return (
       <Form onSubmit={this.onSubmitForm}>
@@ -209,13 +220,5 @@ class UpdateReportForm extends Component {
     );
   }
 }
-
-UpdateReportForm.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func,
-  }),
-  report: PropTypes.object,
-  updateReport: PropTypes.func,
-};
 
 export default UpdateReportForm;

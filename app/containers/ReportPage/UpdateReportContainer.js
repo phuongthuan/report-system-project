@@ -4,11 +4,22 @@ import isEmpty from 'lodash/isEmpty'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import PropTypes from "prop-types";
 import SideBar from '../../components/SideBar'
-import * as ReportPageActions from './actions'
 import UpdateReportForm from "../../components/UpdateReportForm";
 import { selectAReport, selectError, selectLoading } from "./selectors";
+import { addFLashMessage } from "../FlashMessage/actions";
+import { fetchAReport, updateReport } from "./actions";
 
 class UpdateReportContainer extends Component {
+
+  static propTypes = {
+    fetchAReport: PropTypes.func,
+    loading: PropTypes.bool,
+    error: PropTypes.oneOfType([
+      PropTypes.object,
+      PropTypes.bool,
+    ]),
+    report: PropTypes.object
+  };
 
   componentDidMount() {
     const {fetchAReport, match} = this.props;
@@ -17,12 +28,12 @@ class UpdateReportContainer extends Component {
   }
 
   render() {
-    const {updateReport, report, loading} = this.props;
-    console.log('UpdateReportContainer', report);
+    const {updateReport, report, loading, addFlashMessage} = this.props;
+    // console.log('UpdateReportContainer', report);
     return (
       <div className="row mt-5 mb-5">
         <div className="col-md-4">
-          <SideBar/>
+          <SideBar />
         </div>
         <div className="col-md-8">
           {loading && isEmpty(report) ? (
@@ -32,6 +43,7 @@ class UpdateReportContainer extends Component {
               {...this.props}
               report={report}
               updateReport={updateReport}
+              addFlashMessage={addFlashMessage}
             />
           )}
         </div>
@@ -40,16 +52,6 @@ class UpdateReportContainer extends Component {
   }
 }
 
-UpdateReportContainer.propTypes = {
-  fetchAReport: PropTypes.func,
-  loading: PropTypes.bool,
-  error: PropTypes.oneOfType([
-    PropTypes.object,
-    PropTypes.bool,
-  ]),
-  report: PropTypes.object
-};
-
 const mapStateToProps = state => ({
   report: selectAReport(state),
   loading: selectLoading(state),
@@ -57,8 +59,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchAReport: id => dispatch(ReportPageActions.fetchAReport(id)),
-  updateReport: payload => dispatch(ReportPageActions.updateReport(payload))
+  fetchAReport: id => dispatch(fetchAReport(id)),
+  updateReport: payload => dispatch(updateReport(payload)),
+  addFlashMessage: message => dispatch(addFLashMessage(message))
 });
 
 export default connect(

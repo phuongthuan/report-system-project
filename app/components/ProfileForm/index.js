@@ -40,14 +40,17 @@ class ProfileForm extends Component {
         [e.target.name]: e.target.value
       }
     });
-  }
+  };
 
   onSubmitForm = (e) => {
     e.preventDefault();
     const { user } = this.state;
-    const { updateProfile, history } = this.props;
+    const { updateProfile, addFlashMessage } = this.props;
     updateProfile(user);
-    console.log('Update Profile Submitted!', user);
+    addFlashMessage({
+      type: 'success',
+      text: 'Update Profile Success'
+    });
   };
 
   render() {
@@ -88,7 +91,7 @@ class ProfileForm extends Component {
                 <Input
                   autoComplete="off"
                   type="text"
-                  name="lastName"
+                  name="avatar"
                   bsSize="sm"
                   value={user.avatar}
                   onChange={this.onHandleFormChange}
@@ -139,6 +142,7 @@ class ProfileForm extends Component {
               </InputGroup>
             </FormGroup>
           </CardBody>
+
           <CardFooter>
             <Button
               color="secondary"
@@ -156,6 +160,7 @@ class ProfileForm extends Component {
 ProfileForm.propTypes = {
   user: PropTypes.object,
   profile: PropTypes.object,
+  addFlashMessage: PropTypes.func,
 }
 
-export default withRouter(ProfileForm);
+export default ProfileForm;

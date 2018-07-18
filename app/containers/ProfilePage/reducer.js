@@ -34,7 +34,7 @@ export function profileReducer(state = initState, action) {
     case UPDATE_USER_PROFILE_SUCCEEDED:
       return {
         ...state,
-        profile: action.profileUpdated,
+        profile: action.profileUpdatedReceived,
         error: false,
         loading: false
       }
