@@ -1,4 +1,18 @@
 #   Report System
+<br />
+
+<div align="center">
+  <a href="https://david-dm.org/framgia/simple-react-boilerplate" title="dependencies status">
+    <img src="https://david-dm.org/framgia/simple-react-boilerplate/status.svg"/></a>
+  <a href="https://david-dm.org/framgia/simple-react-boilerplate?type=dev" title="devDependencies status">
+    <img src="https://david-dm.org/framgia/simple-react-boilerplate/dev-status.svg"/></a>
+  <a href="https://travis-ci.org/framgia/simple-react-boilerplate" title="build status">
+    <img src="https://travis-ci.org/framgia/simple-react-boilerplate.svg" alt="Build Status" />
+  </a>
+  <a href='https://coveralls.io/github/framgia/simple-react-boilerplate'>
+    <img src='https://coveralls.io/repos/github/framgia/simple-react-boilerplate/badge.svg' alt='Coverage Status' />
+  </a>
+</div>
 
 ## Configure Server before start
 
@@ -18,20 +32,36 @@ npm install
 npm start
 ```
 
-<br />
+### Login ###
 
-<div align="center">
-  <a href="https://david-dm.org/framgia/simple-react-boilerplate" title="dependencies status">
-    <img src="https://david-dm.org/framgia/simple-react-boilerplate/status.svg"/></a>
-  <a href="https://david-dm.org/framgia/simple-react-boilerplate?type=dev" title="devDependencies status">
-    <img src="https://david-dm.org/framgia/simple-react-boilerplate/dev-status.svg"/></a>
-  <a href="https://travis-ci.org/framgia/simple-react-boilerplate" title="build status">
-    <img src="https://travis-ci.org/framgia/simple-react-boilerplate.svg" alt="Build Status" />
-  </a>
-  <a href='https://coveralls.io/github/framgia/simple-react-boilerplate'>
-    <img src='https://coveralls.io/repos/github/framgia/simple-react-boilerplate/badge.svg' alt='Coverage Status' />
-  </a>
-</div>
+For member: account prefix:
+<br />
+email: member(1->46)@gmail.com
+<br />
+password: 123456
+```
+Example:
+email: member1@gmail.com
+password: 123456
+```
+
+For teamleader: account prefix:
+<br />
+email: teamleader(46->49)@gmail.com
+<br />
+password: 123456
+
+```
+Example:
+email: teamleader46@gmail.com
+password: 123456
+```
+For teamleader: 
+
+```
+email: groupleader@gmail.com
+password: 123456
+```
 
 <br />
 
