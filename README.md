@@ -1,4 +1,22 @@
-#   Simple React boilerplate
+#   Report System
+
+## Configure Server before start
+
+Seed data first:
+```
+npm run seed
+```
+Then run server:
+```
+npm run server
+```
+
+## Start project
+
+```
+npm install
+npm start
+```
 
 <br />
 
