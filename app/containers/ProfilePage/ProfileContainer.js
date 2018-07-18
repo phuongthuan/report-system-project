@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import PropTypes from 'prop-types';
+import styled from "styled-components";
 import isEmpty from 'lodash/isEmpty';
 import { connect } from "react-redux";
 import SideBar from '../../components/SideBar'
@@ -9,6 +10,14 @@ import { getUserProfile, updateProfile} from './actions'
 import { addFLashMessage } from '../FlashMessage/actions'
 import { selectUser } from "../Auth/selectors";
 import { selectLoading, selectProfile } from "./selectors";
+
+const Spinner = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 
 class ProfileContainer extends Component {
 
@@ -27,7 +36,9 @@ class ProfileContainer extends Component {
           </div>
           <div className="col-md-8">
             {loading && isEmpty(profile) ? (
-              <FontAwesomeIcon icon="spinner" size="lg" spin/>
+              <Spinner>
+                <FontAwesomeIcon icon="spinner" size="lg" spin/>
+              </Spinner>
             ) : (
               <div className="shadow-sm">
                 <ProfileForm

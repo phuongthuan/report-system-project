@@ -2,12 +2,21 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import isEmpty from "lodash/isEmpty";
+import styled from "styled-components";
 import PropTypes from 'prop-types'
 import SideBar from 'components/SideBar'
 import MembersList from 'components/MembersList'
 import { fetchAllMembersOfTeam } from './actions'
 import { selectLoading, selectMembers } from "./selectors";
 import { selectUser } from "../Auth/selectors";
+
+const Spinner = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 
 class MemberContainer extends Component {
 
@@ -31,15 +40,15 @@ class MemberContainer extends Component {
             <SideBar/>
           </div>
           <div className="col-md-8">
-            <div className="row">
-              {loading && isEmpty(members) ? (
+            {loading && isEmpty(members) ? (
+              <Spinner>
                 <FontAwesomeIcon icon="spinner" size="lg" spin/>
-              ) : (
-                <MembersList
-                  membersList={members}
-                />
-              )}
-            </div>
+              </Spinner>
+            ) : (
+              <MembersList
+                membersList={members}
+              />
+            )}
           </div>
         </div>
       </div>

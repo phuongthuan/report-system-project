@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import isEmpty from "lodash/isEmpty";
 import SideBar from 'components/SideBar'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import IssuePieChart from "../../components/IssuePieChart";
 
 class StatisticContainer extends Component {
   render() {
@@ -21,7 +22,7 @@ class StatisticContainer extends Component {
             {/*)}*/}
 
             <div className="shadow-sm">
-              Static Container
+              <IssuePieChart />
             </div>
           </div>
         </div>
