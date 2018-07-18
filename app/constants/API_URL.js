@@ -12,6 +12,7 @@ export const UPDATE_REPORT = `${API_ROOT}reports`;
 export const DELETE_REPORT = `${API_ROOT}reports`;
 
 export const GET_USER_PROFILE = `${API_ROOT}users`;
+export const GET_MEMBERS_OF_TEAM = `${API_ROOT}users`;
 export const UPDATE_USER_PROFILE = `${API_ROOT}users`;
 export const LOGIN = `${API_ROOT}auth/login`;
 

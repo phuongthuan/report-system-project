@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import { Route,  Switch } from 'react-router-dom'
-import StatisticContainer from "./StatisticContainer";
+import MemberContainer from "./MemberContainer";
 
-class StatisticPage extends Component {
+class MemberPage extends Component {
   render() {
     return (
       <div className="container">
         <Switch>
-          <Route exact path="/statistic" component={StatisticContainer} />
+          <Route exact path="/members" component={MemberContainer} />
         </Switch>
       </div>
     );
   }
 }
 
-export default StatisticPage;
+export default MemberPage;

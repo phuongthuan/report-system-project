@@ -2,14 +2,21 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty'
 import { connect } from 'react-redux';
+import styled from "styled-components";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import ReportsList from '../../components/ReportsList'
 import SideBar from '../../components/SideBar'
-
-
 import * as ReportPageActions from './actions';
 import { selectError, selectLoading, selectReports } from "./selectors";
 import { selectUser } from "../Auth/selectors";
+
+const Spinner = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 
 class ReportContainer extends PureComponent {
 
@@ -19,24 +26,24 @@ class ReportContainer extends PureComponent {
   }
 
   render() {
-    const {reports, deleteReport, loading } = this.props;
+    const {reports, deleteReport, loading} = this.props;
     // console.log('Report Container', reports);
     return (
       <div className="row mt-5 mb-5">
         <div className="col-md-4">
-          <SideBar />
+          <SideBar/>
         </div>
         <div className="col-md-8">
-          <div className="row">
-            {loading && isEmpty(reports) ? (
-              <FontAwesomeIcon icon="spinner" size="lg" spin />
-            ) : (
-              <ReportsList
-                deleteReport={deleteReport}
-                reportsList={reports}
-              />
-            )}
-          </div>
+          {loading && isEmpty(reports) ? (
+            <Spinner>
+              <FontAwesomeIcon icon="spinner" size="lg" spin/>
+            </Spinner>
+          ) : (
+            <ReportsList
+              deleteReport={deleteReport}
+              reportsList={reports}
+            />
+          )}
         </div>
       </div>
     );

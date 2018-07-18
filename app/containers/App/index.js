@@ -8,6 +8,7 @@ import NoMatch from "../../utils/NoMatch";
 import PrivateRoute from '../../utils/PrivateRoute'
 import StatisticPage from "../StatisticPage";
 import ProfilePage from "../ProfilePage";
+import MemberPage from "../MemberPage";
 
 export default class App extends Component {
   render() {
@@ -19,6 +20,7 @@ export default class App extends Component {
         <PrivateRoute path="/report" component={ReportPage} />
         <PrivateRoute path="/statistic" component={StatisticPage} />
         <PrivateRoute path="/profile" component={ProfilePage}/>
+        <PrivateRoute path="/members" component={MemberPage}/>
         <Route component={NoMatch}/>
       </Switch>
     )

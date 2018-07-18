@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux'
+import styled from 'styled-components'
 import { withRouter, Link } from 'react-router-dom'
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty'
@@ -19,7 +20,19 @@ import * as AuthPageActions from '../../containers/Auth/actions'
 import * as ProfilePageActions from '../../containers/ProfilePage/actions'
 import { selectLoading, selectProfile } from "../../containers/ProfilePage/selectors";
 
+const Spinner = styled.div`
+  width: 238px;
+  height: 238px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 class SideBar extends Component {
+
+  state = {
+    isLoading: true
+  }
 
   componentDidMount() {
     const {getProfile, user} = this.props;
@@ -45,7 +58,13 @@ class SideBar extends Component {
         ) : (
           <ListGroup className="shadow-sm">
             <ListGroupItem className="justify-content-between text-center">
-              <CardImg src={avatar} alt="Card image cap"/>
+              {loading && isEmpty(avatar) ? (
+                <Spinner>
+                  <FontAwesomeIcon icon="spinner" size="lg" spin/>
+                </Spinner>
+              ) : (
+                <CardImg src={avatar} alt="Card image cap"/>
+              )}
               <CardBody>
                 <CardTitle>{profile.firstName} {profile.lastName}</CardTitle>
                 <CardText>
@@ -102,7 +121,7 @@ class SideBar extends Component {
                   className="justify-content-between"
                   action
                 >
-                  <Link to="/statistic/members">
+                  <Link to="/members">
                     <FontAwesomeIcon icon="address-card" className="mr-2"/>
                     Members List
                   </Link>
