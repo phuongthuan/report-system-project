@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
-import { PieChart, Pie, Legend } from 'recharts'
+import { PieChart, Pie, Sector } from 'recharts'
 
-const data01 = [{name: 'Group A', value: 400}, {name: 'Group B', value: 300},
-  {name: 'Group C', value: 300}, {name: 'Group D', value: 200}]
+const data01 = [
+  {name: 'Group A', value: 400},
+  {name: 'Group B', value: 300},
+  {name: 'Group C', value: 300},
+  {name: 'Group D', value: 200}
+]
 
 const data02 = [{name: 'A1', value: 100},
   {name: 'A2', value: 300},
@@ -21,8 +25,8 @@ class IssuePieChart extends Component {
     return (
       <div>
         <PieChart width={800} height={400}>
-          <Pie data={data01} cx={200} cy={200} outerRadius={60} fill="#8884d8"/>
-          <Pie data={data02} cx={200} cy={200} innerRadius={70} outerRadius={90} fill="#82ca9d" label/>
+          <Pie dataKey="name" data={data01} cx={200} cy={200} outerRadius={60} fill="#8884d8"/>
+          <Pie dataKey="name" data={data02} cx={200} cy={200} innerRadius={70} outerRadius={90} fill="#82ca9d" label/>
         </PieChart>
       </div>
     );

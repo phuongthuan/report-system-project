@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
+import moment from 'moment'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Button, ButtonGroup, Card, CardBody, CardTitle, CardText, CardFooter} from 'reactstrap'
 
@@ -10,7 +11,7 @@ const Report = ({ report, deleteReport }) => (
       <CardText>{report.achievement}</CardText>
       <CardText>{report.comment}</CardText>
       <CardText>
-        <small className="text-muted"><FontAwesomeIcon icon="calendar-alt"/> Date created: {report.date}</small>
+        <small className="text-muted"><FontAwesomeIcon icon="calendar-alt"/>&nbsp;Date created:&nbsp;&nbsp;{moment(report.date).format("dddd, MMMM Do YYYY, h:mm:ss a")}</small>
       </CardText>
     </CardBody>
     <CardFooter>

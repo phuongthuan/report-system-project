@@ -8,7 +8,8 @@ var database = {
 const division = [
   'Front End Group 1',
   'Front End Group 2',
-  'Front End Group 3'
+  'Front End Group 3',
+  'Front End Group 4',
 ];
 
 const issues = [
@@ -86,12 +87,12 @@ database.users.push({
   role: "group_leader"
 });
 
-for (let i=1; i<=400; i++) {
+for (let i=1; i<=600; i++) {
   database.reports.push({
     id: i,
-    userId: getRandomInt(1, 40),
+    userId: getRandomInt(1, 45),
     title: faker.lorem.sentence(),
-    date: faker.date.weekday(),
+    date: faker.date.between('2018-06-01', '2018-09-31'),
     achievement: faker.lorem.sentence(),
     plan: faker.lorem.sentences(), // Plan for next day.
     issues: getRandom(issues, getRandomInt(1, 5)),
