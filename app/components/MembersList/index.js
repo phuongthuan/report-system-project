@@ -1,9 +1,10 @@
 import React from 'react';
+import Member from '../Member/index'
 
 const MembersList = () => {
   return (
     <div>
-      Members List Component
+      <Member />
     </div>
   );
 };

@@ -102,7 +102,7 @@ class SideBar extends Component {
                   className="justify-content-between"
                   action
                 >
-                  <Link to="/statistic/members">
+                  <Link to="/members">
                     <FontAwesomeIcon icon="address-card" className="mr-2"/>
                     Members List
                   </Link>
