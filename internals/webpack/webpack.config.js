@@ -15,6 +15,14 @@ module.exports = {
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
+          query: {
+            plugins: ['recharts'],
+            presets: [
+              "es2015",
+              "react",
+              "stage-0"
+            ]
+          }
         },
       },
       {

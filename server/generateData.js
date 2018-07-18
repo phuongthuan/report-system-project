@@ -8,7 +8,8 @@ var database = {
 const division = [
   'Front End Group 1',
   'Front End Group 2',
-  'Front End Group 3'
+  'Front End Group 3',
+  'Front End Group 4',
 ];
 
 const issues = [
@@ -91,7 +92,7 @@ for (let i=1; i<=400; i++) {
     id: i,
     userId: getRandomInt(1, 40),
     title: faker.lorem.sentence(),
-    date: faker.date.weekday(),
+    date: faker.date.between('2018-06-01', '2018-09-31'),
     achievement: faker.lorem.sentence(),
     plan: faker.lorem.sentences(), // Plan for next day.
     issues: getRandom(issues, getRandomInt(1, 5)),
