@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
+import 'emoji-mart/css/emoji-mart.css'
+import { Picker } from 'emoji-mart'
 import PropTypes from 'prop-types';
 import IssueSelect from 'components/IssueSelect';
 import Select from 'react-select';
@@ -31,6 +33,7 @@ class CreateReportForm extends Component {
   state = {
     numberSelectBox: 0,
     report : {
+      emotion: {},
       date: new Date().toString(),
       userId: this.props.user.id,
       title: '',
@@ -119,6 +122,25 @@ class CreateReportForm extends Component {
           </CardHeader>
 
           <CardBody>
+
+            <CardSubtitle>Emotions</CardSubtitle>
+            <FormGroup>
+              <Input
+                type="text"
+                name="emotion"
+                bsSize="sm"
+                autoComplete="off"
+                value={report.emotion}
+                onChange={this.onHandleFormChange}
+              />
+              {/*<Picker*/}
+                {/*title='Pick your emoji…'*/}
+                {/*emoji='point_up'*/}
+                {/*emojiSize={30}*/}
+                {/*showPreview={false}*/}
+                {/*onClick={(emoji, event) => console.log('emoji', emoji)}*/}
+              {/*/>*/}
+            </FormGroup>
 
             <CardSubtitle>Title</CardSubtitle>
             <FormGroup>
