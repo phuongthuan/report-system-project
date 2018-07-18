@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import PropTypes from 'prop-types';
-import styled from "styled-components";
+import Spinner from 'components/Spinner'
 import isEmpty from 'lodash/isEmpty';
 import { connect } from "react-redux";
+
 import SideBar from '../../components/SideBar'
 import ProfileForm from "../../components/ProfileForm";
 import { getUserProfile, updateProfile} from './actions'
@@ -11,15 +11,14 @@ import { addFLashMessage } from '../FlashMessage/actions'
 import { selectUser } from "../Auth/selectors";
 import { selectLoading, selectProfile } from "./selectors";
 
-const Spinner = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
 class ProfileContainer extends Component {
+
+  static propTypes = {
+    user: PropTypes.object,
+    profile: PropTypes.object,
+    getProfile: PropTypes.func,
+    updateProfile: PropTypes.func
+  };
 
   componentDidMount() {
     const {getProfile, user} = this.props;
@@ -36,9 +35,7 @@ class ProfileContainer extends Component {
           </div>
           <div className="col-md-8">
             {loading && isEmpty(profile) ? (
-              <Spinner>
-                <FontAwesomeIcon icon="spinner" size="lg" spin/>
-              </Spinner>
+              <Spinner />
             ) : (
               <div className="shadow-sm">
                 <ProfileForm
@@ -53,13 +50,6 @@ class ProfileContainer extends Component {
       </div>
     );
   }
-}
-
-ProfileContainer.propTypes = {
-  user: PropTypes.object,
-  profile: PropTypes.object,
-  getProfile: PropTypes.func,
-  updateProfile: PropTypes.func
 }
 
 export const mapStateToProps = state => ({

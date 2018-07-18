@@ -51,7 +51,7 @@ class UpdateReportForm extends Component {
     updateReport(report);
     addFlashMessage({
       type: 'success',
-      text: 'Update Report Success'
+      text: 'Update Report Successful'
     });
     history.push('/report');
   };

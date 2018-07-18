@@ -2,23 +2,26 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty'
 import { connect } from 'react-redux';
-import styled from "styled-components";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Spinner from 'components/Spinner'
 import ReportsList from '../../components/ReportsList'
 import SideBar from '../../components/SideBar'
-import * as ReportPageActions from './actions';
-import { selectError, selectLoading, selectReports } from "./selectors";
 import { selectUser } from "../Auth/selectors";
-
-const Spinner = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
+import { selectError, selectLoading, selectReports } from "./selectors";
+import { fetchAllReportsOfUser, deleteReport } from "./actions";
 
 class ReportContainer extends PureComponent {
+
+  static propTypes = {
+    fetchAllReportsOfUser: PropTypes.func,
+    deleteReport: PropTypes.func,
+    loading: PropTypes.bool,
+    error: PropTypes.oneOfType([
+      PropTypes.object,
+      PropTypes.bool,
+    ]),
+    reports: PropTypes.arrayOf(PropTypes.object),
+    user: PropTypes.object,
+  };
 
   componentDidMount() {
     const {fetchAllReportsOfUser, user} = this.props;
@@ -27,7 +30,6 @@ class ReportContainer extends PureComponent {
 
   render() {
     const {reports, deleteReport, loading} = this.props;
-    // console.log('Report Container', reports);
     return (
       <div className="row mt-5 mb-5">
         <div className="col-md-4">
@@ -35,9 +37,7 @@ class ReportContainer extends PureComponent {
         </div>
         <div className="col-md-8">
           {loading && isEmpty(reports) ? (
-            <Spinner>
-              <FontAwesomeIcon icon="spinner" size="lg" spin/>
-            </Spinner>
+            <Spinner />
           ) : (
             <ReportsList
               deleteReport={deleteReport}
@@ -50,18 +50,6 @@ class ReportContainer extends PureComponent {
   }
 }
 
-ReportContainer.propTypes = {
-  fetchAllReportsOfUser: PropTypes.func,
-  deleteReport: PropTypes.func,
-  loading: PropTypes.bool,
-  error: PropTypes.oneOfType([
-    PropTypes.object,
-    PropTypes.bool,
-  ]),
-  reports: PropTypes.arrayOf(PropTypes.object),
-  user: PropTypes.object,
-};
-
 export const mapStateToProps = state => ({
   reports: selectReports(state),
   loading: selectLoading(state),
@@ -70,8 +58,8 @@ export const mapStateToProps = state => ({
 });
 
 export const mapDispatchToProps = dispatch => ({
-  fetchAllReportsOfUser: userId => dispatch(ReportPageActions.fetchAllReportsOfUser(userId)),
-  deleteReport: reportId => dispatch(ReportPageActions.deleteReport(reportId))
+  fetchAllReportsOfUser: userId => dispatch(fetchAllReportsOfUser(userId)),
+  deleteReport: reportId => dispatch(deleteReport(reportId))
 });
 
 export default connect(

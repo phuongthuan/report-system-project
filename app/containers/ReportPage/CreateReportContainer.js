@@ -1,13 +1,21 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+
 import CreateReportForm from '../../components/CreateReportForm'
 import SideBar from '../../components/SideBar'
-import * as ReportPageActions from "./actions";
-import * as FlashMessageActions from "../FlashMessage/actions";
 import { selectUser } from "../Auth/selectors";
+import { createReport } from "./actions";
+import { addFLashMessage } from "../FlashMessage/actions";
 
 class CreateReportContainer extends Component {
+
+  static propTypes = {
+    user: PropTypes.object.isRequired,
+    createReport: PropTypes.func.isRequired,
+    addFlashMessage: PropTypes.func.isRequired,
+  };
+
   render() {
     const { createReport, addFlashMessage, user } = this.props;
     return (
@@ -28,18 +36,13 @@ class CreateReportContainer extends Component {
   }
 }
 
-CreateReportContainer.propTypes = {
-  createReport: PropTypes.func,
-  addFlashMessage: PropTypes.func,
-};
-
 export const mapStateToProps = state => ({
   user: selectUser(state)
 });
 
 export const mapDispatchToProps = dispatch => ({
-  createReport: payload => dispatch(ReportPageActions.createReport(payload)),
-  addFlashMessage: message => dispatch(FlashMessageActions.addFLashMessage(message))
+  createReport: payload => dispatch(createReport(payload)),
+  addFlashMessage: message => dispatch(addFLashMessage(message))
 });
 
 export default connect(

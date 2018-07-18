@@ -39,7 +39,7 @@ export const fetchReportsFailed = error => ({
 /*===========================================
  FETCH ALL REPORTS
  ===========================================*/
-export const fetchAllReportsOfUser = (id) => ({
+export const fetchAllReportsOfUser = id => ({
   type: FETCH_ALL_REPORTS_OF_USER,
   id
 });
@@ -57,7 +57,7 @@ export const fetchAllReportsOfUserFailed = error => ({
 /*===========================================
  FETCH A REPORT
  ===========================================*/
-export const fetchAReport = (id) => ({
+export const fetchAReport = id => ({
   type: FETCH_A_REPORT,
   id
 });
@@ -93,7 +93,7 @@ export const createReportFailed = error => ({
 /*===========================================
  UPDATE A REPORT
  ===========================================*/
-export const updateReport = (reportUpdated) => ({
+export const updateReport = reportUpdated => ({
   type: UPDATE_REPORT,
   reportUpdated
 }) ;
@@ -112,17 +112,17 @@ export const updateReportFailed = error => ({
 /*===========================================
  DELETE A REPORT ACTION
  ===========================================*/
-export const deleteReport = (reportId) => ({
+export const deleteReport = reportId => ({
   type: DELETE_REPORT,
   reportId
 });
 
-export const deleteReportSucceeded = (reportId) => ({
+export const deleteReportSucceeded = reportId => ({
   type: DELETE_REPORT_SUCCEEDED,
   reportId
 });
 
-export const deleteReportFailed = (error) => ({
+export const deleteReportFailed = error => ({
   type: DELETE_REPORT_FAILED,
   error
 })

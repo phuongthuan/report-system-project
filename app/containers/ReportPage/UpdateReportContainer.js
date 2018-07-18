@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import isEmpty from 'lodash/isEmpty'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Spinner from 'components/Spinner'
 import PropTypes from "prop-types";
+
 import SideBar from '../../components/SideBar'
 import UpdateReportForm from "../../components/UpdateReportForm";
 import { selectAReport, selectError, selectLoading } from "./selectors";
@@ -12,13 +13,15 @@ import { fetchAReport, updateReport } from "./actions";
 class UpdateReportContainer extends Component {
 
   static propTypes = {
-    fetchAReport: PropTypes.func,
     loading: PropTypes.bool,
     error: PropTypes.oneOfType([
       PropTypes.object,
       PropTypes.bool,
     ]),
-    report: PropTypes.object
+    report: PropTypes.object.isRequired,
+    fetchAReport: PropTypes.func.isRequired,
+    updateReport: PropTypes.func.isRequired,
+    addFlashMessage: PropTypes.func.isRequired
   };
 
   componentDidMount() {
@@ -29,7 +32,6 @@ class UpdateReportContainer extends Component {
 
   render() {
     const {updateReport, report, loading, addFlashMessage} = this.props;
-    // console.log('UpdateReportContainer', report);
     return (
       <div className="row mt-5 mb-5">
         <div className="col-md-4">
@@ -37,7 +39,7 @@ class UpdateReportContainer extends Component {
         </div>
         <div className="col-md-8">
           {loading && isEmpty(report) ? (
-            <FontAwesomeIcon icon="spinner" size="lg" spin/>
+            <Spinner />
           ) : (
             <UpdateReportForm
               {...this.props}

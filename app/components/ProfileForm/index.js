@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import {
@@ -9,6 +8,8 @@ import {
   Input,
   InputGroup,
   Card,
+  CardHeader,
+  CardSubTitle,
   CardBody,
   CardFooter,
   InputGroupAddon
@@ -49,7 +50,7 @@ class ProfileForm extends Component {
     updateProfile(user);
     addFlashMessage({
       type: 'success',
-      text: 'Update Profile Success'
+      text: 'Update Profile Successful'
     });
   };
 
@@ -58,6 +59,9 @@ class ProfileForm extends Component {
     return (
       <Form onSubmit={this.onSubmitForm}>
         <Card>
+          <CardHeader>
+            <h4>Role: {this.props.profile.role} ID: {this.props.profile.id}</h4>
+          </CardHeader>
           <CardBody>
             <FormGroup>
               <InputGroup>
