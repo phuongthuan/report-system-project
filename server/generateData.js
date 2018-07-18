@@ -29,6 +29,19 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+function getRandom(arr, n) {
+  var result = new Array(n),
+    len = arr.length,
+    taken = new Array(len);
+  if (n > len)
+    throw new RangeError("getRandom: more elements taken than available");
+  while (n--) {
+    var x = Math.floor(Math.random() * len);
+    result[n] = arr[x in taken ? taken[x] : x];
+    taken[x] = --len in taken ? taken[len] : len;
+  }
+  return result;
+}
 
 for (let i=1; i<=45; i++) {
   database.users.push({
@@ -81,7 +94,7 @@ for (let i=1; i<=400; i++) {
     date: faker.date.weekday(),
     achievement: faker.lorem.sentence(),
     plan: faker.lorem.sentences(), // Plan for next day.
-    issues: issues,
+    issues: getRandom(issues, getRandomInt(1, 5)),
     description: faker.lorem.paragraphs(),
     comment: faker.lorem.sentences()
   });
