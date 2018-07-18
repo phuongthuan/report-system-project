@@ -22,7 +22,7 @@ npm run seed
 ```
 Then run server:
 ```
-npm run server
+npm run serve
 ```
 
 ## Start project
