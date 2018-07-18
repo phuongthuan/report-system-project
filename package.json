@@ -7,7 +7,9 @@
     "test": "jest --coverage",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
     "start": "./node_modules/.bin/webpack-dev-server --config ./internals/webpack/webpack.config.js --mode=development",
-    "build": "webpack --config ./internals/webpack/webpack.config.js --mode=production"
+    "build": "webpack --config ./internals/webpack/webpack.config.js --mode=production",
+    "seed": "node server/generateData.js > server/db.json",
+    "serve": "node server/server.js"
   },
   "keywords": [
     "react",
