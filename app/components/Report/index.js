@@ -1,15 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Button, ButtonGroup, Card, CardBody, CardTitle, CardText, CardFooter} from 'reactstrap'
 
 const Report = ({ report, deleteReport }) => (
   <Card className="mb-4" key={report.id}>
     <CardBody>
-      <CardTitle>Id: {report.id} - {report.title}</CardTitle>
+      <CardTitle>Report ID: {report.id} - {report.title}</CardTitle>
       <CardText>{report.achievement}</CardText>
-      <CardText>MemberID: {report.userId}</CardText>
+      <CardText>{report.comment}</CardText>
       <CardText>
-        <small className="text-muted">{report.date}</small>
+        <small className="text-muted"><FontAwesomeIcon icon="calendar-alt"/> Date created: {report.date}</small>
       </CardText>
     </CardBody>
     <CardFooter>

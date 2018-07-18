@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components'
 import PropTypes from 'prop-types';
 import classnames from 'classnames'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const Flash = styled.div`
   position: absolute;
@@ -20,21 +21,33 @@ class FlashMessage extends Component {
   };
 
   componentDidMount() {
-    const { deleteFlashMessage, message } = this.props;
+    const {deleteFlashMessage, message} = this.props;
     setTimeout(() => {
       deleteFlashMessage(message.id);
     }, 2000)
   }
 
   render() {
-    const { type, text } = this.props.message;
+    const {type, text} = this.props.message;
     return (
       <Flash className={classnames('alert', {
         'alert-success': type === 'success',
         'alert-danger': type === 'error'
       })}
       >
-        {text}
+        {text}&nbsp;
+        <FontAwesomeIcon
+          icon={(() => {
+            switch (type) {
+              case "success":
+                return "smile";
+              case "error":
+                return "frown";
+              default:
+                return "smile";
+            }
+          })()}
+        />
       </Flash>
     );
   }

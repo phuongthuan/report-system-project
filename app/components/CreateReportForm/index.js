@@ -59,7 +59,7 @@ class CreateReportForm extends Component {
     createReport(report);
     addFlashMessage({
       type: 'success',
-      text: 'Create Successful!'
+      text: 'Create Report Successful'
     })
     history.push('/report');
   };
