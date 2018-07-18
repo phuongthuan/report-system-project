@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux'
-import styled from 'styled-components'
+import Spinner from 'components/Spinner'
 import { withRouter, Link } from 'react-router-dom'
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty'
@@ -19,14 +19,6 @@ import { selectUser } from "../../containers/Auth/selectors";
 import * as AuthPageActions from '../../containers/Auth/actions'
 import * as ProfilePageActions from '../../containers/ProfilePage/actions'
 import { selectLoading, selectProfile } from "../../containers/ProfilePage/selectors";
-
-const Spinner = styled.div`
-  width: 238px;
-  height: 238px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
 
 class SideBar extends Component {
 
@@ -59,9 +51,7 @@ class SideBar extends Component {
           <ListGroup className="shadow-sm">
             <ListGroupItem className="justify-content-between text-center">
               {loading && isEmpty(avatar) ? (
-                <Spinner>
-                  <FontAwesomeIcon icon="spinner" size="lg" spin/>
-                </Spinner>
+                <Spinner width="238px" height="238px" />
               ) : (
                 <CardImg src={avatar} alt="Card image cap"/>
               )}
