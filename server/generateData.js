@@ -6,10 +6,10 @@ var database = {
 };
 
 const division = [
-  'Front End Group 1',
-  'Front End Group 2',
-  'Front End Group 3',
-  'Front End Group 4',
+  'Front End Team 1',
+  'Front End Team 2',
+  'Front End Team 3',
+  'Front End Team 4',
 ];
 
 const issues = [
@@ -68,7 +68,7 @@ for (let i=46; i<=49; i++) {
     avatar: faker.image.avatar(),
     address: faker.address.streetAddress("###") + ' ' + faker.address.city() + ' ' + faker.address.county(),
     phone: faker.phone.phoneNumberFormat(),
-    division: faker.random.arrayElement(division),
+    division: `Front End Team ${50-i}`,
     password: "123456",
     role: "team_leader"
   });
@@ -82,7 +82,7 @@ database.users.push({
   avatar: faker.image.avatar(),
   address: faker.address.streetAddress("###") + ' ' + faker.address.city() + ' ' + faker.address.county(),
   phone: faker.phone.phoneNumberFormat(),
-  division: faker.random.arrayElement(division),
+  division: 'Design Marketing Group A',
   password: "123456",
   role: "group_leader"
 });

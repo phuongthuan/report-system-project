@@ -7,9 +7,10 @@ module.exports = () => {
   var _ = require("lodash");
 
   var division = [
-    'Front End Group 1',
-    'Front End Group 2',
-    'Front End Group 3'
+    'Front End Team 1',
+    'Front End Team 2',
+    'Front End Team 3',
+    'Front End Team 4',
   ];
 
   var issues = [
