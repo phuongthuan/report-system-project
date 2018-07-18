@@ -1,15 +1,19 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom'
+import FlashMessage from "containers/FlashMessage";
 import ProfileContainer from "./ProfileContainer";
 
-class ReportPage extends Component {
+class ProfilePage extends Component {
   render() {
     return (
-      <Switch>
-        <Route exact path="/profile/edit" component={ProfileContainer} />
-      </Switch>
+      <div className="container">
+        <FlashMessage />
+        <Switch>
+          <Route exact path="/profile/edit" component={ProfileContainer} />
+        </Switch>
+      </div>
     );
   }
 }
 
-export default ReportPage;
+export default ProfilePage;

@@ -4,10 +4,10 @@ import Learning from 'containers/Learning'
 import Home from 'containers/Home'
 import Auth from "containers/Auth";
 import ReportPage from 'containers/ReportPage';
-import ProfileContainer from "../ProfilePage/ProfileContainer";
 import NoMatch from "../../utils/NoMatch";
 import PrivateRoute from '../../utils/PrivateRoute'
 import StatisticPage from "../StatisticPage";
+import ProfilePage from "../ProfilePage";
 
 export default class App extends Component {
   render() {
@@ -18,7 +18,7 @@ export default class App extends Component {
         <PrivateRoute path="/learning" component={Learning}/>
         <PrivateRoute path="/report" component={ReportPage} />
         <PrivateRoute path="/statistic" component={StatisticPage} />
-        <PrivateRoute path="/profile" component={ProfileContainer}/>
+        <PrivateRoute path="/profile" component={ProfilePage}/>
         <Route component={NoMatch}/>
       </Switch>
     )

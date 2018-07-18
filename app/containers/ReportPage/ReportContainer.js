@@ -20,6 +20,7 @@ class ReportContainer extends PureComponent {
 
   render() {
     const {reports, deleteReport, loading } = this.props;
+    // console.log('Report Container', reports);
     return (
       <div className="row mt-5 mb-5">
         <div className="col-md-4">

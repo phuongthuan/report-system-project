@@ -36,11 +36,11 @@ class SideBar extends Component {
   }
 
   render() {
-    const {profile, loading} = this.props;
+    const {profile, loading, user} = this.props;
     const avatar = profile ? profile.avatar : imageProfile;
     return (
       <div>
-        {loading && isEmpty(profile) ? (
+        {loading && isEmpty(profile) && isEmpty(user) ? (
           <FontAwesomeIcon icon="spinner" size="lg" spin/>
         ) : (
           <ListGroup className="shadow-sm">
