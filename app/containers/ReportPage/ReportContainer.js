@@ -5,8 +5,6 @@ import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import ReportsList from '../../components/ReportsList'
 import SideBar from '../../components/SideBar'
-
-
 import * as ReportPageActions from './actions';
 import { selectError, selectLoading, selectReports } from "./selectors";
 import { selectUser } from "../Auth/selectors";
