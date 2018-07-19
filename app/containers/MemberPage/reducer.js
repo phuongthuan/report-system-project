@@ -1,10 +1,11 @@
 import {
   FETCH_ALL_MEMBERS_OF_TEAM, FETCH_ALL_MEMBERS_OF_TEAM_FAILED,
-  FETCH_ALL_MEMBERS_OF_TEAM_SUCCEEDED
+  FETCH_ALL_MEMBERS_OF_TEAM_SUCCEEDED, GET_MEMBER_PROFILE, GET_MEMBER_PROFILE_FAILED, GET_MEMBER_PROFILE_SUCCEEDED
 } from "./constants";
 
 const initState = {
   members: [],
+  member: {},
   loading: false,
   error: false
 }
@@ -12,6 +13,7 @@ const initState = {
 export function memberReducer(state = initState, action) {
   switch (action.type) {
     case FETCH_ALL_MEMBERS_OF_TEAM:
+    case GET_MEMBER_PROFILE:
       return {
         ...state,
         loading: true
@@ -23,10 +25,19 @@ export function memberReducer(state = initState, action) {
         loading: false,
         error: false
       }
+    case GET_MEMBER_PROFILE_SUCCEEDED:
+      return {
+        ...state,
+        member: action.memberReceived,
+        loading: false,
+        error: false
+      }
     case FETCH_ALL_MEMBERS_OF_TEAM_FAILED:
+    case GET_MEMBER_PROFILE_FAILED:
       return {
         ...state,
         members: [],
+        member: {},
         error: true
       }
     default:

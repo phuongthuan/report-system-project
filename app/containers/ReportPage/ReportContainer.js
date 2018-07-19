@@ -29,7 +29,7 @@ class ReportContainer extends PureComponent {
   }
 
   render() {
-    const {reports, deleteReport, loading} = this.props;
+    const {reports, deleteReport, loading, user} = this.props;
     return (
       <div className="row mt-5 mb-5">
         <div className="col-md-4">
@@ -40,6 +40,7 @@ class ReportContainer extends PureComponent {
             <Spinner />
           ) : (
             <ReportsList
+              user={user}
               deleteReport={deleteReport}
               reportsList={reports}
             />

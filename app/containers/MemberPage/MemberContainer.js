@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 import SideBar from 'components/SideBar'
 import MembersList from 'components/MembersList'
 import { fetchAllMembersOfTeam } from './actions'
-import { selectLoading, selectMembers } from "./selectors";
+import { selectMemberLoading, selectMembers } from "./selectors";
 import { selectUser } from "../Auth/selectors";
 
 class MemberContainer extends Component {
@@ -49,7 +49,7 @@ class MemberContainer extends Component {
 const mapStateToProps = state => ({
   members: selectMembers(state),
   user: selectUser(state),
-  loading: selectLoading(state)
+  loading: selectMemberLoading(state)
 });
 
 export default connect(

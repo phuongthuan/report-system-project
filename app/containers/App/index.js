@@ -20,7 +20,7 @@ export default class App extends Component {
         <PrivateRoute path="/report" component={ReportPage} />
         <PrivateRoute path="/statistic" component={StatisticPage} />
         <PrivateRoute path="/profile" component={ProfilePage}/>
-        <PrivateRoute path="/members" component={MemberPage}/>
+        <PrivateRoute path="/member" component={MemberPage}/>
         <Route component={NoMatch}/>
       </Switch>
     )
