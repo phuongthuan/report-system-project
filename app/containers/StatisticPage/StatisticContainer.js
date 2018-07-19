@@ -5,30 +5,21 @@ import isEmpty from "lodash/isEmpty";
 import SideBar from 'components/SideBar'
 import BarChart from "../../components/Chart/BarChart";
 import PieChart from "../../components/Chart/PieChart";
-import { selectMembers } from "../MemberPage/selectors";
-import { selectReports } from "../ReportPage/selectors";
-import { fetchAllMembersOfTeam } from "../MemberPage/actions";
-import { fetchAllReportsOfUser } from "../ReportPage/actions";
+import { getAllReportsOfTeam } from "./actions";
+import { selectReportsOfTeam } from "./selectors";
+import { selectProfile } from "../ProfilePage/selectors";
+import { selectUser } from "../Auth/selectors";
 
 class StatisticContainer extends Component {
 
-  state = {
-
-  }
-
   componentDidMount() {
-    // Fetch all reports of Front End Team.
-    // Fetch user, then fetch all reports of that user.
-
-
+    const { getAllReportsOfTeam, user } = this.props;
+    getAllReportsOfTeam(user.division);
   }
-
-  // fetchAllReportOfTeam = (userId, teamName) => {
-  //   const { fetchAllMembersOfTeam } = this.props;
-  //   fetchAllMembersOfTeam(teamName);
-  // }
 
   render() {
+    const { reportsOfTeam } = this.props;
+    console.log('StatisticContainer', reportsOfTeam);
     return (
       <div>
         <div className="row mt-5 mb-5">
@@ -67,20 +58,20 @@ class StatisticContainer extends Component {
 }
 
 StatisticContainer.propTypes = {
-  members: PropTypes.object,
-  reports: PropTypes.object,
-  fetchAllReportsOfUser: PropTypes.func,
-  fetchAllMembersOfTeam: PropTypes.func,
+  reportsOfTeam: PropTypes.array,
+  profile: PropTypes.object,
+  user: PropTypes.object,
+  getAllReportsOfTeam: PropTypes.func,
 }
 
 const mapStateToProps = state => ({
-  members: selectMembers(state),
-  reports: selectReports(state)
+  reportsOfTeam: selectReportsOfTeam(state),
+  profile: selectProfile(state),
+  user: selectUser(state)
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchAllMembersOfTeam: payload => dispatch(fetchAllMembersOfTeam(payload)),
-  fetchAllReportsOfUser: id => dispatch(fetchAllReportsOfUser(id))
+  getAllReportsOfTeam: teamName => dispatch(getAllReportsOfTeam(teamName))
 });
 
 export default connect(
