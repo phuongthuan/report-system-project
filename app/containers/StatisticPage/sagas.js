@@ -7,8 +7,8 @@ import { fetchAllReportsOfUserFailed } from "../ReportPage/actions";
 
 export function* fetchAllReportsOfTeam(action) {
   try {
+    yield delay(700);
     const members = yield call(callGetMembersOfTeam, action.teamName);
-
     const reports = yield members.map(function (member) {
       try {
         return call(callFetchAllReportsOfUser, member.id);

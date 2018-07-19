@@ -6,9 +6,11 @@ import SideBar from 'components/SideBar'
 import BarChart from "../../components/Chart/BarChart";
 import PieChart from "../../components/Chart/PieChart";
 import { getAllReportsOfTeam } from "./actions";
-import { selectReportsOfTeam } from "./selectors";
+import { selectLoading, selectReportsOfTeam } from "./selectors";
 import { selectProfile } from "../ProfilePage/selectors";
 import { selectUser } from "../Auth/selectors";
+import Navigation from "../../components/Navigation";
+import Spinner from "../../components/Spinner";
 
 class StatisticContainer extends Component {
 
@@ -18,38 +20,37 @@ class StatisticContainer extends Component {
   }
 
   render() {
-    const { reportsOfTeam } = this.props;
-    console.log('StatisticContainer', reportsOfTeam);
+    const { reportsOfTeam, loading } = this.props;
     return (
       <div>
         <div className="row mt-5 mb-5">
           <div className="col-md-2">
             <SideBar/>
           </div>
-          <div className="col-md-5">
-            {/*{loading && isEmpty(profile) ? (*/}
-            {/*<FontAwesomeIcon icon="spinner" size="lg" spin/>*/}
-            {/*) : (*/}
-            {/*<div className="shadow-sm">*/}
-            {/*Static Container*/}
-            {/*</div>*/}
-            {/*)}*/}
-            <div className="shadow-sm">
-              <PieChart />
+          <div className="col-md-10">
+            <div className="row mb-3">
+              <div className="col-md-12">
+                <Navigation />
+              </div>
             </div>
-          </div>
 
-          <div className="col-md-5">
-            {/*{loading && isEmpty(profile) ? (*/}
-            {/*<FontAwesomeIcon icon="spinner" size="lg" spin/>*/}
-            {/*) : (*/}
-            {/*<div className="shadow-sm">*/}
-            {/*Static Container*/}
-            {/*</div>*/}
-            {/*)}*/}
-            <div className="shadow-sm">
-              <BarChart />
-            </div>
+            {loading && isEmpty(reportsOfTeam) ? (
+              <Spinner />
+            ) : (
+              <div className="row">
+                <div className="col-md-6">
+                  <div className="shadow-sm">
+                    <PieChart dataSource={reportsOfTeam} />
+                  </div>
+                </div>
+
+                <div className="col-md-6">
+                  <div className="shadow-sm">
+                    <BarChart dataSource={reportsOfTeam} />
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -61,13 +62,15 @@ StatisticContainer.propTypes = {
   reportsOfTeam: PropTypes.array,
   profile: PropTypes.object,
   user: PropTypes.object,
+  loading: PropTypes.bool,
   getAllReportsOfTeam: PropTypes.func,
 }
 
 const mapStateToProps = state => ({
   reportsOfTeam: selectReportsOfTeam(state),
   profile: selectProfile(state),
-  user: selectUser(state)
+  user: selectUser(state),
+  loading: selectLoading(state)
 });
 
 const mapDispatchToProps = dispatch => ({
