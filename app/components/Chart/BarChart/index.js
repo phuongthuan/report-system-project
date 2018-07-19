@@ -12,6 +12,7 @@ class BarChart extends Component {
   }
 
   state = {
+    dataSource: this.props.dataSource,
     data: {
       labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
       datasets: [
@@ -29,7 +30,7 @@ class BarChart extends Component {
   }
 
   render() {
-    const { data } = this.state;
+    const { dataSource, data } = this.state;
     return (
       <div className="card-body">
         <Bar

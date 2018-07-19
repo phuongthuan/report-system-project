@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import moment from 'moment'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types';
 import IssueSelect from 'components/IssueSelect';
@@ -31,7 +32,7 @@ class CreateReportForm extends Component {
   state = {
     numberSelectBox: 0,
     report : {
-      date: new Date().toString(),
+      date: moment(),
       userId: this.props.user.id,
       title: '',
       achievement: '',
@@ -114,7 +115,7 @@ class CreateReportForm extends Component {
           <CardHeader>
             <CardTitle>Write Daily Report</CardTitle>
             <CardSubtitle>
-              Today is: {report.date}
+              Today is: {moment(report.date).format("dddd, MMM Do YYYY")}
             </CardSubtitle>
           </CardHeader>
 

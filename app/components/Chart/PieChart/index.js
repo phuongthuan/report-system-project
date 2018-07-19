@@ -12,30 +12,41 @@ class PieChart extends Component {
   }
 
   state = {
+    dataSource: this.props.dataSource,
     data: {
       labels: [
-        'Red',
-        'Green',
-        'Yellow'
+        'Hard for Debugging',
+        'Keeping up with Technology',
+        'Communication with others',
+        'Time Estimation',
+        'Security Threats'
       ],
       datasets: [{
-        data: [300, 50, 100],
+        data: [300, 100, 200, 50, 100],
         backgroundColor: [
-          '#FF6384',
-          '#36A2EB',
-          '#FFCE56'
+          '#990099',
+          '#3366cc',
+          '#109618',
+          '#DC3912',
+          '#FF9900'
         ],
         hoverBackgroundColor: [
-          '#FF6384',
-          '#36A2EB',
-          '#FFCE56'
+          '#990099',
+          '#3366cc',
+          '#109618',
+          '#DC3912',
+          '#FF9900'
         ]
       }]
     }
   }
 
+  componentDidMount() {
+    console.log('CDM', this.state.dataSource);
+  }
 
   render() {
+
     return (
       <div className="card-body">
         <Pie
