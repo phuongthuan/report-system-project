@@ -2,7 +2,9 @@ var faker = require('faker');
 
 var database = {
   users: [],
-  reports: []
+  reports: [],
+  weeky_reports: [],
+  messages: []
 };
 
 const division = [
@@ -100,5 +102,29 @@ for (let i=1; i<=600; i++) {
     comment: faker.lorem.sentences()
   });
 }
+
+for (let i=1; i<=20; i++) {
+  database.weeky_reports.push({
+    id: i,
+    userId: getRandomInt(46, 49),
+    issues: faker.lorem.sentence(),
+    solutions: faker.lorem.sentence(),
+    date: faker.date.between('2018-06-01', '2018-09-31'),
+    description: faker.lorem.paragraphs(),
+    summary: faker.lorem.sentences()
+  });
+}
+
+for (let i=1; i<=500; i++) {
+  database.messages.push({
+    id: i,
+    userId: getRandomInt(1, 50),
+    toUser: getRandomInt(1, 50),
+    title: faker.lorem.sentence(),
+    message: faker.lorem.sentence(),
+    date: faker.date.between('2018-06-01', '2018-09-31'),
+  });
+}
+
 
 console.log(JSON.stringify(database));
