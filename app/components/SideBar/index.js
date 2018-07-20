@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
+  Badge,
   ListGroup,
   ListGroupItem,
   CardBody,
@@ -38,6 +39,11 @@ class SideBar extends Component {
     e.preventDefault();
     this.props.logout();
     history.push('/');
+  }
+
+  goToMessagePage = () => {
+    const { history } = this.props
+    history.push('/message')
   }
 
   render() {
@@ -89,6 +95,16 @@ class SideBar extends Component {
                     <FontAwesomeIcon icon="book" className="mr-2"/>
                     Reports
                   </Link>
+                </ListGroupItem>
+
+                <ListGroupItem
+                  className="justify-content-between"
+                  action
+                >
+                  <Button onClick={this.goToMessagePage} className="p-0" color="link">
+                    <FontAwesomeIcon icon="envelope" className="mr-2"/>
+                    Messenger <Badge color="warning">4</Badge>
+                  </Button>
                 </ListGroupItem>
               </Fragment>
             )

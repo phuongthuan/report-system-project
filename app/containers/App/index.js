@@ -9,6 +9,7 @@ import PrivateRoute from '../../utils/PrivateRoute'
 import StatisticPage from "../StatisticPage";
 import ProfilePage from "../ProfilePage";
 import MemberPage from "../MemberPage";
+import MessagePage from "../Message";
 
 export default class App extends Component {
   render() {
@@ -17,6 +18,7 @@ export default class App extends Component {
         <Route exact path="/" component={Home}/>
         <Route path="/login" component={Auth}/>
         <PrivateRoute path="/learning" component={Learning}/>
+        <PrivateRoute path="/message" component={MessagePage}/>
         <PrivateRoute path="/report" component={ReportPage} />
         <PrivateRoute path="/statistic" component={StatisticPage} />
         <PrivateRoute path="/profile" component={ProfilePage}/>
