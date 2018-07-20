@@ -4,9 +4,10 @@ import PropTypes from 'prop-types'
 import isEmpty from "lodash/isEmpty";
 import SideBar from 'components/SideBar'
 import BarChart from "../../components/Chart/BarChart";
+import LineChart from "../../components/Chart/LineChart";
 import PieChart from "../../components/Chart/PieChart";
 import { getAllReportsOfTeam } from "./actions";
-import { selectLoading, selectReportsOfTeam } from "./selectors";
+import { selectStatisticLoading, selectReportsOfTeam } from "./selectors";
 import { selectProfile } from "../ProfilePage/selectors";
 import { selectUser } from "../Auth/selectors";
 import Navigation from "../../components/Navigation";
@@ -46,7 +47,7 @@ class StatisticContainer extends Component {
 
                 <div className="col-md-6">
                   <div className="shadow-sm">
-                    <BarChart dataSource={reportsOfTeam} />
+                    <LineChart dataSource={reportsOfTeam} />
                   </div>
                 </div>
               </div>
@@ -70,7 +71,7 @@ const mapStateToProps = state => ({
   reportsOfTeam: selectReportsOfTeam(state),
   profile: selectProfile(state),
   user: selectUser(state),
-  loading: selectLoading(state)
+  loading: selectStatisticLoading(state)
 });
 
 const mapDispatchToProps = dispatch => ({

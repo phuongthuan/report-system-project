@@ -35,8 +35,6 @@ class BarChart extends Component {
       <div className="card-body">
         <Bar
           data={data}
-          width={50}
-          height={30}
           options={{
             title: {
               display: this.props.displayTitle,

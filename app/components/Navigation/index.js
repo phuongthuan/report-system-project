@@ -55,8 +55,8 @@ class Navigation extends Component {
                   Month
                 </DropdownItem>
                 <DropdownItem divider/>
-                <DropdownItem>
-                  Reset
+                <DropdownItem active>
+                  All Time
                 </DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>

@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 
 import SideBar from '../../components/SideBar'
 import UpdateReportForm from "../../components/UpdateReportForm";
-import { selectAReport, selectError, selectLoading } from "./selectors";
+import { selectAReport, selectError, selectReportLoading } from "./selectors";
 import { addFLashMessage } from "../FlashMessage/actions";
 import { fetchAReport, updateReport } from "./actions";
 
@@ -56,7 +56,7 @@ class UpdateReportContainer extends Component {
 
 const mapStateToProps = state => ({
   report: selectAReport(state),
-  loading: selectLoading(state),
+  loading: selectReportLoading(state),
   error: selectError(state)
 });
 
