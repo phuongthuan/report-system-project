@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
 import isEmpty from "lodash/isEmpty";
 import SideBar from 'components/SideBar'
-import BarChart from "../../components/Chart/BarChart";
 import LineChart from "../../components/Chart/LineChart";
 import PieChart from "../../components/Chart/PieChart";
 import { getAllReportsOfTeam } from "./actions";
@@ -17,7 +16,9 @@ class StatisticContainer extends Component {
 
   componentDidMount() {
     const { getAllReportsOfTeam, user } = this.props;
-    getAllReportsOfTeam(user.division);
+    if (user.role === 'team_leader') {
+      getAllReportsOfTeam(user.division);
+    }
   }
 
   render() {

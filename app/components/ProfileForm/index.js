@@ -9,7 +9,6 @@ import {
   InputGroup,
   Card,
   CardHeader,
-  CardSubTitle,
   CardBody,
   CardFooter,
   InputGroupAddon
@@ -56,6 +55,7 @@ class ProfileForm extends Component {
 
   render() {
     const { user } = this.state;
+    const disabled = (user.role === 'member' || user.role === 'team_leader');
     return (
       <Form onSubmit={this.onSubmitForm}>
         <Card>
@@ -135,6 +135,7 @@ class ProfileForm extends Component {
             <FormGroup>
               <InputGroup>
                 <Input
+                  disabled={disabled}
                   type="text"
                   name="division"
                   bsSize="sm"
