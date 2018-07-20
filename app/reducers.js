@@ -12,6 +12,7 @@ import profileReducer from 'containers/ProfilePage/reducer'
 import flashMessageReducer from 'containers/FlashMessage/reducer'
 import memberReducer from 'containers/MemberPage/reducer'
 import statisticReducer from 'containers/StatisticPage/reducer'
+import messageReducer from 'containers/Message/reducer'
 
 import { context as globalContext } from 'containers/App/constants'
 import { context as learningContext } from 'containers/Learning/constants'
@@ -21,11 +22,13 @@ import { context as profilepageContext } from 'containers/ProfilePage/constants'
 import { context as flashMessageContext } from 'containers/FlashMessage/constants'
 import { context as memberpageContext } from 'containers/MemberPage/constants'
 import { context as statisticpageContext } from 'containers/StatisticPage/constants'
+import { context as messagepageContext } from 'containers/Message/constants'
 
 const reducer = combineReducers({
   [authpageContext]: authReducer,
   [profilepageContext]: profileReducer,
   [flashMessageContext]: flashMessageReducer,
+  [messagepageContext]: messageReducer,
   [memberpageContext]: memberReducer,
   [statisticpageContext]: statisticReducer,
   [reportpageContext]: reportReducer,

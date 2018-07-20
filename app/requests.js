@@ -11,7 +11,8 @@ import {
   UPDATE_USER_PROFILE,
   GET_USER_PROFILE,
   LOGIN,
-  GET_MEMBERS_OF_TEAM
+  GET_MEMBERS_OF_TEAM,
+  GET_MESSAGES
 } from 'constants/API_URL'
 
 export const callFetchKeywords = () => request('get', GET_KEYWORDS);
@@ -20,6 +21,7 @@ export const callFetchAllReportsOfUser = userId => request('get', `${GET_ALL_REP
 export const callFetchAReport = id => request('get', `${GET_A_REPORT}/${id}`);
 export const callGetProfile = id => request('get', `${GET_USER_PROFILE}/${id}`)
 export const callGetMembersOfTeam = payload => request('get', `${GET_MEMBERS_OF_TEAM}?division=${payload}`)
+export const callGetMessagesToUser = payload => request('get', `${GET_MESSAGES}?toUser=${payload}`)
 
 
 export const callCreateReport = report => request('post', CREATE_REPORT, report);
