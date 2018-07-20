@@ -5,7 +5,7 @@ import Spinner from 'components/Spinner'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types';
 import MemberDetail from "../../components/MemberDetail";
-import { selectError, selectLoading, selectReports } from "../ReportPage/selectors";
+import { selectError, selectReportLoading, selectReports } from "../ReportPage/selectors";
 import { fetchAllReportsOfUser } from "../ReportPage/actions";
 import { selectMember, selectMemberLoading } from "./selectors";
 import { getMemberProfile } from "./actions";
@@ -56,7 +56,7 @@ MemberDetailContainer.propTypes = {
 
 const mapStateToProps = state => ({
   reports: selectReports(state),
-  loading: selectLoading(state),
+  loading: selectReportLoading(state),
   error: selectError(state),
   member: selectMember(state),
   memberLoading: selectMemberLoading(state)

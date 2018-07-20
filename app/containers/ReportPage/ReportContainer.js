@@ -6,30 +6,41 @@ import Spinner from 'components/Spinner'
 import ReportsList from '../../components/ReportsList'
 import SideBar from '../../components/SideBar'
 import { selectUser } from "../Auth/selectors";
-import { selectError, selectLoading, selectReports } from "./selectors";
+import { selectError, selectReportLoading, selectReports } from "./selectors";
 import { fetchAllReportsOfUser, deleteReport } from "./actions";
+import { getAllReportsOfTeam } from "../StatisticPage/actions";
+import { selectReportsOfTeam, selectStatisticLoading } from "../StatisticPage/selectors";
 
 class ReportContainer extends PureComponent {
 
   static propTypes = {
     fetchAllReportsOfUser: PropTypes.func,
     deleteReport: PropTypes.func,
-    loading: PropTypes.bool,
+    reportLoading: PropTypes.bool,
+    statisticLoading: PropTypes.bool,
     error: PropTypes.oneOfType([
       PropTypes.object,
       PropTypes.bool,
     ]),
-    reports: PropTypes.arrayOf(PropTypes.object),
+    reportsOfUser: PropTypes.arrayOf(PropTypes.object),
+    reportsOfTeam: PropTypes.arrayOf(PropTypes.object),
     user: PropTypes.object,
   };
 
   componentDidMount() {
-    const {fetchAllReportsOfUser, user} = this.props;
+    const { user, fetchAllReportsOfUser, getAllReportsOfTeam } = this.props;
+    if (user.role === 'team_leader') {
+      getAllReportsOfTeam(user.division);
+    }
     fetchAllReportsOfUser(user.id);
   }
 
   render() {
-    const {reports, deleteReport, loading, user} = this.props;
+
+    const {reportsOfUser, deleteReport, reportLoading, statisticLoading, reportsOfTeam, user} = this.props;
+    const loading = (user.role === 'member') ? reportLoading : statisticLoading;
+    const reports = (user.role === 'member') ? reportsOfUser : reportsOfTeam;
+
     return (
       <div className="row mt-5 mb-5">
         <div className="col-md-4">
@@ -52,15 +63,18 @@ class ReportContainer extends PureComponent {
 }
 
 export const mapStateToProps = state => ({
-  reports: selectReports(state),
-  loading: selectLoading(state),
+  reportsOfUser: selectReports(state),
+  reportsOfTeam: selectReportsOfTeam(state),
+  reportLoading: selectReportLoading(state),
+  statisticLoading: selectStatisticLoading(state),
   error: selectError(state),
   user: selectUser(state)
 });
 
 export const mapDispatchToProps = dispatch => ({
   fetchAllReportsOfUser: userId => dispatch(fetchAllReportsOfUser(userId)),
-  deleteReport: reportId => dispatch(deleteReport(reportId))
+  deleteReport: reportId => dispatch(deleteReport(reportId)),
+  getAllReportsOfTeam: teamName => dispatch(getAllReportsOfTeam(teamName))
 });
 
 export default connect(

@@ -97,6 +97,7 @@ class SideBar extends Component {
             {(profile.role) === 'team_leader' &&
             (
               <Fragment>
+
                 <ListGroupItem
                   className="justify-content-between"
                   action
@@ -114,6 +115,16 @@ class SideBar extends Component {
                   <Link to="/member">
                     <FontAwesomeIcon icon="address-card" className="mr-2"/>
                     Members List
+                  </Link>
+                </ListGroupItem>
+
+                <ListGroupItem
+                  className="justify-content-between"
+                  action
+                >
+                  <Link to="/report">
+                    <FontAwesomeIcon icon="book" className="mr-2"/>
+                    Reports of Team
                   </Link>
                 </ListGroupItem>
               </Fragment>

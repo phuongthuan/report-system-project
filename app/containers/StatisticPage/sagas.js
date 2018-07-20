@@ -23,12 +23,6 @@ export function* fetchAllReportsOfTeam(action) {
   }
 }
 
-Array.prototype.mapGen = function *mapGen (callback) {
-  for (let i=0; i<this.length; i++) {
-    yield callback(this[i])
-  }
-};
-
 export function* watchFetchAllReportsOfTeam() {
   yield takeLatest(GET_ALL_REPORTS_OF_TEAM, fetchAllReportsOfTeam);
 }
