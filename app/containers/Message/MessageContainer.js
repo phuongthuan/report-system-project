@@ -1,23 +1,38 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
+import isEmpty from "lodash/isEmpty";
 import PropTypes from 'prop-types';
-import { selectMessages } from "./selectors";
-import { fetchAllMessages } from "./actions";
+import SideBar from 'components/SideBar'
+import Spinner from 'components/Spinner'
+import MessagesList from '../../components/MessagesList/index'
+import { selectMembersRelatedToMessage, selectMessageLoading, selectMessages } from "./selectors";
+import { fetchAllMembersRelatedToMessage, fetchAllMessages } from "./actions";
 import { selectUser } from "../Auth/selectors";
 
 class MessageContainer extends Component {
 
   componentDidMount() {
-    const { fetchAllMessages, user } = this.props;
+    const { fetchAllMessages, user, fetchAllMembersRelatedToMessage } = this.props;
     fetchAllMessages(user.id);
+    fetchAllMembersRelatedToMessage(user.id);
   }
 
   render() {
-    const { messages } = this.props;
-    console.log(messages);
+    const { messages, loading } = this.props;
     return (
-      <div>
-        Message Container.
+      <div className="row mt-5 mb-5">
+        <div className="col-md-4">
+          <SideBar/>
+        </div>
+        <div className="col-md-8">
+          {loading && isEmpty(messages) ? (
+            <Spinner />
+          ) : (
+            <MessagesList
+              messagesList={messages}
+            />
+          )}
+        </div>
       </div>
     );
   }
@@ -25,16 +40,22 @@ class MessageContainer extends Component {
 
 MessageContainer.propTypes = {
   messages: PropTypes.arrayOf(PropTypes.object),
-  fetchAllMessages: PropTypes.func
+  membersRelatedToMessage: PropTypes.arrayOf(PropTypes.object),
+  fetchAllMessages: PropTypes.func,
+  fetchAllMembersRelatedToMessage: PropTypes.func,
+  loading: PropTypes.bool,
 };
 
 const mapStateToProps = state => ({
   messages: selectMessages(state),
-  user: selectUser(state)
+  loading: selectMessageLoading(state),
+  user: selectUser(state),
+  membersRelatedToMessage: selectMembersRelatedToMessage(state),
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchAllMessages: payload => dispatch(fetchAllMessages(payload))
+  fetchAllMessages: payload => dispatch(fetchAllMessages(payload)),
+  fetchAllMembersRelatedToMessage: payload => dispatch(fetchAllMembersRelatedToMessage(payload))
 });
 
 export default connect(

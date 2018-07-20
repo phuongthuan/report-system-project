@@ -20,6 +20,10 @@ import { selectUser } from "../../containers/Auth/selectors";
 import * as AuthPageActions from '../../containers/Auth/actions'
 import * as ProfilePageActions from '../../containers/ProfilePage/actions'
 import { selectLoading, selectProfile } from "../../containers/ProfilePage/selectors";
+import { selectMessages } from "../../containers/Message/selectors";
+import { fetchAllMessages } from "../../containers/Message/actions";
+import { fetchAllReportsOfUser } from "../../containers/ReportPage/actions";
+import { selectReports } from "../../containers/ReportPage/selectors";
 
 class SideBar extends Component {
 
@@ -28,9 +32,11 @@ class SideBar extends Component {
   }
 
   componentDidMount() {
-    const {getProfile, user} = this.props;
+    const {getProfile, user, fetchAllMessages, fetchAllReportsOfUser } = this.props;
     if (user) {
       getProfile(user.id);
+      fetchAllMessages(user.id);
+      fetchAllReportsOfUser(user.id);
     }
   }
 
@@ -47,7 +53,7 @@ class SideBar extends Component {
   }
 
   render() {
-    const {profile, loading, user} = this.props;
+    const {profile, loading, user, messages, reports} = this.props;
     const avatar = profile ? profile.avatar : imageProfile;
     return (
       <div>
@@ -93,7 +99,7 @@ class SideBar extends Component {
                 >
                   <Link to="/report">
                     <FontAwesomeIcon icon="book" className="mr-2"/>
-                    Reports
+                    Reports <Badge color="secondary">{reports.length}</Badge>
                   </Link>
                 </ListGroupItem>
 
@@ -103,9 +109,10 @@ class SideBar extends Component {
                 >
                   <Button onClick={this.goToMessagePage} className="p-0" color="link">
                     <FontAwesomeIcon icon="envelope" className="mr-2"/>
-                    Messenger <Badge color="warning">4</Badge>
+                    Messenger <Badge color="warning">{messages.length}</Badge>
                   </Button>
                 </ListGroupItem>
+
               </Fragment>
             )
             }
@@ -143,6 +150,17 @@ class SideBar extends Component {
                     Reports of Team
                   </Link>
                 </ListGroupItem>
+
+                <ListGroupItem
+                  className="justify-content-between"
+                  action
+                >
+                  <Button onClick={this.goToMessagePage} className="p-0" color="link">
+                    <FontAwesomeIcon icon="envelope" className="mr-2"/>
+                    Messenger <Badge color="warning">{messages.length}</Badge>
+                  </Button>
+                </ListGroupItem>
+
               </Fragment>
             )
             }
@@ -169,6 +187,17 @@ class SideBar extends Component {
                     Members List
                   </Link>
                 </ListGroupItem>
+
+                <ListGroupItem
+                  className="justify-content-between"
+                  action
+                >
+                  <Button onClick={this.goToMessagePage} className="p-0" color="link">
+                    <FontAwesomeIcon icon="envelope" className="mr-2"/>
+                    Messenger <Badge color="warning">{messages.length}</Badge>
+                  </Button>
+                </ListGroupItem>
+
               </Fragment>
             )
             }
@@ -195,21 +224,29 @@ SideBar.propTypes = {
     push: PropTypes.func,
   }),
   profile: PropTypes.object,
+  messages: PropTypes.arrayOf(PropTypes.object),
+  reports: PropTypes.arrayOf(PropTypes.object),
   user: PropTypes.object.isRequired,
   logout: PropTypes.func.isRequired,
   getProfile: PropTypes.func,
+  fetchAllMessages: PropTypes.func,
+  fetchAllReportsOfUser: PropTypes.func,
   loading: PropTypes.bool
 };
 
 const mapStateToProps = state => ({
   profile: selectProfile(state),
   user: selectUser(state),
-  loading: selectLoading(state)
+  loading: selectLoading(state),
+  messages: selectMessages(state),
+  reports: selectReports(state)
 });
 
 const mapDispatchToProps = dispatch => ({
   getProfile: id => dispatch(ProfilePageActions.getUserProfile(id)),
-  logout: () => dispatch(AuthPageActions.logout())
+  logout: () => dispatch(AuthPageActions.logout()),
+  fetchAllMessages: payload => dispatch(fetchAllMessages(payload)),
+  fetchAllReportsOfUser: payload => dispatch(fetchAllReportsOfUser(payload))
 });
 
 export default connect(
