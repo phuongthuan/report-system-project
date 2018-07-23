@@ -1,0 +1,9 @@
+export const context = 'reportfilter'
+
+export const SET_REPORT_FILTER = 'REPORTFILTER/SET_REPORT_FILTER'
+
+export const SHOW_ALL_TIME = 'REPORTFILTER/SHOW_ALL_TIME'
+export const SHOW_BY_DAY = 'REPORTFILTER/SHOW_BY_DAY'
+export const SHOW_BY_WEEK = 'REPORTFILTER/SHOW_BY_WEEK'
+export const SHOW_BY_MONTH = 'REPORTFILTER/SHOW_BY_MONTH'
+
