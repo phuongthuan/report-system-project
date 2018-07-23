@@ -29,7 +29,6 @@ class Member extends Component {
     modal: false
   };
 
-
   onSubmitForm = (e) => {
     e.preventDefault();
     const {modal} = this.state;

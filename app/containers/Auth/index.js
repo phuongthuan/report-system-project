@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import img from '../../assests/images/fancycrave-248220-unsplash.jpg';
 import * as AuthActions from './actions'
 import * as FlashMessageActions from '../FlashMessage/actions'
-import { selectUser } from "./selectors";
+import { selectAuthLoading, selectUser } from "./selectors";
 import LoginForm from "../../components/LoginForm";
 
 const AuthWrapper = styled.div`

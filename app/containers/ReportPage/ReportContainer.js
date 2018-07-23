@@ -29,7 +29,7 @@ class ReportContainer extends PureComponent {
 
   componentDidMount() {
     const { user, fetchAllReportsOfUser, getAllReportsOfTeam } = this.props;
-    if (user.role === 'team_leader') {
+    if (user && user.role === 'team_leader') {
       getAllReportsOfTeam(user.division);
     }
     fetchAllReportsOfUser(user.id);

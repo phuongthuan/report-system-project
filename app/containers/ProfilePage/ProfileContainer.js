@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Spinner from 'components/Spinner'
 import isEmpty from 'lodash/isEmpty';
@@ -6,10 +6,10 @@ import { connect } from "react-redux";
 
 import SideBar from '../../components/SideBar'
 import ProfileForm from "../../components/ProfileForm";
-import { getUserProfile, updateProfile} from './actions'
+import { getUserProfile, updateProfile } from './actions'
 import { addFLashMessage } from '../FlashMessage/actions'
-import { selectUser } from "../Auth/selectors";
-import { selectLoading, selectProfile } from "./selectors";
+import { selectAuthLoading, selectUser } from "../Auth/selectors";
+import { selectProfileLoading, selectProfile } from "./selectors";
 
 class ProfileContainer extends Component {
 
@@ -26,26 +26,36 @@ class ProfileContainer extends Component {
   }
 
   render() {
-    const {updateProfile, profile, loading, addFlashMessage} = this.props;
+    const {updateProfile, profile, loading, addFlashMessage, authLoading} = this.props;
     return (
       <div className="container">
         <div className="row mt-5 mb-5">
-          <div className="col-md-4">
-            <SideBar />
-          </div>
-          <div className="col-md-8">
-            {loading && isEmpty(profile) ? (
-              <Spinner />
+          {
+            authLoading ? (
+              <Spinner/>
             ) : (
-              <div className="shadow-sm">
-                <ProfileForm
-                  profile={profile}
-                  addFlashMessage={addFlashMessage}
-                  updateProfile={updateProfile}
-                />
-              </div>
-            )}
-          </div>
+              <Fragment>
+                {loading && isEmpty(profile) ? (
+                  <Spinner/>
+                ) : (
+                  <Fragment>
+                    <div className="col-md-4">
+                      <SideBar/>
+                    </div>
+                    <div className="col-md-8">
+                      <div className="shadow-sm">
+                        <ProfileForm
+                          profile={profile}
+                          addFlashMessage={addFlashMessage}
+                          updateProfile={updateProfile}
+                        />
+                      </div>
+                    </div>
+                  </Fragment>
+                )}
+              </Fragment>
+            )
+          }
         </div>
       </div>
     );
@@ -55,7 +65,8 @@ class ProfileContainer extends Component {
 export const mapStateToProps = state => ({
   profile: selectProfile(state),
   user: selectUser(state),
-  loading: selectLoading(state)
+  loading: selectProfileLoading(state),
+  authLoading: selectAuthLoading(state)
 });
 
 export const mapDispatchToProps = dispatch => ({

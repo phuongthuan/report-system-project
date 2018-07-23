@@ -47,10 +47,9 @@ class Report extends Component {
 
   render() {
     const {report, user, member} = this.props;
-
     return (
       <Fragment>
-        {(user && user.role === 'member') ? (
+        {(user && user.role === 'member' && user.id === report.userId) ? (
           <Card className="mb-4" key={report.id}>
             <CardBody>
               <CardTitle>{report.id} - {report.title}</CardTitle>

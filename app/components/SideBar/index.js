@@ -19,17 +19,13 @@ import imageProfile from '../../assests/images/Gabe_newell.png';
 import { selectUser } from "../../containers/Auth/selectors";
 import * as AuthPageActions from '../../containers/Auth/actions'
 import * as ProfilePageActions from '../../containers/ProfilePage/actions'
-import { selectLoading, selectProfile } from "../../containers/ProfilePage/selectors";
+import { selectProfileLoading, selectProfile } from "../../containers/ProfilePage/selectors";
 import { selectMessages } from "../../containers/Message/selectors";
 import { fetchAllMessages } from "../../containers/Message/actions";
 import { fetchAllReportsOfUser } from "../../containers/ReportPage/actions";
 import { selectReports } from "../../containers/ReportPage/selectors";
 
 class SideBar extends Component {
-
-  state = {
-    isLoading: true
-  }
 
   componentDidMount() {
     const {getProfile, user, fetchAllMessages, fetchAllReportsOfUser } = this.props;
@@ -58,7 +54,7 @@ class SideBar extends Component {
     return (
       <div>
         {loading && isEmpty(profile) && isEmpty(user) ? (
-          <FontAwesomeIcon icon="spinner" size="lg" spin/>
+          <Spinner/>
         ) : (
           <ListGroup className="shadow-sm">
             <ListGroupItem className="justify-content-between text-center">
@@ -237,7 +233,7 @@ SideBar.propTypes = {
 const mapStateToProps = state => ({
   profile: selectProfile(state),
   user: selectUser(state),
-  loading: selectLoading(state),
+  loading: selectProfileLoading(state),
   messages: selectMessages(state),
   reports: selectReports(state)
 });
