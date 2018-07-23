@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import isEmpty from "lodash/isEmpty";
-import { Jumbotron, Button, UncontrolledCollapse, Card, CardBody } from 'reactstrap'
+import { Jumbotron, Button, UncontrolledCollapse } from 'reactstrap'
 import Spinner from 'components/Spinner'
 import PropTypes from 'prop-types';
 import ReportsList from "../ReportsList";
@@ -9,7 +9,7 @@ import Member from "../Member";
 class MemberDetail extends Component {
 
   render() {
-    const {reportsList, loading, memberLoading, member } = this.props;
+    const {reportsList, loading, member, user } = this.props;
     return (
       <div>
         <Jumbotron className="py-2">
@@ -22,7 +22,10 @@ class MemberDetail extends Component {
                 More information
               </Button>
               <UncontrolledCollapse toggler="#toggler">
-                <Member member={member} />
+                <Member
+                  member={member}
+                  user={user}
+                />
               </UncontrolledCollapse>
             </div>
           </div>

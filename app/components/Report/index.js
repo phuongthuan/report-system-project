@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from 'react';
-import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import moment from 'moment'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -10,22 +9,11 @@ import {
   Form,
   ModalFooter, ButtonGroup, Card, CardBody, CardTitle, CardText, CardFooter
 } from 'reactstrap'
-import { selectMember } from "../../containers/MemberPage/selectors";
-import { getMemberProfile } from "../../containers/MemberPage/actions";
-import { addFLashMessage } from "../../containers/FlashMessage/actions";
-import { selectUser } from "../../containers/Auth/selectors";
 
 class Report extends Component {
 
   state = {
     modal: false
-  }
-
-  componentDidMount() {
-    const {getMember, report, user} = this.props;
-    if (user.role === 'team_leader') {
-      getMember(report.userId);
-    }
   }
 
   onSubmitForm = (e) => {
@@ -46,7 +34,8 @@ class Report extends Component {
   }
 
   render() {
-    const {report, user, member} = this.props;
+    const {report, user} = this.props;
+    const { userId } = report;
     return (
       <Fragment>
         {(user && user.role === 'member' && user.id === report.userId) ? (
@@ -92,8 +81,8 @@ class Report extends Component {
                 <small className="text-muted">
                   <FontAwesomeIcon icon="user-tie"/>
                   &nbsp;&nbsp;Created by:&nbsp;
-                  <Link to={`member/${report.userId}`}>
-                    {member.firstName} {member.lastName}
+                  <Link to={`member/${userId.id}`}>
+                    {userId.firstName} {userId.lastName}
                   </Link>
                 </small>
               </CardText>
@@ -137,17 +126,4 @@ class Report extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  member: selectMember(state),
-  user: selectUser(state)
-});
-
-const mapDispatchToProps = dispatch => ({
-  getMember: id => dispatch(getMemberProfile(id)),
-  addFlashMessage: message => dispatch(addFLashMessage(message))
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Report);
+export default Report;

@@ -1,13 +1,13 @@
 import { call, put, fork ,takeLatest } from 'redux-saga/effects'
 import { delay } from 'redux-saga'
 import {
+  createMessageFailed, createMessageSucceeded,
   fetchAllMessagesFailed,
   fetchAllMessagesSucceeded,
 } from "./actions";
-import { FETCH_ALL_MESSAGES } from "./constants";
-import { callGetMessagesToUser, callGetProfile } from "../../requests";
+import { CREATE_MESSAGE, FETCH_ALL_MESSAGES } from "./constants";
+import { callCreateMessage, callGetMessagesToUser, callGetProfile } from "../../requests";
 import { getMemberProfileFailed } from "../MemberPage/actions";
-
 
 export function* fetchAllMessages(action) {
   try {
@@ -34,12 +34,26 @@ export function* fetchAllMessages(action) {
   }
 }
 
+export function* createMessage(action) {
+  try {
+    const message = yield call(callCreateMessage, action.newMessage);
+    yield put(createMessageSucceeded(message));
+  } catch (error) {
+    return put(createMessageFailed(error));
+  }
+}
+
 export function* watchFetchAllMessages() {
   yield takeLatest(FETCH_ALL_MESSAGES, fetchAllMessages);
 }
 
+export function* watchCreateMessage() {
+  yield takeLatest(CREATE_MESSAGE, createMessage);
+}
+
 export default function* messageSagaPage() {
   yield [
-    fork(watchFetchAllMessages)
+    fork(watchFetchAllMessages),
+    fork(watchCreateMessage)
   ];
 }

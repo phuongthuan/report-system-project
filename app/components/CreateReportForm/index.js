@@ -32,7 +32,7 @@ class CreateReportForm extends Component {
   state = {
     numberSelectBox: 0,
     report : {
-      date: moment(),
+      date: moment().toString(),
       userId: this.props.user.id,
       title: '',
       achievement: '',
@@ -92,7 +92,9 @@ class CreateReportForm extends Component {
   render() {
     const { numberSelectBox, report } = this.state;
     const children = [];
-    for (var i = 0; i < numberSelectBox; i += 1) {
+    const date = moment(report.date, "dddd, MMM Do YYYY");
+
+    for (let i = 0; i < numberSelectBox; i++) {
       children.push(
         <FormGroup key={i} row>
           <Col sm={8}>
@@ -115,7 +117,7 @@ class CreateReportForm extends Component {
           <CardHeader>
             <CardTitle>Write Daily Report</CardTitle>
             <CardSubtitle>
-              Today is: {moment(report.date).format("dddd, MMM Do YYYY")}
+              Today is: {date.format("dddd, MMM Do YYYY")}
             </CardSubtitle>
           </CardHeader>
 
@@ -131,6 +133,7 @@ class CreateReportForm extends Component {
                 value={report.title}
                 placeholder="Title"
                 onChange={this.onHandleFormChange}
+                required
               />
             </FormGroup>
 
@@ -144,6 +147,7 @@ class CreateReportForm extends Component {
                 value={report.achievement}
                 bsSize="sm"
                 onChange={this.onHandleFormChange}
+                required
               />
             </FormGroup>
 
@@ -157,6 +161,7 @@ class CreateReportForm extends Component {
                 placeholder="Tomorrow I'll bla bla ..."
                 bsSize="sm"
                 onChange={this.onHandleFormChange}
+                required
               />
             </FormGroup>
 
@@ -164,7 +169,6 @@ class CreateReportForm extends Component {
             <IssueSelect addSelectBox={this.onAddSelectBox} >
               {children}
             </IssueSelect>
-
 
             <CardSubtitle>Description</CardSubtitle>
             <FormGroup>

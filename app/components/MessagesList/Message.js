@@ -8,6 +8,7 @@ class Message extends Component {
   render() {
     const { message }= this.props;
     const { userId } = message;
+
     return (
       <Fragment>
         <Card className="mb-3">
@@ -16,15 +17,17 @@ class Message extends Component {
               <div className="media-body">
                 <CardText>
                   <small className="text-muted"><FontAwesomeIcon icon="envelope"/>&nbsp;
-                    Message from:&nbsp;&nbsp;
+                    Sent by&nbsp;&nbsp;
                     <Link to={`member/${userId.id}`}>
                       {userId.firstName} {userId.lastName}
                     </Link>
+                    &nbsp;&nbsp;from {moment(message.date).format("dddd, MMMM Do YYYY")}
                   </small>
                 </CardText>
-
                 <CardText>
                   {message.title}
+                </CardText>
+                <CardText>
                   {message.message}
                 </CardText>
               </div>

@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty'
 import { connect } from 'react-redux';
@@ -10,12 +10,15 @@ import { selectError, selectReportLoading, selectReports } from "./selectors";
 import { fetchAllReportsOfUser, deleteReport } from "./actions";
 import { getAllReportsOfTeam } from "../StatisticPage/actions";
 import { selectReportsOfTeam, selectStatisticLoading } from "../StatisticPage/selectors";
+import { addFlashMessage } from "../FlashMessage/actions";
 
-class ReportContainer extends PureComponent {
+class ReportContainer extends Component {
 
   static propTypes = {
     fetchAllReportsOfUser: PropTypes.func,
+    fetchAllReportsOfTeam: PropTypes.func,
     deleteReport: PropTypes.func,
+    addFlashMessage: PropTypes.func,
     reportLoading: PropTypes.bool,
     statisticLoading: PropTypes.bool,
     error: PropTypes.oneOfType([
@@ -28,11 +31,15 @@ class ReportContainer extends PureComponent {
   };
 
   componentDidMount() {
-    const { user, fetchAllReportsOfUser, getAllReportsOfTeam } = this.props;
+    const { user, fetchAllReportsOfUser, fetchAllReportsOfTeam } = this.props;
+
     if (user && user.role === 'team_leader') {
-      getAllReportsOfTeam(user.division);
+      fetchAllReportsOfTeam(user.division);
     }
-    fetchAllReportsOfUser(user.id);
+
+    if (user && user.role === 'member') {
+      fetchAllReportsOfUser(user.id);
+    }
   }
 
   render() {
@@ -52,6 +59,7 @@ class ReportContainer extends PureComponent {
           ) : (
             <ReportsList
               user={user}
+              addFlashMessage={addFlashMessage}
               deleteReport={deleteReport}
               reportsList={reports}
             />
@@ -74,7 +82,8 @@ export const mapStateToProps = state => ({
 export const mapDispatchToProps = dispatch => ({
   fetchAllReportsOfUser: userId => dispatch(fetchAllReportsOfUser(userId)),
   deleteReport: reportId => dispatch(deleteReport(reportId)),
-  getAllReportsOfTeam: teamName => dispatch(getAllReportsOfTeam(teamName))
+  fetchAllReportsOfTeam: teamName => dispatch(getAllReportsOfTeam(teamName)),
+  addFlashMessage: message => dispatch(addFlashMessage(message))
 });
 
 export default connect(
