@@ -1,27 +1,32 @@
-import React, { Component, Fragment } from 'react';
-import { Button, Image, Card, CardBody} from 'reactstrap'
-import img from '../../assests/images/Gabe_newell.png'
+import React, { Component, Fragment } from 'react'
+import { Link } from 'react-router-dom';
+import moment from 'moment'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { CardText, Card, CardBody} from 'reactstrap'
 
 class Message extends Component {
   render() {
     const { message }= this.props;
-    console.log(message);
+    const { userId } = message;
     return (
       <Fragment>
         <Card className="mb-3">
           <CardBody>
             <div className="media">
-              {/*<Link to={`member/${id}`}>*/}
-                {/*<Image className="mr-3 rounded-circle" src={image} alt="Member Profile img"/>*/}
-              {/*</Link>*/}
               <div className="media-body">
-                {/*<h5 className="mt-0">*/}
-                  {/*<Link to={`member/${id}`}>*/}
-                    {/*{firstName} {lastName}*/}
-                  {/*</Link>*/}
-                {/*</h5>*/}
-                <p>{message.title}</p>
-                <p>{message.message}</p>
+                <CardText>
+                  <small className="text-muted"><FontAwesomeIcon icon="envelope"/>&nbsp;
+                    Message from:&nbsp;&nbsp;
+                    <Link to={`member/${userId.id}`}>
+                      {userId.firstName} {userId.lastName}
+                    </Link>
+                  </small>
+                </CardText>
+
+                <CardText>
+                  {message.title}
+                  {message.message}
+                </CardText>
               </div>
             </div>
           </CardBody>

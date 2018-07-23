@@ -1,4 +1,5 @@
 import { take, call, put, takeLatest, fork } from 'redux-saga/effects'
+import { delay } from 'redux-saga'
 
 import {
   AUTH_LOGIN_REQUEST, AUTH_LOGOUT_REQUEST
@@ -19,6 +20,7 @@ export function* loginFlow(action) {
   };
 
   try {
+    yield delay(300);
     const responseUser = yield call(callLogin, options);
     const { user } = responseUser;
     localStorage.setItem('auth', JSON.stringify(responseUser));
