@@ -9,28 +9,30 @@ import { selectError, selectReportLoading, selectReports } from "../ReportPage/s
 import { fetchAllReportsOfUser } from "../ReportPage/actions";
 import { selectMember, selectMemberLoading } from "./selectors";
 import { getMemberProfile } from "./actions";
+import { selectUser } from "../Auth/selectors";
 
 class MemberDetailContainer extends Component {
 
   componentDidMount() {
     const { match, fetchAllReportsOfUser, getMemberProfile } = this.props;
-    const id = match.params.id;
-    fetchAllReportsOfUser(id);
-    getMemberProfile(id);
+    const memberId = match.params.id;
+    fetchAllReportsOfUser(memberId);
+    getMemberProfile(memberId);
   }
 
   render() {
-    const { reports, loading, memberLoading, member} = this.props;
+    const { reports, loading, memberLoading, member, user} = this.props;
     return (
       <div className="row mt-5 mb-5">
         <div className="col-md-4">
           <SideBar />
         </div>
         <div className="col-md-8">
-          {loading && isEmpty(reports) ? (
+          {loading && memberLoading && isEmpty(reports) ? (
             <Spinner />
           ) : (
             <MemberDetail
+              user={user}
               {...this.props}
               member={member}
               reportsList={reports}
@@ -58,6 +60,7 @@ const mapStateToProps = state => ({
   reports: selectReports(state),
   loading: selectReportLoading(state),
   error: selectError(state),
+  user: selectUser(state),
   member: selectMember(state),
   memberLoading: selectMemberLoading(state)
 });

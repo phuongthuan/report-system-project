@@ -6,7 +6,7 @@ import {
   callUpdateReport,
   callFetchAReport,
   callDeleteReport,
-  callFetchAllReportsOfUser
+  callFetchAllReportsOfUser, callGetProfile
 } from '../../requests';
 import {
   fetchReportsSucceeded,
@@ -30,20 +30,26 @@ import {
   FETCH_A_REPORT,
   DELETE_REPORT, FETCH_ALL_REPORTS_OF_USER
 } from './constants';
-
-export function* fetchReports() {
-  try {
-    const reports = yield call(callFetchReports);
-    yield put(fetchReportsSucceeded(reports));
-  } catch (error) {
-    yield put(fetchReportsFailed(error));
-  }
-}
+import { getUserProfileFailed } from "../ProfilePage/actions";
 
 export function* fetchAllReportsOfUser(action) {
   try {
     const reports = yield call(callFetchAllReportsOfUser, action.id);
     yield delay(700);
+    const users = yield reports.map(function (report) {
+      try {
+        return call(callGetProfile, report.userId);
+      } catch (error) {
+        return put(getUserProfileFailed(error));
+      }
+    });
+    reports.map(report => {
+      const userRelatedToReport = users.filter(user => user.id === report.userId);
+      if (userRelatedToReport && userRelatedToReport.length > 0) {
+        report.userId = userRelatedToReport[0];
+      }
+      return null;
+    });
     yield put(fetchAllReportsOfUserSucceeded(reports));
   } catch (error) {
     yield put(fetchAllReportsOfUserFailed(error));
@@ -94,10 +100,6 @@ export function* watchFetchAllReportsOfUser() {
   yield takeLatest(FETCH_ALL_REPORTS_OF_USER, fetchAllReportsOfUser);
 }
 
-export function* watchFetchReports() {
-  yield takeLatest(FETCH_REPORTS, fetchReports);
-}
-
 export function* watchFetchAReport() {
   yield takeLatest(FETCH_A_REPORT, fetchAReport);
 }
@@ -109,6 +111,7 @@ export function* watchCreateReport() {
 export function* watchUpdateReport() {
   yield takeLatest(UPDATE_REPORT, updateReport);
 }
+
 export function* watchDeleteReport() {
   yield takeLatest(DELETE_REPORT, deleteReport);
 }
@@ -116,7 +119,6 @@ export function* watchDeleteReport() {
 export default function* reportPageSaga() {
   yield [
     fork(watchFetchAllReportsOfUser),
-    fork(watchFetchReports),
     fork(watchFetchAReport),
     fork(watchCreateReport),
     fork(watchUpdateReport),

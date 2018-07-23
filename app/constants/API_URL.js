@@ -9,6 +9,7 @@ export const GET_A_REPORT = `${API_ROOT}reports`;
 export const GET_MESSAGES = `${API_ROOT}messages`;
 
 export const CREATE_REPORT = `${API_ROOT}reports`;
+export const CREATE_MESSAGE = `${API_ROOT}messages`;
 export const UPDATE_REPORT = `${API_ROOT}reports`;
 export const DELETE_REPORT = `${API_ROOT}reports`;
 

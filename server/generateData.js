@@ -1,4 +1,5 @@
 var faker = require('faker');
+var moment = require('moment');
 
 var database = {
   users: [],
@@ -115,11 +116,11 @@ for (let i=1; i<=20; i++) {
   });
 }
 
-for (let i=1; i<=500; i++) {
+for (let i=1; i<=50; i++) {
   database.messages.push({
     id: i,
-    userId: getRandomInt(1, 50),
-    toUser: getRandomInt(1, 50),
+    userId: getRandomInt(46, 49),
+    toUser: getRandomInt(1, 45),
     title: faker.lorem.sentence(),
     message: faker.lorem.sentence(),
     date: faker.date.between('2018-06-01', '2018-09-31'),

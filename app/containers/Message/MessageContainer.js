@@ -25,15 +25,19 @@ class MessageContainer extends Component {
         <div className="col-md-4">
           <SideBar/>
         </div>
-        <div className="col-md-8">
-          {loading && isEmpty(messages) ? (
-            <Spinner />
-          ) : (
-            <MessagesList
-              messagesList={messages}
-            />
-          )}
-        </div>
+        {messages.length === 0 ? (
+          <h4>No message</h4>
+        ) : (
+          <div className="col-md-8">
+            {loading && isEmpty(messages) ? (
+              <Spinner />
+            ) : (
+              <MessagesList
+                messagesList={messages}
+              />
+            )}
+          </div>
+        )}
       </div>
     );
   }

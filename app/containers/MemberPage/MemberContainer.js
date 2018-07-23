@@ -6,6 +6,8 @@ import PropTypes from 'prop-types'
 import SideBar from 'components/SideBar'
 import MembersList from 'components/MembersList'
 import { fetchAllMembersOfTeam } from './actions'
+import { addFlashMessage } from '../FlashMessage/actions'
+import { createMessage } from '../Message/actions'
 import { selectMemberLoading, selectMembers } from "./selectors";
 import { selectUser } from "../Auth/selectors";
 
@@ -16,15 +18,19 @@ class MemberContainer extends Component {
     members: PropTypes.array,
     loading: PropTypes.bool,
     fetchAllMembersOfTeam: PropTypes.func,
+    createMessage: PropTypes.func,
+    addFlashMessage: PropTypes.func,
   }
 
   componentDidMount() {
     const {fetchAllMembersOfTeam, user} = this.props;
-    fetchAllMembersOfTeam(user.division);
+    if (user && user.role === 'team_leader' || user.role === 'group_leader') {
+      fetchAllMembersOfTeam(user.division);
+    }
   }
 
   render() {
-    const {members, loading} = this.props;
+    const {members, loading, createMessage, addFlashMessage, user} = this.props;
     return (
       <div className="container">
         <div className="row mt-5 mb-5">
@@ -36,6 +42,9 @@ class MemberContainer extends Component {
               <Spinner />
             ) : (
               <MembersList
+                user={user}
+                createMessage={createMessage}
+                addFlashMessage={addFlashMessage}
                 membersList={members}
               />
             )}
@@ -54,5 +63,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  {fetchAllMembersOfTeam}
+  {fetchAllMembersOfTeam, createMessage, addFlashMessage }
 )(MemberContainer);

@@ -1,10 +1,16 @@
 import React from 'react';
 import Member from '../Member/index'
 
-const MembersList = ({membersList}) => (
+const MembersList = ({membersList, user, createMessage, addFlashMessage}) => (
   <div>
     {membersList.map(member => (
-      <Member key={member.id} member={member} />
+      <Member
+        user={user}
+        addFlashMessage={addFlashMessage}
+        createMessage={createMessage}
+        key={member.id}
+        member={member}
+      />
     ))}
   </div>
 );

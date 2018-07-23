@@ -47,7 +47,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = dispatch => ({
   loginAction: payload => dispatch(AuthActions.login(payload)),
-  addFlashMessage: message => dispatch(FlashMessageActions.addFLashMessage(message))
+  addFlashMessage: message => dispatch(FlashMessageActions.addFlashMessage(message))
 });
 
 export default connect(

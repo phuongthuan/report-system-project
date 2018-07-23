@@ -31,8 +31,11 @@ class SideBar extends Component {
     const {getProfile, user, fetchAllMessages, fetchAllReportsOfUser } = this.props;
     if (user) {
       getProfile(user.id);
-      fetchAllMessages(user.id);
-      fetchAllReportsOfUser(user.id);
+
+      if (user.role === 'member') {
+        fetchAllMessages(user.id);
+        fetchAllReportsOfUser(user.id);
+      }
     }
   }
 
@@ -146,17 +149,6 @@ class SideBar extends Component {
                     Reports of Team
                   </Link>
                 </ListGroupItem>
-
-                <ListGroupItem
-                  className="justify-content-between"
-                  action
-                >
-                  <Button onClick={this.goToMessagePage} className="p-0" color="link">
-                    <FontAwesomeIcon icon="envelope" className="mr-2"/>
-                    Messenger <Badge color="warning">{messages.length}</Badge>
-                  </Button>
-                </ListGroupItem>
-
               </Fragment>
             )
             }
@@ -183,17 +175,6 @@ class SideBar extends Component {
                     Members List
                   </Link>
                 </ListGroupItem>
-
-                <ListGroupItem
-                  className="justify-content-between"
-                  action
-                >
-                  <Button onClick={this.goToMessagePage} className="p-0" color="link">
-                    <FontAwesomeIcon icon="envelope" className="mr-2"/>
-                    Messenger <Badge color="warning">{messages.length}</Badge>
-                  </Button>
-                </ListGroupItem>
-
               </Fragment>
             )
             }

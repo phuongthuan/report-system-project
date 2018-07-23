@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import SideBar from '../../components/SideBar'
 import ProfileForm from "../../components/ProfileForm";
 import { getUserProfile, updateProfile } from './actions'
-import { addFLashMessage } from '../FlashMessage/actions'
+import { addFlashMessage } from '../FlashMessage/actions'
 import { selectAuthLoading, selectUser } from "../Auth/selectors";
 import { selectProfileLoading, selectProfile } from "./selectors";
 
@@ -72,7 +72,7 @@ export const mapStateToProps = state => ({
 export const mapDispatchToProps = dispatch => ({
   getProfile: id => dispatch(getUserProfile(id)),
   updateProfile: payload => dispatch(updateProfile(payload)),
-  addFlashMessage: message => dispatch(addFLashMessage(message))
+  addFlashMessage: message => dispatch(addFlashMessage(message))
 });
 
 export default connect(

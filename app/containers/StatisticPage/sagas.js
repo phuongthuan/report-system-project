@@ -17,6 +17,13 @@ export function* fetchAllReportsOfTeam(action) {
       }
     });
     const mergedReports = [].concat.apply([], reports);
+    mergedReports.map(report => {
+      const memberReport = members.filter(member => member.id === report.userId);
+      if (memberReport && memberReport.length > 0) {
+        report.userId = memberReport[0];
+      }
+      return null;
+    });
     yield put(getAllReportsOfTeamSucceeded(mergedReports));
   } catch (error) {
     yield put(getAllReportsOfTeamFailed(error.message));

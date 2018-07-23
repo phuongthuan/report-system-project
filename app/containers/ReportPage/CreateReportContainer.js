@@ -6,7 +6,7 @@ import CreateReportForm from '../../components/CreateReportForm'
 import SideBar from '../../components/SideBar'
 import { selectUser } from "../Auth/selectors";
 import { createReport } from "./actions";
-import { addFLashMessage } from "../FlashMessage/actions";
+import { addFlashMessage } from "../FlashMessage/actions";
 
 class CreateReportContainer extends Component {
 
@@ -42,7 +42,7 @@ export const mapStateToProps = state => ({
 
 export const mapDispatchToProps = dispatch => ({
   createReport: payload => dispatch(createReport(payload)),
-  addFlashMessage: message => dispatch(addFLashMessage(message))
+  addFlashMessage: message => dispatch(addFlashMessage(message))
 });
 
 export default connect(

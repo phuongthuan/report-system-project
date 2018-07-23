@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 import SideBar from '../../components/SideBar'
 import UpdateReportForm from "../../components/UpdateReportForm";
 import { selectAReport, selectError, selectReportLoading } from "./selectors";
-import { addFLashMessage } from "../FlashMessage/actions";
+import { addFlashMessage } from "../FlashMessage/actions";
 import { fetchAReport, updateReport } from "./actions";
 
 class UpdateReportContainer extends Component {
@@ -63,7 +63,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   fetchAReport: id => dispatch(fetchAReport(id)),
   updateReport: payload => dispatch(updateReport(payload)),
-  addFlashMessage: message => dispatch(addFLashMessage(message))
+  addFlashMessage: message => dispatch(addFlashMessage(message))
 });
 
 export default connect(
