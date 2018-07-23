@@ -1,5 +1,6 @@
 import { put, call, takeLatest, fork } from 'redux-saga/effects'
 import { delay } from 'redux-saga'
+import moment from 'moment'
 import { GET_ALL_REPORTS_OF_TEAM } from "./constants";
 import { callFetchAllReportsOfUser, callGetMembersOfTeam } from "../../requests";
 import { getAllReportsOfTeamFailed, getAllReportsOfTeamSucceeded } from "./actions";
@@ -24,6 +25,40 @@ export function* fetchAllReportsOfTeam(action) {
       }
       return null;
     });
+
+
+    //filter by month
+    const reportByMonth = mergedReports.filter(report => (report.date >= '2018-09-01' && report.date < '2018-09-31'));
+
+    const resultsReportByMonth = reportByMonth.map(report => ({
+      id: report.id,
+      date: moment(report.date).format("YYYY-MM-DD"),
+    }));
+
+    console.log('Saga reportByMonth', resultsReportByMonth);
+
+
+    //filter by week:
+    const reportByWeek = mergedReports.filter(report => (report.date >= '2018-09-01' && report.date < '2018-09-07'));
+
+    const resultsReportByWeek = reportByWeek.map(report => ({
+      id: report.id,
+      date: moment(report.date).format("YYYY-MM-DD"),
+    }));
+    console.log('Saga reportByWeek', resultsReportByWeek);
+
+
+    //filter by day:
+    const reportByDay = mergedReports.filter(report => (report.date === '2018-09-19T05:23:57.476Z'));
+
+    const resultsReportByDay = reportByDay.map(report => ({
+      id: report.id,
+      date: moment(report.date).format("YYYY-MM-DD"),
+    }));
+    console.log('Saga reportByDay', resultsReportByDay);
+
+
+
     yield put(getAllReportsOfTeamSucceeded(mergedReports));
   } catch (error) {
     yield put(getAllReportsOfTeamFailed(error.message));
