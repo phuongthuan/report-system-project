@@ -11,6 +11,8 @@ import { fetchAllReportsOfUser, deleteReport } from "./actions";
 import { getAllReportsOfTeam } from "../StatisticPage/actions";
 import { selectReportsOfTeam, selectStatisticLoading } from "../StatisticPage/selectors";
 import { addFlashMessage } from "../FlashMessage/actions";
+import Navigation from "../../components/Navigation";
+import DateTimePicker from "../../components/DateTimePicker";
 
 class ReportContainer extends Component {
 
@@ -54,6 +56,17 @@ class ReportContainer extends Component {
           <SideBar/>
         </div>
         <div className="col-md-8">
+          <div className="row mb-3">
+            <div className="col-md-12">
+              <Navigation/>
+            </div>
+          </div>
+
+          <div className="row mb-3">
+            <div className="col-md-4">
+              <DateTimePicker/>
+            </div>
+          </div>
           {loading && isEmpty(reports) ? (
             <Spinner />
           ) : (
