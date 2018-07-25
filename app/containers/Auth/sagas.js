@@ -1,4 +1,4 @@
-import { take, call, put, takeLatest, fork } from 'redux-saga/effects'
+import { take, call, put, takeLatest, fork, all } from 'redux-saga/effects'
 import { delay } from 'redux-saga'
 
 import {
@@ -48,6 +48,8 @@ export function* watchLogout() {
 }
 
 export default function* authPageSaga() {
-  yield fork(watchLogin);
-  yield fork(watchLogout);
+  yield all([
+    fork(watchLogin),
+    fork(watchLogout)
+  ]);
 }

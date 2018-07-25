@@ -1,4 +1,4 @@
-import { call, put, fork ,takeLatest } from 'redux-saga/effects'
+import { call, put, fork ,takeLatest, all } from 'redux-saga/effects'
 import { delay } from 'redux-saga'
 import {
   createMessageFailed, createMessageSucceeded,
@@ -52,8 +52,8 @@ export function* watchCreateMessage() {
 }
 
 export default function* messageSagaPage() {
-  yield [
+  yield all([
     fork(watchFetchAllMessages),
     fork(watchCreateMessage)
-  ];
+  ]);
 }

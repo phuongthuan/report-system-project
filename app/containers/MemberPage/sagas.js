@@ -1,4 +1,4 @@
-import { call, put, takeLatest, fork } from 'redux-saga/effects'
+import { call, put, takeLatest, fork, all } from 'redux-saga/effects'
 import { delay } from 'redux-saga'
 import { callGetMembersOfTeam, callGetProfile } from "../../requests";
 import {
@@ -36,8 +36,8 @@ export function* watchGetMemberProfile() {
 }
 
 export function* memberSagaPage() {
-  yield [
+  yield all([
     fork(watchFetchAllMembersOfTeam),
     fork(watchGetMemberProfile)
-  ]
+  ]);
 }

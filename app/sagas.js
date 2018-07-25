@@ -16,5 +16,5 @@ export default function* rootSaga() {
     profilePageSaga(),
     learningSaga(),
     reportPageSaga()
-  ])
+  ]);
 }

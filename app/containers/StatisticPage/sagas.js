@@ -1,4 +1,4 @@
-import { put, call, takeLatest, fork } from 'redux-saga/effects'
+import { put, call, takeLatest, fork, all } from 'redux-saga/effects'
 import { delay } from 'redux-saga'
 import moment from 'moment'
 import { GET_ALL_REPORTS_OF_TEAM } from "./constants";
@@ -70,7 +70,7 @@ export function* watchFetchAllReportsOfTeam() {
 }
 
 export function* statisticSagaPage() {
-  yield [
+  yield all([
     fork(watchFetchAllReportsOfTeam)
-  ]
+  ])
 }

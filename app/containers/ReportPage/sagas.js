@@ -1,4 +1,4 @@
-import { call, put, fork ,takeLatest } from 'redux-saga/effects'
+import { call, put, fork ,takeLatest, all } from 'redux-saga/effects'
 import { delay } from 'redux-saga'
 import {
   callFetchReports,
@@ -117,11 +117,11 @@ export function* watchDeleteReport() {
 }
 
 export default function* reportPageSaga() {
-  yield [
+  yield all([
     fork(watchFetchAllReportsOfUser),
     fork(watchFetchAReport),
     fork(watchCreateReport),
     fork(watchUpdateReport),
     fork(watchDeleteReport),
-  ];
+  ]);
 }
