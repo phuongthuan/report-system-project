@@ -1,5 +1,6 @@
 import { SHOW_ALL_TIME, SHOW_BY_DAY, SHOW_BY_MONTH, SHOW_BY_WEEK } from "./constants";
 import { filterReportByDay, filterReportByRange } from "./utilities";
+import { selectReportsOfTeam } from "../StatisticPage/selectors";
 
 const getFilterReports = (reports, filter) => {
   switch (filter) {
@@ -15,3 +16,7 @@ const getFilterReports = (reports, filter) => {
       throw new Error('Unknown filter: ' + filter)
   }
 }
+
+const mapStateToProps = state => ({
+  reports: getFilterReports(selectReportsOfTeam(state), )
+});

@@ -9,6 +9,7 @@ const initState = {
 function statisticReducer(state = initState, action) {
   switch (action.type) {
 
+
     case GET_ALL_REPORTS_OF_TEAM:
       return {
         ...state,

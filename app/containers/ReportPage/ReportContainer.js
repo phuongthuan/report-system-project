@@ -56,17 +56,11 @@ class ReportContainer extends Component {
           <SideBar/>
         </div>
         <div className="col-md-8">
-          <div className="row mb-3">
-            <div className="col-md-12">
-              <Navigation/>
-            </div>
-          </div>
-
-          <div className="row mb-3">
-            <div className="col-md-4">
-              <DateTimePicker/>
-            </div>
-          </div>
+          {/*<div className="row mb-3">*/}
+            {/*<div className="col">*/}
+              {/*<DateTimePicker />*/}
+            {/*</div>*/}
+          {/*</div>*/}
           {loading && isEmpty(reports) ? (
             <Spinner />
           ) : (
@@ -97,6 +91,7 @@ export const mapDispatchToProps = dispatch => ({
   deleteReport: reportId => dispatch(deleteReport(reportId)),
   fetchAllReportsOfTeam: teamName => dispatch(getAllReportsOfTeam(teamName)),
   addFlashMessage: message => dispatch(addFlashMessage(message))
+
 });
 
 export default connect(

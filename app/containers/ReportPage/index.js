@@ -4,6 +4,7 @@ import FlashMessage from "containers/FlashMessage";
 import ReportContainer from "./ReportContainer";
 import CreateReportContainer from "./CreateReportContainer";
 import UpdateReportContainer from "./UpdateReportContainer";
+import NoMatch from "../../utils/NoMatch";
 
 class ReportPage extends Component {
   render() {
@@ -14,6 +15,7 @@ class ReportPage extends Component {
           <Route exact path="/report" component={ReportContainer}/>
           <Route path="/report/create" component={CreateReportContainer}/>
           <Route path="/report/update/:id" component={UpdateReportContainer}/>
+          <Route component={NoMatch}/>
         </Switch>
       </div>
     );

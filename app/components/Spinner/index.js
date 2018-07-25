@@ -1,10 +1,10 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Icon } from 'antd'
 import Wrapper from './Wrapper'
 
 const Spinner = ({width, height}) => (
   <Wrapper width={width} height={height}>
-    <FontAwesomeIcon icon="spinner" size="lg" spin/>
+    <Icon type="loading" style={{ fontSize: 30 }} spin />
   </Wrapper>
 );
 

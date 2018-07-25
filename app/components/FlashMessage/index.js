@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components'
 import PropTypes from 'prop-types';
 import classnames from 'classnames'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Icon } from 'antd';
 
 const Flash = styled.div`
   position: absolute;
@@ -36,8 +36,8 @@ class FlashMessage extends Component {
       })}
       >
         {text}&nbsp;
-        <FontAwesomeIcon
-          icon={(() => {
+        <Icon
+          type={(() => {
             switch (type) {
               case "success":
                 return "smile";

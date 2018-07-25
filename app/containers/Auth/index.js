@@ -5,8 +5,8 @@ import styled from 'styled-components'
 import img from '../../assests/images/fancycrave-248220-unsplash.jpg';
 import * as AuthActions from './actions'
 import * as FlashMessageActions from '../FlashMessage/actions'
-import { selectAuthLoading, selectUser } from "./selectors";
-import LoginForm from "../../components/LoginForm";
+import { selectUser } from "./selectors";
+import WrappedLoginForm from "../../components/LoginForm";
 
 const AuthWrapper = styled.div`
   background-image: url(${img});
@@ -26,7 +26,7 @@ class Auth extends Component {
     const { addFlashMessage, loginAction } = this.props;
     return (
       <AuthWrapper>
-        <LoginForm
+        <WrappedLoginForm
           {...this.props}
           loginAction={loginAction}
           addFlashMessage={addFlashMessage}

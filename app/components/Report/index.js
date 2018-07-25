@@ -1,35 +1,29 @@
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom'
+import { Button, Icon, Modal } from 'antd';
 import moment from 'moment'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-  Button, Modal,
-  ModalHeader,
-  ModalBody,
-  Form,
-  ModalFooter, ButtonGroup, Card, CardBody, CardTitle, CardText, CardFooter
+import { Card, CardBody, CardTitle, CardText, CardFooter
 } from 'reactstrap'
+
+const ButtonGroup = Button.Group;
+const confirm = Modal.confirm;
 
 class Report extends Component {
 
-  state = {
-    modal: false
-  }
-
-  onSubmitForm = (e) => {
-    e.preventDefault();
+  showConfirm = () => {
     const { addFlashMessage, deleteReport, report } = this.props;
-    deleteReport(report.id)
-    addFlashMessage({
-      type: 'success',
-      text: 'Delete Report Successful'
-    });
-  };
-
-  toggle = () => {
-    const {modal} = this.state;
-    this.setState({
-      modal: !modal
+    confirm({
+      title: 'Do you want to delete these items?',
+      content: 'When clicked the OK button, this item will be delete immediately',
+      onOk() {
+        deleteReport(report.id);
+        addFlashMessage({
+          type: 'success',
+          message: 'Delete Report Successful'
+        });
+      },
+      onCancel() {},
     });
   }
 
@@ -38,7 +32,7 @@ class Report extends Component {
     const { userId } = report;
     return (
       <Fragment>
-        {(user && user.role === 'member' && user.id === report.userId) ? (
+        {(user && (user.role === 'member') && (user.id === report.userId.id)) ? (
           <Card className="mb-4" key={report.id}>
             <CardBody>
               <CardTitle>{report.id} - {report.title}</CardTitle>
@@ -51,8 +45,10 @@ class Report extends Component {
               </CardText>
             </CardBody>
             <CardFooter>
+
               <ButtonGroup>
-                <Button size="sm">
+                <Button>
+                  <Icon type="edit" />
                   <Link
                     style={{
                       textDecoration: 'none',
@@ -63,13 +59,15 @@ class Report extends Component {
                     Edit
                   </Link>
                 </Button>
+
                 <Button
-                  onClick={this.toggle}
-                  size="sm"
-                  color="danger"
+                  type="danger"
+                  onClick={this.showConfirm}
+                  htmlType="submit"
                 >
-                  Delete
+                  Delete<Icon type="delete" />
                 </Button>
+
               </ButtonGroup>
             </CardFooter>
           </Card>
@@ -97,30 +95,6 @@ class Report extends Component {
             </CardBody>
           </Card>
         )}
-
-        <Modal
-          isOpen={this.state.modal}
-          toggle={this.toggle}
-          className={this.props.className}
-        >
-          <Form onSubmit={this.onSubmitForm}>
-            <ModalHeader toggle={this.toggle}>Confirm</ModalHeader>
-            <ModalBody>
-              Are you sure want to delete this report?
-            </ModalBody>
-            <ModalFooter>
-              <ButtonGroup>
-                <Button
-                  color="danger"
-                  type="submit"
-                  required
-                >Delete
-                </Button>
-                <Button color="secondary" onClick={this.toggle}>Cancel</Button>
-              </ButtonGroup>
-            </ModalFooter>
-          </Form>
-        </Modal>
       </Fragment>
     );
   }

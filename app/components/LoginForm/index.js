@@ -1,85 +1,61 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {
-  Form,
-  FormGroup,
-  Input,
-  Card,
-  CardBody,
-  CardTitle,
-  Button
-} from 'reactstrap'
+import { Card, Form, Icon, Input, Button } from 'antd';
+
+const FormItem = Form.Item;
 
 class LoginForm extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      email: '',
-      password: '',
-      isLoading: false
-    }
-  }
-
-  onHandleInputChange = (e) => {
-    const target = e.target;
-    this.setState({
-      [target.name]: target.value
+  onSubmitForm = (e) => {
+    e.preventDefault();
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        const {loginAction, history} = this.props;
+        loginAction(values);
+        // addFlashMessage({
+        //   type: 'success',
+        //   text: 'You signed in successfully. Welcome!'
+        // });
+        history.push('/profile/edit');
+      }
     });
   }
 
-  onSubmitForm = (e) => {
-    e.preventDefault();
-    const { email, password } = this.state;
-    const { loginAction, history, addFlashMessage } = this.props;
-    loginAction({ email, password });
-    // addFlashMessage({
-    //   type: 'success',
-    //   text: 'You signed in successfully. Welcome!'
-    // });
-    history.push('/profile/edit');
-  }
-
   render() {
-    const { email, password } = this.state;
+    const {getFieldDecorator} = this.props.form;
+    const regexEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;     /*eslint-disable-line no-useless-escape*/
     return (
-      <Form onSubmit={this.onSubmitForm}>
-        <Card>
-          <CardBody>
-            <CardTitle>Login</CardTitle>
-            <FormGroup>
-              <Input
-                type="text"
-                autoComplete="off"
-                name="email"
-                bsSize="sm"
-                value={email}
-                onChange={this.onHandleInputChange}
-                required
-              />
-            </FormGroup>
+      <Form onSubmit={this.onSubmitForm} className="login-form">
+        <Card title="Login">
+          <FormItem>
+            {getFieldDecorator('email', {
+              rules:
+                [
+                  {required: true, message: 'Please input your email!'},
+                  {max: 32, message: 'Email cannot greater than 32 characters'},
+                  {whitespace: true, message: 'Email cannot contain whitespace'},
+                  {pattern: regexEmail, message: 'Email cannot contain special characters'},
+                ],
+            })(
+              <Input autoComplete="off" prefix={<Icon type="mail" style={{color: 'rgba(0,0,0,.25)'}}/>} placeholder="Email"/>
+            )}
+          </FormItem>
 
-            <FormGroup>
-              <Input
-                type="password"
-                autoComplete="off"
-                name="password"
-                bsSize="sm"
-                value={password}
-                onChange={this.onHandleInputChange}
-                required
-              />
-            </FormGroup>
-
-            <Button
-              color="primary"
-              className="w-100"
-              size="sm"
-              type="submit"
-            >
-              Login
+          <FormItem>
+            {getFieldDecorator('password', {
+              rules:
+                [
+                  {required: true, message: 'Please input your Password!'},
+                ],
+            })(
+              <Input autoComplete="off" prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>} type="password" placeholder="Password"/>
+            )}
+          </FormItem>
+          <FormItem>
+            <Button icon="login" type="primary" htmlType="submit" className="login-form-button">
+              Log in
             </Button>
-          </CardBody>
+          </FormItem>
         </Card>
       </Form>
     );
@@ -91,4 +67,5 @@ LoginForm.propTypes = {
   password: PropTypes.string,
 };
 
-export default LoginForm;
+const WrappedLoginForm = Form.create()(LoginForm);
+export default WrappedLoginForm;

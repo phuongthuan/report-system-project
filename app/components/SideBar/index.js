@@ -1,10 +1,10 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux'
+import { Icon } from 'antd'
 import Spinner from 'components/Spinner'
 import { withRouter, Link } from 'react-router-dom'
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   Badge,
   ListGroup,
@@ -46,11 +46,6 @@ class SideBar extends Component {
     history.push('/');
   }
 
-  goToMessagePage = () => {
-    const { history } = this.props
-    history.push('/message')
-  }
-
   render() {
     const {profile, loading, user, messages, reports} = this.props;
     const avatar = profile ? profile.avatar : imageProfile;
@@ -71,7 +66,7 @@ class SideBar extends Component {
                 <CardText>
                   <small className="text-muted">
                     <Link to="/profile/edit">
-                      <FontAwesomeIcon icon="user-edit" className="mr-2"/>
+                      <Icon type="profile" className="mr-1"/>
                       Edit Profile
                     </Link>
                   </small>
@@ -87,7 +82,7 @@ class SideBar extends Component {
                   action
                 >
                   <Link to="/report/create">
-                    <FontAwesomeIcon icon="pencil-alt" className="mr-2"/>
+                    <Icon type="form" className="mr-2" />
                     Write Daily Report
                   </Link>
                 </ListGroupItem>
@@ -97,7 +92,7 @@ class SideBar extends Component {
                   action
                 >
                   <Link to="/report">
-                    <FontAwesomeIcon icon="book" className="mr-2"/>
+                    <Icon type="book" className="mr-2" />
                     Reports <Badge color="secondary">{reports.length}</Badge>
                   </Link>
                 </ListGroupItem>
@@ -106,12 +101,11 @@ class SideBar extends Component {
                   className="justify-content-between"
                   action
                 >
-                  <Button onClick={this.goToMessagePage} className="p-0" color="link">
-                    <FontAwesomeIcon icon="envelope" className="mr-2"/>
+                  <Link to="/message">
+                    <Icon type="inbox" className="mr-2" />
                     Messenger <Badge color="warning">{messages.length}</Badge>
-                  </Button>
+                  </Link>
                 </ListGroupItem>
-
               </Fragment>
             )
             }
@@ -119,13 +113,12 @@ class SideBar extends Component {
             {(profile.role) === 'team_leader' &&
             (
               <Fragment>
-
                 <ListGroupItem
                   className="justify-content-between"
                   action
                 >
                   <Link to="/statistic">
-                    <FontAwesomeIcon icon="chart-area" className="mr-2"/>
+                    <Icon className="mr-2" type="area-chart" />
                     Statistics
                   </Link>
                 </ListGroupItem>
@@ -135,7 +128,7 @@ class SideBar extends Component {
                   action
                 >
                   <Link to="/member">
-                    <FontAwesomeIcon icon="address-card" className="mr-2"/>
+                    <Icon className="mr-2" type="team" />
                     Members List
                   </Link>
                 </ListGroupItem>
@@ -145,7 +138,7 @@ class SideBar extends Component {
                   action
                 >
                   <Link to="/report">
-                    <FontAwesomeIcon icon="book" className="mr-2"/>
+                    <Icon className="mr-2" type="solution" />
                     Reports of Team
                   </Link>
                 </ListGroupItem>
@@ -161,7 +154,7 @@ class SideBar extends Component {
                   action
                 >
                   <Link to="/statistic/teams">
-                    <FontAwesomeIcon icon="list-alt" className="mr-2"/>
+                    <Icon type="idcard" className="mr-2" />
                     Teams List
                   </Link>
                 </ListGroupItem>
@@ -171,7 +164,7 @@ class SideBar extends Component {
                   action
                 >
                   <Link to="/member">
-                    <FontAwesomeIcon icon="address-card" className="mr-2"/>
+                    <Icon className="mr-2" type="team" />
                     Members List
                   </Link>
                 </ListGroupItem>
@@ -183,9 +176,10 @@ class SideBar extends Component {
               <Button
                 color="link"
                 className="p-0"
+                size="sm"
                 onClick={this.logout}
               >
-                <FontAwesomeIcon icon="sign-out-alt" className="mr-2"/>
+                <Icon type="logout" className="mr-2" />
                 Logout
               </Button>
             </ListGroupItem>

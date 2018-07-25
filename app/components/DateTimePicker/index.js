@@ -1,35 +1,28 @@
-import React, { Component } from 'react';
-import DatePicker from 'react-datepicker';
+import React, { Component, Fragment } from 'react';
+import 'antd/dist/antd.css';
+import { DatePicker } from 'antd';
 import moment from 'moment';
-
-import 'react-datepicker/dist/react-datepicker.css';
-
-// CSS Modules, react-datepicker-cssmodules.css
-// import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 
 class DateTimePicker extends Component {
 
-  state = {
-    startDate: moment()
-  };
-
-  handleChange = (date) => {
-    this.setState({
-      startDate: date
-    });
+  onChange = (date, dateString) => {
+    console.log('Selected Date: ', date);
+    console.log('Formatted Selected Time: ', dateString);
   }
 
-  handleSelect = (e) => {
-    console.log('selected', moment(e).format("YYYY-MM-DD"));
+  onOk = (value) => {
+    console.log('onOk: ', value);
   }
 
   render() {
     return (
-      <DatePicker
-        selected={this.state.startDate}
-        onChange={this.handleChange}
-        onSelect={this.handleSelect}
-      />
+      <Fragment>
+        <DatePicker
+          onChange={this.onChange}
+          placeholder="Select date"
+          onOk={this.onOk}
+        />
+      </Fragment>
     );
   }
 }
