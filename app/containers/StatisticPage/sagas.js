@@ -1,4 +1,4 @@
-import { put, call, takeLatest, fork } from 'redux-saga/effects'
+import { put, call, takeLatest, fork, all } from 'redux-saga/effects'
 import { delay } from 'redux-saga'
 import moment from 'moment'
 import { GET_ALL_REPORTS_OF_TEAM } from "./constants";
@@ -25,7 +25,6 @@ export function* fetchAllReportsOfTeam(action) {
       }
       return null;
     });
-
 
     //filter by month
     // const reportByMonth = mergedReports.filter(report => (report.date >= '2018-09-01' && report.date < '2018-09-31'));
@@ -57,8 +56,6 @@ export function* fetchAllReportsOfTeam(action) {
     // }));
     // console.log('Saga reportByDay', resultsReportByDay);
 
-
-
     yield put(getAllReportsOfTeamSucceeded(mergedReports));
   } catch (error) {
     yield put(getAllReportsOfTeamFailed(error.message));
@@ -70,7 +67,7 @@ export function* watchFetchAllReportsOfTeam() {
 }
 
 export function* statisticSagaPage() {
-  yield [
+  yield all([
     fork(watchFetchAllReportsOfTeam)
-  ]
+  ])
 }

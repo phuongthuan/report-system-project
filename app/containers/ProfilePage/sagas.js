@@ -1,4 +1,4 @@
-import { call, put, takeLatest, fork } from 'redux-saga/effects'
+import { call, put, takeLatest, fork, all } from 'redux-saga/effects'
 import { delay } from 'redux-saga'
 
 import {
@@ -41,8 +41,8 @@ export function* watchUpdateProfile() {
 }
 
 export default function* profilePageSaga() {
-  yield [
+  yield all([
     fork(watchGetProfile),
     fork(watchUpdateProfile)
-  ]
+  ]);
 }

@@ -30,32 +30,34 @@ class ProfileContainer extends Component {
     return (
       <div className="container">
         <div className="row mt-5 mb-5">
-          {
-            authLoading ? (
+
+          <Fragment>
+            {loading && isEmpty(profile) ? (
               <Spinner/>
             ) : (
               <Fragment>
-                {loading && isEmpty(profile) ? (
-                  <Spinner/>
-                ) : (
-                  <Fragment>
-                    <div className="col-md-4">
-                      <SideBar/>
-                    </div>
-                    <div className="col-md-8">
-                      <div className="shadow-sm">
-                        <ProfileForm
-                          profile={profile}
-                          addFlashMessage={addFlashMessage}
-                          updateProfile={updateProfile}
-                        />
-                      </div>
-                    </div>
-                  </Fragment>
-                )}
+                <div className="col-md-4">
+                  <SideBar/>
+                </div>
+                <div className="col-md-8">
+                  <div className="shadow-sm">
+                    <ProfileForm
+                      profile={profile}
+                      addFlashMessage={addFlashMessage}
+                      updateProfile={updateProfile}
+                    />
+                  </div>
+                </div>
               </Fragment>
-            )
-          }
+            )}
+          </Fragment>
+          {/*{*/}
+            {/*authLoading ? (*/}
+              {/*<Spinner/>*/}
+            {/*) : (*/}
+              {/**/}
+            {/*)*/}
+          {/*}*/}
         </div>
       </div>
     );

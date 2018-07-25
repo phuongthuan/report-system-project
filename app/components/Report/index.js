@@ -3,16 +3,23 @@ import { Link } from 'react-router-dom'
 import { Button, Icon, Modal } from 'antd';
 import moment from 'moment'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Card, CardBody, CardTitle, CardText, CardFooter
+import {
+  Card, Media, CardBody, CardHeader, CardTitle, CardText, CardFooter
 } from 'reactstrap'
+import styled from "styled-components";
 
 const ButtonGroup = Button.Group;
 const confirm = Modal.confirm;
 
+const Image = styled.img`
+  width: 38px;
+  height: 38px;
+`;
+
 class Report extends Component {
 
   showConfirm = () => {
-    const { addFlashMessage, deleteReport, report } = this.props;
+    const {addFlashMessage, deleteReport, report} = this.props;
     confirm({
       title: 'Do you want to delete these items?',
       content: 'When clicked the OK button, this item will be delete immediately',
@@ -23,13 +30,14 @@ class Report extends Component {
           message: 'Delete Report Successful'
         });
       },
-      onCancel() {},
+      onCancel() {
+      },
     });
   }
 
   render() {
     const {report, user} = this.props;
-    const { userId } = report;
+    const {userId} = report;
     return (
       <Fragment>
         {(user && (user.role === 'member') && (user.id === report.userId.id)) ? (
@@ -48,7 +56,7 @@ class Report extends Component {
 
               <ButtonGroup>
                 <Button>
-                  <Icon type="edit" />
+                  <Icon type="edit"/>
                   <Link
                     style={{
                       textDecoration: 'none',
@@ -65,7 +73,7 @@ class Report extends Component {
                   onClick={this.showConfirm}
                   htmlType="submit"
                 >
-                  Delete<Icon type="delete" />
+                  Delete<Icon type="delete"/>
                 </Button>
 
               </ButtonGroup>
@@ -73,25 +81,32 @@ class Report extends Component {
           </Card>
         ) : (
           <Card className="mb-4" key={report.id}>
-            <CardBody>
+            <CardHeader>
               <CardTitle>{report.id} - {report.title}</CardTitle>
-              <CardText>
-                <small className="text-muted">
-                  <FontAwesomeIcon icon="user-tie"/>
-                  &nbsp;&nbsp;Created by:&nbsp;
+            </CardHeader>
+            <CardBody>
+              <Media>
+                <Media left>
                   <Link to={`member/${userId.id}`}>
-                    {userId.firstName} {userId.lastName}
+                    <Image className="mr-3 rounded-circle" src={userId.avatar} alt="Member Profile img"/>
                   </Link>
-                </small>
-              </CardText>
-              <br/>
-              <CardText>{report.achievement}</CardText>
-              <CardText>{report.comment}</CardText>
-              <CardText>
-                <small className="text-muted"><FontAwesomeIcon icon="clock"/>&nbsp;Time
-                  release: {moment(report.date).format("dddd, MMMM Do YYYY")}
-                </small>
-              </CardText>
+                </Media>
+                <Media body>
+                  <Media>
+                    <Link to={`member/${userId.id}`}>
+                      {userId.firstName} {userId.lastName}
+                    </Link>
+                  </Media>
+                  <CardText>{report.achievement}</CardText>
+                  <CardText>{report.comment}</CardText>
+                  <CardText>
+                    <small className="text-muted">
+                      <FontAwesomeIcon icon="calendar-alt"/>&nbsp;Time
+                      release: {moment(report.date).format("dddd, MMMM Do YYYY")}
+                    </small>
+                  </CardText>
+                </Media>
+              </Media>
             </CardBody>
           </Card>
         )}

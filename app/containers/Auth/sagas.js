@@ -1,4 +1,4 @@
-import { take, call, put, takeLatest, fork } from 'redux-saga/effects'
+import { take, call, put, takeLatest, fork, all } from 'redux-saga/effects'
 import { delay } from 'redux-saga'
 
 import {
@@ -20,8 +20,8 @@ export function* loginFlow(action) {
   };
 
   try {
-    yield delay(300);
     const responseUser = yield call(callLogin, options);
+    yield delay(300);
     const { user } = responseUser;
     localStorage.setItem('auth', JSON.stringify(responseUser));
     yield put(loginSucceeded(user));
@@ -48,6 +48,8 @@ export function* watchLogout() {
 }
 
 export default function* authPageSaga() {
-  yield fork(watchLogin);
-  yield fork(watchLogout);
+  yield all([
+    fork(watchLogin),
+    fork(watchLogout)
+  ]);
 }

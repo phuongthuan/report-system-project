@@ -1,11 +1,12 @@
-import { call, put, takeLatest, fork } from 'redux-saga/effects'
+import { call, put, takeLatest, fork, all } from 'redux-saga/effects'
 import { delay } from 'redux-saga'
-import { callGetMembersOfTeam, callGetProfile } from "../../requests";
+import { callGetMembers, callGetMembersOfTeam, callGetProfile } from "../../requests";
 import {
-  fetchAllMembersOfTeamFailed, fetchAllMembersOfTeamSucceeded, getMemberProfileFailed,
+  fetchAllMembersFailed,
+  fetchAllMembersOfTeamFailed, fetchAllMembersOfTeamSucceeded, fetchAllMembersSucceeded, getMemberProfileFailed,
   getMemberProfileSucceeded
 } from "./actions";
-import { FETCH_ALL_MEMBERS_OF_TEAM, GET_MEMBER_PROFILE } from "./constants";
+import { FETCH_ALL_MEMBERS, FETCH_ALL_MEMBERS_OF_TEAM, GET_MEMBER_PROFILE } from "./constants";
 
 export function* fetchAllMembersOfTeam(action) {
   try {
@@ -13,7 +14,17 @@ export function* fetchAllMembersOfTeam(action) {
     yield delay(700);
     yield put(fetchAllMembersOfTeamSucceeded(members));
   } catch (error) {
-    yield put(fetchAllMembersOfTeamFailed(error.message));
+    yield put(fetchAllMembersOfTeamFailed(error));
+  }
+}
+
+export function* fetchAllMembers() {
+  try {
+    const members = yield call(callGetMembers);
+    yield delay(700);
+    yield put(fetchAllMembersSucceeded(members));
+  } catch (error) {
+    yield put(fetchAllMembersFailed(error));
   }
 }
 
@@ -23,8 +34,12 @@ export function* getMemberProfile(action) {
     yield delay(700);
     yield put(getMemberProfileSucceeded(member));
   } catch (error) {
-    yield put(getMemberProfileFailed(error.message));
+    yield put(getMemberProfileFailed(error));
   }
+}
+
+export function* watchFetchAllMembers() {
+  yield takeLatest(FETCH_ALL_MEMBERS, fetchAllMembers);
 }
 
 export function* watchFetchAllMembersOfTeam() {
@@ -36,8 +51,9 @@ export function* watchGetMemberProfile() {
 }
 
 export function* memberSagaPage() {
-  yield [
+  yield all([
+    fork(watchFetchAllMembers),
     fork(watchFetchAllMembersOfTeam),
     fork(watchGetMemberProfile)
-  ]
+  ]);
 }

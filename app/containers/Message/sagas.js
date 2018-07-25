@@ -1,4 +1,4 @@
-import { call, put, fork ,takeLatest } from 'redux-saga/effects'
+import { call, put, fork ,takeLatest, all } from 'redux-saga/effects'
 import { delay } from 'redux-saga'
 import {
   createMessageFailed, createMessageSucceeded,
@@ -11,8 +11,8 @@ import { getMemberProfileFailed } from "../MemberPage/actions";
 
 export function* fetchAllMessages(action) {
   try {
-    yield delay(700);
     const messages = yield call(callGetMessagesToUser, action.toUserId);
+    yield delay(700);
     const members = yield messages.map(function (message) {
       try {
         return call(callGetProfile, message.userId);
@@ -52,8 +52,8 @@ export function* watchCreateMessage() {
 }
 
 export default function* messageSagaPage() {
-  yield [
+  yield all([
     fork(watchFetchAllMessages),
     fork(watchCreateMessage)
-  ];
+  ]);
 }
