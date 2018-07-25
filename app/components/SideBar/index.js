@@ -103,7 +103,12 @@ class SideBar extends Component {
                 >
                   <Link to="/message">
                     <Icon type="inbox" className="mr-2" />
-                    Messenger <Badge color="warning">{messages.length}</Badge>
+                    Messenger
+                    {messages.length > 0 &&
+                      (
+                        <Badge color="warning">{messages.length}</Badge>
+                      )
+                    }
                   </Link>
                 </ListGroupItem>
               </Fragment>

@@ -1,9 +1,10 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import { Button, Icon, Modal } from 'antd';
 import moment from 'moment'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Card, CardBody, CardTitle, CardText, CardFooter
+import {
+  Card, CardBody, CardTitle, CardText, CardFooter
 } from 'reactstrap'
 
 const ButtonGroup = Button.Group;
@@ -12,7 +13,7 @@ const confirm = Modal.confirm;
 class Report extends Component {
 
   showConfirm = () => {
-    const { addFlashMessage, deleteReport, report } = this.props;
+    const {addFlashMessage, deleteReport, report} = this.props;
     confirm({
       title: 'Do you want to delete these items?',
       content: 'When clicked the OK button, this item will be delete immediately',
@@ -23,15 +24,16 @@ class Report extends Component {
           message: 'Delete Report Successful'
         });
       },
-      onCancel() {},
+      onCancel() {
+      },
     });
   }
 
   render() {
     const {report, user} = this.props;
-    const { userId } = report;
+    const {userId} = report;
     return (
-      <Fragment>
+      <div className="shadow-sm">
         {(user && (user.role === 'member') && (user.id === report.userId.id)) ? (
           <Card className="mb-4" key={report.id}>
             <CardBody>
@@ -48,7 +50,7 @@ class Report extends Component {
 
               <ButtonGroup>
                 <Button>
-                  <Icon type="edit" />
+                  <Icon type="edit"/>
                   <Link
                     style={{
                       textDecoration: 'none',
@@ -65,7 +67,7 @@ class Report extends Component {
                   onClick={this.showConfirm}
                   htmlType="submit"
                 >
-                  Delete<Icon type="delete" />
+                  Delete<Icon type="delete"/>
                 </Button>
 
               </ButtonGroup>
@@ -95,7 +97,7 @@ class Report extends Component {
             </CardBody>
           </Card>
         )}
-      </Fragment>
+      </div>
     );
   }
 }

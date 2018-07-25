@@ -60,7 +60,7 @@ class ProfileForm extends Component {
       <Form onSubmit={this.onSubmitForm}>
         <Card>
           <CardHeader>
-            <h4>Role: {this.props.profile.role} ID: {this.props.profile.id}</h4>
+            Update Profile
           </CardHeader>
           <CardBody>
             <FormGroup>
