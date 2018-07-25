@@ -115,10 +115,10 @@ class CreateReportForm extends Component {
       <Form onSubmit={this.onSubmitForm}>
         <Card>
           <CardHeader>
-            <CardTitle>Write Daily Report</CardTitle>
-            <CardSubtitle>
+            Write Daily Report
+            <p>
               Today is: {date.format("dddd, MMM Do YYYY")}
-            </CardSubtitle>
+            </p>
           </CardHeader>
 
           <CardBody>

@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
-
 import {
   Form,
   FormGroup,
@@ -11,13 +10,13 @@ import {
   CardHeader,
   CardBody,
   CardFooter,
-  InputGroupAddon
 } from 'reactstrap';
 
 class ProfileForm extends Component {
 
   state = {
     user: {
+      id: '',
       firstName: '',
       lastName: '',
       avatar: '',
@@ -28,12 +27,12 @@ class ProfileForm extends Component {
   }
 
   componentDidMount() {
-    const { profile } = this.props;
+    const {profile} = this.props;
     this.setState({user: profile});
   }
 
   onHandleFormChange = (e) => {
-    const { user } = this.state;
+    const {user} = this.state;
     this.setState({
       user: {
         ...user,
@@ -44,8 +43,8 @@ class ProfileForm extends Component {
 
   onSubmitForm = (e) => {
     e.preventDefault();
-    const { user } = this.state;
-    const { updateProfile, addFlashMessage } = this.props;
+    const {user} = this.state;
+    const {updateProfile, addFlashMessage} = this.props;
     updateProfile(user);
     addFlashMessage({
       type: 'success',
@@ -54,110 +53,125 @@ class ProfileForm extends Component {
   };
 
   render() {
-    const { user } = this.state;
+    const {user} = this.state;
     const disabled = (user.role === 'member' || user.role === 'team_leader');
     return (
-      <Form onSubmit={this.onSubmitForm}>
-        <Card>
-          <CardHeader>
-            Update Profile
-          </CardHeader>
-          <CardBody>
-            <FormGroup>
-              <InputGroup>
-                <Input
-                  type="text"
-                  name="firstName"
-                  autoComplete="off"
-                  bsSize="sm"
-                  value={user.firstName}
-                  onChange={this.onHandleFormChange}
-                />
-                <InputGroupAddon addonType="prepend">First name</InputGroupAddon>
-              </InputGroup>
-            </FormGroup>
-            <FormGroup>
-              <InputGroup>
-                <Input
-                  autoComplete="off"
-                  type="text"
-                  name="lastName"
-                  bsSize="sm"
-                  value={user.lastName}
-                  onChange={this.onHandleFormChange}
-                />
-                <InputGroupAddon addonType="prepend">Last name</InputGroupAddon>
-              </InputGroup>
-            </FormGroup>
 
-            <FormGroup>
-              <InputGroup>
-                <Input
-                  autoComplete="off"
-                  type="text"
-                  name="avatar"
-                  bsSize="sm"
-                  value={user.avatar}
-                  onChange={this.onHandleFormChange}
-                />
-                <InputGroupAddon addonType="prepend">Avatar</InputGroupAddon>
-              </InputGroup>
-            </FormGroup>
+      <Fragment>
+        <Form onSubmit={this.onSubmitForm}>
+          <Card>
+            <CardHeader>
+              Update Profile
+            </CardHeader>
+            <CardBody>
 
-            <FormGroup>
-              <InputGroup>
-                <Input
-                  type="text"
-                  name="address"
-                  autoComplete="off"
-                  bsSize="sm"
-                  value={user.address}
-                  onChange={this.onHandleFormChange}
-                />
-                <InputGroupAddon addonType="prepend">Address</InputGroupAddon>
-              </InputGroup>
-            </FormGroup>
+              <FormGroup>
+                <InputGroup>
+                  <Input
+                    disabled="true"
+                    bsSize="sm"
+                    type="text"
+                    name="id"
+                    value={user.id}
+                  />
+                </InputGroup>
+              </FormGroup>
 
-            <FormGroup>
-              <InputGroup>
-                <Input
-                  type="text"
-                  name="phone"
-                  bsSize="sm"
-                  autoComplete="off"
-                  value={user.phone}
-                  onChange={this.onHandleFormChange}
-                />
-                <InputGroupAddon addonType="prepend">Phone</InputGroupAddon>
-              </InputGroup>
-            </FormGroup>
+              <FormGroup>
+                <InputGroup>
+                  <Input
+                    autoComplete="off"
+                    type="text"
+                    name="firstName"
+                    bsSize="sm"
+                    value={user.firstName}
+                    onChange={this.onHandleFormChange}
+                    required
+                  />
+                </InputGroup>
+              </FormGroup>
+              <FormGroup>
+                <InputGroup>
+                  <Input
+                    autoComplete="off"
+                    type="text"
+                    name="lastName"
+                    bsSize="sm"
+                    value={user.lastName}
+                    onChange={this.onHandleFormChange}
+                    required
+                  />
+                </InputGroup>
+              </FormGroup>
 
-            <FormGroup>
-              <InputGroup>
-                <Input
-                  disabled={disabled}
-                  type="text"
-                  name="division"
-                  bsSize="sm"
-                  autoComplete="off"
-                  value={user.division}
-                  onChange={this.onHandleFormChange}
-                />
-                <InputGroupAddon addonType="prepend">Division</InputGroupAddon>
-              </InputGroup>
-            </FormGroup>
-          </CardBody>
+              <FormGroup>
+                <InputGroup>
+                  <Input
+                    autoComplete="off"
+                    type="text"
+                    name="avatar"
+                    bsSize="sm"
+                    value={user.avatar}
+                    onChange={this.onHandleFormChange}
+                    required
+                  />
+                </InputGroup>
+              </FormGroup>
 
-          <CardFooter>
-            <Button
-              color="secondary"
-              type="submit"
-            >
-              Save
-            </Button>
-          </CardFooter>
-        </Card>
-      </Form>
+              <FormGroup>
+                <InputGroup>
+                  <Input
+                    autoComplete="off"
+                    type="text"
+                    name="address"
+                    bsSize="sm"
+                    value={user.address}
+                    onChange={this.onHandleFormChange}
+                    required
+                  />
+                </InputGroup>
+              </FormGroup>
+
+              <FormGroup>
+                <InputGroup>
+                  <Input
+                    autoComplete="off"
+                    type="text"
+                    name="phone"
+                    bsSize="sm"
+                    value={user.phone}
+                    onChange={this.onHandleFormChange}
+                    required
+                  />
+                </InputGroup>
+              </FormGroup>
+
+              <FormGroup>
+                <InputGroup>
+                  <Input
+                    autoComplete="off"
+                    disabled={disabled}
+                    type="text"
+                    name="division"
+                    bsSize="sm"
+                    value={user.division}
+                  />
+                </InputGroup>
+              </FormGroup>
+            </CardBody>
+
+            <CardFooter>
+              <Button
+                color="secondary"
+                type="submit"
+                size="sm"
+              >
+                Save
+              </Button>
+            </CardFooter>
+          </Card>
+        </Form>
+      </Fragment>
     );
   }
 }
@@ -168,4 +182,8 @@ ProfileForm.propTypes = {
   addFlashMessage: PropTypes.func,
 }
 
+
 export default ProfileForm;
+
+
+

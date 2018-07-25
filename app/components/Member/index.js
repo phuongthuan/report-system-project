@@ -21,6 +21,7 @@ class Member extends Component {
     const {member, user, createMessage, addFlashMessage} = this.props;
     const {id, firstName, address, phone, lastName, avatar} = member;
     const image = member ? avatar : img;
+
     return (
       <Fragment>
         <Card className="mb-4">

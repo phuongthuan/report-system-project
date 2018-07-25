@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 import styled from 'styled-components'
 import img from '../../assests/images/fancycrave-248220-unsplash.jpg';
-import * as AuthActions from './actions'
-import * as FlashMessageActions from '../FlashMessage/actions'
-import { selectUser } from "./selectors";
-import WrappedLoginForm from "../../components/LoginForm";
+import { addFlashMessage } from '../FlashMessage/actions'
+import { login } from './actions'
+import LoginForm from "../../components/LoginForm";
 
 const AuthWrapper = styled.div`
   background-image: url(${img});
@@ -23,12 +22,12 @@ const AuthWrapper = styled.div`
 class Auth extends Component {
 
   render() {
-    const { addFlashMessage, loginAction } = this.props;
+    const {addFlashMessage, login} = this.props;
     return (
       <AuthWrapper>
-        <WrappedLoginForm
+        <LoginForm
           {...this.props}
-          loginAction={loginAction}
+          login={login}
           addFlashMessage={addFlashMessage}
         />
       </AuthWrapper>
@@ -37,20 +36,11 @@ class Auth extends Component {
 }
 
 Auth.propTypes = {
-  loginAction: PropTypes.func.isRequired,
+  login: PropTypes.func.isRequired,
   addFlashMessage: PropTypes.func.isRequired,
 }
 
-const mapStateToProps = (state) => ({
-  user: selectUser(state)
-});
-
-const mapDispatchToProps = dispatch => ({
-  loginAction: payload => dispatch(AuthActions.login(payload)),
-  addFlashMessage: message => dispatch(FlashMessageActions.addFlashMessage(message))
-});
-
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  null,
+  {addFlashMessage, login}
 )(Auth);

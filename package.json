@@ -23,6 +23,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.1.0-11",
     "@fortawesome/react-fontawesome": "0.1.0-11",
     "antd": "^3.7.1",
+    "availity-reactstrap-validation": "^2.0.2",
     "axios": "^0.18.0",
     "bootstrap": "^4.1.1",
     "chart.js": "^2.7.2",
@@ -40,8 +41,6 @@
     "prop-types": "^15.6.2",
     "react": "^16.4.1",
     "react-chartjs-2": "^2.7.4",
-    "react-datepicker": "^1.5.0",
-    "react-datetime": "^2.14.0",
     "react-dom": "^16.4.1",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",
@@ -88,7 +87,14 @@
   "babel": {
     "plugins": [
       "recharts",
-      ["import", { "libraryName": "antd", "libraryDirectory": "es", "style": "css" }]
+      [
+        "import",
+        {
+          "libraryName": "antd",
+          "libraryDirectory": "es",
+          "style": "css"
+        }
+      ]
     ],
     "presets": [
       "es2015",

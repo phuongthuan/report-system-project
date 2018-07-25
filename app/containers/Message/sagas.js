@@ -11,8 +11,8 @@ import { getMemberProfileFailed } from "../MemberPage/actions";
 
 export function* fetchAllMessages(action) {
   try {
-    yield delay(700);
     const messages = yield call(callGetMessagesToUser, action.toUserId);
+    yield delay(700);
     const members = yield messages.map(function (message) {
       try {
         return call(callGetProfile, message.userId);

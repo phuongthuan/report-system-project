@@ -26,7 +26,6 @@ export function* fetchAllReportsOfTeam(action) {
       return null;
     });
 
-
     //filter by month
     // const reportByMonth = mergedReports.filter(report => (report.date >= '2018-09-01' && report.date < '2018-09-31'));
     //
@@ -56,8 +55,6 @@ export function* fetchAllReportsOfTeam(action) {
     //   date: moment(report.date).format("YYYY-MM-DD"),
     // }));
     // console.log('Saga reportByDay', resultsReportByDay);
-
-
 
     yield put(getAllReportsOfTeamSucceeded(mergedReports));
   } catch (error) {

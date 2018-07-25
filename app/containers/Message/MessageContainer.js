@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux'
 import isEmpty from "lodash/isEmpty";
 import PropTypes from 'prop-types';
@@ -25,19 +25,21 @@ class MessageContainer extends Component {
         <div className="col-md-4">
           <SideBar/>
         </div>
-        {messages.length === 0 ? (
-          <h4>No message</h4>
-        ) : (
-          <div className="col-md-8">
-            {loading && isEmpty(messages) ? (
-              <Spinner />
-            ) : (
-              <MessagesList
-                messagesList={messages}
-              />
-            )}
-          </div>
-        )}
+        <div className="col-md-8">
+          {loading && isEmpty(messages) ? (
+            <Spinner />
+          ) : (
+            <Fragment>
+              {messages.length === 0 ? (
+                <h4>No message</h4>
+              ) : (
+                <MessagesList
+                  messagesList={messages}
+                />
+              )}
+            </Fragment>
+          )}
+        </div>
       </div>
     );
   }
