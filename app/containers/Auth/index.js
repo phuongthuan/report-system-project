@@ -6,6 +6,7 @@ import img from '../../assests/images/fancycrave-248220-unsplash.jpg';
 import { addFlashMessage } from '../FlashMessage/actions'
 import { login } from './actions'
 import LoginForm from "../../components/LoginForm";
+import { selectAuthError } from "./selectors";
 
 const AuthWrapper = styled.div`
   background-image: url(${img});
@@ -22,11 +23,12 @@ const AuthWrapper = styled.div`
 class Auth extends Component {
 
   render() {
-    const {addFlashMessage, login} = this.props;
+    const {addFlashMessage, login, authError} = this.props;
     return (
       <AuthWrapper>
         <LoginForm
           {...this.props}
+          authError={authError}
           login={login}
           addFlashMessage={addFlashMessage}
         />
@@ -40,7 +42,11 @@ Auth.propTypes = {
   addFlashMessage: PropTypes.func.isRequired,
 }
 
+const mapStateToProps = state => ({
+  authError: selectAuthError(state)
+});
+
 export default connect(
-  null,
+  mapStateToProps,
   {addFlashMessage, login}
 )(Auth);

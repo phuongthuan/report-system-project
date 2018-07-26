@@ -57,7 +57,7 @@ class SideBar extends Component {
           <ListGroup className="shadow-sm">
             <ListGroupItem className="justify-content-between text-center">
               {loading && isEmpty(avatar) ? (
-                <Spinner width="238px" height="238px" />
+                <Spinner />
               ) : (
                 <CardImg src={avatar} alt="Card image cap"/>
               )}

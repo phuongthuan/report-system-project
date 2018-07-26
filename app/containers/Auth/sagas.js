@@ -20,10 +20,10 @@ export function* loginFlow(action) {
   };
 
   try {
-    const responseUser = yield call(callLogin, options);
+    const auth = yield call(callLogin, options);
     yield delay(300);
-    const { user } = responseUser;
-    localStorage.setItem('auth', JSON.stringify(responseUser));
+    const { user } = auth;
+    localStorage.setItem('auth', JSON.stringify(auth));
     yield put(loginSucceeded(user));
   } catch (error) {
     yield put(loginFailed(error.message));
