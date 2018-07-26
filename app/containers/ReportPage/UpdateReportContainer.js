@@ -33,7 +33,7 @@ class UpdateReportContainer extends Component {
   render() {
     const {updateReport, report, loading, addFlashMessage} = this.props;
     return (
-      <div className="row mt-5 mb-5">
+      <div className="row">
         <div className="col-md-4">
           <SideBar />
         </div>

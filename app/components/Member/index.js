@@ -24,7 +24,10 @@ class Member extends Component {
 
     return (
       <Fragment>
-        <Card className="mb-4">
+        <Card
+          className="mb-4 border-0 shadow-sm"
+          style={{borderRadius: '0'}}
+        >
           <CardBody>
             <div className="media">
               <Link to={`member/${id}`}>

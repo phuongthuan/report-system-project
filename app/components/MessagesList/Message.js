@@ -11,7 +11,10 @@ class Message extends Component {
 
     return (
       <Fragment>
-        <Card className="mb-3">
+        <Card
+          className="mb-3 border-0 shadow-sm"
+          style={{borderRadius: '0'}}
+        >
           <CardBody>
             <div className="media">
               <div className="media-body">

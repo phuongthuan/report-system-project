@@ -112,7 +112,7 @@ class UpdateReportForm extends Component {
 
     return (
       <Form onSubmit={this.onSubmitForm}>
-        <Card>
+        <Card className="border-0 shadow-sm">
           <CardHeader>
             <CardTitle>Update Daily Report</CardTitle>
             <CardSubtitle>
