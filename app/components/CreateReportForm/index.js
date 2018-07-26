@@ -113,7 +113,7 @@ class CreateReportForm extends Component {
 
     return (
       <Form onSubmit={this.onSubmitForm}>
-        <Card>
+        <Card style={{borderRadius: '0'}} className="border-0 shadow-sm">
           <CardHeader>
             Write Daily Report
             <p>

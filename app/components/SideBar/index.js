@@ -54,7 +54,7 @@ class SideBar extends Component {
         {loading && isEmpty(profile) && isEmpty(user) ? (
           <Spinner/>
         ) : (
-          <ListGroup className="shadow-sm">
+          <ListGroup flush className="shadow-sm border-0">
             <ListGroupItem className="justify-content-between text-center">
               {loading && isEmpty(avatar) ? (
                 <Spinner />

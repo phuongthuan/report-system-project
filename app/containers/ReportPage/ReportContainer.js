@@ -51,16 +51,16 @@ class ReportContainer extends Component {
     const reports = (user.role === 'member') ? reportsOfUser : reportsOfTeam;
 
     return (
-      <div className="row mt-5 mb-5">
+      <div className="row">
         <div className="col-md-4">
           <SideBar/>
         </div>
         <div className="col-md-8">
-          {/*<div className="row mb-3">*/}
-            {/*<div className="col">*/}
-              {/*<DateTimePicker />*/}
-            {/*</div>*/}
-          {/*</div>*/}
+          <div className="row mb-3">
+            <div className="col">
+              <DateTimePicker />
+            </div>
+          </div>
           {loading && isEmpty(reports) ? (
             <Spinner />
           ) : (

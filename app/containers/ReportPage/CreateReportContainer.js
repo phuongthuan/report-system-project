@@ -19,7 +19,7 @@ class CreateReportContainer extends Component {
   render() {
     const { createReport, addFlashMessage, user } = this.props;
     return (
-      <div className="row mt-5 mb-5">
+      <div className="row">
         <div className="col-md-4">
           <SideBar />
         </div>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import isEmpty from "lodash/isEmpty";
+import styled from "styled-components";
 import Spinner from 'components/Spinner'
 import PropTypes from 'prop-types'
 import SideBar from 'components/SideBar'
@@ -10,6 +11,11 @@ import { addFlashMessage } from '../FlashMessage/actions'
 import { createMessage } from '../Message/actions'
 import { selectMemberLoading, selectMembers } from "./selectors";
 import { selectUser } from "../Auth/selectors";
+
+const Wrapper = styled.div`
+  height: 100%;
+  min-height: 100vh;
+`;
 
 class MemberContainer extends Component {
 
@@ -36,16 +42,15 @@ class MemberContainer extends Component {
 
   render() {
     const {members, loading, createMessage, addFlashMessage, user} = this.props;
-
     return (
-      <div className="container">
-        <div className="row mt-5 mb-5">
+      <Wrapper>
+        <div className="row">
           <div className="col-md-4">
             <SideBar/>
           </div>
           <div className="col-md-8">
             {loading && isEmpty(members) ? (
-              <Spinner />
+              <Spinner/>
             ) : (
               <MembersList
                 user={user}
@@ -56,7 +61,7 @@ class MemberContainer extends Component {
             )}
           </div>
         </div>
-      </div>
+      </Wrapper>
     );
   }
 }
@@ -69,5 +74,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  {fetchAllMembersOfTeam, fetchAllMembers, createMessage, addFlashMessage }
+  {fetchAllMembersOfTeam, fetchAllMembers, createMessage, addFlashMessage}
 )(MemberContainer);

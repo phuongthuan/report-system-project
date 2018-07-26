@@ -41,7 +41,11 @@ class Report extends Component {
     return (
       <Fragment>
         {(user && (user.role === 'member') && (user.id === report.userId.id)) ? (
-          <Card className="mb-4" key={report.id}>
+          <Card
+            className="mb-4 border-0 shadow-sm"
+            key={report.id}
+            style={{borderRadius: '0'}}
+          >
             <CardBody>
               <CardTitle>{report.id} - {report.title}</CardTitle>
               <CardText>{report.achievement}</CardText>
