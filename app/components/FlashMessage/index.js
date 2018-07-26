@@ -24,7 +24,7 @@ class FlashMessage extends Component {
     const {deleteFlashMessage, message} = this.props;
     setTimeout(() => {
       deleteFlashMessage(message.id);
-    }, 2000)
+    }, 4000)
   }
 
   render() {

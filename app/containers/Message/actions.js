@@ -1,7 +1,9 @@
 import {
   CREATE_MESSAGE,
   CREATE_MESSAGE_FAILED,
-  CREATE_MESSAGE_SUCCEEDED,
+  CREATE_MESSAGE_SUCCEEDED, DELETE_MESSAGE,
+  DELETE_MESSAGE_SUCCEEDED,
+  DELETE_MESSAGE_FAILED,
   FETCH_ALL_MESSAGES,
   FETCH_ALL_MESSAGES_FAILED,
   FETCH_ALL_MESSAGES_SUCCEEDED
@@ -40,5 +42,23 @@ export const createMessageSucceeded = newMessageReceived => ({
 
 export const createMessageFailed = error => ({
   type: CREATE_MESSAGE_FAILED,
+  error
+});
+
+/*===========================================
+ DELETE NEW MESSAGE
+ ===========================================*/
+export const deleteMessage = id => ({
+  type: DELETE_MESSAGE,
+  id
+});
+
+export const deleteMessageSucceeded = messageId => ({
+  type: DELETE_MESSAGE_SUCCEEDED,
+  messageId
+});
+
+export const deleteMessageFailed = error => ({
+  type: DELETE_MESSAGE_FAILED,
   error
 });

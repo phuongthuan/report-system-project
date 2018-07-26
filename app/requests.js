@@ -13,7 +13,8 @@ import {
   GET_MEMBERS_OF_TEAM,
   GET_MESSAGES,
   CREATE_MESSAGE,
-  GET_MEMBERS
+  GET_MEMBERS,
+  DELETE_MESSAGE
 } from 'constants/API_URL'
 
 export const callFetchReports = () => request('get', GET_REPORTS);
@@ -33,3 +34,4 @@ export const callUpdateProfile = payload => request('put', `${UPDATE_USER_PROFIL
 export const callUpdateReport = report => request('put', `${UPDATE_REPORT}/${report.id}`, report)
 
 export const callDeleteReport = id => request('delete', `${DELETE_REPORT}/${id}`)
+export const callDeleteMessage = id => request('delete', `${DELETE_MESSAGE}/${id}`)
