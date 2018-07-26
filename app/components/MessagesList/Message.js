@@ -2,13 +2,22 @@ import React, { Component, Fragment } from 'react'
 import { Link } from 'react-router-dom';
 import moment from 'moment'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { CardText, Card, CardBody} from 'reactstrap'
+import { CardText, Card, CardBody } from 'reactstrap'
 
 class Message extends Component {
-  render() {
-    const { message }= this.props;
-    const { userId } = message;
 
+  onDeleteMessage = () => {
+    const {deleteMessage, addFlashMessage, message} = this.props;
+    deleteMessage(message.id);
+    addFlashMessage({
+      type: 'success',
+      text: 'Message has been deleted.'
+    });
+  }
+
+  render() {
+    const {message} = this.props;
+    const {userId} = message;
     return (
       <Fragment>
         <Card
@@ -18,6 +27,13 @@ class Message extends Component {
           <CardBody>
             <div className="media">
               <div className="media-body">
+                <button
+                  onClick={this.onDeleteMessage}
+                  className="close"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
                 <CardText>
                   <small className="text-muted"><FontAwesomeIcon icon="envelope"/>&nbsp;
                     Sent by&nbsp;&nbsp;

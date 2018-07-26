@@ -7,8 +7,9 @@ import SideBar from 'components/SideBar'
 import Spinner from 'components/Spinner'
 import MessagesList from '../../components/MessagesList/index'
 import { selectMessageLoading, selectMessages } from "./selectors";
-import { fetchAllMessages } from "./actions";
+import { deleteMessage, fetchAllMessages } from "./actions";
 import { selectUser } from "../Auth/selectors";
+import { addFlashMessage } from "../FlashMessage/actions";
 
 const Wrapper = styled.div`
   height: 100%;
@@ -19,13 +20,13 @@ class MessageContainer extends Component {
 
   componentDidMount() {
     const { fetchAllMessages, user } = this.props;
-    if (user) {
+    if (user && user.role === 'member') {
       fetchAllMessages(user.id);
     }
   }
 
   render() {
-    const { messages, loading } = this.props;
+    const { messages, loading, deleteMessage, addFlashMessage } = this.props;
     return (
       <Wrapper>
         <div className="row">
@@ -41,6 +42,8 @@ class MessageContainer extends Component {
                   <h4>No message</h4>
                 ) : (
                   <MessagesList
+                    addFlashMessage={addFlashMessage}
+                    deleteMessage={deleteMessage}
                     messagesList={messages}
                   />
                 )}
@@ -55,8 +58,10 @@ class MessageContainer extends Component {
 
 MessageContainer.propTypes = {
   messages: PropTypes.arrayOf(PropTypes.object),
-  fetchAllMessages: PropTypes.func,
   loading: PropTypes.bool,
+  fetchAllMessages: PropTypes.func.isRequired,
+  deleteMessage: PropTypes.func.isRequired,
+  addFlashMessage: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -66,7 +71,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchAllMessages: payload => dispatch(fetchAllMessages(payload))
+  fetchAllMessages: payload => dispatch(fetchAllMessages(payload)),
+  deleteMessage: id => dispatch(deleteMessage(id)),
+  addFlashMessage: message => dispatch(addFlashMessage(message))
 });
 
 export default connect(

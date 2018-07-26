@@ -4,7 +4,7 @@ import {
   FETCH_ALL_MESSAGES_SUCCEEDED,
   CREATE_MESSAGE_SUCCEEDED,
   FETCH_ALL_MESSAGES_FAILED,
-  CREATE_MESSAGE_FAILED
+  CREATE_MESSAGE_FAILED, DELETE_MESSAGE, DELETE_MESSAGE_SUCCEEDED, DELETE_MESSAGE_FAILED
 } from './constants';
 
 const initState = {
@@ -18,6 +18,7 @@ function messageReducer(state = initState, action) {
   switch (action.type) {
     case CREATE_MESSAGE:
     case FETCH_ALL_MESSAGES:
+    case DELETE_MESSAGE:
       return {
         ...state,
         loading: true
@@ -40,8 +41,17 @@ function messageReducer(state = initState, action) {
         loading: false
       }
 
+    case DELETE_MESSAGE_SUCCEEDED:
+      return {
+        ...state,
+        messages: state.messages.filter(message => message.id !== action.messageId),
+        loading: false,
+        error: false
+      }
+
     case FETCH_ALL_MESSAGES_FAILED:
     case CREATE_MESSAGE_FAILED:
+    case DELETE_MESSAGE_FAILED:
       return {
         ...state,
         error: true,
