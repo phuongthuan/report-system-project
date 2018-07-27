@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty'
 import { connect } from 'react-redux';
@@ -7,69 +7,94 @@ import ReportsList from '../../components/ReportsList'
 import SideBar from '../../components/SideBar'
 import { selectUser } from "../Auth/selectors";
 import { selectError, selectReportLoading, selectReports } from "./selectors";
-import { fetchAllReportsOfUser, deleteReport } from "./actions";
-import { getAllReportsOfTeam } from "../StatisticPage/actions";
+import {
+  fetchAllReportsOfUser, deleteReport, fetchAllReportsOfUserByDay,
+  fetchAllReportsOfUserByRange
+} from "./actions";
+import { getAllReportsOfTeam, getAllReportsOfTeamByDay, getAllReportsOfTeamByRange } from "../StatisticPage/actions";
 import { selectReportsOfTeam, selectStatisticLoading } from "../StatisticPage/selectors";
 import { addFlashMessage } from "../FlashMessage/actions";
-import Navigation from "../../components/Navigation";
-import DateTimePicker from "../../components/DateTimePicker";
+import FilterReport from "../../components/FilterReport";
+import DataTables from '../../components/DataTables/index'
 
 class ReportContainer extends Component {
 
   static propTypes = {
-    fetchAllReportsOfUser: PropTypes.func,
-    fetchAllReportsOfTeam: PropTypes.func,
-    deleteReport: PropTypes.func,
-    addFlashMessage: PropTypes.func,
+    fetchAllReportsOfUser: PropTypes.func.isRequired,
+    fetchAllReportsOfUserByDay: PropTypes.func.isRequired,
+    fetchAllReportsOfUserByRange: PropTypes.func.isRequired,
+    fetchAllReportsOfTeam: PropTypes.func.isRequired,
+    getAllReportsOfTeamByRange: PropTypes.func.isRequired,
+    getAllReportsOfTeamByDay: PropTypes.func.isRequired,
+    deleteReport: PropTypes.func.isRequired,
+    addFlashMessage: PropTypes.func.isRequired,
     reportLoading: PropTypes.bool,
     statisticLoading: PropTypes.bool,
     error: PropTypes.oneOfType([
       PropTypes.object,
       PropTypes.bool,
     ]),
-    reportsOfUser: PropTypes.arrayOf(PropTypes.object),
-    reportsOfTeam: PropTypes.arrayOf(PropTypes.object),
-    user: PropTypes.object,
+    reportsOfUser: PropTypes.arrayOf(PropTypes.object).isRequired,
+    reportsOfTeam: PropTypes.arrayOf(PropTypes.object).isRequired,
+    user: PropTypes.object.isRequired,
   };
 
   componentDidMount() {
-    const { user, fetchAllReportsOfUser, fetchAllReportsOfTeam } = this.props;
-
+    const {user, fetchAllReportsOfUser, fetchAllReportsOfTeam} = this.props;
     if (user && user.role === 'team_leader') {
       fetchAllReportsOfTeam(user.division);
     }
-
     if (user && user.role === 'member') {
       fetchAllReportsOfUser(user.id);
     }
   }
 
   render() {
-
-    const {reportsOfUser, deleteReport, reportLoading, statisticLoading, reportsOfTeam, user} = this.props;
+    const {reportsOfUser, fetchAllReportsOfUserByRange, fetchAllReportsOfUserByDay, getAllReportsOfTeamByDay, deleteReport, reportLoading, statisticLoading, reportsOfTeam, user, getAllReportsOfTeamByRange} = this.props;
     const loading = (user.role === 'member') ? reportLoading : statisticLoading;
     const reports = (user.role === 'member') ? reportsOfUser : reportsOfTeam;
-
+    console.log('ReportContainer', reports);
     return (
       <div className="row">
-        <div className="col-md-4">
+        <div className="col-md-3">
           <SideBar/>
         </div>
-        <div className="col-md-8">
+        <div className="col-md-9">
           <div className="row mb-3">
             <div className="col">
-              <DateTimePicker />
+              <FilterReport
+                user={user}
+                fetchAllReportsOfUserByDay={fetchAllReportsOfUserByDay}
+                fetchAllReportsOfUserByRange={fetchAllReportsOfUserByRange}
+                getAllReportsOfTeamByRange={getAllReportsOfTeamByRange}
+                getAllReportsOfTeamByDay={getAllReportsOfTeamByDay}
+              />
             </div>
           </div>
           {loading && isEmpty(reports) ? (
-            <Spinner />
+            <Spinner/>
           ) : (
-            <ReportsList
-              user={user}
-              addFlashMessage={addFlashMessage}
-              deleteReport={deleteReport}
-              reportsList={reports}
-            />
+            <Fragment>
+              {reports.length === 0 ? (
+                <h3>There are no report</h3>
+              ) : (
+                <Fragment>
+                  {user && user.role === 'member' ? (
+                    <ReportsList
+                      user={user}
+                      addFlashMessage={addFlashMessage}
+                      deleteReport={deleteReport}
+                      reportsList={reports}
+                    />
+                  ) : (
+                    <DataTables
+                      user={user}
+                      reportsList={reports}
+                    />
+                  )}
+                </Fragment>
+              )}
+            </Fragment>
           )}
         </div>
       </div>
@@ -88,10 +113,13 @@ export const mapStateToProps = state => ({
 
 export const mapDispatchToProps = dispatch => ({
   fetchAllReportsOfUser: userId => dispatch(fetchAllReportsOfUser(userId)),
+  fetchAllReportsOfUserByDay: (userId, date) => dispatch(fetchAllReportsOfUserByDay(userId, date)),
+  fetchAllReportsOfUserByRange: (userId, range) => dispatch(fetchAllReportsOfUserByRange(userId, range)),
   deleteReport: reportId => dispatch(deleteReport(reportId)),
   fetchAllReportsOfTeam: teamName => dispatch(getAllReportsOfTeam(teamName)),
-  addFlashMessage: message => dispatch(addFlashMessage(message))
-
+  addFlashMessage: message => dispatch(addFlashMessage(message)),
+  getAllReportsOfTeamByRange: (teamName, range) => dispatch(getAllReportsOfTeamByRange(teamName, range)),
+  getAllReportsOfTeamByDay: (teamName, date) => dispatch(getAllReportsOfTeamByDay(teamName, date))
 });
 
 export default connect(

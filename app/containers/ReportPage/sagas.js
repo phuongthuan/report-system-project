@@ -1,16 +1,13 @@
 import { call, put, fork ,takeLatest, all } from 'redux-saga/effects'
 import { delay } from 'redux-saga'
 import {
-  callFetchReports,
   callCreateReport,
   callUpdateReport,
   callFetchAReport,
   callDeleteReport,
-  callFetchAllReportsOfUser, callGetProfile
+  callFetchAllReportsOfUser, callGetProfile, callFetchAllReportsOfUserByDay, callFetchAllReportsOfUserByRange
 } from '../../requests';
 import {
-  fetchReportsSucceeded,
-  fetchReportsFailed,
   createReportSucceeded,
   createReportFailed,
   updateReportFailed,
@@ -20,15 +17,18 @@ import {
   deleteReportSucceeded,
   deleteReportFailed,
   fetchAllReportsOfUserFailed,
-  fetchAllReportsOfUserSucceeded
+  fetchAllReportsOfUserSucceeded,
+  fetchAllReportsOfUserByDayFailed,
+  fetchAllReportsOfUserByDaySucceeded,
+  fetchAllReportsOfUserByRangeSucceeded,
+  fetchAllReportsOfUserByRangeFailed
 } from './actions';
 
 import {
   CREATE_REPORT,
   UPDATE_REPORT,
-  FETCH_REPORTS,
   FETCH_A_REPORT,
-  DELETE_REPORT, FETCH_ALL_REPORTS_OF_USER
+  DELETE_REPORT, FETCH_ALL_REPORTS_OF_USER, FETCH_ALL_REPORTS_OF_USER_BY_DAY, FETCH_ALL_REPORTS_OF_USER_BY_RANGE
 } from './constants';
 import { getUserProfileFailed } from "../ProfilePage/actions";
 
@@ -53,6 +53,70 @@ export function* fetchAllReportsOfUser(action) {
     yield put(fetchAllReportsOfUserSucceeded(reports));
   } catch (error) {
     yield put(fetchAllReportsOfUserFailed(error));
+  }
+}
+
+export function* fetchAllReportsOfUserByDay(action) {
+
+  const payload = {
+    userId: action.id,
+    date: action.date
+  }
+
+  try {
+    const reports = yield call(callFetchAllReportsOfUserByDay, payload);
+    yield delay(700);
+    const users = yield reports.map(function (report) {
+      try {
+        return call(callGetProfile, report.userId);
+      } catch (error) {
+        return put(getUserProfileFailed(error));
+      }
+    });
+    reports.map(report => {
+      const userRelatedToReport = users.filter(user => user.id === report.userId);
+      if (userRelatedToReport && userRelatedToReport.length > 0) {
+        report.userId = userRelatedToReport[0];
+      }
+      return null;
+    });
+    const reportByDay = reports.filter(report => report.date === action.date);
+    yield put(fetchAllReportsOfUserByDaySucceeded(reportByDay));
+  } catch (error) {
+    yield put(fetchAllReportsOfUserByDayFailed(error));
+  }
+}
+
+export function* fetchAllReportsOfUserByRange(action) {
+
+  const payload = {
+    userId: action.id,
+    startDate: action.range[0],
+    endDate: action.range[1],
+  }
+
+  try {
+    const reports = yield call(callFetchAllReportsOfUserByRange, payload);
+    yield delay(700);
+    const users = yield reports.map(function (report) {
+      try {
+        return call(callGetProfile, report.userId);
+      } catch (error) {
+        return put(getUserProfileFailed(error));
+      }
+    });
+    reports.map(report => {
+      const userRelatedToReport = users.filter(user => user.id === report.userId);
+      if (userRelatedToReport && userRelatedToReport.length > 0) {
+        report.userId = userRelatedToReport[0];
+      }
+      return null;
+    });
+    const reportByRange = reports.filter(report => (report.date >= action.range[0] && report.date < action.range[1]));
+    console.log('reportByRange', reportByRange);
+    yield put(fetchAllReportsOfUserByRangeSucceeded(reportByRange));
+  } catch (error) {
+    yield put(fetchAllReportsOfUserByRangeFailed(error));
   }
 }
 
@@ -100,6 +164,14 @@ export function* watchFetchAllReportsOfUser() {
   yield takeLatest(FETCH_ALL_REPORTS_OF_USER, fetchAllReportsOfUser);
 }
 
+export function* watchFetchAllReportsOfUserByDay() {
+  yield takeLatest(FETCH_ALL_REPORTS_OF_USER_BY_DAY, fetchAllReportsOfUserByDay);
+}
+
+export function* watchFetchAllReportsOfUserByRange() {
+  yield takeLatest(FETCH_ALL_REPORTS_OF_USER_BY_RANGE, fetchAllReportsOfUserByRange);
+}
+
 export function* watchFetchAReport() {
   yield takeLatest(FETCH_A_REPORT, fetchAReport);
 }
@@ -119,6 +191,8 @@ export function* watchDeleteReport() {
 export default function* reportPageSaga() {
   yield all([
     fork(watchFetchAllReportsOfUser),
+    fork(watchFetchAllReportsOfUserByDay),
+    fork(watchFetchAllReportsOfUserByRange),
     fork(watchFetchAReport),
     fork(watchCreateReport),
     fork(watchUpdateReport),

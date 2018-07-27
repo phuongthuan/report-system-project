@@ -1,11 +1,18 @@
 import React from 'react'
+import styled from 'styled-components'
+
+const WrapperStyled = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 
 const NoMatch = ({ location }) => (
-  <div>
+  <WrapperStyled>
     <h3>
-      No match for <code>{location.pathname}</code>
+      Not found for <code>{location.pathname}</code>
     </h3>
-  </div>
+  </WrapperStyled>
 );
 
 export default NoMatch;
