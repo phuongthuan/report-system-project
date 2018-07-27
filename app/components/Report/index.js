@@ -84,7 +84,11 @@ class Report extends Component {
             </CardFooter>
           </Card>
         ) : (
-          <Card className="mb-4" key={report.id}>
+          <Card
+            className="mb-4 border-0 shadow-sm"
+            key={report.id}
+            style={{borderRadius: '0'}}
+          >
             <CardHeader>
               <CardTitle>{report.id} - {report.title}</CardTitle>
             </CardHeader>

@@ -5,7 +5,7 @@ import isEmpty from "lodash/isEmpty";
 import SideBar from 'components/SideBar'
 import LineChart from "../../components/Chart/LineChart";
 import PieChart from "../../components/Chart/PieChart";
-import { getAllReportsOfTeam } from "./actions";
+import { getAllReportsOfTeam, getAllReportsOfTeamByRange } from "./actions";
 import { selectStatisticLoading, selectReportsOfTeam } from "./selectors";
 import { selectProfile } from "../ProfilePage/selectors";
 import { selectUser } from "../Auth/selectors";
@@ -25,7 +25,7 @@ class StatisticContainer extends Component {
     const { reportsOfTeam, loading } = this.props;
     return (
       <div>
-        <div className="row mt-5 mb-5">
+        <div className="row">
           <div className="col-md-2">
             <SideBar/>
           </div>
@@ -66,6 +66,7 @@ StatisticContainer.propTypes = {
   user: PropTypes.object,
   loading: PropTypes.bool,
   getAllReportsOfTeam: PropTypes.func,
+  getAllReportsOfTeamByRange: PropTypes.func,
 }
 
 const mapStateToProps = state => ({
@@ -76,7 +77,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getAllReportsOfTeam: teamName => dispatch(getAllReportsOfTeam(teamName))
+  getAllReportsOfTeam: teamName => dispatch(getAllReportsOfTeam(teamName)),
 });
 
 export default connect(

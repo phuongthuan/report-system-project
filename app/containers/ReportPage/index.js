@@ -9,7 +9,7 @@ import NoMatch from "../../utils/NoMatch";
 class ReportPage extends Component {
   render() {
     return (
-      <div className="container">
+      <div className="container-fluid">
         <FlashMessage />
         <Switch>
           <Route exact path="/report" component={ReportContainer}/>

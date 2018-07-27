@@ -19,9 +19,11 @@ import {
 
 export const callFetchReports = () => request('get', GET_REPORTS);
 export const callFetchAllReportsOfUser = userId => request('get', `${GET_ALL_REPORTS_OF_USER}/${userId}/reports?_sort=date&_order=desc`);
+export const callFetchAllReportsOfUserByDay = payload => request('get', `${GET_ALL_REPORTS_OF_USER}/${payload.userId}/reports?date=${payload.date}`);
+export const callFetchAllReportsOfUserByRange = payload => request('get', `${GET_ALL_REPORTS_OF_USER}/${payload.userId}/reports?date_gte=${payload.startDate}&date_lte=${payload.endDate}`);
 export const callFetchAReport = id => request('get', `${GET_A_REPORT}/${id}`);
 export const callGetProfile = id => request('get', `${GET_USER_PROFILE}/${id}`)
-export const callGetMembersOfTeam = payload => request('get', `${GET_MEMBERS_OF_TEAM}?division=${payload}`)
+export const callGetMembersOfTeam = payload => request('get', `${GET_MEMBERS_OF_TEAM}?division=${payload}&_page=1`)
 export const callGetMembers = () => request('get', `${GET_MEMBERS}?_page=1`)
 export const callGetMessagesToUser = payload => request('get', `${GET_MESSAGES}?toUser=${payload}&_sort=date&_order=desc`)
 
