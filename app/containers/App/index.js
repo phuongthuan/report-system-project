@@ -11,6 +11,7 @@ import ProfilePage from "../ProfilePage";
 import MemberPage from "../MemberPage";
 import MessagePage from "../Message";
 import img from '../../assests/images/neil-rosenstech-752022-unsplash.jpg'
+import TeamPage from "../TeamPage";
 
 const AppWrapper = styled.div`
   background-image: url(${img});
@@ -34,6 +35,7 @@ export default class App extends Component {
           <PrivateRoute path="/statistic" component={StatisticPage} />
           <PrivateRoute path="/profile" component={ProfilePage}/>
           <PrivateRoute path="/member" component={MemberPage}/>
+          <PrivateRoute path="/team" component={TeamPage}/>
           <Route component={NoMatch}/>
         </Switch>
       </AppWrapper>

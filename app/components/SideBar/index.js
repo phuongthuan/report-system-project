@@ -158,7 +158,7 @@ class SideBar extends Component {
                   className="justify-content-between"
                   action
                 >
-                  <Link to="/statistic/teams">
+                  <Link to="/team">
                     <Icon type="idcard" className="mr-2" />
                     Teams List
                   </Link>

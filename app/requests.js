@@ -14,10 +14,12 @@ import {
   GET_MESSAGES,
   CREATE_MESSAGE,
   GET_MEMBERS,
-  DELETE_MESSAGE
+  DELETE_MESSAGE,
+  GET_TEAMS
 } from 'constants/API_URL'
 
 export const callFetchReports = () => request('get', GET_REPORTS);
+export const callFetchTeams = () => request('get', GET_TEAMS);
 export const callFetchAllReportsOfUser = userId => request('get', `${GET_ALL_REPORTS_OF_USER}/${userId}/reports?_sort=date&_order=desc`);
 export const callFetchAllReportsOfUserByDay = payload => request('get', `${GET_ALL_REPORTS_OF_USER}/${payload.userId}/reports?date=${payload.date}`);
 export const callFetchAllReportsOfUserByRange = payload => request('get', `${GET_ALL_REPORTS_OF_USER}/${payload.userId}/reports?date_gte=${payload.startDate}&date_lte=${payload.endDate}`);

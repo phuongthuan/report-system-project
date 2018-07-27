@@ -5,7 +5,8 @@ var database = {
   users: [],
   reports: [],
   weeky_reports: [],
-  messages: []
+  messages: [],
+  teams: []
 };
 
 const division = [
@@ -127,5 +128,13 @@ for (let i=1; i<=50; i++) {
   });
 }
 
+for (let i=1; i<=4; i++) {
+  database.teams.push({
+    id: i,
+    name: "Front End Team " + i,
+    userId: (25-i),
+    description: faker.lorem.paragraphs()
+  });
+}
 
 console.log(JSON.stringify(database));
