@@ -5,12 +5,13 @@ import styled from "styled-components";
 import Spinner from 'components/Spinner'
 import PropTypes from 'prop-types'
 import SideBar from 'components/SideBar'
-import MembersList from 'components/MembersList'
+import MembersList from '../../components/MembersList'
 import { fetchAllMembersOfTeam, fetchAllMembers } from './actions'
 import { addFlashMessage } from '../FlashMessage/actions'
 import { createMessage } from '../Message/actions'
 import { selectMemberLoading, selectMembers } from "./selectors";
 import { selectUser } from "../Auth/selectors";
+import { selectFlashMessage } from "../FlashMessage/selectors";
 
 const Wrapper = styled.div`
   height: 100%;
@@ -69,7 +70,8 @@ class MemberContainer extends Component {
 const mapStateToProps = state => ({
   members: selectMembers(state),
   user: selectUser(state),
-  loading: selectMemberLoading(state)
+  loading: selectMemberLoading(state),
+  messages: selectFlashMessage(state)
 });
 
 export default connect(

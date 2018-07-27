@@ -27,12 +27,13 @@ class Report extends Component {
         deleteReport(report.id);
         addFlashMessage({
           type: 'success',
-          message: 'Delete Report Successful'
+          text: 'Report has been deleted.'
         });
       },
       onCancel() {
       },
     });
+
   }
 
   render() {

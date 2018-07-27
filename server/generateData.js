@@ -71,7 +71,7 @@ for (let i=21; i<=24; i++) {
     avatar: faker.image.avatar(),
     address: faker.address.streetAddress("###") + ' ' + faker.address.city() + ' ' + faker.address.county(),
     phone: faker.phone.phoneNumberFormat(),
-    division: `Front End Team ${24-i}`,
+    division: `Front End Team ${25-i}`,
     password: "123456",
     role: "team_leader"
   });

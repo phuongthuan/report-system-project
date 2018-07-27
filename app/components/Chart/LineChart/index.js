@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import update from 'immutability-helper';
+import { Card, CardBody } from 'reactstrap'
 import { Line } from 'react-chartjs-2'
 import PropTypes from 'prop-types';
 
@@ -177,22 +178,24 @@ class LineChart extends Component {
   render() {
 
     return (
-      <div className="card-body">
-        <Line
-          data={this.state.data}
-          options={{
-            title: {
-              display: this.props.displayTitle,
-              fontSize: 25,
-              text: 'Issues of reports changing by time'
-            },
-            legend: {
-              display: this.props.displayLegend,
-              position: this.props.legendPosition
-            }
-          }}
-        />
-      </div>
+      <Card>
+        <CardBody>
+          <Line
+            data={this.state.data}
+            options={{
+              title: {
+                display: this.props.displayTitle,
+                fontSize: 25,
+                text: 'Issues of reports changing by time'
+              },
+              legend: {
+                display: this.props.displayLegend,
+                position: this.props.legendPosition
+              }
+            }}
+          />
+        </CardBody>
+      </Card>
     );
   }
 }

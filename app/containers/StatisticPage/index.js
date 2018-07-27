@@ -5,7 +5,7 @@ import StatisticContainer from "./StatisticContainer";
 class StatisticPage extends Component {
   render() {
     return (
-      <div className="container">
+      <div className="container-fluid">
         <Switch>
           <Route exact path="/statistic" component={StatisticContainer} />
         </Switch>

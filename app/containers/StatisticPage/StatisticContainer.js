@@ -5,7 +5,7 @@ import isEmpty from "lodash/isEmpty";
 import SideBar from 'components/SideBar'
 import LineChart from "../../components/Chart/LineChart";
 import PieChart from "../../components/Chart/PieChart";
-import { getAllReportsOfTeam, getAllReportsOfTeamByRange } from "./actions";
+import { getAllReportsOfTeam } from "./actions";
 import { selectStatisticLoading, selectReportsOfTeam } from "./selectors";
 import { selectProfile } from "../ProfilePage/selectors";
 import { selectUser } from "../Auth/selectors";
@@ -26,10 +26,10 @@ class StatisticContainer extends Component {
     return (
       <div>
         <div className="row">
-          <div className="col-md-2">
+          <div className="col-md-3">
             <SideBar/>
           </div>
-          <div className="col-md-10">
+          <div className="col-md-9">
             <div className="row mb-3">
               <div className="col-md-12">
                 <Navigation />
@@ -53,6 +53,10 @@ class StatisticContainer extends Component {
                 </div>
               </div>
             )}
+
+            <div className="row">
+              
+            </div>
           </div>
         </div>
       </div>

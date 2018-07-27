@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import update from 'immutability-helper';
+import { Card, CardBody } from 'reactstrap'
+
 import { Pie } from 'react-chartjs-2'
 import PropTypes from 'prop-types';
 
@@ -94,23 +96,25 @@ class PieChart extends Component {
   render() {
 
     return (
-      <div className="card-body">
-        <Pie
-          data={this.state.data}
-          options={{
-            title: {
-              display: this.props.displayTitle,
-              text: 'Issues of reports by all time',
-              fontSize: 25
-            },
-            cutoutPercentage: 10,
-            legend: {
-              display: this.props.displayLegend,
-              position: this.props.legendPosition
-            }
-          }}
-        />
-      </div>
+      <Card>
+        <CardBody>
+          <Pie
+            data={this.state.data}
+            options={{
+              title: {
+                display: this.props.displayTitle,
+                text: 'Issues of reports by all time',
+                fontSize: 25
+              },
+              cutoutPercentage: 10,
+              legend: {
+                display: this.props.displayLegend,
+                position: this.props.legendPosition
+              }
+            }}
+          />
+        </CardBody>
+      </Card>
     );
   }
 }

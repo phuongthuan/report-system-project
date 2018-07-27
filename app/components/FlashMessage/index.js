@@ -6,9 +6,9 @@ import { Icon } from 'antd';
 
 const Flash = styled.div`
   position: absolute;
-  margin: 0 10px 10px 0;
+  margin: 0 0 10px 10px;
   bottom: 0;
-  right: 0;
+  left: 0;
   width: auto;
   z-index: 1;
 `;
