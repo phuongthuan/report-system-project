@@ -33,21 +33,23 @@ class UpdateReportContainer extends Component {
   render() {
     const {updateReport, report, loading, addFlashMessage} = this.props;
     return (
-      <div className="row">
-        <div className="col-md-4">
-          <SideBar />
-        </div>
-        <div className="col-md-8">
-          {loading && isEmpty(report) ? (
-            <Spinner />
-          ) : (
-            <UpdateReportForm
-              {...this.props}
-              report={report}
-              updateReport={updateReport}
-              addFlashMessage={addFlashMessage}
-            />
-          )}
+      <div className="container">
+        <div className="row">
+          <div className="col-md-4">
+            <SideBar />
+          </div>
+          <div className="col-md-8">
+            {loading && isEmpty(report) ? (
+              <Spinner />
+            ) : (
+              <UpdateReportForm
+                {...this.props}
+                report={report}
+                updateReport={updateReport}
+                addFlashMessage={addFlashMessage}
+              />
+            )}
+          </div>
         </div>
       </div>
     );

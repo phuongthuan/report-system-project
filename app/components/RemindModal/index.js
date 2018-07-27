@@ -19,7 +19,7 @@ class RemindModal extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    const { createMessage } = this.props;
+    const { createMessage, addFlashMessage } = this.props;
     const { messageObj } = this.state;
     this.setState({ loading: true });
 
@@ -35,9 +35,14 @@ class RemindModal extends Component {
             date: messageObj.date
           }
           createMessage(message);
+          addFlashMessage({
+            type: 'success',
+            text: 'Message has been sent.'
+          });
         }, 2000);
       }
     });
+
   }
 
   showModal = () => {
