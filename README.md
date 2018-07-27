@@ -36,7 +36,7 @@ npm start
 
 For member: account prefix:
 <br />
-email: member(1->46)@gmail.com
+email: member(1->20)@gmail.com
 <br />
 password: 123456
 ```
@@ -47,7 +47,7 @@ password: 123456
 
 For teamleader: account prefix:
 <br />
-email: teamleader(46->49)@gmail.com
+email: teamleader(21->24)@gmail.com
 <br />
 password: 123456
 
