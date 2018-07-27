@@ -6,10 +6,12 @@ import profilePageSaga from "./containers/ProfilePage/sagas";
 import { memberSagaPage } from "./containers/MemberPage/sagas";
 import { statisticSagaPage } from "./containers/StatisticPage/sagas";
 import messageSagaPage from "./containers/Message/sagas";
+import { teamPageSaga } from "./containers/TeamPage/sagas";
 
 export default function* rootSaga() {
   yield all([
     authPageSaga(),
+    teamPageSaga(),
     memberSagaPage(),
     messageSagaPage(),
     statisticSagaPage(),
