@@ -64,7 +64,7 @@ class ReportContainer extends Component {
         </div>
         <div className="col-md-9">
           <div className="row mb-3">
-            <div className="col">
+            <div className="col-md-6">
               <FilterReport
                 user={user}
 

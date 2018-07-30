@@ -4,7 +4,10 @@ import Team from "./Team";
 const TeamList = (props) => {
   const { teamsList } = props;
   return (
-    <div>
+    <div
+      className="d-flex"
+      style={{flexWrap: 'wrap'}}
+    >
       {teamsList.map(team =>
         (
           <Team

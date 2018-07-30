@@ -32,7 +32,7 @@ class Navigation extends Component {
   render() {
     const { today } = this.state;
     return (
-      <Navbar color="light" light expand="md" className="shadow-sm">
+      <Navbar color="light" light expand="md" className="shadow-sm mb-3">
         <NavbarBrand>
           <FontAwesomeIcon icon="clock" />
           <span> {moment(today).format("dddd, MMM Do YYYY")}</span>

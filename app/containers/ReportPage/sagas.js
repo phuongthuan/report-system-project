@@ -189,7 +189,7 @@ export function* watchDeleteReport() {
 }
 
 export default function* reportPageSaga() {
-  yield all([
+  yield all ([
     fork(watchFetchAllReportsOfUser),
     fork(watchFetchAllReportsOfUserByDay),
     fork(watchFetchAllReportsOfUserByRange),

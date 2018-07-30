@@ -28,7 +28,9 @@ class TeamContainer extends Component {
             <SideBar/>
           </div>
           <div className="col-md-9">
+
             <Navigation/>
+
             {teamLoading && isEmpty(teams) ? (
               <Spinner/>
             ) : (

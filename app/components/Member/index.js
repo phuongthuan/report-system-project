@@ -6,6 +6,7 @@ import {
   Card,
   CardBody,
   CardFooter,
+  Badge
 } from 'reactstrap'
 import img from '../../assests/images/Gabe_newell.png'
 import WrapperRemindModal from '../RemindModal/index'
@@ -19,7 +20,7 @@ class Member extends Component {
 
   render() {
     const {member, user, createMessage, addFlashMessage} = this.props;
-    const {id, firstName, address, phone, lastName, avatar} = member;
+    const {id, firstName, address, phone, lastName, avatar, role, division} = member;
     const image = member ? avatar : img;
 
     return (
@@ -39,6 +40,34 @@ class Member extends Component {
                     {firstName} {lastName}
                   </Link>
                 </h5>
+
+                <p>
+                  <Badge
+                    color="light"
+                  >
+                    {
+                      (() => {
+                        switch (role) {
+                          case "member":
+                            return "Member";
+                          case "team_leader":
+                            return "Team leader";
+                          case "group_leader":
+                            return "Group leader";
+                          default:
+                            return "Member";
+                        }
+                      })()
+                    }
+                  </Badge>
+                  &nbsp;&nbsp;
+                  <Badge
+                    color="success"
+                  >
+                    {division}
+                  </Badge>
+                </p>
+
                 Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus
                 odio
                 <br/>
