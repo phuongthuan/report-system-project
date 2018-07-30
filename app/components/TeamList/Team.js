@@ -25,7 +25,7 @@ class Team extends Component {
           <CardBody>
             <div className="media">
               <Link to={`member/${userId.id}`}>
-                <Image className="mr-3 rounded-circle" src={image} alt="Member Profile img"/>
+                <Image className="mr-3 rounded-circle" src={image} alt={userId.firstName}/>
               </Link>
               <div className="media-body">
                 <h5 className="mt-0">

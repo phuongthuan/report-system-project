@@ -4,7 +4,7 @@ var moment = require('moment');
 var database = {
   users: [],
   reports: [],
-  weeky_reports: [],
+  weekly_reports: [],
   messages: [],
   teams: []
 };
@@ -106,12 +106,12 @@ for (let i=1; i<=600; i++) {
 }
 
 for (let i=1; i<=10; i++) {
-  database.weeky_reports.push({
+  database.weekly_reports.push({
     id: i,
     userId: getRandomInt(21, 24),
-    issues: faker.lorem.sentence(),
-    solutions: faker.lorem.sentence(),
-    date: faker.date.between('2018-06-01', '2018-09-31'),
+    issue: faker.lorem.sentence(),
+    solution: faker.lorem.sentence(),
+    date: moment(faker.date.between('2018-06-01', '2018-09-31')).format("YYYY-MM-DD"),
     description: faker.lorem.paragraphs(),
     summary: faker.lorem.sentences()
   });

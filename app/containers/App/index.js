@@ -12,6 +12,7 @@ import MemberPage from "../MemberPage";
 import MessagePage from "../Message";
 import img from '../../assests/images/neil-rosenstech-752022-unsplash.jpg'
 import TeamPage from "../TeamPage";
+import WeeklyReport from "../WeeklyReport/index";
 
 const AppWrapper = styled.div`
   background-image: url(${img});
@@ -31,6 +32,7 @@ export default class App extends Component {
           <Route exact path="/" component={Home}/>
           <Route path="/login" component={Auth}/>
           <PrivateRoute path="/message" component={MessagePage}/>
+          <PrivateRoute path="/weekly-report" component={WeeklyReport}/>
           <PrivateRoute path="/report" component={ReportPage} />
           <PrivateRoute path="/statistic" component={StatisticPage} />
           <PrivateRoute path="/profile" component={ProfilePage}/>

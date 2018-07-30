@@ -7,6 +7,7 @@ import { memberSagaPage } from "./containers/MemberPage/sagas";
 import { statisticSagaPage } from "./containers/StatisticPage/sagas";
 import messageSagaPage from "./containers/Message/sagas";
 import { teamPageSaga } from "./containers/TeamPage/sagas";
+import weeklyReportSagaPage from "./containers/WeeklyReport/sagas";
 
 export default function* rootSaga() {
   yield all([
@@ -14,6 +15,7 @@ export default function* rootSaga() {
     teamPageSaga(),
     memberSagaPage(),
     messageSagaPage(),
+    weeklyReportSagaPage(),
     statisticSagaPage(),
     profilePageSaga(),
     learningSaga(),

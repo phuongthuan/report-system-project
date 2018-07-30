@@ -15,7 +15,8 @@ import {
   CREATE_MESSAGE,
   GET_MEMBERS,
   DELETE_MESSAGE,
-  GET_TEAMS
+  GET_TEAMS,
+  CREATE_WEEKLY_REPORT
 } from 'constants/API_URL'
 
 export const callFetchReports = () => request('get', GET_REPORTS);
@@ -31,6 +32,7 @@ export const callGetMessagesToUser = payload => request('get', `${GET_MESSAGES}?
 
 export const callCreateReport = report => request('post', CREATE_REPORT, report);
 export const callCreateMessage = message => request('post', CREATE_MESSAGE, message);
+export const callCreateWeeklyReport = weeklyReport => request('post', CREATE_WEEKLY_REPORT, weeklyReport);
 export const callLogin = options => request('post', LOGIN, options);
 export const callLogout = () => localStorage.removeItem('auth');
 

@@ -53,7 +53,6 @@ class StatisticContainer extends Component {
                 </div>
               </div>
             )}
-
           </div>
         </div>
       </div>
