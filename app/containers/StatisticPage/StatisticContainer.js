@@ -32,7 +32,6 @@ class StatisticContainer extends Component {
           <div className="col-md-9">
             <div className="row mb-3">
               <div className="col-md-6">
-                {/*<Navigation />*/}
                 <FilterReport
                   user={user}
                   fetchAllReportsOfTeamByRange={fetchAllReportsOfTeamByRange}

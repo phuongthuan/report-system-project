@@ -105,7 +105,7 @@ for (let i=1; i<=2000; i++) {
   });
 }
 
-for (let i=1; i<=10; i++) {
+for (let i=1; i<=20; i++) {
   database.weekly_reports.push({
     id: i,
     userId: getRandomInt(21, 24),

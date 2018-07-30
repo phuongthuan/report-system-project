@@ -114,7 +114,6 @@ class PieChart extends Component {
   }
 
   render() {
-    console.log('render', this.props.dataSource);
     return (
       <Card
         className="border-0 shadow-sm"

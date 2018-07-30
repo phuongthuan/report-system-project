@@ -19,7 +19,7 @@ class Team extends Component {
     return (
       <Fragment>
         <Card
-          className="mb-4 border-0 shadow-sm"
+          className="col-md-6 mb-4 border-0 shadow-sm"
           style={{borderRadius: '0'}}
         >
           <CardBody>
