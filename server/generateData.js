@@ -91,12 +91,12 @@ database.users.push({
   role: "group_leader"
 });
 
-for (let i=1; i<=600; i++) {
+for (let i=1; i<=2000; i++) {
   database.reports.push({
     id: i,
     userId: getRandomInt(1, 20),
     title: faker.lorem.sentence(),
-    date: moment(faker.date.between('2018-07-01', '2018-07-31')).format("YYYY-MM-DD"),
+    date: moment(faker.date.between('2018-06-01', '2018-09-31')).format("YYYY-MM-DD"),
     achievement: faker.lorem.sentence(),
     plan: faker.lorem.sentences(),
     issues: getRandom(issues, getRandomInt(1, 5)),

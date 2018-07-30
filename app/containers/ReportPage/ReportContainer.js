@@ -23,17 +23,21 @@ class ReportContainer extends Component {
     fetchAllReportsOfUser: PropTypes.func.isRequired,
     fetchAllReportsOfUserByDay: PropTypes.func.isRequired,
     fetchAllReportsOfUserByRange: PropTypes.func.isRequired,
+
     fetchAllReportsOfTeam: PropTypes.func.isRequired,
-    getAllReportsOfTeamByRange: PropTypes.func.isRequired,
-    getAllReportsOfTeamByDay: PropTypes.func.isRequired,
+    fetchAllReportsOfTeamByRange: PropTypes.func.isRequired,
+    fetchAllReportsOfTeamByDay: PropTypes.func.isRequired,
+
     deleteReport: PropTypes.func.isRequired,
     addFlashMessage: PropTypes.func.isRequired,
+
     reportLoading: PropTypes.bool,
     statisticLoading: PropTypes.bool,
     error: PropTypes.oneOfType([
       PropTypes.object,
       PropTypes.bool,
     ]),
+
     reportsOfUser: PropTypes.arrayOf(PropTypes.object).isRequired,
     reportsOfTeam: PropTypes.arrayOf(PropTypes.object).isRequired,
     user: PropTypes.object.isRequired,
@@ -50,10 +54,9 @@ class ReportContainer extends Component {
   }
 
   render() {
-    const {reportsOfUser, fetchAllReportsOfUserByRange, fetchAllReportsOfUserByDay, getAllReportsOfTeamByDay, deleteReport, reportLoading, statisticLoading, reportsOfTeam, user, getAllReportsOfTeamByRange} = this.props;
+    const {reportsOfUser, fetchAllReportsOfUserByRange, fetchAllReportsOfUserByDay, fetchAllReportsOfTeamByDay, deleteReport, reportLoading, statisticLoading, reportsOfTeam, user, fetchAllReportsOfTeamByRange} = this.props;
     const loading = (user.role === 'member') ? reportLoading : statisticLoading;
     const reports = (user.role === 'member') ? reportsOfUser : reportsOfTeam;
-    console.log('ReportContainer', reports);
     return (
       <div className="row">
         <div className="col-md-3">
@@ -64,10 +67,12 @@ class ReportContainer extends Component {
             <div className="col">
               <FilterReport
                 user={user}
+
                 fetchAllReportsOfUserByDay={fetchAllReportsOfUserByDay}
                 fetchAllReportsOfUserByRange={fetchAllReportsOfUserByRange}
-                getAllReportsOfTeamByRange={getAllReportsOfTeamByRange}
-                getAllReportsOfTeamByDay={getAllReportsOfTeamByDay}
+
+                fetchAllReportsOfTeamByRange={fetchAllReportsOfTeamByRange}
+                fetchAllReportsOfTeamByDay={fetchAllReportsOfTeamByDay}
               />
             </div>
           </div>
@@ -115,11 +120,13 @@ export const mapDispatchToProps = dispatch => ({
   fetchAllReportsOfUser: userId => dispatch(fetchAllReportsOfUser(userId)),
   fetchAllReportsOfUserByDay: (userId, date) => dispatch(fetchAllReportsOfUserByDay(userId, date)),
   fetchAllReportsOfUserByRange: (userId, range) => dispatch(fetchAllReportsOfUserByRange(userId, range)),
+
   deleteReport: reportId => dispatch(deleteReport(reportId)),
-  fetchAllReportsOfTeam: teamName => dispatch(getAllReportsOfTeam(teamName)),
   addFlashMessage: message => dispatch(addFlashMessage(message)),
-  getAllReportsOfTeamByRange: (teamName, range) => dispatch(getAllReportsOfTeamByRange(teamName, range)),
-  getAllReportsOfTeamByDay: (teamName, date) => dispatch(getAllReportsOfTeamByDay(teamName, date))
+
+  fetchAllReportsOfTeam: teamName => dispatch(getAllReportsOfTeam(teamName)),
+  fetchAllReportsOfTeamByRange: (teamName, range) => dispatch(getAllReportsOfTeamByRange(teamName, range)),
+  fetchAllReportsOfTeamByDay: (teamName, date) => dispatch(getAllReportsOfTeamByDay(teamName, date))
 });
 
 export default connect(

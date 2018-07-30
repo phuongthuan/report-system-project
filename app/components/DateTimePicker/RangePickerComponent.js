@@ -7,12 +7,12 @@ const { RangePicker } = DatePicker;
 class RangePickerComponent extends Component {
 
   onChange = (date, dateString) => {
-    const { getAllReportsOfTeamByRange, fetchAllReportsOfUserByRange, user } = this.props;
+    const { fetchAllReportsOfTeamByRange, fetchAllReportsOfUserByRange, user } = this.props;
     if (user && user.role === 'member') {
       fetchAllReportsOfUserByRange(user.id, dateString)
     }
     if (user && user.role === 'team_leader') {
-      getAllReportsOfTeamByRange(user.division, dateString);
+      fetchAllReportsOfTeamByRange(user.division, dateString);
     }
     console.log('RangePicker submitted!', dateString);
   }
