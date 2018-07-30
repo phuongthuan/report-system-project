@@ -14,7 +14,6 @@ export function teamReducer(state = initState, action) {
         loading: true
       }
     case FETCH_ALL_TEAMS_SUCCEEDED:
-      console.log('teamReducer', action.teamsReceived);
       return {
         ...state,
         teams: action.teamsReceived,
