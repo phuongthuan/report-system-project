@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import { Card, Typography, CardContent, CardActions } from '@material-ui/core'
+import { Card, CardActions } from '@material-ui/core'
 import DatePickerComponent from "../DateTimePicker/DatePickerComponent";
 import RangePickerComponent from "../DateTimePicker/RangePickerComponent";
 
@@ -16,8 +16,7 @@ const styles = {
     margin: '0 2px',
     transform: 'scale(0.8)',
   },
-  title: {
-  },
+  title: {},
   pos: {
     marginBottom: 12,
   },
@@ -25,22 +24,29 @@ const styles = {
 
 class FilterReport extends Component {
   render() {
-    const { classes } = this.props;
-    const {getAllReportsOfTeamByRange, fetchAllReportsOfUserByRange, fetchAllReportsOfUserByDay, getAllReportsOfTeamByDay, user} = this.props;
+    const {classes} = this.props;
+    const {
+      fetchAllReportsOfUserByRange,
+      fetchAllReportsOfUserByDay,
+
+      fetchAllReportsOfTeamByDay,
+      fetchAllReportsOfTeamByRange,
+      user
+    } = this.props;
     return (
       <Card className={classes.card}>
         <CardActions>
           <DatePickerComponent
             user={user}
             fetchAllReportsOfUserByDay={fetchAllReportsOfUserByDay}
-            getAllReportsOfTeamByDay={getAllReportsOfTeamByDay}
+            fetchAllReportsOfTeamByDay={fetchAllReportsOfTeamByDay}
           />
         </CardActions>
         <CardActions>
           <RangePickerComponent
             user={user}
             fetchAllReportsOfUserByRange={fetchAllReportsOfUserByRange}
-            getAllReportsOfTeamByRange={getAllReportsOfTeamByRange}
+            fetchAllReportsOfTeamByRange={fetchAllReportsOfTeamByRange}
           />
         </CardActions>
       </Card>

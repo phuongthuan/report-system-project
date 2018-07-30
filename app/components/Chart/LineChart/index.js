@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import update from 'immutability-helper';
 import { Card, CardBody } from 'reactstrap'
 import { Line } from 'react-chartjs-2'
-import PropTypes from 'prop-types';
 
 class LineChart extends Component {
 
@@ -10,7 +9,7 @@ class LineChart extends Component {
     displayName: 'Line Chart',
     displayTitle: true,
     displayLegend: true,
-    legendPosition: 'right',
+    legendPosition: 'bottom',
   }
 
   state = {
@@ -133,24 +132,44 @@ class LineChart extends Component {
   componentDidMount() {
     const {dataSource} = this.props;
     const issues = [];
-    dataSource.map(report => { // report: object
+    dataSource.map(report => {
+      report.issues.map(issue =>
+        issues.push(issue)
+      );
+    });
+
+    let newState = update(this.state, {
+      data: {
+        datasets: [
+          {
+            data: {$set: this.count(issues)}
+          }
+        ]
+      }
+    });
+
+    this.setState(newState);
+  }
+
+  componentWillReceiveProps(nextProps, state) {
+    const issues = [];
+    nextProps.dataSource.map(report => {
       report.issues.map(issue =>
         issues.push(issue)
       );
     });
 
     // Update state using immutability-helper:
-    // let newState = update(this.state, {
-    //   data: {
-    //     datasets: [
-    //       {
-    //         data: {$set: this.count(issues)}
-    //       }
-    //     ]
-    //   }
-    // });
-    //
-    // this.setState(newState);
+    let newState = update(this.state, {
+      data: {
+        datasets: [
+          {
+            data: {$set: this.count(issues)}
+          }
+        ]
+      }
+    });
+    this.setState(newState);
   }
 
   count = (arrays) => {
@@ -178,7 +197,10 @@ class LineChart extends Component {
   render() {
 
     return (
-      <Card>
+      <Card
+        className="border-0 shadow-sm"
+        style={{borderRadius: '0'}}
+      >
         <CardBody>
           <Line
             data={this.state.data}
@@ -199,6 +221,5 @@ class LineChart extends Component {
     );
   }
 }
-
 
 export default LineChart;
