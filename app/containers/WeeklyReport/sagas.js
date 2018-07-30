@@ -3,6 +3,7 @@ import { callCreateWeeklyReport } from "../../requests";
 import { createWeeklyReportFailed, createWeeklyReportSucceeded } from "./actions";
 import { CREATE_WEEKLY_REPORT } from "./constants";
 
+
 export function* createWeeklyReport(action) {
   try {
     const weeklyReport = yield call(callCreateWeeklyReport, action.newWeeklyReport);

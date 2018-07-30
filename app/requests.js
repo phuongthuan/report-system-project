@@ -16,7 +16,8 @@ import {
   GET_MEMBERS,
   DELETE_MESSAGE,
   GET_TEAMS,
-  CREATE_WEEKLY_REPORT
+  CREATE_WEEKLY_REPORT,
+  GET_WEEKLY_REPORTS
 } from 'constants/API_URL'
 
 export const callFetchReports = () => request('get', GET_REPORTS);
@@ -29,6 +30,7 @@ export const callGetProfile = id => request('get', `${GET_USER_PROFILE}/${id}`)
 export const callGetMembersOfTeam = payload => request('get', `${GET_MEMBERS_OF_TEAM}?division=${payload}&_page=1`)
 export const callGetMembers = () => request('get', GET_MEMBERS)
 export const callGetMessagesToUser = payload => request('get', `${GET_MESSAGES}?toUser=${payload}&_sort=date&_order=desc`)
+export const callFetchAllWeeklyReportsOfUser = id => request('get', `${GET_WEEKLY_REPORTS}?userId=${id}`)
 
 export const callCreateReport = report => request('post', CREATE_REPORT, report);
 export const callCreateMessage = message => request('post', CREATE_MESSAGE, message);

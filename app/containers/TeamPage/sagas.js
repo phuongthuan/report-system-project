@@ -1,9 +1,10 @@
 import { take, put, call, takeLatest, all, fork } from 'redux-saga/effects'
 import { delay } from 'redux-saga'
 import { fetchAllTeamsFailed, fetchAllTeamsSucceeded } from "./actions";
-import { callFetchTeams, callGetProfile } from "../../requests";
+import { callFetchAllWeeklyReportsOfUser, callFetchTeams, callGetProfile } from "../../requests";
 import { FETCH_ALL_TEAMS } from "./constants";
 import { getUserProfileFailed } from "../ProfilePage/actions";
+import { fetchAllWeeklyReportsOfUserFailed } from "../WeeklyReport/actions";
 
 export function* fetchAllTeams() {
   try {
@@ -21,6 +22,23 @@ export function* fetchAllTeams() {
       const userTeam = teamsWithUserProfile.filter(userInfo => userInfo.id === team.userId);
       if (userTeam && userTeam.length > 0) {
         team.userId = userTeam[0];
+      }
+    });
+
+    const teamsWithWeeklyReports = yield teams.map(function (team) {
+      try {
+        return call(callFetchAllWeeklyReportsOfUser, team.userId.id);
+      } catch (error) {
+        return put(fetchAllWeeklyReportsOfUserFailed(error));
+      }
+    });
+
+    const mergedWeeklyReports = [].concat.apply([], teamsWithWeeklyReports);
+
+    teams.map(team => {
+      const weeklyReports = mergedWeeklyReports.filter(wr => wr.userId === team.userId.id);
+      if (weeklyReports && weeklyReports.length > 0) {
+        team.userId.weekly_reports = weeklyReports;
       }
     });
 
