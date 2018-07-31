@@ -9,6 +9,10 @@ var database = {
   teams: []
 };
 
+const emoji = [
+
+];
+
 const division = [
   'Front End Team 1',
   'Front End Team 2',
@@ -95,6 +99,7 @@ for (let i=1; i<=2000; i++) {
   database.reports.push({
     id: i,
     userId: getRandomInt(1, 20),
+    emotion:
     title: faker.lorem.sentence(),
     date: moment(faker.date.between('2018-06-01', '2018-09-31')).format("YYYY-MM-DD"),
     achievement: faker.lorem.sentence(),

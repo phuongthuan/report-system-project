@@ -31,7 +31,7 @@ class TeamContainer extends Component {
           <Navigation/>
 
           {teamLoading && isEmpty(teams) ? (
-            <Spinner/>
+            <Spinner height="650px" style={{fontSize: 32, color: '#FFFFFF'}} />
           ) : (
             <TeamList
               teamsList={teams}
