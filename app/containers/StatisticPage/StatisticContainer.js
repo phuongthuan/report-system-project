@@ -41,7 +41,7 @@ class StatisticContainer extends Component {
             </div>
 
             {loading && isEmpty(reportsOfTeam) ? (
-              <Spinner/>
+              <Spinner height="650px" style={{fontSize: 32, color: '#FFFFFF'}}/>
             ) : (
               <div className="row">
                 <div className="col-md-6">

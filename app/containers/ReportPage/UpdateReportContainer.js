@@ -40,7 +40,7 @@ class UpdateReportContainer extends Component {
           </div>
           <div className="col-md-8">
             {loading && isEmpty(report) ? (
-              <Spinner />
+              <Spinner height="650px" style={{fontSize: 32, color: '#FFFFFF'}}/>
             ) : (
               <UpdateReportForm
                 {...this.props}

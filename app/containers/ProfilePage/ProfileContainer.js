@@ -38,8 +38,11 @@ class ProfileContainer extends Component {
           <div className="col-md-4">
             <SideBar/>
           </div>
+
           {loading && isEmpty(profile) ? (
-            <Spinner/>
+            <div className="col-md-8">
+              <Spinner height="500px" style={{fontSize: 32, color: '#FFFFFF'}}/>
+            </div>
           ) : (
             <div className="col-md-8">
               <div className="shadow-sm">

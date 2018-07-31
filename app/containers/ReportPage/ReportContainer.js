@@ -76,31 +76,35 @@ class ReportContainer extends Component {
               />
             </div>
           </div>
-          {loading && isEmpty(reports) ? (
-            <Spinner/>
-          ) : (
-            <Fragment>
-              {reports.length === 0 ? (
-                <h3>There are no report</h3>
+          <div className="row">
+            <div className="col-md-12">
+              {loading && isEmpty(reports) ? (
+                <Spinner height="650px" style={{fontSize: 32, color: '#FFFFFF'}} />
               ) : (
                 <Fragment>
-                  {user && user.role === 'member' ? (
-                    <ReportsList
-                      user={user}
-                      addFlashMessage={addFlashMessage}
-                      deleteReport={deleteReport}
-                      reportsList={reports}
-                    />
+                  {reports.length === 0 ? (
+                    <p className="d-flex justify-content-center display-4">No report</p>
                   ) : (
-                    <DataTables
-                      user={user}
-                      reportsList={reports}
-                    />
+                    <Fragment>
+                      {user && user.role === 'member' ? (
+                        <ReportsList
+                          user={user}
+                          addFlashMessage={addFlashMessage}
+                          deleteReport={deleteReport}
+                          reportsList={reports}
+                        />
+                      ) : (
+                        <DataTables
+                          user={user}
+                          reportsList={reports}
+                        />
+                      )}
+                    </Fragment>
                   )}
                 </Fragment>
               )}
-            </Fragment>
-          )}
+            </div>
+          </div>
         </div>
       </div>
     );

@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import { addFlashMessage } from '../FlashMessage/actions'
 import { login } from './actions'
 import LoginForm from "../../components/LoginForm";
-import { selectAuthError } from "./selectors";
+import { selectAuthError, selectUser } from "./selectors";
 
 const AuthWrapper = styled.div`
   display: flex;
@@ -19,11 +19,12 @@ const AuthWrapper = styled.div`
 class Auth extends Component {
 
   render() {
-    const {addFlashMessage, login, authError} = this.props;
+    const {addFlashMessage, login, authError, user} = this.props;
     return (
       <AuthWrapper>
         <LoginForm
           {...this.props}
+          user={user}
           authError={authError}
           login={login}
           addFlashMessage={addFlashMessage}
@@ -36,10 +37,12 @@ class Auth extends Component {
 Auth.propTypes = {
   login: PropTypes.func.isRequired,
   addFlashMessage: PropTypes.func.isRequired,
+  user: PropTypes.object
 }
 
 const mapStateToProps = state => ({
-  authError: selectAuthError(state)
+  authError: selectAuthError(state),
+  user: selectUser(state)
 });
 
 export default connect(

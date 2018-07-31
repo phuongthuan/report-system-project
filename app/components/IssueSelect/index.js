@@ -3,13 +3,13 @@ import {
   FormGroup,
   Button,
   Col,
-  CardSubtitle,
+  Label,
 } from 'reactstrap';
 
 const IssueSelect = ({addSelectBox, children}) => {
   return (
     <Fragment>
-      <CardSubtitle>Issues</CardSubtitle>
+      <Label for="issues">Issues</Label>
       {children}
       <FormGroup row>
         <Col>
