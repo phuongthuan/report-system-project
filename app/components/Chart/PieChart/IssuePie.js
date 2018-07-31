@@ -3,14 +3,15 @@ import update from 'immutability-helper';
 import { Card, CardBody } from 'reactstrap'
 import { Pie } from 'react-chartjs-2'
 import 'chartjs-plugin-datalabels'
+import count from '../../../utils/count'
 
-class PieChart extends Component {
+class IssuePie extends Component {
 
   static defaultProps = {
     displayName: 'Pie Chart',
     displayTitle: true,
     displayLegend: true,
-    legendPosition: 'right',
+    legendPosition: 'bottom',
   }
 
   state = {
@@ -57,12 +58,11 @@ class PieChart extends Component {
       );
     });
 
-    // Update state using immutability-helper:
     let newState = update(this.state, {
       data: {
         datasets: [
           {
-            data: {$set: this.count(issues)}
+            data: {$set: count(issues)}
           }
         ]
       }
@@ -84,34 +84,12 @@ class PieChart extends Component {
       data: {
         datasets: [
           {
-            data: {$set: this.count(issues)}
+            data: {$set: count(issues)}
           }
         ]
       }
     });
     this.setState(newState);
-  }
-
-  count = (arrays) => {
-    arrays.sort();
-    var results = [];
-    var current = null;
-    var cnt = 0;
-    for (var i = 0; i < arrays.length; i++) {
-      if (arrays[i] !== current) {
-        if (cnt > 0) {
-          results.push(cnt);
-        }
-        current = arrays[i];
-        cnt = 1;
-      } else {
-        cnt++;
-      }
-    }
-    if (cnt > 0) {
-      results.push(cnt);
-    }
-    return results;
   }
 
   render() {
@@ -148,4 +126,4 @@ class PieChart extends Component {
   }
 }
 
-export default PieChart;
+export default IssuePie;

@@ -3,7 +3,6 @@ import Member from '../Member/index'
 
 const MembersList = ({membersList, user, createMessage, addFlashMessage}) => (
   <div>
-
     {membersList.filter(member =>
       member.id !== user.id)
       .map(member => (

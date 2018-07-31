@@ -7,7 +7,7 @@ import NoMatch from "../../utils/NoMatch";
 class StatisticPage extends Component {
   render() {
     return (
-      <div className="container-fluid">
+      <div className="container">
         <FlashMessage/>
         <Switch>
           <Route exact path="/statistic" component={StatisticContainer} />

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import IssueSelect from 'components/IssueSelect';
 import Select from 'react-select';
 import EmojiMartPicker  from 'emoji-mart-picker';
-import { Emoji } from 'emoji-mart';
+
 import {
   Form,
   FormGroup,
@@ -35,7 +35,7 @@ class CreateReportForm extends Component {
   state = {
     numberSelectBox: 0,
     report : {
-      date: moment().toString(),
+      date: moment().format("YYYY-MM-DD"),
       emotion: {
         id: 'smiley',
         name: 'Smiling Face with Open Mouth',
@@ -82,7 +82,7 @@ class CreateReportForm extends Component {
 
   onSelectedIssueHandleChange = (selectedValue) => {
     if (selectedValue) {
-      let issue = selectedValue.label.toString().toLowerCase();
+      let issue = selectedValue.label.toString();
       const { report } = this.state;
       this.setState({
         report: {
@@ -117,11 +117,8 @@ class CreateReportForm extends Component {
   }
 
   render() {
-    const { numberSelectBox, report } = this.state;
-
+    const { numberSelectBox, report, date } = this.state;
     const children = [];
-
-    const date = moment().format("dddd, MMMM Do YYYY");
 
     for (let i = 0; i < numberSelectBox; i++) {
       children.push(
@@ -153,7 +150,6 @@ class CreateReportForm extends Component {
             <FormGroup>
               <EmojiMartPicker
                 set='emojione'
-                onSelect={(emoji) => console.log(emoji)}
                 onChange={this.onChange}
               >
                 <Input
