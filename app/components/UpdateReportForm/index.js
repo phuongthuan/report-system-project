@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import uuidv1 from 'uuid/v1'
 import IssueSelect from 'components/IssueSelect';
 import Select from 'react-select';
+import moment from 'moment'
 import {
   Form,
   FormGroup,
@@ -14,7 +15,7 @@ import {
   CardHeader,
   CardBody,
   CardTitle,
-  CardSubtitle,
+  Label,
   CardFooter,
   ButtonGroup
 } from 'reactstrap';
@@ -44,6 +45,10 @@ class UpdateReportForm extends Component {
     });
   }
 
+  componentWillReceiveProps(nextProps, state) {
+    this.setState({ report: nextProps.report });
+  }
+
   onSubmitForm = (e) => {
     e.preventDefault();
     const {report} = this.state;
@@ -66,10 +71,12 @@ class UpdateReportForm extends Component {
       }
     });
   }
+
   onAddSelectBox = () => {
     const {numberSelectBox} = this.state;
     this.setState({numberSelectBox: numberSelectBox + 1});
   }
+
   onRemoveSelectBox = () => {
     const {numberSelectBox} = this.state;
     this.setState({numberSelectBox: numberSelectBox - 1});
@@ -112,17 +119,14 @@ class UpdateReportForm extends Component {
 
     return (
       <Form onSubmit={this.onSubmitForm}>
-        <Card className="border-0 shadow-sm">
+        <Card style={{borderRadius: '0'}} className="border-0 shadow-sm">
           <CardHeader>
             <CardTitle>Update Daily Report</CardTitle>
-            <CardSubtitle>
-              Today is: {new Date().toString()}
-            </CardSubtitle>
+            <Label for="date">{moment().format("dddd, MMMM Do YYYY")}</Label>
           </CardHeader>
 
           <CardBody>
-
-            <CardSubtitle>Title</CardSubtitle>
+            <Label for="title">Title</Label>
             <FormGroup>
               <Input
                 type="text"
@@ -135,7 +139,7 @@ class UpdateReportForm extends Component {
               />
             </FormGroup>
 
-            <CardSubtitle>Today Achievement</CardSubtitle>
+            <Label for="achievement">Today Achievement</Label>
             <FormGroup>
               <Input
                 style={{height: '100px'}}
@@ -148,7 +152,7 @@ class UpdateReportForm extends Component {
               />
             </FormGroup>
 
-            <CardSubtitle>Planing for next day</CardSubtitle>
+            <Label for="plan">Planing for next day</Label>
             <FormGroup>
               <Input
                 style={{height: '100px'}}
@@ -166,8 +170,7 @@ class UpdateReportForm extends Component {
               {children}
             </IssueSelect>
 
-
-            <CardSubtitle>Description</CardSubtitle>
+            <Label for="description">Description</Label>
             <FormGroup>
               <Input
                 style={{height: '100px'}}
@@ -180,7 +183,7 @@ class UpdateReportForm extends Component {
               />
             </FormGroup>
 
-            <CardSubtitle>Comment</CardSubtitle>
+            <Label for="comment">Comment</Label>
             <FormGroup>
               <Input
                 style={{height: '100px'}}
@@ -199,6 +202,7 @@ class UpdateReportForm extends Component {
               <Button
                 color="primary"
                 type="submit"
+                size="sm"
               >
                 Update report
               </Button>

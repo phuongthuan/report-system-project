@@ -14,7 +14,7 @@ class Team extends Component {
 
   render() {
     const { team } = this.props;
-    const {id, name, userId, description} = team;
+    const {id, name, userId} = team;
     const image = userId ? userId.avatar : img;
     const weeklyReport = team.userId.weekly_reports[0].summary;
     return (

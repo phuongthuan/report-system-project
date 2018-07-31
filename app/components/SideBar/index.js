@@ -6,13 +6,13 @@ import { withRouter, Link } from 'react-router-dom'
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty'
 import {
-  Badge,
   ListGroup,
   ListGroupItem,
   CardBody,
   CardTitle,
   CardText,
   Button,
+  Badge,
   CardImg
 } from 'reactstrap';
 import imageProfile from '../../assests/images/Gabe_newell.png';
@@ -28,14 +28,12 @@ import { selectReports } from "../../containers/ReportPage/selectors";
 class SideBar extends Component {
 
   componentDidMount() {
-    const {getProfile, user, fetchAllMessages, fetchAllReportsOfUser } = this.props;
+    const {getProfile, user, fetchAllMessages} = this.props;
     if (user) {
       getProfile(user.id);
-
-      if (user.role === 'member') {
-        fetchAllMessages(user.id);
-        fetchAllReportsOfUser(user.id);
-      }
+    }
+    if (user.role === 'member') {
+      fetchAllMessages(user.id);
     }
   }
 
@@ -47,17 +45,17 @@ class SideBar extends Component {
   }
 
   render() {
-    const {profile, loading, user, messages, reports} = this.props;
+    const {profile, loading, user, messages} = this.props;
     const avatar = profile ? profile.avatar : imageProfile;
     return (
       <div>
         {loading && isEmpty(profile) && isEmpty(user) ? (
-          <Spinner/>
+          <Spinner style={{fontSize: 32, color: '#071820'}}/>
         ) : (
           <ListGroup flush className="shadow-sm border-0">
             <ListGroupItem className="justify-content-between text-center">
               {loading && isEmpty(avatar) ? (
-                <Spinner />
+                <Spinner/>
               ) : (
                 <CardImg src={avatar} alt="Card image cap"/>
               )}
@@ -82,7 +80,7 @@ class SideBar extends Component {
                   action
                 >
                   <Link to="/report/create">
-                    <Icon type="form" className="mr-2" />
+                    <Icon type="form" className="mr-2"/>
                     Write Daily Report
                   </Link>
                 </ListGroupItem>
@@ -92,8 +90,8 @@ class SideBar extends Component {
                   action
                 >
                   <Link to="/report">
-                    <Icon type="book" className="mr-2" />
-                    Reports <Badge color="secondary">{reports.length}</Badge>
+                    <Icon type="book" className="mr-2"/>
+                    Reports
                   </Link>
                 </ListGroupItem>
 
@@ -102,12 +100,12 @@ class SideBar extends Component {
                   action
                 >
                   <Link to="/message">
-                    <Icon type="inbox" className="mr-2" />
+                    <Icon type="inbox" className="mr-2"/>
                     Messenger
                     {messages.length > 0 &&
-                      (
-                        <Badge color="warning">{messages.length}</Badge>
-                      )
+                    (
+                      <Badge color="warning">{messages.length}</Badge>
+                    )
                     }
                   </Link>
                 </ListGroupItem>
@@ -123,7 +121,7 @@ class SideBar extends Component {
                   action
                 >
                   <Link to="/statistic">
-                    <Icon className="mr-2" type="area-chart" />
+                    <Icon className="mr-2" type="area-chart"/>
                     Statistics
                   </Link>
                 </ListGroupItem>
@@ -133,7 +131,7 @@ class SideBar extends Component {
                   action
                 >
                   <Link to="/member">
-                    <Icon className="mr-2" type="team" />
+                    <Icon className="mr-2" type="team"/>
                     Members List
                   </Link>
                 </ListGroupItem>
@@ -143,7 +141,7 @@ class SideBar extends Component {
                   action
                 >
                   <Link to="/report">
-                    <Icon className="mr-2" type="solution" />
+                    <Icon className="mr-2" type="solution"/>
                     Reports of Team
                   </Link>
                 </ListGroupItem>
@@ -159,7 +157,7 @@ class SideBar extends Component {
                   action
                 >
                   <Link to="/team">
-                    <Icon type="idcard" className="mr-2" />
+                    <Icon type="idcard" className="mr-2"/>
                     Teams List
                   </Link>
                 </ListGroupItem>
@@ -169,7 +167,7 @@ class SideBar extends Component {
                   action
                 >
                   <Link to="/member">
-                    <Icon className="mr-2" type="team" />
+                    <Icon className="mr-2" type="team"/>
                     Members List
                   </Link>
                 </ListGroupItem>
@@ -184,7 +182,7 @@ class SideBar extends Component {
                 size="sm"
                 onClick={this.logout}
               >
-                <Icon type="logout" className="mr-2" />
+                <Icon type="logout" className="mr-2"/>
                 Logout
               </Button>
             </ListGroupItem>

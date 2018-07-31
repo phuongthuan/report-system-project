@@ -35,11 +35,11 @@ class MessageContainer extends Component {
           </div>
           <div className="col-md-8">
             {loading && isEmpty(messages) ? (
-              <Spinner />
+              <Spinner height="650px" style={{fontSize: 32, color: '#FFFFFF'}}/>
             ) : (
               <Fragment>
                 {messages.length === 0 ? (
-                  <h4>No message</h4>
+                  <p className="d-flex justify-content-center display-4">No message</p>
                 ) : (
                   <MessagesList
                     addFlashMessage={addFlashMessage}

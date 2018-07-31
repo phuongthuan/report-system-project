@@ -7,7 +7,7 @@ import TeamDetailContainer from "./TeamDetailContainer";
 class TeamPage extends Component {
   render() {
     return (
-      <div className="container-fluid">
+      <div className="container">
         <Switch>
           <Route exact path="/team" component={TeamContainer} />
           <Route path="/team/:id" component={TeamDetailContainer} />

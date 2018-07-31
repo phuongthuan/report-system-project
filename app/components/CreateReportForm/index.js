@@ -10,6 +10,7 @@ import {
   Button,
   Input,
   Col,
+  Label,
   CardSubtitle,
   Card,
   CardHeader,
@@ -92,7 +93,7 @@ class CreateReportForm extends Component {
   render() {
     const { numberSelectBox, report } = this.state;
     const children = [];
-    const date = moment(report.date, "dddd, MMM Do YYYY");
+    const date = moment().format("dddd, MMMM Do YYYY");
 
     for (let i = 0; i < numberSelectBox; i++) {
       children.push(
@@ -115,15 +116,12 @@ class CreateReportForm extends Component {
       <Form onSubmit={this.onSubmitForm}>
         <Card style={{borderRadius: '0'}} className="border-0 shadow-sm">
           <CardHeader>
-            Write Daily Report
-            <p>
-              Today is: {date.format("dddd, MMM Do YYYY")}
-            </p>
+            <CardTitle>Write Daily Report</CardTitle>
+            <Label for="date">{date}</Label>
           </CardHeader>
 
           <CardBody>
-
-            <CardSubtitle>Title</CardSubtitle>
+            <Label for="title">Title</Label>
             <FormGroup>
               <Input
                 type="text"
@@ -137,7 +135,7 @@ class CreateReportForm extends Component {
               />
             </FormGroup>
 
-            <CardSubtitle>Today Achievement</CardSubtitle>
+            <Label for="achievement">Today Achievement</Label>
             <FormGroup>
               <Input
                 style={{height: '100px'}}
@@ -151,7 +149,7 @@ class CreateReportForm extends Component {
               />
             </FormGroup>
 
-            <CardSubtitle>Planing for next day</CardSubtitle>
+            <Label for="plan">Planing for next day</Label>
             <FormGroup>
               <Input
                 style={{height: '100px'}}
@@ -170,24 +168,26 @@ class CreateReportForm extends Component {
               {children}
             </IssueSelect>
 
-            <CardSubtitle>Description</CardSubtitle>
+            <Label for="description">Description</Label>
             <FormGroup>
               <Input
                 style={{height: '100px'}}
                 type="textarea"
                 name="description"
+                value={report.description}
                 bsSize="sm"
                 placeholder="More info ..."
                 onChange={this.onHandleFormChange}
               />
             </FormGroup>
 
-            <CardSubtitle>Comment</CardSubtitle>
+            <Label for="comment">Comment</Label>
             <FormGroup>
               <Input
                 style={{height: '100px'}}
                 type="textarea"
                 name="comment"
+                value={report.comment}
                 bsSize="sm"
                 placeholder="Leave a comment ..."
                 onChange={this.onHandleFormChange}
@@ -200,8 +200,9 @@ class CreateReportForm extends Component {
               <Button
                 color="success"
                 type="submit"
+                size="sm"
               >
-                Submit new report
+                Create new report
               </Button>
               <Button size="sm">
                 <Link

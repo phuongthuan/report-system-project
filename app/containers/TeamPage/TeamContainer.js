@@ -22,23 +22,21 @@ class TeamContainer extends Component {
   render() {
     const {teams, teamLoading} = this.props;
     return (
-      <div>
-        <div className="row">
-          <div className="col-md-3">
-            <SideBar/>
-          </div>
-          <div className="col-md-9">
+      <div className="row">
+        <div className="col-md-4">
+          <SideBar/>
+        </div>
+        <div className="col-md-8">
 
-            <Navigation/>
+          <Navigation/>
 
-            {teamLoading && isEmpty(teams) ? (
-              <Spinner/>
-            ) : (
-              <TeamList
-                teamsList={teams}
-              />
-            )}
-          </div>
+          {teamLoading && isEmpty(teams) ? (
+            <Spinner/>
+          ) : (
+            <TeamList
+              teamsList={teams}
+            />
+          )}
         </div>
       </div>
     );
