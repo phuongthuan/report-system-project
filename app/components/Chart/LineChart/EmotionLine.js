@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import update from 'immutability-helper';
 import { Card, CardBody } from 'reactstrap'
 import { Line } from 'react-chartjs-2'
+import count from '../../../utils/count'
 
-class LineChart extends Component {
+class EmotionLine extends Component {
 
   static defaultProps = {
     displayName: 'Line Chart',
@@ -14,56 +15,12 @@ class LineChart extends Component {
 
   state = {
     dataSource: this.props.dataSource,
-    issues: [],
     data: {
 
       labels: ['June', 'July', 'August', 'September'],
       datasets: [
         {
-          label: 'Hard for Debugging',
-          fill: false,
-          lineTension: 0.1,
-          backgroundColor: '#990099',
-          borderColor: '#990099',
-          borderCapStyle: 'butt',
-          borderDash: [],
-          borderDashOffset: 0.0,
-          borderJoinStyle: 'miter',
-          pointBorderColor: '#990099',
-          pointBackgroundColor: '#fff',
-          pointBorderWidth: 1,
-          pointHoverRadius: 5,
-          pointHoverBackgroundColor: '#990099',
-          pointHoverBorderColor: 'rgba(220,220,220,1)',
-          pointHoverBorderWidth: 2,
-          pointRadius: 1,
-          pointHitRadius: 10,
-          data: [65, 59, 80, 81]
-        },
-
-        {
-          label: 'Keeping up with Technology',
-          fill: false,
-          lineTension: 0.1,
-          backgroundColor: '#3366cc',
-          borderColor: '#3366cc',
-          borderCapStyle: 'butt',
-          borderDash: [],
-          borderDashOffset: 0.0,
-          borderJoinStyle: 'miter',
-          pointBorderColor: '#3366cc',
-          pointBackgroundColor: '#fff',
-          pointBorderWidth: 1,
-          pointHoverRadius: 5,
-          pointHoverBackgroundColor: '#3366cc',
-          pointHoverBorderColor: 'rgba(220,220,220,1)',
-          pointHoverBorderWidth: 2,
-          pointRadius: 1,
-          pointHitRadius: 10,
-          data: [25, 49, 20, 51]
-        },
-        {
-          label: 'Communication with others',
+          label: 'Positive',
           fill: false,
           lineTension: 0.1,
           backgroundColor: '#109618',
@@ -84,7 +41,7 @@ class LineChart extends Component {
           data: [35, 79, 10, 51]
         },
         {
-          label: 'Time Estimation',
+          label: 'Negative',
           fill: false,
           lineTension: 0.1,
           backgroundColor: '#DC3912',
@@ -105,25 +62,25 @@ class LineChart extends Component {
           data: [55, 29, 60, 21]
         },
         {
-          label: 'Security Threats',
+          label: 'Other',
           fill: false,
           lineTension: 0.1,
-          backgroundColor: '#FF9900',
-          borderColor: '#FF9900',
+          backgroundColor: '#3366cc',
+          borderColor: '#3366cc',
           borderCapStyle: 'butt',
           borderDash: [],
           borderDashOffset: 0.0,
           borderJoinStyle: 'miter',
-          pointBorderColor: '#FF9900',
+          pointBorderColor: '#3366cc',
           pointBackgroundColor: '#fff',
           pointBorderWidth: 1,
           pointHoverRadius: 5,
-          pointHoverBackgroundColor: '#FF9900',
+          pointHoverBackgroundColor: '#3366cc',
           pointHoverBorderColor: 'rgba(220,220,220,1)',
           pointHoverBorderWidth: 2,
           pointRadius: 1,
           pointHitRadius: 10,
-          data: [78, 39, 40, 20]
+          data: [25, 49, 20, 51]
         }
       ]
     }
@@ -131,67 +88,53 @@ class LineChart extends Component {
 
   componentDidMount() {
     const {dataSource} = this.props;
-    const issues = [];
-    dataSource.map(report => {
-      report.issues.map(issue =>
-        issues.push(issue)
-      );
-    });
 
-    let newState = update(this.state, {
-      data: {
-        datasets: [
-          {
-            data: {$set: this.count(issues)}
-          }
-        ]
-      }
-    });
+    const months = [6, 7, 8, 9];
 
-    this.setState(newState);
-  }
+    const positiveEmotions = [];
+    const negativeEmotions = [];
+    const otherEmotions = [];
 
-  componentWillReceiveProps(nextProps, state) {
-    const issues = [];
-    nextProps.dataSource.map(report => {
-      report.issues.map(issue =>
-        issues.push(issue)
-      );
-    });
-
-    // Update state using immutability-helper:
-    let newState = update(this.state, {
-      data: {
-        datasets: [
-          {
-            data: {$set: this.count(issues)}
-          }
-        ]
-      }
-    });
-    this.setState(newState);
-  }
-
-  count = (arrays) => {
-    arrays.sort();
-    var results = [];
-    var current = null;
-    var cnt = 0;
-    for (var i = 0; i < arrays.length; i++) {
-      if (arrays[i] !== current) {
-        if (cnt > 0) {
-          results.push(cnt);
+    const reportsWithMonth = months.map(month => {
+      const array1 = dataSource.filter(report => {
+        const objMonth = new Date(report.date).getMonth() + 1;
+        return month === objMonth;
+      });
+      const array2 =  array1.map(report => {
+        const emoji = report.emotion.id;
+        if ((emoji === 'smiley')
+          || (emoji === 'heart_eyes')
+          || (emoji === 'stuck_out_tongue_winking_eye')
+          || (emoji === 'laughing')) {
+          positiveEmotions.push(emoji);
+        } else if ((emoji === 'white_frowning_face')
+          || (emoji === 'disappointed')
+          || (emoji === 'worried')) {
+          negativeEmotions.push(emoji);
+        } else {
+          otherEmotions.push(emoji);
         }
-        current = arrays[i];
-        cnt = 1;
-      } else {
-        cnt++;
+      })
+      return array1;
+    });
+
+    let index = [0, 1, 2];
+    let newState = update(this.state, {
+      data: {
+        datasets: {
+          [index[0]]: {
+            data: {$set: count(positiveEmotions)}
+          },
+          [index[1]]: {
+            data: {$set: count(negativeEmotions)}
+          },
+          [index[2]]: {
+            data: {$set: count(otherEmotions)}
+          },
+        }
       }
-    }
-    if (cnt > 0) {
-      results.push(cnt);
-    }
-    return results;
+    });
+    this.setState(newState);
   }
 
   render() {
@@ -208,7 +151,7 @@ class LineChart extends Component {
               title: {
                 display: this.props.displayTitle,
                 fontSize: 25,
-                text: 'Issues of reports changing by time'
+                text: 'Emotions of reports changing by time'
               },
               legend: {
                 display: this.props.displayLegend,
@@ -222,4 +165,6 @@ class LineChart extends Component {
   }
 }
 
-export default LineChart;
+EmotionLine.propTypes = {};
+
+export default EmotionLine;

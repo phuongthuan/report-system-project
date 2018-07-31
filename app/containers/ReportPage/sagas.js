@@ -5,7 +5,7 @@ import {
   callUpdateReport,
   callFetchAReport,
   callDeleteReport,
-  callFetchAllReportsOfUser, callFetchAllReportsOfUserByDay, callFetchAllReportsOfUserByRange
+  callFetchAllReportsOfUser, callGetProfile, callFetchAllReportsOfUserByDay, callFetchAllReportsOfUserByRange
 } from '../../requests';
 import {
   createReportSucceeded,
@@ -30,11 +30,26 @@ import {
   FETCH_A_REPORT,
   DELETE_REPORT, FETCH_ALL_REPORTS_OF_USER, FETCH_ALL_REPORTS_OF_USER_BY_DAY, FETCH_ALL_REPORTS_OF_USER_BY_RANGE
 } from './constants';
+import { getUserProfileFailed } from "../ProfilePage/actions";
 
 export function* fetchAllReportsOfUser(action) {
   try {
     const reports = yield call(callFetchAllReportsOfUser, action.id);
     yield delay(700);
+    const users = yield reports.map(function (report) {
+      try {
+        return call(callGetProfile, report.userId);
+      } catch (error) {
+        return put(getUserProfileFailed(error));
+      }
+    });
+    reports.map(report => {
+      const userRelatedToReport = users.filter(user => user.id === report.userId);
+      if (userRelatedToReport && userRelatedToReport.length > 0) {
+        report.userId = userRelatedToReport[0];
+      }
+      return null;
+    });
     yield put(fetchAllReportsOfUserSucceeded(reports));
   } catch (error) {
     yield put(fetchAllReportsOfUserFailed(error));
@@ -50,8 +65,22 @@ export function* fetchAllReportsOfUserByDay(action) {
 
   try {
     const reports = yield call(callFetchAllReportsOfUserByDay, payload);
-    const reportByDay = reports.filter(report => report.date === action.date);
     yield delay(700);
+    const users = yield reports.map(function (report) {
+      try {
+        return call(callGetProfile, report.userId);
+      } catch (error) {
+        return put(getUserProfileFailed(error));
+      }
+    });
+    reports.map(report => {
+      const userRelatedToReport = users.filter(user => user.id === report.userId);
+      if (userRelatedToReport && userRelatedToReport.length > 0) {
+        report.userId = userRelatedToReport[0];
+      }
+      return null;
+    });
+    const reportByDay = reports.filter(report => report.date === action.date);
     yield put(fetchAllReportsOfUserByDaySucceeded(reportByDay));
   } catch (error) {
     yield put(fetchAllReportsOfUserByDayFailed(error));
@@ -68,8 +97,23 @@ export function* fetchAllReportsOfUserByRange(action) {
 
   try {
     const reports = yield call(callFetchAllReportsOfUserByRange, payload);
-    const reportByRange = reports.filter(report => (report.date >= action.range[0] && report.date < action.range[1]));
     yield delay(700);
+    const users = yield reports.map(function (report) {
+      try {
+        return call(callGetProfile, report.userId);
+      } catch (error) {
+        return put(getUserProfileFailed(error));
+      }
+    });
+    reports.map(report => {
+      const userRelatedToReport = users.filter(user => user.id === report.userId);
+      if (userRelatedToReport && userRelatedToReport.length > 0) {
+        report.userId = userRelatedToReport[0];
+      }
+      return null;
+    });
+    const reportByRange = reports.filter(report => (report.date >= action.range[0] && report.date < action.range[1]));
+    console.log('reportByRange', reportByRange);
     yield put(fetchAllReportsOfUserByRangeSucceeded(reportByRange));
   } catch (error) {
     yield put(fetchAllReportsOfUserByRangeFailed(error));

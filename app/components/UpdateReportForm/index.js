@@ -19,6 +19,7 @@ import {
   CardFooter,
   ButtonGroup
 } from 'reactstrap';
+import EmojiMartPicker  from 'emoji-mart-picker';
 
 class UpdateReportForm extends Component {
 
@@ -32,7 +33,9 @@ class UpdateReportForm extends Component {
   };
 
   state = {
-    report: {},
+    report: {
+      emotion: {}
+    },
     numberSelectBox: 0
   };
 
@@ -82,6 +85,18 @@ class UpdateReportForm extends Component {
     this.setState({numberSelectBox: numberSelectBox - 1});
   }
 
+  onChange = (emoji) => {
+    if (emoji) {
+      const { report } = this.state;
+      this.setState({
+        report: {
+          ...report,
+          emotion: emoji
+        }
+      });
+    }
+  }
+
   convertToSelectObject = () => {
     var issues_type = [];
     const {report} = this.state;
@@ -93,6 +108,8 @@ class UpdateReportForm extends Component {
     }
     return issues_type;
   }
+
+
 
   render() {
     const {report} = this.state;
@@ -120,12 +137,32 @@ class UpdateReportForm extends Component {
     return (
       <Form onSubmit={this.onSubmitForm}>
         <Card style={{borderRadius: '0'}} className="border-0 shadow-sm">
+
           <CardHeader>
             <CardTitle>Update Daily Report</CardTitle>
             <Label for="date">{moment().format("dddd, MMMM Do YYYY")}</Label>
           </CardHeader>
 
           <CardBody>
+
+            <Label for="title">Emotion</Label>
+            <FormGroup>
+              <EmojiMartPicker
+                set='emojione'
+                onChange={this.onChange}
+              >
+                <Input
+                  type="text"
+                  name="emotion"
+                  bsSize="sm"
+                  autoComplete="off"
+                  value={report.emotion.native}
+                  onChange={this.onHandleFormChange}
+                  required
+                />
+              </EmojiMartPicker>
+            </FormGroup>
+
             <Label for="title">Title</Label>
             <FormGroup>
               <Input

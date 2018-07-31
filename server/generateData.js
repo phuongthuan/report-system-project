@@ -9,8 +9,80 @@ var database = {
   teams: []
 };
 
-const emoji = [
+const emojis = [
+  // positive icon
+  {
+    id: 'smiley',
+    name: 'Smiling Face with Open Mouth',
+    colons: ':smiley:',
+    text: ':)',
+    emoticons: [
+      '=)',
+      '=-)'
+    ],
+    skin: null,
+    native: '😃'
+  },
 
+  {
+    id: "heart_eyes",
+    name: "Smiling Face with Heart-Shaped Eyes",
+    colons: ":heart_eyes:",
+    emoticons: [],
+    skin: null,
+    native: "😍"
+  },
+  {
+    id: "stuck_out_tongue_winking_eye",
+    name: "Face with Stuck-out Tongue and Winking Eye",
+    colons: ":stuck_out_tongue_winking_eye:",
+    emoticons: [],
+    skin: null,
+    native: "😜"
+  },
+
+  {
+    id: "laughing",
+    name: "Smiling Face with Open Mouth and Tightly-Closed Eyes",
+    colons: ":laughing:",
+    emoticons: [
+      ":>", ":->"
+    ],
+    native: "😆",
+    skin: null,
+    unified: "1f606"
+  },
+
+
+  // negative icon:
+  {
+    id: "white_frowning_face",
+    name: "White Frowning Face",
+    colons: ":white_frowning_face:",
+    emoticons: [],
+    skin: null,
+    native: "☹️",
+    unified: "2639-fe0f"
+  },
+
+  {
+    id: "disappointed",
+    name: "Disappointed Face",
+    colons: ":disappointed:",
+    emoticons: ["):", ":(", ":-("],
+    skin: null,
+    native: "😞",
+    unified: "1f61e"
+  },
+  {
+    id: "worried",
+    name: "Worried Face",
+    colons: ":worried:",
+    emoticons: Array(0),
+    native: "😟",
+    skin: null,
+    unified: "1f61f"
+  }
 ];
 
 const division = [
@@ -26,12 +98,6 @@ const issues = [
   'Communication with others',
   'Time Estimation',
   'Security Threats'
-];
-
-const userTypes = [
-  'member',
-  'team_leader',
-  'group_leader'
 ];
 
 function getRandomInt(min, max) {
@@ -99,7 +165,7 @@ for (let i=1; i<=2000; i++) {
   database.reports.push({
     id: i,
     userId: getRandomInt(1, 20),
-    emotion:
+    emotion: faker.random.arrayElement(emojis),
     title: faker.lorem.sentence(),
     date: moment(faker.date.between('2018-06-01', '2018-09-31')).format("YYYY-MM-DD"),
     achievement: faker.lorem.sentence(),

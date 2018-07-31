@@ -22,14 +22,15 @@ class MemberDetailContainer extends Component {
 
   render() {
     const { reports, loading, memberLoading, member, user} = this.props;
+
     return (
       <div className="row mt-5 mb-5">
         <div className="col-md-4">
           <SideBar />
         </div>
         <div className="col-md-8">
-          {loading && memberLoading && isEmpty(reports) ? (
-            <Spinner />
+          {loading && isEmpty(reports) ? (
+            <Spinner height="650px" style={{fontSize: 32, color: '#FFFFFF'}} />
           ) : (
             <MemberDetail
               user={user}

@@ -32,7 +32,7 @@ class MemberDetail extends Component {
         </Jumbotron>
 
         {loading && isEmpty(reportsList) ? (
-          <Spinner/>
+          <Spinner />
         ) : (
           <ReportsList
             reportsList={reportsList}

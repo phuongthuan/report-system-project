@@ -58,7 +58,7 @@ export function* fetchAllReportsOfTeamByDay(action) {
       return null;
     });
     const reportByDay = mergedReports.filter(report => report.date === action.date)
-    // console.log('reportByDay', reportByDay);
+    console.log('reportByDay', reportByDay);
     yield delay(700);
     yield put(getAllReportsOfTeamByDaySucceeded(reportByDay));
   } catch (error) {

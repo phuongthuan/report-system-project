@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import { Emoji } from 'emoji-mart';
 import {
   ListItem,
-  TableFooter,
   TablePagination,
   ListItemText,
   Avatar,
@@ -12,12 +12,9 @@ import {
   TableCell,
   TableHead,
   TableRow,
-  Paper,
-  Typography
+  Paper
 } from '@material-ui/core';
-import EnhancedTableToolbar from './EnhancedTableToolbar'
-
-import TablePaginationActionsWrapped from './TablePaginationActions'
+import EnhancedTableToolbar from './EnhancedTableToolbar';
 
 const CustomTableCell = withStyles(theme => ({
   body: {
@@ -87,6 +84,7 @@ class DataTables extends Component {
             <CustomTableHead>
               <CustomTableRow>
                 <CustomTableCell>ID</CustomTableCell>
+                <CustomTableCell>Emotion</CustomTableCell>
                 <CustomTableCell>Title</CustomTableCell>
                 <CustomTableCell>Author</CustomTableCell>
                 <CustomTableCell>Date created</CustomTableCell>
@@ -97,6 +95,9 @@ class DataTables extends Component {
                 return (
                   <CustomTableRow key={report.id}>
                     <CustomTableCell>{report.id}</CustomTableCell>
+                    <CustomTableCell>
+                      <Emoji set={'emojione'} emoji={report.emotion.colons} size={24}/>
+                    </CustomTableCell>
                     <CustomTableCell component="th" scope="row">
                       {report.title}
                     </CustomTableCell>

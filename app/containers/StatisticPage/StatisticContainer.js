@@ -1,16 +1,19 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
 import isEmpty from "lodash/isEmpty";
 import SideBar from 'components/SideBar'
-import LineChart from "../../components/Chart/LineChart";
-import PieChart from "../../components/Chart/PieChart";
+
 import { getAllReportsOfTeam, getAllReportsOfTeamByDay, getAllReportsOfTeamByRange } from "./actions";
 import { selectStatisticLoading, selectReportsOfTeam } from "./selectors";
 import { selectProfile } from "../ProfilePage/selectors";
 import { selectUser } from "../Auth/selectors";
 import FilterReport from '../../components/FilterReport/index'
 import Spinner from "../../components/Spinner";
+import EmotionPie from "../../components/Chart/PieChart/EmotionPie";
+import EmotionLine from "../../components/Chart/LineChart/EmotionLine";
+import IssueLine from "../../components/Chart/LineChart/IssueLine";
+import IssuePie from "../../components/Chart/PieChart/IssuePie";
 
 class StatisticContainer extends Component {
 
@@ -26,12 +29,12 @@ class StatisticContainer extends Component {
     return (
       <div>
         <div className="row">
-          <div className="col-md-3">
+          <div className="col-md-4">
             <SideBar/>
           </div>
-          <div className="col-md-9">
-            <div className="row mb-3">
-              <div className="col-md-6">
+          <div className="col-md-8">
+            <div className="row">
+              <div className="col-md-12">
                 <FilterReport
                   user={user}
                   fetchAllReportsOfTeamByRange={fetchAllReportsOfTeamByRange}
@@ -43,19 +46,40 @@ class StatisticContainer extends Component {
             {loading && isEmpty(reportsOfTeam) ? (
               <Spinner height="650px" style={{fontSize: 32, color: '#FFFFFF'}}/>
             ) : (
-              <div className="row">
-                <div className="col-md-6">
-                  <div className="shadow-sm">
-                    <PieChart dataSource={reportsOfTeam}/>
+              <Fragment>
+
+                <div className="row mt-4">
+                  <div className="col-md-12">
+                    <div className="shadow-sm">
+                      <IssuePie dataSource={reportsOfTeam}/>
+                    </div>
                   </div>
                 </div>
 
-                <div className="col-md-6">
-                  <div className="shadow-sm">
-                    <LineChart dataSource={reportsOfTeam}/>
+                <div className="row mt-4">
+                  <div className="col-md-12">
+                    <div className="shadow-sm">
+                      <IssueLine dataSource={reportsOfTeam}/>
+                    </div>
                   </div>
                 </div>
-              </div>
+
+                <div className="row mt-4">
+                  <div className="col-md-12">
+                    <div className="shadow-sm">
+                      <EmotionPie dataSource={reportsOfTeam}/>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="row mt-4">
+                  <div className="col-md-12">
+                    <div className="shadow-sm">
+                      <EmotionLine dataSource={reportsOfTeam}/>
+                    </div>
+                  </div>
+                </div>
+              </Fragment>
             )}
           </div>
         </div>
