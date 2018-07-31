@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import update from 'immutability-helper';
 import { Card, CardBody } from 'reactstrap'
 import { Pie } from 'react-chartjs-2'
+import 'chartjs-plugin-datalabels'
 
 class PieChart extends Component {
 
@@ -132,6 +133,12 @@ class PieChart extends Component {
               legend: {
                 display: this.props.displayLegend,
                 position: this.props.legendPosition
+              },
+              responsive: true,
+              plugins: {
+                datalabels: {
+                  color: 'white'
+                }
               }
             }}
           />

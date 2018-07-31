@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types';
 import IssueSelect from 'components/IssueSelect';
 import Select from 'react-select';
+import EmojiMartPicker  from 'emoji-mart-picker';
+import { Emoji } from 'emoji-mart';
 import {
   Form,
   FormGroup,
@@ -11,7 +13,6 @@ import {
   Input,
   Col,
   Label,
-  CardSubtitle,
   Card,
   CardHeader,
   CardBody,
@@ -19,6 +20,7 @@ import {
   CardFooter,
   ButtonGroup
 } from 'reactstrap';
+import 'emoji-mart/css/emoji-mart.css'
 
 const issues_type = [
   {value: 1, label: 'Hard for Debugging'},
@@ -34,6 +36,18 @@ class CreateReportForm extends Component {
     numberSelectBox: 0,
     report : {
       date: moment().toString(),
+      emotion: {
+        id: 'smiley',
+        name: 'Smiling Face with Open Mouth',
+        colons: ':smiley:',
+        text: ':)',
+        emoticons: [
+          '=)',
+          '=-)'
+        ],
+        skin: null,
+        native: '😃'
+      },
       userId: this.props.user.id,
       title: '',
       achievement: '',
@@ -90,9 +104,23 @@ class CreateReportForm extends Component {
     this.setState({ numberSelectBox: numberSelectBox - 1});
   }
 
+  onChange = (emoji) => {
+    if (emoji) {
+      const { report } = this.state;
+      this.setState({
+        report: {
+          ...report,
+          emotion: emoji
+        }
+      });
+    }
+  }
+
   render() {
     const { numberSelectBox, report } = this.state;
+
     const children = [];
+
     const date = moment().format("dddd, MMMM Do YYYY");
 
     for (let i = 0; i < numberSelectBox; i++) {
@@ -121,6 +149,25 @@ class CreateReportForm extends Component {
           </CardHeader>
 
           <CardBody>
+            <Label for="title">Emotion</Label>
+            <FormGroup>
+              <EmojiMartPicker
+                set='emojione'
+                onSelect={(emoji) => console.log(emoji)}
+                onChange={this.onChange}
+              >
+                <Input
+                  type="text"
+                  name="emotion"
+                  bsSize="sm"
+                  autoComplete="off"
+                  value={report.emotion.native}
+                  onChange={this.onHandleFormChange}
+                  required
+                />
+              </EmojiMartPicker>
+            </FormGroup>
+
             <Label for="title">Title</Label>
             <FormGroup>
               <Input
