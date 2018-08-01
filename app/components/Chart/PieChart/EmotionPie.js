@@ -25,7 +25,7 @@ class EmotionPie extends Component {
       ],
       datasets: [
         {
-          data: [300, 100, 200],
+          data: [100, 100, 50],
           backgroundColor: [
             '#109618',
             '#DC3912',
@@ -44,13 +44,10 @@ class EmotionPie extends Component {
 
   componentDidMount() {
     const {dataSource} = this.props;
-
     const emotions = [];
-
     dataSource.map(report => {
       const emoji = report.emotion.id;
       if ((emoji === 'smiley')
-        || (emoji === 'heart_eyes')
         || (emoji === 'stuck_out_tongue_winking_eye')
         || (emoji === 'laughing')) {
         const positive = 'Positive';
@@ -66,13 +63,13 @@ class EmotionPie extends Component {
       }
     });
 
-    console.log(count(emotions));
+    const results = count(emotions).map(emotion => emotion.count);
 
     let newState = update(this.state, {
       data: {
         datasets: [
           {
-            data: {$set: count(emotions)}
+            data: {$set: results}
           }
         ]
       }
@@ -87,7 +84,6 @@ class EmotionPie extends Component {
       const emoji = report.emotion.id;
 
       if ((emoji === 'smiley')
-        || (emoji === 'heart_eyes')
         || (emoji === 'stuck_out_tongue_winking_eye')
         || (emoji === 'laughing')) {
         const positive = 'Positive';
@@ -103,11 +99,13 @@ class EmotionPie extends Component {
       }
     });
 
+    const results = count(emotions).map(emotion => emotion.count);
+
     let newState = update(this.state, {
       data: {
         datasets: [
           {
-            data: {$set: count(emotions)}
+            data: {$set: results}
           }
         ]
       }
