@@ -27,34 +27,40 @@ class ProfileContainer extends Component {
 
   componentDidMount() {
     const {getProfile, user} = this.props;
-    getProfile(user.id);
+    if (user) {
+      getProfile(user.id);
+    }
   }
 
   render() {
-    const {updateProfile, profile, loading, addFlashMessage} = this.props;
+    const {updateProfile, profile, loading, addFlashMessage, user, authLoading} = this.props;
     return (
       <Wrapper>
-        <div className="row">
-          <div className="col-md-4">
-            <SideBar/>
-          </div>
+        {authLoading && isEmpty(user) ? (
+          <Spinner height="500px" style={{fontSize: 32, color: '#FFFFFF'}}/>
+        ) : (
+          <div className="row">
+            <div className="col-md-4">
+              <SideBar/>
+            </div>
 
-          {loading && isEmpty(profile) ? (
-            <div className="col-md-8">
-              <Spinner height="500px" style={{fontSize: 32, color: '#FFFFFF'}}/>
-            </div>
-          ) : (
-            <div className="col-md-8">
-              <div className="shadow-sm">
-                <ProfileForm
-                  profile={profile}
-                  addFlashMessage={addFlashMessage}
-                  updateProfile={updateProfile}
-                />
+            {loading && isEmpty(profile) ? (
+              <div className="col-md-8">
+                <Spinner height="500px" style={{fontSize: 32, color: '#FFFFFF'}}/>
               </div>
-            </div>
-          )}
-        </div>
+            ) : (
+              <div className="col-md-8">
+                <div className="shadow-sm">
+                  <ProfileForm
+                    profile={profile}
+                    addFlashMessage={addFlashMessage}
+                    updateProfile={updateProfile}
+                  />
+                </div>
+              </div>
+            )}
+          </div>
+        )}
       </Wrapper>
     );
   }

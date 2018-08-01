@@ -24,7 +24,7 @@ class MemberDetailContainer extends Component {
     const { reports, loading, memberLoading, member, user} = this.props;
 
     return (
-      <div className="row mt-5 mb-5">
+      <div className="row">
         <div className="col-md-4">
           <SideBar />
         </div>

@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 (function() {
+
   const auth = JSON.parse(localStorage.getItem('auth'));
 
   const token = auth

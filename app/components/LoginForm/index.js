@@ -16,8 +16,7 @@ class LoginForm extends Component {
     super(props);
     this.state = {
       email: '',
-      password: '',
-      isLoading: false
+      password: ''
     }
   }
 
@@ -31,7 +30,7 @@ class LoginForm extends Component {
   onSubmitForm = (e) => {
     e.preventDefault();
     const { email, password } = this.state;
-    const { login, history, addFlashMessage, authError, user } = this.props;
+    const { login, history, addFlashMessage, authError } = this.props;
     login({ email, password });
 
     if (authError) {
@@ -43,18 +42,7 @@ class LoginForm extends Component {
       type: 'success',
       text: 'You signed in successfully. Welcome!'
     });
-
     history.push('/profile/edit');
-
-
-    // if (user && user.role === 'member') {
-    //   history.push('report');
-    // } else if (user.role === 'team_leader') {
-    //   history.push('/statistic');
-    // } else {
-    //   history.push('/team');
-    // }
-
   }
 
   render() {

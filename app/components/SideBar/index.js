@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux'
-import { Icon } from 'antd'
+import { Icon, Affix } from 'antd'
 import Spinner from 'components/Spinner'
 import { withRouter, Link } from 'react-router-dom'
 import PropTypes from 'prop-types';
@@ -27,6 +27,11 @@ import { selectReports } from "../../containers/ReportPage/selectors";
 
 class SideBar extends Component {
 
+  state = {
+    top: 10,
+    bottom: 10,
+  }
+
   componentDidMount() {
     const {getProfile, user, fetchAllMessages} = this.props;
     if (user) {
@@ -49,145 +54,147 @@ class SideBar extends Component {
     const avatar = profile ? profile.avatar : imageProfile;
     return (
       <div>
-        {loading && isEmpty(profile) && isEmpty(user) ? (
-          <Spinner style={{fontSize: 32, color: '#071820'}}/>
-        ) : (
-          <ListGroup flush className="shadow-sm border-0">
-            <ListGroupItem className="justify-content-between text-center">
-              {loading && isEmpty(avatar) ? (
-                <Spinner/>
-              ) : (
-                <CardImg src={avatar} alt="Card image cap"/>
-              )}
-              <CardBody>
-                <CardTitle>{profile.firstName} {profile.lastName}</CardTitle>
-                <CardText>
-                  <small className="text-muted">
-                    <Link to="/profile/edit">
-                      <Icon type="profile" className="mr-1"/>
-                      Edit Profile
+        <Affix offsetTop={this.state.top}>
+          {loading && isEmpty(profile) && isEmpty(user) ? (
+            <Spinner style={{fontSize: 32, color: '#071820'}}/>
+          ) : (
+            <ListGroup flush className="shadow-sm border-0">
+              <ListGroupItem className="justify-content-between text-center">
+                {loading && isEmpty(avatar) ? (
+                  <Spinner/>
+                ) : (
+                  <CardImg src={avatar} alt="Card image cap"/>
+                )}
+                <CardBody>
+                  <CardTitle>{profile.firstName} {profile.lastName}</CardTitle>
+                  <CardText>
+                    <small className="text-muted">
+                      <Link to="/profile/edit">
+                        <Icon type="profile" className="mr-1"/>
+                        Edit Profile
+                      </Link>
+                    </small>
+                  </CardText>
+                </CardBody>
+              </ListGroupItem>
+
+              {(profile.role) === 'member' &&
+              (
+                <Fragment>
+                  <ListGroupItem
+                    className="justify-content-between"
+                    action
+                  >
+                    <Link to="/report/create">
+                      <Icon type="form" className="mr-2"/>
+                      Write Daily Report
                     </Link>
-                  </small>
-                </CardText>
-              </CardBody>
-            </ListGroupItem>
+                  </ListGroupItem>
 
-            {(profile.role) === 'member' &&
-            (
-              <Fragment>
-                <ListGroupItem
-                  className="justify-content-between"
-                  action
+                  <ListGroupItem
+                    className="justify-content-between"
+                    action
+                  >
+                    <Link to="/report">
+                      <Icon type="book" className="mr-2"/>
+                      Reports
+                    </Link>
+                  </ListGroupItem>
+
+                  <ListGroupItem
+                    className="justify-content-between"
+                    action
+                  >
+                    <Link to="/message">
+                      <Icon type="inbox" className="mr-2"/>
+                      Messenger
+                      {messages.length > 0 &&
+                      (
+                        <Badge color="warning">{messages.length}</Badge>
+                      )
+                      }
+                    </Link>
+                  </ListGroupItem>
+                </Fragment>
+              )
+              }
+
+              {(profile.role) === 'team_leader' &&
+              (
+                <Fragment>
+                  <ListGroupItem
+                    className="justify-content-between"
+                    action
+                  >
+                    <Link to="/statistic">
+                      <Icon className="mr-2" type="area-chart"/>
+                      Statistics
+                    </Link>
+                  </ListGroupItem>
+
+                  <ListGroupItem
+                    className="justify-content-between"
+                    action
+                  >
+                    <Link to="/member">
+                      <Icon className="mr-2" type="team"/>
+                      Members List
+                    </Link>
+                  </ListGroupItem>
+
+                  <ListGroupItem
+                    className="justify-content-between"
+                    action
+                  >
+                    <Link to="/report">
+                      <Icon className="mr-2" type="solution"/>
+                      Reports of Team
+                    </Link>
+                  </ListGroupItem>
+                </Fragment>
+              )
+              }
+
+              {(profile.role) === 'group_leader' &&
+              (
+                <Fragment>
+                  <ListGroupItem
+                    className="justify-content-between"
+                    action
+                  >
+                    <Link to="/team">
+                      <Icon type="idcard" className="mr-2"/>
+                      Teams List
+                    </Link>
+                  </ListGroupItem>
+
+                  <ListGroupItem
+                    className="justify-content-between"
+                    action
+                  >
+                    <Link to="/member">
+                      <Icon className="mr-2" type="team"/>
+                      Members List
+                    </Link>
+                  </ListGroupItem>
+                </Fragment>
+              )
+              }
+
+              <ListGroupItem tag="a" className="justify-content-between" action>
+                <Button
+                  color="link"
+                  className="p-0"
+                  size="sm"
+                  onClick={this.logout}
                 >
-                  <Link to="/report/create">
-                    <Icon type="form" className="mr-2"/>
-                    Write Daily Report
-                  </Link>
-                </ListGroupItem>
-
-                <ListGroupItem
-                  className="justify-content-between"
-                  action
-                >
-                  <Link to="/report">
-                    <Icon type="book" className="mr-2"/>
-                    Reports
-                  </Link>
-                </ListGroupItem>
-
-                <ListGroupItem
-                  className="justify-content-between"
-                  action
-                >
-                  <Link to="/message">
-                    <Icon type="inbox" className="mr-2"/>
-                    Messenger
-                    {messages.length > 0 &&
-                    (
-                      <Badge color="warning">{messages.length}</Badge>
-                    )
-                    }
-                  </Link>
-                </ListGroupItem>
-              </Fragment>
-            )
-            }
-
-            {(profile.role) === 'team_leader' &&
-            (
-              <Fragment>
-                <ListGroupItem
-                  className="justify-content-between"
-                  action
-                >
-                  <Link to="/statistic">
-                    <Icon className="mr-2" type="area-chart"/>
-                    Statistics
-                  </Link>
-                </ListGroupItem>
-
-                <ListGroupItem
-                  className="justify-content-between"
-                  action
-                >
-                  <Link to="/member">
-                    <Icon className="mr-2" type="team"/>
-                    Members List
-                  </Link>
-                </ListGroupItem>
-
-                <ListGroupItem
-                  className="justify-content-between"
-                  action
-                >
-                  <Link to="/report">
-                    <Icon className="mr-2" type="solution"/>
-                    Reports of Team
-                  </Link>
-                </ListGroupItem>
-              </Fragment>
-            )
-            }
-
-            {(profile.role) === 'group_leader' &&
-            (
-              <Fragment>
-                <ListGroupItem
-                  className="justify-content-between"
-                  action
-                >
-                  <Link to="/team">
-                    <Icon type="idcard" className="mr-2"/>
-                    Teams List
-                  </Link>
-                </ListGroupItem>
-
-                <ListGroupItem
-                  className="justify-content-between"
-                  action
-                >
-                  <Link to="/member">
-                    <Icon className="mr-2" type="team"/>
-                    Members List
-                  </Link>
-                </ListGroupItem>
-              </Fragment>
-            )
-            }
-
-            <ListGroupItem tag="a" className="justify-content-between" action>
-              <Button
-                color="link"
-                className="p-0"
-                size="sm"
-                onClick={this.logout}
-              >
-                <Icon type="logout" className="mr-2"/>
-                Logout
-              </Button>
-            </ListGroupItem>
-          </ListGroup>
-        )}
+                  <Icon type="logout" className="mr-2"/>
+                  Logout
+                </Button>
+              </ListGroupItem>
+            </ListGroup>
+          )}
+        </Affix>
       </div>
     )
   }

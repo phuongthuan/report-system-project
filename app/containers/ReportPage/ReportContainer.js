@@ -63,7 +63,7 @@ class ReportContainer extends Component {
           <SideBar/>
         </div>
         <div className="col-md-8">
-          <div className="row">
+          <div className="row mb-4">
             <div className="col-md-12">
               <FilterReport
                 user={user}

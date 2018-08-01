@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import styled from 'styled-components'
@@ -20,6 +21,9 @@ class Auth extends Component {
 
   render() {
     const {addFlashMessage, login, authError, user} = this.props;
+    if (user) {
+      return <Redirect to='/profile/edit' />
+    }
     return (
       <AuthWrapper>
         <LoginForm

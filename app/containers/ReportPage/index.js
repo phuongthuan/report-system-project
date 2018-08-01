@@ -5,6 +5,7 @@ import ReportContainer from "./ReportContainer";
 import CreateReportContainer from "./CreateReportContainer";
 import UpdateReportContainer from "./UpdateReportContainer";
 import NoMatch from "../../utils/NoMatch";
+import ReportDetailContainer from "./ReportDetailContainer";
 
 class ReportPage extends Component {
   render() {
@@ -15,6 +16,7 @@ class ReportPage extends Component {
           <Route exact path="/report" component={ReportContainer}/>
           <Route path="/report/create" component={CreateReportContainer}/>
           <Route path="/report/update/:id" component={UpdateReportContainer}/>
+          <Route path="/report/:id" component={ReportDetailContainer}/>
           <Route component={NoMatch}/>
         </Switch>
       </div>

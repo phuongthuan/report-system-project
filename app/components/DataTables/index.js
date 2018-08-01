@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Emoji } from 'emoji-mart';
@@ -60,7 +61,7 @@ class DataTables extends Component {
   }
 
   componentWillReceiveProps(nextProps, state) {
-    this.setState({ data: nextProps.reportsList });
+    this.setState({data: nextProps.reportsList});
   }
 
   handleChangePage = (event, page) => {
@@ -79,7 +80,7 @@ class DataTables extends Component {
     return (
       <Paper className={classes.root}>
         <div className={classes.tableWrapper}>
-          <EnhancedTableToolbar user={user} />
+          <EnhancedTableToolbar user={user}/>
           <Table className={classes.table}>
             <CustomTableHead>
               <CustomTableRow>
@@ -99,7 +100,9 @@ class DataTables extends Component {
                       <Emoji set={'emojione'} emoji={report.emotion.colons} size={24}/>
                     </CustomTableCell>
                     <CustomTableCell component="th" scope="row">
-                      {report.title}
+                      <Link to={`/report/${report.id}`}>
+                        {report.title}
+                      </Link>
                     </CustomTableCell>
                     <CustomTableCell padding="none" component="th" scope="row">
                       <ListItem>
@@ -114,8 +117,8 @@ class DataTables extends Component {
                 );
               })}
               {emptyRows > 0 && (
-                <TableRow style={{ height: 48 * emptyRows }}>
-                  <TableCell colSpan={6} />
+                <TableRow style={{height: 48 * emptyRows}}>
+                  <TableCell colSpan={6}/>
                 </TableRow>
               )}
             </TableBody>

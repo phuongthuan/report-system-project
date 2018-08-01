@@ -1,6 +1,10 @@
 import React, { PureComponent } from 'react'
+import isEmpty from 'lodash/isEmpty'
 import PropTypes from 'prop-types'
+import { Redirect } from 'react-router-dom'
+import { connect } from 'react-redux'
 import Button from 'components/Button'
+import { selectUser } from "../Auth/selectors";
 
 export class Home extends PureComponent {
 
@@ -10,18 +14,14 @@ export class Home extends PureComponent {
     })
   }
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      isLogin: false,
-    }
-  }
-
   goToReportPage = () => {
+    const { user } = this.props;
     const {history} = this.props;
-    const {isLogin} = this.state;
-    if (isLogin) history.push('/profile/edit');
-    history.push('/login');
+    if (isEmpty(user)) {
+      history.push('/login');
+    } else {
+      return <Redirect to="/profile/edit" />
+    }
   }
 
   render() {
@@ -32,7 +32,7 @@ export class Home extends PureComponent {
             className="mt-3"
             onClick={this.goToReportPage}
           >
-            REPORT
+            REPORT SYSTEMS
           </Button>
         </div>
       </div>
@@ -40,4 +40,8 @@ export class Home extends PureComponent {
   }
 }
 
-export default Home;
+const mapStateToProps = state => ({
+  user: selectUser(state)
+});
+
+export default connect(mapStateToProps, null)(Home);
