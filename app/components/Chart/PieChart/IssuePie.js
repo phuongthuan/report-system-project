@@ -51,18 +51,17 @@ class IssuePie extends Component {
   componentDidMount() {
     const {dataSource} = this.props;
     const issues = [];
-
     dataSource.map(report => {
       report.issues.map(issue =>
         issues.push(issue)
       );
     });
-
+    const results = count(issues).map(issue => issue.count);
     let newState = update(this.state, {
       data: {
         datasets: [
           {
-            data: {$set: count(issues)}
+            data: {$set: results}
           }
         ]
       }
@@ -78,13 +77,12 @@ class IssuePie extends Component {
         issues.push(issue)
       );
     });
-
-    // Update state using immutability-helper:
+    const results = count(issues).map(issue => issue.count);
     let newState = update(this.state, {
       data: {
         datasets: [
           {
-            data: {$set: count(issues)}
+            data: {$set: results}
           }
         ]
       }
