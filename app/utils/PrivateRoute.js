@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { selectUser } from "../containers/Auth/selectors";
+import { selectIsAuthenticated } from "../containers/Auth/selectors";
 
 const PrivateRoute = ({component: Component, isAuthenticated, ...rest}) => {
   return (
@@ -24,7 +24,7 @@ const PrivateRoute = ({component: Component, isAuthenticated, ...rest}) => {
 }
 
 const mapStateToProps = state => ({
-  isAuthenticated: !!selectUser(state)
+  isAuthenticated: selectIsAuthenticated(state)
 });
 
 export default connect(

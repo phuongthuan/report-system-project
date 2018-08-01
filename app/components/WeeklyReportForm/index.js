@@ -108,6 +108,7 @@ class WeeklyReportForm extends Component {
               <Button
                 color="success"
                 type="submit"
+                size="sm"
               >
                 Create weekly report
               </Button>

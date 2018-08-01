@@ -23,10 +23,10 @@ class TeamContainer extends Component {
     const {teams, teamLoading} = this.props;
     return (
       <div className="row">
-        <div className="col-md-4">
+        <div className="col-md-3">
           <SideBar/>
         </div>
-        <div className="col-md-8">
+        <div className="col-md-9">
 
           <Navigation/>
 

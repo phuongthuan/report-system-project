@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
 import isEmpty from "lodash/isEmpty";
 import SideBar from 'components/SideBar'
-
 import { getAllReportsOfTeam, getAllReportsOfTeamByDay, getAllReportsOfTeamByRange } from "./actions";
 import { selectStatisticLoading, selectReportsOfTeam } from "./selectors";
 import { selectProfile } from "../ProfilePage/selectors";
@@ -14,6 +13,9 @@ import EmotionPie from "../../components/Chart/PieChart/EmotionPie";
 import EmotionLine from "../../components/Chart/LineChart/EmotionLine";
 import IssueLine from "../../components/Chart/LineChart/IssueLine";
 import IssuePie from "../../components/Chart/PieChart/IssuePie";
+import WeeklyReportModal from '../../components/WeeklyReportModal/index'
+import { addFlashMessage } from "../FlashMessage/actions";
+import { createWeeklyReport } from "../WeeklyReport/actions";
 
 class StatisticContainer extends Component {
 
@@ -25,16 +27,23 @@ class StatisticContainer extends Component {
   }
 
   render() {
-    const {user, reportsOfTeam, loading, fetchAllReportsOfTeamByRange, fetchAllReportsOfTeamByDay} = this.props;
+    const { user, createWeeklyReport, addFlashMessage, reportsOfTeam, loading, fetchAllReportsOfTeamByRange, fetchAllReportsOfTeamByDay} = this.props;
     return (
       <div>
         <div className="row">
-          <div className="col-md-4">
+          <div className="col-md-3">
             <SideBar/>
           </div>
-          <div className="col-md-8">
+          <div className="col-md-9">
             <div className="row">
-              <div className="col-md-12">
+              <div className="col-md-4">
+                <WeeklyReportModal
+                  user={user}
+                  addFlashMessage={addFlashMessage}
+                  createWeeklyReport={createWeeklyReport}
+                />
+              </div>
+              <div className="col-md-8">
                 <FilterReport
                   user={user}
                   fetchAllReportsOfTeamByRange={fetchAllReportsOfTeamByRange}
@@ -47,7 +56,6 @@ class StatisticContainer extends Component {
               <Spinner height="650px" style={{fontSize: 32, color: '#FFFFFF'}}/>
             ) : (
               <Fragment>
-
                 <div className="row mt-4">
                   <div className="col-md-12">
                     <div className="shadow-sm">
@@ -96,6 +104,8 @@ StatisticContainer.propTypes = {
   fetchAllReportsOfTeam: PropTypes.func,
   fetchAllReportsOfTeamByRange: PropTypes.func,
   fetchAllReportsOfTeamByDay: PropTypes.func,
+  addFlashMessage: PropTypes.func,
+  createWeeklyReport: PropTypes.func,
 }
 
 const mapStateToProps = state => ({
@@ -108,7 +118,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   fetchAllReportsOfTeam: teamName => dispatch(getAllReportsOfTeam(teamName)),
   fetchAllReportsOfTeamByRange: (teamName, range) => dispatch(getAllReportsOfTeamByRange(teamName, range)),
-  fetchAllReportsOfTeamByDay: (teamName, date) => dispatch(getAllReportsOfTeamByDay(teamName, date))
+  fetchAllReportsOfTeamByDay: (teamName, date) => dispatch(getAllReportsOfTeamByDay(teamName, date)),
+  addFlashMessage: message => dispatch(addFlashMessage(message)),
+  createWeeklyReport: payload => dispatch(createWeeklyReport(payload))
 });
 
 export default connect(

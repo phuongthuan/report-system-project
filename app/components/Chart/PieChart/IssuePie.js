@@ -56,7 +56,7 @@ class IssuePie extends Component {
         issues.push(issue)
       );
     });
-    const results = count(issues).map(issue => issue.count);
+    const results = count(issues);
     let newState = update(this.state, {
       data: {
         datasets: [
@@ -77,7 +77,7 @@ class IssuePie extends Component {
         issues.push(issue)
       );
     });
-    const results = count(issues).map(issue => issue.count);
+    const results = count(issues);
     let newState = update(this.state, {
       data: {
         datasets: [
