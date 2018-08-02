@@ -7,11 +7,10 @@ import {
 
 const auth = JSON.parse(localStorage.getItem('auth'));
 
-const user = auth ? auth.user : undefined;
-
 const initState = {
-  user,
+  user: auth ? auth.user : {},
   loading: false,
+  isAuthenticated: !!auth,
   error: null
 }
 
@@ -20,17 +19,20 @@ function authReducer(state = initState, action) {
     case AUTH_LOGIN_REQUEST:
       return {
         ...state,
-        loading: true
+        loading: true,
+        isAuthenticated: false
       }
     case AUTH_LOGIN_SUCCEEDED:
       return {
         ...state,
-        user: action.userResponse
+        user: action.userResponse,
+        isAuthenticated: true
       }
     case AUTH_LOGOUT_SUCCEEDED:
       return {
         ...state,
-        user: action.userResponse
+        user: action.userResponse,
+        isAuthenticated: false
       }
     case AUTH_LOGIN_FAILED:
     case AUTH_LOGOUT_FAILED:

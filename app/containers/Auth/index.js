@@ -3,10 +3,11 @@ import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import styled from 'styled-components'
+import isEmpty from 'lodash/isEmpty'
 import { addFlashMessage } from '../FlashMessage/actions'
 import { login } from './actions'
 import LoginForm from "../../components/LoginForm";
-import { selectAuthError, selectUser } from "./selectors";
+import { selectAuthError, selectIsAuthenticated, selectUser } from "./selectors";
 
 const AuthWrapper = styled.div`
   display: flex;
@@ -20,15 +21,17 @@ const AuthWrapper = styled.div`
 class Auth extends Component {
 
   render() {
-    const {addFlashMessage, login, authError, user} = this.props;
-    if (user) {
+    const {addFlashMessage, login, authError, isAuthenticated} = this.props;
+
+    if (isAuthenticated) {
       return <Redirect to='/profile/edit' />
     }
+
     return (
       <AuthWrapper>
         <LoginForm
           {...this.props}
-          user={user}
+          isAuthenticated={isAuthenticated}
           authError={authError}
           login={login}
           addFlashMessage={addFlashMessage}
@@ -46,7 +49,7 @@ Auth.propTypes = {
 
 const mapStateToProps = state => ({
   authError: selectAuthError(state),
-  user: selectUser(state)
+  isAuthenticated: selectIsAuthenticated(state)
 });
 
 export default connect(

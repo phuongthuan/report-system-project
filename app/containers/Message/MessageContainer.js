@@ -30,10 +30,10 @@ class MessageContainer extends Component {
     return (
       <Wrapper>
         <div className="row">
-          <div className="col-md-4">
+          <div className="col-md-3">
             <SideBar/>
           </div>
-          <div className="col-md-8">
+          <div className="col-md-9">
             {loading && isEmpty(messages) ? (
               <Spinner height="650px" style={{fontSize: 32, color: '#FFFFFF'}}/>
             ) : (

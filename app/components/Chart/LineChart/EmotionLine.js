@@ -96,27 +96,33 @@ class EmotionLine extends Component {
     const otherEmotions = [];
 
     const reportsWithMonth = months.map(month => {
-      const array1 = dataSource.filter(report => {
+      return dataSource.filter(report => {
         const objMonth = new Date(report.date).getMonth() + 1;
         return month === objMonth;
       });
-      const array2 =  array1.map(report => {
+    });
+
+    const results1 = reportsWithMonth.map(reportMonth => {
+      reportMonth.map(report => {
         const emoji = report.emotion.id;
         if ((emoji === 'smiley')
-          || (emoji === 'heart_eyes')
           || (emoji === 'stuck_out_tongue_winking_eye')
           || (emoji === 'laughing')) {
-          positiveEmotions.push(emoji);
+          const positive = 'Positive';
+          positiveEmotions.push(positive);
         } else if ((emoji === 'white_frowning_face')
           || (emoji === 'disappointed')
           || (emoji === 'worried')) {
-          negativeEmotions.push(emoji);
+          const negative = 'Negative';
+          negativeEmotions.push(negative);
         } else {
-          otherEmotions.push(emoji);
+          const other = 'Other';
+          otherEmotions.push(other);
         }
       })
-      return array1;
     });
+
+    // emotion of June:
 
     let index = [0, 1, 2];
     let newState = update(this.state, {

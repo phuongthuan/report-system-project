@@ -44,27 +44,29 @@ class EmotionPie extends Component {
 
   componentDidMount() {
     const {dataSource} = this.props;
-    const emotions = [];
+
+    const positiveEmotions = [];
+    const negativeEmotions = [];
+    const otherEmotions = [];
+
     dataSource.map(report => {
       const emoji = report.emotion.id;
       if ((emoji === 'smiley')
         || (emoji === 'stuck_out_tongue_winking_eye')
         || (emoji === 'laughing')) {
         const positive = 'Positive';
-        emotions.push(positive);
+        positiveEmotions.push(positive);
       } else if ((emoji === 'white_frowning_face')
         || (emoji === 'disappointed')
         || (emoji === 'worried')) {
         const negative = 'Negative';
-        emotions.push(negative);
+        negativeEmotions.push(negative);
       } else {
         const other = 'Other';
-        emotions.push(other);
+        otherEmotions.push(other);
       }
     });
-
-    const results = count(emotions).map(emotion => emotion.count);
-
+    const results = [positiveEmotions.length, negativeEmotions.length, otherEmotions.length];
     let newState = update(this.state, {
       data: {
         datasets: [
@@ -79,28 +81,28 @@ class EmotionPie extends Component {
   }
 
   componentWillReceiveProps(nextProps, state) {
-    const emotions = [];
+    const positiveEmotions = [];
+    const negativeEmotions = [];
+    const otherEmotions = [];
+
     nextProps.dataSource.map(report => {
       const emoji = report.emotion.id;
-
       if ((emoji === 'smiley')
         || (emoji === 'stuck_out_tongue_winking_eye')
         || (emoji === 'laughing')) {
         const positive = 'Positive';
-        emotions.push(positive);
+        positiveEmotions.push(positive);
       } else if ((emoji === 'white_frowning_face')
         || (emoji === 'disappointed')
         || (emoji === 'worried')) {
         const negative = 'Negative';
-        emotions.push(negative);
+        negativeEmotions.push(negative);
       } else {
         const other = 'Other';
-        emotions.push(other);
+        otherEmotions.push(other);
       }
     });
-
-    const results = count(emotions).map(emotion => emotion.count);
-
+    const results = [positiveEmotions.length, negativeEmotions.length, otherEmotions.length];
     let newState = update(this.state, {
       data: {
         datasets: [

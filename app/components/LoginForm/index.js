@@ -30,19 +30,19 @@ class LoginForm extends Component {
   onSubmitForm = (e) => {
     e.preventDefault();
     const { email, password } = this.state;
-    const { login, history, addFlashMessage, authError } = this.props;
-    login({ email, password });
+    const { login, history, addFlashMessage, authError, isAuthenticated } = this.props;
 
-    if (authError) {
-      console.log('Login failed!');
-      return;
-    }
+    // dispatch login action.
+    login({ email, password });
 
     addFlashMessage({
       type: 'success',
       text: 'You signed in successfully. Welcome!'
     });
-    history.push('/profile/edit');
+
+    if (isAuthenticated) {
+      history.push('/profile/edit');
+    }
   }
 
   render() {
