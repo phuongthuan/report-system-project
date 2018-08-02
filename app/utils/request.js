@@ -1,9 +1,7 @@
 import axios from 'axios';
 
 (function() {
-
   const auth = JSON.parse(localStorage.getItem('auth'));
-
   const token = auth
     ? auth.access_token
     : null;
@@ -14,6 +12,19 @@ import axios from 'axios';
     axios.defaults.headers.common['Authorization'] = null;
   }
 })();
+
+export function updateAuthenticationHeader() {
+  const auth = JSON.parse(localStorage.getItem('auth'));
+  const token = auth
+    ? auth.access_token
+    : null;
+
+  if (token) {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  } else {
+    axios.defaults.headers.common['Authorization'] = null;
+  }
+}
 
 function parseJSON(response) {
   if (response.status === 204 || response.status === 205) {
