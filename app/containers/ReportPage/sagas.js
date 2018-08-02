@@ -36,13 +36,14 @@ export function* fetchAllReportsOfUser(action) {
   try {
     const reports = yield call(callFetchAllReportsOfUser, action.id);
     yield delay(700);
-    const users = yield reports.map(function (report) {
+    const users = yield all(reports.map(function (report) {
       try {
         return call(callGetProfile, report.userId);
       } catch (error) {
         return put(getUserProfileFailed(error));
       }
-    });
+    }));
+
     reports.map(report => {
       const userRelatedToReport = users.filter(user => user.id === report.userId);
       if (userRelatedToReport && userRelatedToReport.length > 0) {
@@ -66,13 +67,14 @@ export function* fetchAllReportsOfUserByDay(action) {
   try {
     const reports = yield call(callFetchAllReportsOfUserByDay, payload);
     yield delay(700);
-    const users = yield reports.map(function (report) {
+    const users = yield all(reports.map(function (report) {
       try {
         return call(callGetProfile, report.userId);
       } catch (error) {
         return put(getUserProfileFailed(error));
       }
-    });
+    }));
+
     reports.map(report => {
       const userRelatedToReport = users.filter(user => user.id === report.userId);
       if (userRelatedToReport && userRelatedToReport.length > 0) {
@@ -98,13 +100,13 @@ export function* fetchAllReportsOfUserByRange(action) {
   try {
     const reports = yield call(callFetchAllReportsOfUserByRange, payload);
     yield delay(700);
-    const users = yield reports.map(function (report) {
+    const users = yield all(reports.map(function (report) {
       try {
         return call(callGetProfile, report.userId);
       } catch (error) {
         return put(getUserProfileFailed(error));
       }
-    });
+    }));
     reports.map(report => {
       const userRelatedToReport = users.filter(user => user.id === report.userId);
       if (userRelatedToReport && userRelatedToReport.length > 0) {

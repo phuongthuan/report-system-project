@@ -10,13 +10,13 @@ export function* fetchAllTeams() {
   try {
     const teams = yield call(callFetchTeams);
 
-    const teamsWithUserProfile = yield teams.map(function (team) {
+    const teamsWithUserProfile = yield all(teams.map(function (team) {
       try {
         return call(callGetProfile, team.userId);
       } catch (error) {
         return put(getUserProfileFailed(error));
       }
-    });
+    }));
 
     teams.map(team => {
       const userTeam = teamsWithUserProfile.filter(userInfo => userInfo.id === team.userId);
@@ -25,13 +25,13 @@ export function* fetchAllTeams() {
       }
     });
 
-    const teamsWithWeeklyReports = yield teams.map(function (team) {
+    const teamsWithWeeklyReports = yield all(teams.map(function (team) {
       try {
         return call(callFetchAllWeeklyReportsOfUser, team.userId.id);
       } catch (error) {
         return put(fetchAllWeeklyReportsOfUserFailed(error));
       }
-    });
+    }));
 
     const mergedWeeklyReports = [].concat.apply([], teamsWithWeeklyReports);
 
