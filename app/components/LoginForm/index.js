@@ -1,6 +1,6 @@
 import React from 'react';
 import { withFormik } from 'formik'
-import { Button } from 'antd'
+import AsyncButton from 'components/AsyncButton'
 import * as Yup from 'yup';
 import {
   Form,
@@ -38,14 +38,13 @@ const LoginFormikForm = ({
           error={touched.password && errors.password}
           onChange={handleChange}
         />
-        <Button
+        <AsyncButton
+          buttonName="Login"
           htmlType="submit"
           type="primary"
           icon="login"
           loading={isSubmitting}
-        >
-          Login
-        </Button>
+        />
       </CardBody>
     </Card>
   </Form>
