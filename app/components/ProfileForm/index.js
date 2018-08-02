@@ -1,184 +1,125 @@
-import React, { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import {
   Form,
-  FormGroup,
-  Button,
-  Input,
-  InputGroup,
   Card,
   CardHeader,
   CardBody,
   CardFooter,
 } from 'reactstrap';
+import { withFormik } from 'formik'
+import * as Yup from 'yup'
+import AsyncButton from "../AsyncButton";
+import InputField from '../InputField/index';
 
-class ProfileForm extends Component {
+const FormikForm = ({values, handleSubmit, handleChange, isSubmitting, touched, errors}) => (
+  <Form onSubmit={handleSubmit}>
+    <Card style={{borderRadius: '0'}} className="border-0 shadow-sm">
+      <CardHeader>
+        Update Profile
+      </CardHeader>
+      <CardBody>
 
-  state = {
-    user: {
-      id: '',
-      firstName: '',
-      lastName: '',
-      avatar: '',
-      address: '',
-      phone: '',
-      division: ''
-    }
-  }
+        <InputField
+          disabled="true"
+          type="text"
+          name="id"
+          value={values.id}
+        />
 
-  componentDidMount() {
-    const {profile} = this.props;
-    this.setState({user: profile});
-  }
+        <InputField
+          type="text"
+          name="firstName"
+          value={values.firstName}
+          error={touched.firstName && errors.firstName}
+          onChange={handleChange}
+        />
 
-  onHandleFormChange = (e) => {
-    const {user} = this.state;
-    this.setState({
-      user: {
-        ...user,
-        [e.target.name]: e.target.value
-      }
-    });
-  };
+        <InputField
+          type="text"
+          name="lastName"
+          value={values.lastName}
+          placeholder="Solution..."
+          error={touched.lastName && errors.lastName}
+          onChange={handleChange}
+        />
 
-  onSubmitForm = (e) => {
-    e.preventDefault();
-    const {user} = this.state;
-    const {updateProfile, addFlashMessage} = this.props;
-    updateProfile(user);
-    addFlashMessage({
-      type: 'success',
-      text: 'Update Profile Successful'
-    });
-  };
+        <InputField
+          type="text"
+          name="avatar"
+          value={values.avatar}
+          error={touched.avatar && errors.avatar}
+          onChange={handleChange}
+        />
 
-  render() {
-    const {user} = this.state;
-    const disabled = (user.role === 'member' || user.role === 'team_leader');
-    return (
-      <Form onSubmit={this.onSubmitForm}>
-        <Card style={{borderRadius: '0'}} className="border-0 shadow-sm">
-          <CardHeader>
-            Update Profile
-          </CardHeader>
-          <CardBody>
+        <InputField
+          type="text"
+          name="address"
+          value={values.address}
+          placeholder="Summary..."
+          error={touched.address && errors.address}
+          onChange={handleChange}
+        />
 
-            <FormGroup>
-              <InputGroup>
-                <Input
-                  disabled="true"
-                  bsSize="sm"
-                  type="text"
-                  name="id"
-                  value={user.id}
-                />
-              </InputGroup>
-            </FormGroup>
+        <InputField
+          type="text"
+          name="phone"
+          value={values.phone}
+          error={touched.phone && errors.phone}
+          onChange={handleChange}
+        />
 
-            <FormGroup>
-              <InputGroup>
-                <Input
-                  autoComplete="off"
-                  type="text"
-                  name="firstName"
-                  bsSize="sm"
-                  value={user.firstName}
-                  onChange={this.onHandleFormChange}
-                  required
-                />
-              </InputGroup>
-            </FormGroup>
-            <FormGroup>
-              <InputGroup>
-                <Input
-                  autoComplete="off"
-                  type="text"
-                  name="lastName"
-                  bsSize="sm"
-                  value={user.lastName}
-                  onChange={this.onHandleFormChange}
-                  required
-                />
-              </InputGroup>
-            </FormGroup>
+        <InputField
+          disabled="true"
+          type="text"
+          name="division"
+          value={values.division}
+        />
 
-            <FormGroup>
-              <InputGroup>
-                <Input
-                  autoComplete="off"
-                  type="text"
-                  name="avatar"
-                  bsSize="sm"
-                  value={user.avatar}
-                  onChange={this.onHandleFormChange}
-                  required
-                />
-              </InputGroup>
-            </FormGroup>
+      </CardBody>
 
-            <FormGroup>
-              <InputGroup>
-                <Input
-                  autoComplete="off"
-                  type="text"
-                  name="address"
-                  bsSize="sm"
-                  value={user.address}
-                  onChange={this.onHandleFormChange}
-                  required
-                />
-              </InputGroup>
-            </FormGroup>
+      <CardFooter>
+        <AsyncButton
+          buttonName="Save"
+          type="primary"
+          htmlType="submit"
+          icon="save"
+          loading={isSubmitting}
+        />
+      </CardFooter>
 
-            <FormGroup>
-              <InputGroup>
-                <Input
-                  autoComplete="off"
-                  type="text"
-                  name="phone"
-                  bsSize="sm"
-                  value={user.phone}
-                  onChange={this.onHandleFormChange}
-                  required
-                />
-              </InputGroup>
-            </FormGroup>
+    </Card>
+  </Form>
+)
 
-            <FormGroup>
-              <InputGroup>
-                <Input
-                  autoComplete="off"
-                  disabled={disabled}
-                  type="text"
-                  name="division"
-                  bsSize="sm"
-                  value={user.division}
-                />
-              </InputGroup>
-            </FormGroup>
-          </CardBody>
+const ProfileForm = withFormik({
 
-          <CardFooter>
-            <Button
-              color="secondary"
-              type="submit"
-              size="sm"
-            >
-              Save
-            </Button>
-          </CardFooter>
-        </Card>
-      </Form>
-    );
-  }
-}
+  validationSchema: Yup.object().shape({
+    firstName: Yup.string().required('First name is required.'),
+    lastName: Yup.string().required('Last name is required.'),
+    avatar: Yup.string().matches(/(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png)/, 'Image is invalid').required('Avatar is required.'),
+    address: Yup.string().required('Address is required.'),
+    phone: Yup.string().matches(/^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$/, 'Phone number is invalid.').required('Phone is required.'),
+  }),
 
-ProfileForm.propTypes = {
-  user: PropTypes.object,
-  profile: PropTypes.object,
-  addFlashMessage: PropTypes.func,
-}
+  mapPropsToValues: ({profile}) => ({
+    ...profile
+  }),
 
+  handleSubmit: (values, {props, setSubmitting}) => {
+    const {updateProfile, addFlashMessage} = props;
+    setSubmitting(true);
+    setTimeout(() => {
+      updateProfile(values);
+      addFlashMessage({
+        type: 'success',
+        text: 'Update Profile Successful'
+      });
+      setSubmitting(false);
+    }, 1500)
+  },
+
+  displayName: 'ProfileForm'
+})(FormikForm)
 
 export default ProfileForm;
 

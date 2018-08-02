@@ -10,6 +10,7 @@ import {
 } from 'reactstrap'
 import img from '../../assests/images/Gabe_newell.png'
 import WrapperRemindModal from '../RemindModal/index'
+import RemindModal from "../RemindModal";
 
 const Image = styled.img`
   width: 64px;
@@ -81,7 +82,7 @@ class Member extends Component {
           {(user && (user.role === 'team_leader') || (user.role === 'group_leader')) &&
           (
             <CardFooter>
-              <WrapperRemindModal
+              <RemindModal
                 addFlashMessage={addFlashMessage}
                 createMessage={createMessage}
                 member={member}
