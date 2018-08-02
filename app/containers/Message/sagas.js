@@ -13,13 +13,13 @@ export function* fetchAllMessages(action) {
   try {
     const messages = yield call(callGetMessagesToUser, action.toUserId);
     yield delay(700);
-    const members = yield messages.map(function (message) {
+    const members = yield all(messages.map(function (message) {
       try {
         return call(callGetProfile, message.userId);
       } catch (error) {
         return put(getMemberProfileFailed(error));
       }
-    });
+    }));
     const messagesWithUser = messages.map(message => {
       const userMessage = members.filter(member => member.id === message.userId);
       if (userMessage && userMessage.length > 0) {

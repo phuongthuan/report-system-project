@@ -16,13 +16,13 @@ export function* fetchAllReportsOfTeam(action) {
   try {
     yield delay(700);
     const members = yield call(callGetMembersOfTeam, action.teamName);
-    const reports = yield members.map(function (member) {
+    const reports = yield all(members.map(function (member) {
       try {
         return call(callFetchAllReportsOfUser, member.id);
       } catch (error) {
         return put(fetchAllReportsOfUserFailed(error));
       }
-    });
+    }));
     const mergedReports = [].concat.apply([], reports);
 
     mergedReports.map(report => {
@@ -42,13 +42,13 @@ export function* fetchAllReportsOfTeam(action) {
 export function* fetchAllReportsOfTeamByDay(action) {
   try {
     const members = yield call(callGetMembersOfTeam, action.teamName);
-    const reports = yield members.map(function (member) {
+    const reports = yield all(members.map(function (member) {
       try {
         return call(callFetchAllReportsOfUser, member.id);
       } catch (error) {
         return put(fetchAllReportsOfUserFailed(error));
       }
-    });
+    }));
     const mergedReports = [].concat.apply([], reports);
     mergedReports.map(report => {
       const memberReport = members.filter(member => member.id === report.userId);
@@ -59,6 +59,7 @@ export function* fetchAllReportsOfTeamByDay(action) {
     });
     const reportByDay = mergedReports.filter(report => report.date === action.date)
     console.log('reportByDay', reportByDay);
+
     yield delay(700);
     yield put(getAllReportsOfTeamByDaySucceeded(reportByDay));
   } catch (error) {
@@ -69,13 +70,13 @@ export function* fetchAllReportsOfTeamByDay(action) {
 export function* fetchAllReportsOfTeamByRange(action) {
   try {
     const members = yield call(callGetMembersOfTeam, action.teamName);
-    const reports = yield members.map(function (member) {
+    const reports = yield all(members.map(function (member) {
       try {
         return call(callFetchAllReportsOfUser, member.id);
       } catch (error) {
         return put(fetchAllReportsOfUserFailed(error));
       }
-    });
+    }));
     const mergedReports = [].concat.apply([], reports);
     mergedReports.map(report => {
       const memberReport = members.filter(member => member.id === report.userId);
@@ -85,9 +86,9 @@ export function* fetchAllReportsOfTeamByRange(action) {
       return null;
     });
 
-    //filter by range:
     const reportByRange = mergedReports.filter(report => (report.date >= action.range[0] && report.date < action.range[1]));
-    // console.log('Saga reportByRange', reportByRange);
+    console.log('Saga reportByRange', reportByRange);
+
     yield delay(700);
     yield put(getAllReportsOfTeamByRangeSucceeded(reportByRange));
   } catch (error) {

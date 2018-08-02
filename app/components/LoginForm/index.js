@@ -1,101 +1,87 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
+import { withFormik } from 'formik'
+import AsyncButton from 'components/AsyncButton'
+import * as Yup from 'yup';
 import {
   Form,
-  FormGroup,
-  Input,
   Card,
   CardBody,
-  CardHeader,
-  Button
+  CardHeader
 } from 'reactstrap'
+import InputField from '../InputField/index'
 
-class LoginForm extends Component {
+const LoginFormikForm = ({
+                           values,
+                           errors,
+                           handleChange,
+                           handleSubmit,
+                           touched,
+                           isSubmitting
+                         }) => (
+  <Form onSubmit={handleSubmit}>
+    <Card>
+      <CardHeader>
+        Login
+      </CardHeader>
+      <CardBody>
+        <InputField
+          type="email"
+          name="email"
+          value={values.email}
+          error={touched.email && errors.email}
+          onChange={handleChange}
+        />
+        <InputField
+          type="password"
+          name="password"
+          value={values.password}
+          error={touched.password && errors.password}
+          onChange={handleChange}
+        />
+        <AsyncButton
+          buttonName="Login"
+          htmlType="submit"
+          type="primary"
+          icon="login"
+          loading={isSubmitting}
+        />
+      </CardBody>
+    </Card>
+  </Form>
+)
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      email: '',
-      password: ''
-    }
-  }
+const LoginForm = withFormik({
+  validationSchema: Yup.object().shape({
+    email: Yup.string()
+      .email('Invalid email address')
+      .required('Email is required!'),
+    password: Yup.string()
+      .min(6, "Password must be more than 6 characters.")
+      .required('Password is required.'),
+  }),
 
-  onHandleInputChange = (e) => {
-    const target = e.target;
-    this.setState({
-      [target.name]: target.value
-    });
-  }
+  mapPropsToValues: ({email, password}) => ({
+    email: email || '',
+    password: password || ''
+  }),
 
-  onSubmitForm = (e) => {
-    e.preventDefault();
-    const { email, password } = this.state;
-    const { login, history, addFlashMessage, authError, isAuthenticated } = this.props;
+  handleSubmit: (values, {props, setSubmitting}) => {
+    const {login, history, addFlashMessage, isAuthenticated} = props;
+    setSubmitting(true);
+    setTimeout(() => {
+      login(values);
 
-    // dispatch login action.
-    login({ email, password });
-
-    addFlashMessage({
-      type: 'success',
-      text: 'You signed in successfully. Welcome!'
-    });
-
-    if (isAuthenticated) {
-      history.push('/profile/edit');
-    }
-  }
-
-  render() {
-    const { email, password } = this.state;
-    return (
-      <Form onSubmit={this.onSubmitForm}>
-        <Card>
-          <CardHeader>
-            Login
-          </CardHeader>
-          <CardBody>
-            <FormGroup>
-              <Input
-                type="text"
-                autoComplete="off"
-                name="email"
-                bsSize="sm"
-                value={email}
-                onChange={this.onHandleInputChange}
-                required
-              />
-            </FormGroup>
-
-            <FormGroup>
-              <Input
-                type="password"
-                autoComplete="off"
-                name="password"
-                bsSize="sm"
-                value={password}
-                onChange={this.onHandleInputChange}
-                required
-              />
-            </FormGroup>
-
-            <Button
-              color="primary"
-              className="w-100"
-              size="sm"
-              type="submit"
-            >
-              Login
-            </Button>
-          </CardBody>
-        </Card>
-      </Form>
-    );
-  }
-}
-
-LoginForm.propTypes = {
-  email: PropTypes.string,
-  password: PropTypes.string,
-};
+      addFlashMessage({
+        type: 'success',
+        text: 'You signed in successfully. Welcome!'
+      });
+      if (isAuthenticated) {
+        history.push('/profile/edit');
+      }
+      setSubmitting(false);
+    }, 2000)
+  },
+  displayName: 'LoginForm'
+})(LoginFormikForm);
 
 export default LoginForm;
