@@ -1,121 +1,49 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import {Dialog, TextField, DialogTitle, DialogContentText, DialogContent, DialogActions } from '@material-ui/core'
-import moment from 'moment';
-import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
-import { Button } from 'reactstrap'
+import { Button } from 'antd';
+import { Modal, ModalHeader, ModalBody } from 'reactstrap';
+import WeeklyReportForm from '../WeeklyReportForm/index'
 
 class WeeklyReportModal extends Component {
 
   state = {
-    weekly_report: {
-      date: moment().format("YYYY-MM-DD"),
-      issue: '',
-      solution: '',
-      description: '',
-      summary: ''
-    },
-    disabled: true,
-    open: false,
-  };
-
-  onSubmit = (e) => {
-    e.preventDefault();
-    const {weekly_report} = this.state;
-    const { addFlashMessage, createWeeklyReport } = this.props;
-    createWeeklyReport(weekly_report);
-    addFlashMessage({
-      type: 'success',
-      text: 'Weekly Report has been created.'
-    });
+    modal: false
   }
 
-  handleChange = e => {
-    const {weekly_report} = this.state;
-
-    if (e.target.value === '') {
-      this.setState({
-        disabled: true
-      });
-    }
-
-    console.log(e.target.value);
-
-    this.setState({
-      weekly_report: {
-        ...weekly_report,
-        [e.target.name]: e.target.value
-      },
-      disabled: false
-    });
-  };
-
-  handleClickOpen = () => {
-    this.setState({open: true});
-  };
-
-  handleClose = () => {
-    this.setState({open: false});
-  };
+  toggle = () => {
+    const {modal} = this.state;
+    this.setState({modal: !modal});
+  }
 
   render() {
-    const { issue, solution, description, summary } = this.state.weekly_report;
+    const {user, addFlashMessage, createWeeklyReport} = this.props;
     return (
       <div>
-        <Button color="info" size="sm" onClick={this.handleClickOpen}>
+        <Button
+          icon="form"
+          type="primary"
+          onClick={this.toggle}
+        >
           Create weekly report
         </Button>
 
-        <Dialog
-          open={this.state.open}
-          onClose={this.handleClose}
-          aria-labelledby="form-dialog-title"
+        <Modal
+          isOpen={this.state.modal}
+          toggle={this.toggle}
+          className={this.props.className}
         >
-          <ValidatorForm
-            onSubmit={this.onSubmit}
-          >
-            <DialogTitle id="form-dialog-title">Weekly Report</DialogTitle>
-            <DialogContent>
-
-              <DialogContentText>
-                Write weekly report for group leader.
-              </DialogContentText>
-
-              <TextValidator
-                autoFocus
-                name="issue"
-                label="Issue"
-                fullWidth
-                value={issue}
-                onChange={this.handleChange}
-                autoComplete="off"
-                validators={['required', 'isEmail']}
-                errorMessages={['This field is required', 'Not Email']}
-              />
-
-            </DialogContent>
-            <DialogActions>
-              <Button
-                disabled={this.state.disabled}
-                color="primary"
-                size="sm"
-                onClick={this.handleClose}
-                type="submit"
-              >
-                Submit
-              </Button>
-              <Button size="sm" color="light" onClick={this.handleClose}>
-                Cancel
-              </Button>
-            </DialogActions>
-          </ValidatorForm>
-        </Dialog>
-
+          <ModalHeader>Weekly Report</ModalHeader>
+          <ModalBody>
+            <WeeklyReportForm
+              user={user}
+              addFlashMessage={addFlashMessage}
+              toggle={this.toggle}
+              createWeeklyReport={createWeeklyReport}
+            />
+          </ModalBody>
+        </Modal>
       </div>
     );
   }
 }
-
-WeeklyReportModal.propTypes = {};
 
 export default WeeklyReportModal;

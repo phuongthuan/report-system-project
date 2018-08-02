@@ -1,147 +1,90 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom'
-import {
-  Card,
-  CardBody,
-  CardFooter,
-  ButtonGroup,
-  Button,
-  CardHeader,
-  Label
-} from 'reactstrap'
-import { AvForm, AvGroup, AvInput, AvFeedback } from 'availity-reactstrap-validation';
-import PropTypes from 'prop-types';
+import React from 'react';
+import { withFormik } from 'formik'
+import { Form } from 'reactstrap'
+import * as Yup from 'yup'
 import moment from "moment/moment";
+import AsyncButton from "../AsyncButton";
+import InputField from '../InputField/index';
 
-class WeeklyReportForm extends Component {
+const FormikForm = ({values, handleSubmit, handleChange, isSubmitting, touched, errors}) => (
+  <Form onSubmit={handleSubmit}>
+    <InputField
+      type="textarea"
+      name="issue"
+      value={values.issue}
+      placeholder="Issue..."
+      error={touched.issue && errors.issue}
+      onChange={handleChange}
+    />
 
-  onSubmitForm = (event, errors, values) => {
-    const {addFlashMessage, createWeeklyReport, user, history} = this.props;
+    <InputField
+      type="textarea"
+      style={{height: '100px'}}
+      name="solution"
+      value={values.solution}
+      placeholder="Solution..."
+      error={touched.solution && errors.solution}
+      onChange={handleChange}
+    />
 
-    if (errors.length === 0) {
+    <InputField
+      type="textarea"
+      style={{height: '100px'}}
+      name="description"
+      value={values.description}
+      placeholder="Description..."
+      error={touched.description && errors.description}
+      onChange={handleChange}
+    />
 
-      const weeklyReport = {
-        date: moment().toString(),
-        userId: user.id,
-        issue: values.issue,
-        solution: values.solution,
-        description: values.description,
-        summary: values.summary
-      }
+    <InputField
+      type="textarea"
+      style={{height: '100px'}}
+      name="summary"
+      value={values.summary}
+      placeholder="Summary..."
+      error={touched.summary && errors.summary}
+      onChange={handleChange}
+    />
+    <AsyncButton
+      buttonName="Submit"
+      type="primary"
+      htmlType="submit"
+      icon="enter"
+      loading={isSubmitting}
+    />
+  </Form>
+)
 
-      createWeeklyReport(weeklyReport);
-
+const WeeklyReportForm = withFormik({
+  validationSchema: Yup.object().shape({
+    issue: Yup.string().required('Issue is required.'),
+    solution: Yup.string().required('Solution is required.'),
+    description: Yup.string().required('Description is required.'),
+    summary: Yup.string().required('Summary is required.')
+  }),
+  mapPropsToValues: ({user}) => ({
+    date: moment().toString(),
+    userId: user.id,
+    issue: '',
+    solution: '',
+    description: '',
+    summary: ''
+  }),
+  handleSubmit: (values, {props, setSubmitting}) => {
+    const {createWeeklyReport, addFlashMessage, toggle} = props;
+    setSubmitting(true);
+    setTimeout(() => {
+      createWeeklyReport(values);
       addFlashMessage({
         type: 'success',
         text: 'Create Weekly Report Successful'
       });
-      history.push('/statistic');
-    } else {
-      addFlashMessage({
-        type: 'error',
-        text: 'Failed to submit form.'
-      });
-    }
-  }
-
-  render() {
-    return (
-      <AvForm onSubmit={this.onSubmitForm}>
-        <Card style={{borderRadius: '0'}} className="border-0 shadow-sm">
-          <CardHeader>
-            Create Weekly Report
-          </CardHeader>
-          <CardBody>
-
-            <AvGroup>
-              <Label for="issue">Issue</Label>
-              <AvInput
-                bsSize="sm"
-                type="textarea"
-                style={{height: '70px'}}
-                name="issue"
-                required
-              />
-              <AvFeedback>This field is invalid</AvFeedback>
-            </AvGroup>
-
-            <AvGroup>
-              <Label for="solution">Solution</Label>
-              <AvInput
-                bsSize="sm"
-                type="textarea"
-                style={{height: '70px'}}
-                name="solution"
-                required
-              />
-              <AvFeedback>This field is invalid</AvFeedback>
-            </AvGroup>
-
-            <AvGroup>
-              <Label for="description">Description</Label>
-              <AvInput
-                bsSize="sm"
-                type="textarea"
-                style={{height: '70px'}}
-                name="description"
-                required
-              />
-              <AvFeedback>This field is invalid</AvFeedback>
-            </AvGroup>
-
-            <AvGroup>
-              <Label for="summary">Summary</Label>
-              <AvInput
-                bsSize="sm"
-                type="textarea"
-                style={{height: '100px'}}
-                name="summary"
-                required
-              />
-              <AvFeedback>This field is invalid</AvFeedback>
-            </AvGroup>
-
-          </CardBody>
-
-          <CardFooter>
-            <ButtonGroup>
-              <Button
-                color="success"
-                type="submit"
-                size="sm"
-              >
-                Create weekly report
-              </Button>
-              <Button size="sm">
-                <Link
-                  style={{
-                    textDecoration: 'none',
-                    color: '#fff'
-                  }}
-                  to="/statistic"
-                >
-                  Back to Statistic Page
-                </Link>
-              </Button>
-            </ButtonGroup>
-          </CardFooter>
-        </Card>
-      </AvForm>
-    );
-  }
-}
-
-WeeklyReportForm.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func,
-  }),
-  weekly_report: PropTypes.shape({
-    userId: PropTypes.number,
-    issue: PropTypes.string,
-    solution: PropTypes.string,
-    description: PropTypes.string,
-    summary: PropTypes.string
-  })
-};
+      toggle();
+      setSubmitting(false);
+    }, 1500)
+  },
+  displayName: 'WeeklyReportForm'
+})(FormikForm)
 
 export default WeeklyReportForm;
