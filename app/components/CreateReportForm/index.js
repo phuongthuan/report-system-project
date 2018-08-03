@@ -2,16 +2,12 @@ import React, { Component } from 'react';
 import moment from 'moment'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types';
-import IssueSelect from 'components/IssueSelect';
-import Select from 'react-select';
 import EmojiMartPicker  from 'emoji-mart-picker';
-
 import {
   Form,
   FormGroup,
   Button,
   Input,
-  Col,
   Label,
   Card,
   CardHeader,
@@ -21,14 +17,7 @@ import {
   ButtonGroup
 } from 'reactstrap';
 import 'emoji-mart/css/emoji-mart.css'
-
-const issues_type = [
-  {value: 1, label: 'Hard for Debugging'},
-  {value: 2, label: 'Keeping up with Technology'},
-  {value: 3, label: 'Communication with others'},
-  {value: 4, label: 'Time Estimation'},
-  {value: 5, label: 'Security Threats'}
-]
+import IssueSelect from '../IssueSelect/index';
 
 class CreateReportForm extends Component {
 
@@ -72,37 +61,15 @@ class CreateReportForm extends Component {
     e.preventDefault();
     const { report } = this.state;
     const { addFlashMessage, createReport, history } = this.props;
-    createReport(report);
+
+    console.log(report);
+    // createReport(report);
     addFlashMessage({
       type: 'success',
       text: 'Create Report Successful'
     })
-    history.push('/report');
+    // history.push('/report');
   };
-
-  onSelectedIssueHandleChange = (selectedValue) => {
-    if (selectedValue) {
-      let issue = selectedValue.label.toString();
-      const { report } = this.state;
-      this.setState({
-        report: {
-          ...report,
-          issues: [
-            ...report.issues,
-            issue
-          ]}
-      });
-    }
-  }
-
-  onAddSelectBox = () => {
-    const { numberSelectBox } = this.state;
-    this.setState({ numberSelectBox: numberSelectBox + 1});
-  }
-  onRemoveSelectBox = () => {
-    const { numberSelectBox } = this.state;
-    this.setState({ numberSelectBox: numberSelectBox - 1});
-  }
 
   onChange = (emoji) => {
     if (emoji) {
@@ -116,27 +83,19 @@ class CreateReportForm extends Component {
     }
   }
 
+  setIssueSelectData = (data) => {
+    const { report } = this.state;
+    this.setState({
+      report: {
+        ...report,
+        issues: data
+      }
+    });
+  }
+
   render() {
-    const { numberSelectBox, report, date } = this.state;
-    const children = [];
-
-    for (let i = 0; i < numberSelectBox; i++) {
-      children.push(
-        <FormGroup key={i} row>
-          <Col sm={8}>
-            <Select
-              className="issue-select"
-              classNamePrefix="report-system"
-              placeholder="Select Issue"
-              options={issues_type}
-              onChange={this.onSelectedIssueHandleChange}
-            />
-          </Col>
-          <Button sm={2} onClick={this.onRemoveSelectBox}><strong> - </strong></Button>
-        </FormGroup>
-      );
-    }
-
+    const { report, date } = this.state;
+    console.log(report);
     return (
       <Form onSubmit={this.onSubmitForm}>
         <Card style={{borderRadius: '0'}} className="border-0 shadow-sm">
@@ -206,10 +165,10 @@ class CreateReportForm extends Component {
               />
             </FormGroup>
 
-            {/*Issue Select Box*/}
-            <IssueSelect addSelectBox={this.onAddSelectBox} >
-              {children}
-            </IssueSelect>
+            <IssueSelect
+              data={report.issues}
+              setData={this.setIssueSelectData}
+            />
 
             <Label for="description">Description</Label>
             <FormGroup>
