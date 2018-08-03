@@ -1,5 +1,4 @@
-#   Simple React boilerplate
-
+#   Report System
 <br />
 
 <div align="center">
@@ -14,6 +13,55 @@
     <img src='https://coveralls.io/repos/github/framgia/simple-react-boilerplate/badge.svg' alt='Coverage Status' />
   </a>
 </div>
+
+## Configure Server before start
+
+Seed data first:
+```
+npm run seed
+```
+Then run server:
+```
+npm run serve
+```
+
+## Start project
+
+```
+npm install
+npm start
+```
+
+### Login ###
+
+For member: account prefix:
+<br />
+email: member(1->20)@gmail.com
+<br />
+password: 123456
+```
+Example:
+email: member1@gmail.com
+password: 123456
+```
+
+For teamleader: account prefix:
+<br />
+email: teamleader(21->24)@gmail.com
+<br />
+password: 123456
+
+```
+Example:
+email: teamleader46@gmail.com
+password: 123456
+```
+For teamleader: 
+
+```
+email: groupleader@gmail.com
+password: 123456
+```
 
 <br />
 

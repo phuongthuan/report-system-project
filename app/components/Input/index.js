@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Fragment} from 'react'
 import PropTypes from 'prop-types'
 
 export default class Input extends React.PureComponent {
@@ -10,13 +10,14 @@ export default class Input extends React.PureComponent {
   render() {
     const { value, onChange } = this.props
     return (
-      <div>
+      <Fragment>
         <input
           type="text"
+          placeholder="Type your name..."
           value={value}
           onChange={e => onChange(e.target.value)}
         />
-      </div>
+      </Fragment>
     )
   }
 }

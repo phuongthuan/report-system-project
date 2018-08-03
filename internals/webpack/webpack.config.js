@@ -15,6 +15,14 @@ module.exports = {
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
+          query: {
+            plugins: ['recharts'],
+            presets: [
+              "es2015",
+              "react",
+              "stage-0"
+            ]
+          }
         },
       },
       {
@@ -29,11 +37,25 @@ module.exports = {
         include: /node_modules/,
         use: ['style-loader', 'css-loader'],
       },
+      {
+        test: /\.(gif|png|jpe?g|svg)$/i,
+        use: [
+          'file-loader',
+          {
+            loader: 'image-webpack-loader',
+            options: {
+              bypassOnDebug: true, // webpack@1.x
+              disable: true, // webpack@2.x and newer
+            },
+          },
+        ],
+      }
     ],
   },
   output: {
     path: path.join(process.cwd(), '/build'),
     filename: 'bundle.js',
+    publicPath: '/'
   },
   devServer: {
     contentBase: parentDir,
