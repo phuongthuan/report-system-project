@@ -62,13 +62,12 @@ class CreateReportForm extends Component {
     const { report } = this.state;
     const { addFlashMessage, createReport, history } = this.props;
 
-    console.log(report);
-    // createReport(report);
+    createReport(report);
     addFlashMessage({
       type: 'success',
       text: 'Create Report Successful'
     })
-    // history.push('/report');
+    history.push('/report');
   };
 
   onChange = (emoji) => {
@@ -95,7 +94,6 @@ class CreateReportForm extends Component {
 
   render() {
     const { report, date } = this.state;
-    console.log(report);
     return (
       <Form onSubmit={this.onSubmitForm}>
         <Card style={{borderRadius: '0'}} className="border-0 shadow-sm">

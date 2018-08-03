@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { withFormik } from 'formik'
+import { Formik, withFormik, Field } from 'formik'
 import * as Yup from 'yup'
 import EmojiMartPicker from 'emoji-mart-picker'
 import moment from "moment/moment";
@@ -8,7 +8,19 @@ import isEmpty from 'lodash/isEmpty'
 import { FormGroup, Label, Input, Form, Button, Card, CardHeader, CardFooter, CardTitle, CardBody } from 'reactstrap'
 import InputField from '../InputField/index'
 import AsyncButton from '../AsyncButton/index'
-import IssueSelect from '../IssueSelect/index'
+import SelectBox from '../SelectBox/index'
+
+
+// const ReportForm = () => (
+//   <Formik
+//     initialValues={{
+//       email: '',
+//       password: '',
+//     }}
+//
+//   />
+// )
+
 
 const FormikForm = ({values, setFieldValue, handleSubmit, handleChange, isSubmitting, touched, errors}) => (
   <Form onSubmit={handleSubmit}>
@@ -58,6 +70,8 @@ const FormikForm = ({values, setFieldValue, handleSubmit, handleChange, isSubmit
           onChange={handleChange}
         />
 
+        <SelectBox values={values} />
+
         <InputField
           type="textarea"
           label="Planing for next day"
@@ -98,7 +112,6 @@ const FormikForm = ({values, setFieldValue, handleSubmit, handleChange, isSubmit
           type="primary"
           htmlType="submit"
           icon="enter"
-          loading={isSubmitting}
         />
 
         <Button size="sm">
