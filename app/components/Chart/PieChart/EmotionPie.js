@@ -66,7 +66,15 @@ class EmotionPie extends Component {
         otherEmotions.push(other);
       }
     });
-    const results = [positiveEmotions.length, negativeEmotions.length, otherEmotions.length];
+    var results = [];
+    if (positiveEmotions.length === 0) {
+      results = [negativeEmotions.length, otherEmotions.length];
+    } else if (negativeEmotions.length === 0) {
+      results = [positiveEmotions.length, otherEmotions.length];
+    } else {
+      results = [positiveEmotions.length, negativeEmotions.length];
+    }
+
     let newState = update(this.state, {
       data: {
         datasets: [
@@ -102,7 +110,16 @@ class EmotionPie extends Component {
         otherEmotions.push(other);
       }
     });
-    const results = [positiveEmotions.length, negativeEmotions.length, otherEmotions.length];
+
+    var results = [];
+    if (positiveEmotions.length === 0) {
+      results = [negativeEmotions.length, otherEmotions.length];
+    } else if (negativeEmotions.length === 0) {
+      results = [positiveEmotions.length, otherEmotions.length];
+    } else {
+      results = [positiveEmotions.length, negativeEmotions.length];
+    }
+
     let newState = update(this.state, {
       data: {
         datasets: [
