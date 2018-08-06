@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import DatePickerComponent from "../DateTimePicker/DatePickerComponent";
 import RangePickerComponent from "../DateTimePicker/RangePickerComponent";
 
