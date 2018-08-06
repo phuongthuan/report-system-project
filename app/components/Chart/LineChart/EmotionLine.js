@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import update from 'immutability-helper';
 import { Card, CardBody } from 'reactstrap'
 import { Line } from 'react-chartjs-2'
-import count from '../../../utils/count'
 
 class EmotionLine extends Component {
 
@@ -88,54 +87,80 @@ class EmotionLine extends Component {
 
   componentDidMount() {
     const {dataSource} = this.props;
+    const positiveEmotions = [0, 0, 0, 0];
+    const negativeEmotions = [0, 0, 0, 0];
+    const otherEmotions = [0, 0, 0, 0];
 
-    const months = [6, 7, 8, 9];
-
-    const positiveEmotions = [];
-    const negativeEmotions = [];
-    const otherEmotions = [];
-
-    const reportsWithMonth = months.map(month => {
-      return dataSource.filter(report => {
-        const objMonth = new Date(report.date).getMonth() + 1;
-        return month === objMonth;
-      });
-    });
-
-    const results1 = reportsWithMonth.map(reportMonth => {
-      reportMonth.map(report => {
-        const emoji = report.emotion.id;
-        if ((emoji === 'smiley')
-          || (emoji === 'stuck_out_tongue_winking_eye')
-          || (emoji === 'laughing')) {
-          const positive = 'Positive';
-          positiveEmotions.push(positive);
-        } else if ((emoji === 'white_frowning_face')
-          || (emoji === 'disappointed')
-          || (emoji === 'worried')) {
-          const negative = 'Negative';
-          negativeEmotions.push(negative);
+    dataSource
+      .map(report => {
+        if (report.date >= '2018-06-01' && report.date <= '2018-06-31') {
+          const emoji = report.emotion.id;
+          if ((emoji === 'smiley')
+            || (emoji === 'stuck_out_tongue_winking_eye')
+            || (emoji === 'laughing')) {
+            positiveEmotions[0]++;
+          } else if ((emoji === 'white_frowning_face')
+            || (emoji === 'disappointed')
+            || (emoji === 'worried')) {
+            negativeEmotions[0]++;
+          } else {
+            otherEmotions[0]++;
+          }
+        } else if (report.date >= '2018-07-01' && report.date <= '2018-07-31') {
+          const emoji = report.emotion.id;
+          if ((emoji === 'smiley')
+            || (emoji === 'stuck_out_tongue_winking_eye')
+            || (emoji === 'laughing')) {
+            positiveEmotions[1]++;
+          } else if ((emoji === 'white_frowning_face')
+            || (emoji === 'disappointed')
+            || (emoji === 'worried')) {
+            negativeEmotions[1]++;
+          } else {
+            otherEmotions[1]++;
+          }
+        } else if (report.date >= '2018-08-01' && report.date <= '2018-08-31') {
+          const emoji = report.emotion.id;
+          if ((emoji === 'smiley')
+            || (emoji === 'stuck_out_tongue_winking_eye')
+            || (emoji === 'laughing')) {
+            positiveEmotions[2]++;
+          } else if ((emoji === 'white_frowning_face')
+            || (emoji === 'disappointed')
+            || (emoji === 'worried')) {
+            negativeEmotions[2]++;
+          } else {
+            otherEmotions[2]++;
+          }
         } else {
-          const other = 'Other';
-          otherEmotions.push(other);
+          const emoji = report.emotion.id;
+          if ((emoji === 'smiley')
+            || (emoji === 'stuck_out_tongue_winking_eye')
+            || (emoji === 'laughing')) {
+            positiveEmotions[3]++;
+          } else if ((emoji === 'white_frowning_face')
+            || (emoji === 'disappointed')
+            || (emoji === 'worried')) {
+            negativeEmotions[3]++;
+          } else {
+            otherEmotions[3]++;
+          }
         }
       })
-    });
 
     // emotion of June:
-
     let index = [0, 1, 2];
     let newState = update(this.state, {
       data: {
         datasets: {
           [index[0]]: {
-            data: {$set: count(positiveEmotions)}
+            data: {$set: positiveEmotions}
           },
           [index[1]]: {
-            data: {$set: count(negativeEmotions)}
+            data: {$set: negativeEmotions}
           },
           [index[2]]: {
-            data: {$set: count(otherEmotions)}
+            data: {$set: otherEmotions}
           },
         }
       }

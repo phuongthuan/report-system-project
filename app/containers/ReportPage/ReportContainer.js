@@ -76,7 +76,7 @@ class ReportContainer extends Component {
               />
             </div>
           </div>
-          <div className="row mt-4">
+          <div className="row">
             <div className="col-md-12">
               {loading && isEmpty(reports) ? (
                 <Spinner height="650px" style={{fontSize: 32, color: '#FFFFFF'}} />
