@@ -15,7 +15,6 @@ class FilterReport extends Component {
     } = this.props;
     return (
       <div className="d-flex justify-content-between">
-
         <DatePickerComponent
           user={user}
           fetchAllReportsOfUserByDay={fetchAllReportsOfUserByDay}

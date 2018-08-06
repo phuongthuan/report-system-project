@@ -6,7 +6,6 @@ import { selectUser } from "../Auth/selectors";
 import { createReport } from "./actions";
 import { addFlashMessage } from "../FlashMessage/actions";
 import ReportForm from '../../components/ReportForm/index'
-import CreateReportForm from '../../components/CreateReportForm'
 
 class CreateReportContainer extends Component {
 
@@ -25,15 +24,8 @@ class CreateReportContainer extends Component {
             <SideBar/>
           </div>
           <div className="col-md-9">
-
-            {/*<CreateReportForm*/}
-            {/*{...this.props}*/}
-            {/*user={user}*/}
-            {/*createReport={createReport}*/}
-            {/*addFlashMessage={addFlashMessage}*/}
-            {/*/>*/}
-
             <ReportForm
+              {...this.props}
               user={user}
               createReport={createReport}
               addFlashMessage={addFlashMessage}

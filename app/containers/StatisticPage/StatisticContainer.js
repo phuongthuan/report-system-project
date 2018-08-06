@@ -27,69 +27,67 @@ class StatisticContainer extends Component {
   }
 
   render() {
-    const { user, createWeeklyReport, addFlashMessage, reportsOfTeam, loading, fetchAllReportsOfTeamByRange, fetchAllReportsOfTeamByDay} = this.props;
+    const {user, createWeeklyReport, addFlashMessage, reportsOfTeam, loading, fetchAllReportsOfTeamByRange, fetchAllReportsOfTeamByDay} = this.props;
     return (
-      <div>
-        <div className="row">
-          <div className="col-md-3">
-            <SideBar/>
-          </div>
-          <div className="col-md-9">
-            <div className="row">
-              <div className="col-md-4">
-                <WeeklyReportModal
-                  user={user}
-                  addFlashMessage={addFlashMessage}
-                  createWeeklyReport={createWeeklyReport}
-                />
-              </div>
-              <div className="col-md-8">
-                <FilterReport
-                  user={user}
-                  fetchAllReportsOfTeamByRange={fetchAllReportsOfTeamByRange}
-                  fetchAllReportsOfTeamByDay={fetchAllReportsOfTeamByDay}
-                />
-              </div>
+      <div className="row">
+        <div className="col-md-3">
+          <SideBar/>
+        </div>
+        <div className="col-md-9">
+          <div className="row">
+            <div className="col-md-4">
+              <WeeklyReportModal
+                user={user}
+                addFlashMessage={addFlashMessage}
+                createWeeklyReport={createWeeklyReport}
+              />
             </div>
-
-            {loading && isEmpty(reportsOfTeam) ? (
-              <Spinner height="650px" style={{fontSize: 32, color: '#FFFFFF'}}/>
-            ) : (
-              <Fragment>
-                <div className="row mt-4">
-                  <div className="col-md-12">
-                    <div className="shadow-sm">
-                      <IssuePie dataSource={reportsOfTeam}/>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="row mt-4">
-                  <div className="col-md-12">
-                    <div className="shadow-sm">
-                      <IssueLine dataSource={reportsOfTeam}/>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="row mt-4">
-                  <div className="col-md-12">
-                    <div className="shadow-sm">
-                      <EmotionPie dataSource={reportsOfTeam}/>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="row mt-4">
-                  <div className="col-md-12">
-                    <div className="shadow-sm">
-                      <EmotionLine dataSource={reportsOfTeam}/>
-                    </div>
-                  </div>
-                </div>
-              </Fragment>
-            )}
+            <div className="col-md-8">
+              <FilterReport
+                user={user}
+                fetchAllReportsOfTeamByRange={fetchAllReportsOfTeamByRange}
+                fetchAllReportsOfTeamByDay={fetchAllReportsOfTeamByDay}
+              />
+            </div>
           </div>
+
+          {loading && isEmpty(reportsOfTeam) ? (
+            <Spinner height="650px" style={{fontSize: 32, color: '#FFFFFF'}}/>
+          ) : (
+            <Fragment>
+              <div className="row mt-4">
+                <div className="col-md-12">
+                  <div className="shadow-sm">
+                    <IssuePie dataSource={reportsOfTeam}/>
+                  </div>
+                </div>
+              </div>
+
+              <div className="row mt-4">
+                <div className="col-md-12">
+                  <div className="shadow-sm">
+                    <IssueLine dataSource={reportsOfTeam}/>
+                  </div>
+                </div>
+              </div>
+
+              <div className="row mt-4">
+                <div className="col-md-12">
+                  <div className="shadow-sm">
+                    <EmotionPie dataSource={reportsOfTeam}/>
+                  </div>
+                </div>
+              </div>
+
+              <div className="row mt-4">
+                <div className="col-md-12">
+                  <div className="shadow-sm">
+                    <EmotionLine dataSource={reportsOfTeam}/>
+                  </div>
+                </div>
+              </div>
+            </Fragment>
+          )}
         </div>
       </div>
     );

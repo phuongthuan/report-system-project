@@ -1,34 +1,28 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
-import { Formik, withFormik, Field } from 'formik'
+import { withFormik } from 'formik'
 import * as Yup from 'yup'
 import EmojiMartPicker from 'emoji-mart-picker'
 import moment from "moment/moment";
 import isEmpty from 'lodash/isEmpty'
-import { FormGroup, Label, Input, Form, Button, Card, CardHeader, CardFooter, CardTitle, CardBody } from 'reactstrap'
+import { Button } from 'antd'
+import { FormGroup, Label, Input, Form, Card, CardHeader, CardFooter, CardTitle, CardBody } from 'reactstrap'
 import InputField from '../InputField/index'
 import AsyncButton from '../AsyncButton/index'
 import SelectBox from '../SelectBox/index'
+import history from '../../utils/history'
 
+const navigate = () => {
+  history.push('/report');
+}
 
-// const ReportForm = () => (
-//   <Formik
-//     initialValues={{
-//       email: '',
-//       password: '',
-//     }}
-//
-//   />
-// )
-
+const ButtonGroup = Button.Group;
 
 const FormikForm = ({values, setFieldValue, handleSubmit, handleChange, isSubmitting, touched, errors}) => (
   <Form onSubmit={handleSubmit}>
     <Card style={{borderRadius: '0'}} className="border-0 shadow-sm">
-
       <CardHeader>
-        <CardTitle>Write Daily Report</CardTitle>
-        <Label for="date">{values.date}</Label>
+        <CardTitle>Daily Report</CardTitle>
+        <Label for="date">{moment(values.date).format("dddd, MMMM Do YYYY")}</Label>
       </CardHeader>
       <CardBody>
 
@@ -70,7 +64,7 @@ const FormikForm = ({values, setFieldValue, handleSubmit, handleChange, isSubmit
           onChange={handleChange}
         />
 
-        <SelectBox values={values} />
+        <SelectBox values={values}/>
 
         <InputField
           type="textarea"
@@ -89,7 +83,7 @@ const FormikForm = ({values, setFieldValue, handleSubmit, handleChange, isSubmit
           style={{height: '100px'}}
           name="description"
           value={values.description}
-          placeholder="Description..."
+          placeholder="Description ..."
           error={touched.description && errors.description}
           onChange={handleChange}
         />
@@ -107,32 +101,34 @@ const FormikForm = ({values, setFieldValue, handleSubmit, handleChange, isSubmit
       </CardBody>
 
       <CardFooter>
-        <AsyncButton
-          buttonName="Create new report"
-          type="primary"
-          htmlType="submit"
-          icon="enter"
-        />
+        <ButtonGroup>
+          <AsyncButton
+            buttonName="Submit"
+            type="primary"
+            htmlType="submit"
+            icon="form"
+            loading={isSubmitting}
+          />
 
-        <Button size="sm">
-          <Link
-            style={{
-              textDecoration: 'none',
-              color: '#fff'
-            }}
-            to="/report"
+          <Button
+            onClick={navigate}
           >
             Back to Report Page
-          </Link>
-        </Button>
+          </Button>
+        </ButtonGroup>
       </CardFooter>
-
     </Card>
   </Form>
 );
 
 const ReportForm = withFormik({
-  mapPropsToValues: ({report, user }) => {
+  enableReinitialize: true,
+  validationSchema: Yup.object().shape({
+    title: Yup.string().required('Title is required.'),
+    achievement: Yup.string().required('Achievement is required.'),
+    plan: Yup.string().required('Plan is required.'),
+  }),
+  mapPropsToValues: ({report, user}) => {
     if (isEmpty(report)) {
       return {
         date: moment().format("YYYY-MM-DD"),
@@ -157,13 +153,32 @@ const ReportForm = withFormik({
         comment: ''
       }
     }
-
-    return report;
+    return report
   },
 
   handleSubmit: (values, {props, setSubmitting}) => {
-    console.log(values);
-  }
+    const {createReport, addFlashMessage, updateReport, match} = props;
+    const isReport = match.params.id;
+    setSubmitting(true);
+    setTimeout(() => {
+      if (isReport) {
+        updateReport(values);
+        addFlashMessage({
+          type: 'success',
+          text: 'Update Report Successful.'
+        });
+      } else {
+        createReport(values);
+        addFlashMessage({
+          type: 'success',
+          text: 'Create Report Successful.'
+        });
+      }
+      setSubmitting(false);
+    }, 1500)
+  },
+
+  displayName: 'ReportForm'
 
 })(FormikForm);
 
