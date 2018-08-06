@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import DatePickerComponent from "../DateTimePicker/DatePickerComponent";
 import RangePickerComponent from "../DateTimePicker/RangePickerComponent";
 
@@ -15,7 +14,6 @@ class FilterReport extends Component {
     } = this.props;
     return (
       <div className="d-flex justify-content-between">
-
         <DatePickerComponent
           user={user}
           fetchAllReportsOfUserByDay={fetchAllReportsOfUserByDay}
