@@ -2,7 +2,7 @@ import React from 'react';
 import Team from "./Team";
 
 const TeamList = (props) => {
-  const { teamsList } = props;
+  const {teamsList, fetchAllReportsOfTeam} = props;
   return (
     <div
       className="d-flex"
@@ -11,6 +11,7 @@ const TeamList = (props) => {
       {teamsList.map(team =>
         (
           <Team
+            fetchAllReportsOfTeam={fetchAllReportsOfTeam}
             key={team.id}
             team={team}
           />

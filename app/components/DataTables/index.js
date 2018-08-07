@@ -97,7 +97,12 @@ class DataTables extends Component {
                   <CustomTableRow key={report.id}>
                     <CustomTableCell>{report.id}</CustomTableCell>
                     <CustomTableCell>
-                      <Emoji set={'emojione'} emoji={report.emotion.colons} size={24}/>
+                      <Emoji
+                        tooltip
+                        set={'emojione'}
+                        emoji={report.emotion.colons}
+                        size={24}
+                      />
                     </CustomTableCell>
                     <CustomTableCell component="th" scope="row">
                       <Link to={`/report/${report.id}`}>

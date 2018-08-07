@@ -36,6 +36,11 @@ class Report extends Component {
     });
   }
 
+  navigate = (url) => {
+    const {history} = this.props;
+    history.push(url)
+  }
+
   render() {
     const {report, user} = this.props;
     const emoji = report.emotion.colons;
@@ -51,7 +56,7 @@ class Report extends Component {
           >
             <CardBody>
               <CardTitle>{report.id} - {report.title}&nbsp;&nbsp;
-                <Emoji set={'emojione'} emoji={emoji} size={24}/>
+                <Emoji tooltip set={'emojione'} emoji={emoji} size={24}/>
               </CardTitle>
               <CardText>{report.achievement}</CardText>
               <CardText>{report.comment}</CardText>
@@ -64,17 +69,11 @@ class Report extends Component {
             <CardFooter>
 
               <ButtonGroup>
-                <Button>
-                  <Icon type="edit"/>
-                  <Link
-                    style={{
-                      textDecoration: 'none',
-                      color: '#fff'
-                    }}
-                    to={`/report/update/${report.id}`}
-                  >
-                    Edit
-                  </Link>
+                <Button
+                  onClick={() => this.navigate(`/report/update/${report.id}`)}
+                  htmlType="submit"
+                ><Icon type="edit"/>
+                  Edit
                 </Button>
 
                 <Button
@@ -96,7 +95,7 @@ class Report extends Component {
           >
             <CardHeader>
               <CardTitle>{report.id} - {report.title}&nbsp;&nbsp;
-                <Emoji set={'emojione'} emoji={emoji} size={24}/>
+                <Emoji set="emojione" emoji={emoji} size={24}/>
               </CardTitle>
             </CardHeader>
             <CardBody>

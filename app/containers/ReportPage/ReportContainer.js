@@ -88,6 +88,7 @@ class ReportContainer extends Component {
                     <Fragment>
                       {user && user.role === 'member' ? (
                         <ReportsList
+                          {...this.props}
                           user={user}
                           addFlashMessage={addFlashMessage}
                           deleteReport={deleteReport}

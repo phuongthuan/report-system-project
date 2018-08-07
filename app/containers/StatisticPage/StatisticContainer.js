@@ -20,9 +20,14 @@ import { createWeeklyReport } from "../WeeklyReport/actions";
 class StatisticContainer extends Component {
 
   componentDidMount() {
-    const {fetchAllReportsOfTeam, user} = this.props;
+    const {fetchAllReportsOfTeam, user, location} = this.props;
     if (user.role === 'team_leader') {
       fetchAllReportsOfTeam(user.division);
+    }
+    if (user.role === 'group_leader' && location) {
+      if (location.state.teamName) {
+        fetchAllReportsOfTeam(location.state.teamName);
+      }
     }
   }
 
