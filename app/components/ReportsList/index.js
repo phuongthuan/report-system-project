@@ -8,6 +8,7 @@ const ReportsList = (props) => {
       {reportsList.map(report =>
         (
           <Report
+            {...props}
             user={user}
             addFlashMessage={addFlashMessage}
             deleteReport={deleteReport}

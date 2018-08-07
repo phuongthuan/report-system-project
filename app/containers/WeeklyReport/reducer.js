@@ -20,7 +20,6 @@ function weeklyReportReducer(state = initState, action) {
       }
 
     case GET_ALL_WEEKLY_REPORTS_OF_USER_SUCCEEDED:
-      console.log(action.weeklyReportsReceived);
       return {
         ...state,
         weekly_reports: action.weeklyReportsReceived,

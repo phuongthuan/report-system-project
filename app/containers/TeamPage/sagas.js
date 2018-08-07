@@ -1,8 +1,11 @@
 import { take, put, call, takeLatest, all, fork } from 'redux-saga/effects'
 import { delay } from 'redux-saga'
-import { fetchAllTeamsFailed, fetchAllTeamsSucceeded } from "./actions";
-import { callFetchAllWeeklyReportsOfUser, callFetchTeams, callGetProfile } from "../../requests";
-import { FETCH_ALL_TEAMS } from "./constants";
+import { fetchAllTeamsFailed, fetchAllTeamsSucceeded, fetchTeamFailed, fetchTeamSucceeded } from "./actions";
+import {
+  callFetchAllWeeklyReportsOfUser, callFetchTeam, callFetchTeams, callGetMembersOfTeam,
+  callGetProfile
+} from "../../requests";
+import { FETCH_ALL_TEAMS, FETCH_TEAM } from "./constants";
 import { getUserProfileFailed } from "../ProfilePage/actions";
 import { fetchAllWeeklyReportsOfUserFailed } from "../WeeklyReport/actions";
 
@@ -41,7 +44,6 @@ export function* fetchAllTeams() {
         team.userId.weekly_reports = weeklyReports;
       }
     });
-
     yield delay(700);
     yield put(fetchAllTeamsSucceeded(teams));
   } catch (error) {
@@ -49,12 +51,30 @@ export function* fetchAllTeams() {
   }
 }
 
+export function* fetchTeam(action) {
+  try {
+    let team = yield call(callFetchTeam, action.payload);
+    const {userId, name} = team;
+    team.userId = yield call(callGetProfile, userId);
+    team.members = yield call(callGetMembersOfTeam, name);
+    yield delay(700);
+    yield put(fetchTeamSucceeded(team));
+  } catch (error) {
+    yield put(fetchTeamFailed(error));
+  }
+}
+
 export function* watchFetchAllTeams() {
   yield takeLatest(FETCH_ALL_TEAMS, fetchAllTeams);
 }
 
+export function* watchFetchTeam() {
+  yield takeLatest(FETCH_TEAM, fetchTeam);
+}
+
 export function* teamPageSaga() {
   yield all([
-    fork(watchFetchAllTeams)
+    fork(watchFetchAllTeams),
+    fork(watchFetchTeam),
   ]);
 }
