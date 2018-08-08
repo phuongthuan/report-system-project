@@ -58,11 +58,15 @@ class StatisticContainer extends Component {
         <div className="col-md-9">
           <div className="row">
             <div className="col-md-4">
-              <WeeklyReportModal
-                user={user}
-                addFlashMessage={addFlashMessage}
-                createWeeklyReport={createWeeklyReport}
-              />
+              {user.role === 'team_leader' ? (
+                <WeeklyReportModal
+                  user={user}
+                  addFlashMessage={addFlashMessage}
+                  createWeeklyReport={createWeeklyReport}
+                />
+              ) : (
+                null
+              )}
             </div>
             <div className="col-md-8">
               <FilterReport

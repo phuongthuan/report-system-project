@@ -34,34 +34,33 @@ class Navigation extends Component {
     return (
       <Navbar color="light" light expand="md" className="shadow-sm mb-3">
         <NavbarBrand>
-          <FontAwesomeIcon icon="clock" />
-          <span> {moment(today).format("dddd, MMM Do YYYY")}</span>
+          Front End Team 1
         </NavbarBrand>
-        <NavbarToggler onClick={this.toggle}/>
-        <Collapse isOpen={this.state.isOpen} navbar>
-          <Nav className="ml-auto" navbar>
-            <UncontrolledDropdown nav inNavbar>
-              <DropdownToggle nav caret>
-                Displayed by
-              </DropdownToggle>
-              <DropdownMenu right>
-                <DropdownItem>
-                  Day
-                </DropdownItem>
-                <DropdownItem>
-                  Week
-                </DropdownItem>
-                <DropdownItem>
-                  Month
-                </DropdownItem>
-                <DropdownItem divider/>
-                <DropdownItem active>
-                  All Time
-                </DropdownItem>
-              </DropdownMenu>
-            </UncontrolledDropdown>
-          </Nav>
-        </Collapse>
+        {/*<NavbarToggler onClick={this.toggle}/>*/}
+        {/*<Collapse isOpen={this.state.isOpen} navbar>*/}
+        {/*<Nav className="ml-auto" navbar>*/}
+        {/*<UncontrolledDropdown nav inNavbar>*/}
+        {/*<DropdownToggle nav caret>*/}
+        {/*Displayed by*/}
+        {/*</DropdownToggle>*/}
+        {/*<DropdownMenu right>*/}
+        {/*<DropdownItem>*/}
+        {/*Day*/}
+        {/*</DropdownItem>*/}
+        {/*<DropdownItem>*/}
+        {/*Week*/}
+        {/*</DropdownItem>*/}
+        {/*<DropdownItem>*/}
+        {/*Month*/}
+        {/*</DropdownItem>*/}
+        {/*<DropdownItem divider/>*/}
+        {/*<DropdownItem active>*/}
+        {/*All Time*/}
+        {/*</DropdownItem>*/}
+        {/*</DropdownMenu>*/}
+        {/*</UncontrolledDropdown>*/}
+        {/*</Nav>*/}
+        {/*</Collapse>*/}
       </Navbar>
     );
   }
