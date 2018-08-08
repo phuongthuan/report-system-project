@@ -37,7 +37,7 @@ class SideBar extends Component {
     if (user) {
       getProfile(user.id);
     }
-    if (user.role === 'member') {
+    if (user.role === 'member' || user.role === 'team_leader') {
       fetchAllMessages(user.id);
     }
   }
@@ -149,6 +149,20 @@ class SideBar extends Component {
                     <Link to="/report">
                       <Icon className="mr-2" type="solution"/>
                       Reports of Team
+                    </Link>
+                  </ListGroupItem>
+                  <ListGroupItem
+                    className="justify-content-between"
+                    action
+                  >
+                    <Link to="/message">
+                      <Icon type="inbox" className="mr-2"/>
+                      Messenger
+                      {messages.length > 0 &&
+                      (
+                        <Badge color="warning">{messages.length}</Badge>
+                      )
+                      }
                     </Link>
                   </ListGroupItem>
                 </Fragment>

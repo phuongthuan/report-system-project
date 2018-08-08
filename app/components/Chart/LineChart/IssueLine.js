@@ -15,9 +15,7 @@ class IssueLine extends Component {
 
   state = {
     dataSource: this.props.dataSource,
-    issues: [],
     data: {
-
       labels: ['June', 'July', 'August', 'September'],
       datasets: [
         {
@@ -132,6 +130,10 @@ class IssueLine extends Component {
 
   componentDidMount() {
     const {dataSource} = this.props;
+    this.calculateData(dataSource);
+  }
+
+  calculateData = (data) => {
 
     const issue1 = [0, 0, 0, 0];
     const issue2 = [0, 0, 0, 0];
@@ -139,7 +141,7 @@ class IssueLine extends Component {
     const issue4 = [0, 0, 0, 0];
     const issue5 = [0, 0, 0, 0];
 
-    dataSource
+    data
       .map(report => {
         if (report.date >= '2018-06-01' && report.date <= '2018-06-31') {
           report.issues.map(issue => {
@@ -224,27 +226,6 @@ class IssueLine extends Component {
     });
     this.setState(newState);
   }
-
-  // componentWillReceiveProps(nextProps, state) {
-  //   const issues = [];
-  //   nextProps.dataSource.map(report => {
-  //     report.issues.map(issue =>
-  //       issues.push(issue)
-  //     );
-  //   });
-  //
-  //   // Update state using immutability-helper:
-  //   let newState = update(this.state, {
-  //     data: {
-  //       datasets: [
-  //         {
-  //           data: {$set: count(issues)}
-  //         }
-  //       ]
-  //     }
-  //   });
-  //   this.setState(newState);
-  // }
 
   render() {
 

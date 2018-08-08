@@ -6,6 +6,8 @@ import CreateReportContainer from "./CreateReportContainer";
 import UpdateReportContainer from "./UpdateReportContainer";
 import NoMatch from "../../utils/NoMatch";
 import ReportDetailContainer from "./ReportDetailContainer";
+import { MEMBER, TEAM_LEADER } from "../../constants/rolesType";
+import PermissionRoute from '../../utils/PermissionRoute'
 
 class ReportPage extends Component {
   render() {
@@ -13,10 +15,15 @@ class ReportPage extends Component {
       <div className="container">
         <FlashMessage />
         <Switch>
-          <Route exact path="/report" component={ReportContainer}/>
-          <Route path="/report/create" component={CreateReportContainer}/>
-          <Route path="/report/update/:id" component={UpdateReportContainer}/>
-          <Route path="/report/:id" component={ReportDetailContainer}/>
+          <PermissionRoute
+            exact
+            path="/report"
+            role={[TEAM_LEADER, MEMBER]}
+            component={ReportContainer}
+          />
+          <PermissionRoute role={MEMBER} path="/report/create" component={CreateReportContainer}/>
+          <PermissionRoute role={MEMBER} path="/report/update/:id" component={UpdateReportContainer}/>
+          <PermissionRoute role={[MEMBER, TEAM_LEADER]} path="/report/:id" component={ReportDetailContainer}/>
           <Route component={NoMatch}/>
         </Switch>
       </div>

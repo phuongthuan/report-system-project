@@ -19,15 +19,37 @@ import { createWeeklyReport } from "../WeeklyReport/actions";
 
 class StatisticContainer extends Component {
 
+  state = {
+    action: ''
+  }
+
   componentDidMount() {
-    const {fetchAllReportsOfTeam, user} = this.props;
+    const {fetchAllReportsOfTeam, user, location} = this.props;
     if (user.role === 'team_leader') {
       fetchAllReportsOfTeam(user.division);
     }
+    if (user.role === 'group_leader' && location) {
+      if (location.state.teamName) {
+        fetchAllReportsOfTeam(location.state.teamName);
+      }
+    }
+  }
+
+  actionChange = (action) => {
+    this.setState({action});
   }
 
   render() {
-    const {user, createWeeklyReport, addFlashMessage, reportsOfTeam, loading, fetchAllReportsOfTeamByRange, fetchAllReportsOfTeamByDay} = this.props;
+    const {
+      user,
+      createWeeklyReport,
+      addFlashMessage,
+      reportsOfTeam,
+      loading,
+      fetchAllReportsOfTeamByRange,
+      fetchAllReportsOfTeamByDay
+    } = this.props;
+
     return (
       <div className="row">
         <div className="col-md-3">
@@ -36,14 +58,20 @@ class StatisticContainer extends Component {
         <div className="col-md-9">
           <div className="row">
             <div className="col-md-4">
-              <WeeklyReportModal
-                user={user}
-                addFlashMessage={addFlashMessage}
-                createWeeklyReport={createWeeklyReport}
-              />
+              {user.role === 'team_leader' ? (
+                <WeeklyReportModal
+                  user={user}
+                  addFlashMessage={addFlashMessage}
+                  createWeeklyReport={createWeeklyReport}
+                />
+              ) : (
+                null
+              )}
             </div>
             <div className="col-md-8">
               <FilterReport
+                actionChange={this.actionChange}
+                {...this.props}
                 user={user}
                 fetchAllReportsOfTeamByRange={fetchAllReportsOfTeamByRange}
                 fetchAllReportsOfTeamByDay={fetchAllReportsOfTeamByDay}
@@ -55,10 +83,13 @@ class StatisticContainer extends Component {
             <Spinner height="650px" style={{fontSize: 32, color: '#FFFFFF'}}/>
           ) : (
             <Fragment>
-              <div className="row mt-4">
+              <div className="row">
                 <div className="col-md-12">
                   <div className="shadow-sm">
-                    <IssuePie dataSource={reportsOfTeam}/>
+                    <IssuePie
+                      action={this.state.action}
+                      dataSource={reportsOfTeam}
+                    />
                   </div>
                 </div>
               </div>
@@ -66,7 +97,10 @@ class StatisticContainer extends Component {
               <div className="row mt-4">
                 <div className="col-md-12">
                   <div className="shadow-sm">
-                    <IssueLine dataSource={reportsOfTeam}/>
+                    <IssueLine
+                      action={this.state.action}
+                      dataSource={reportsOfTeam}
+                    />
                   </div>
                 </div>
               </div>
@@ -74,7 +108,10 @@ class StatisticContainer extends Component {
               <div className="row mt-4">
                 <div className="col-md-12">
                   <div className="shadow-sm">
-                    <EmotionPie dataSource={reportsOfTeam}/>
+                    <EmotionPie
+                      action={this.state.action}
+                      dataSource={reportsOfTeam}
+                    />
                   </div>
                 </div>
               </div>
@@ -82,7 +119,10 @@ class StatisticContainer extends Component {
               <div className="row mt-4">
                 <div className="col-md-12">
                   <div className="shadow-sm">
-                    <EmotionLine dataSource={reportsOfTeam}/>
+                    <EmotionLine
+                      action={this.state.action}
+                      dataSource={reportsOfTeam}
+                    />
                   </div>
                 </div>
               </div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   Form,
+  CardTitle,
   Card,
   CardHeader,
   CardBody,
@@ -15,7 +16,9 @@ const FormikForm = ({values, handleSubmit, handleChange, isSubmitting, touched, 
   <Form onSubmit={handleSubmit}>
     <Card style={{borderRadius: '0'}} className="border-0 shadow-sm">
       <CardHeader>
-        Update Profile
+        <CardTitle>
+          Update Profile
+        </CardTitle>
       </CardHeader>
       <CardBody>
 
@@ -92,7 +95,7 @@ const FormikForm = ({values, handleSubmit, handleChange, isSubmitting, touched, 
 )
 
 const ProfileForm = withFormik({
-
+  enableReinitialize: true,
   validationSchema: Yup.object().shape({
     firstName: Yup.string().required('First name is required.'),
     lastName: Yup.string().required('Last name is required.'),
