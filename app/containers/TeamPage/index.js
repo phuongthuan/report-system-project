@@ -5,16 +5,23 @@ import NoMatch from "../../utils/NoMatch";
 import TeamDetailContainer from "./TeamDetailContainer";
 import StatisticContainer from "../StatisticPage/StatisticContainer";
 import TestContainer from "../TestContainer";
+import PermissionRoute from '../../utils/PermissionRoute'
+import { GROUP_LEADER } from '../../constants/rolesType'
 
 class TeamPage extends Component {
   render() {
     return (
       <div className="container">
         <Switch>
-          <Route exact path="/team" component={TeamContainer} />
-          <Route path="/team/:id/statistic" component={StatisticContainer}/>
-          <Route path="/team/:id/weekly-report" component={TestContainer}/>
-          <Route path="/team/:id" component={TeamDetailContainer} />
+          <PermissionRoute
+            exact
+            path="/team"
+            role={GROUP_LEADER}
+            component={TeamContainer}
+          />
+          <PermissionRoute role={GROUP_LEADER} path="/team/:id/statistic" component={StatisticContainer}/>
+          <PermissionRoute role={GROUP_LEADER} path="/team/:id/weekly-report" component={TestContainer}/>
+          <PermissionRoute role={GROUP_LEADER} path="/team/:id" component={TeamDetailContainer}/>
           <Route component={NoMatch}/>
         </Switch>
       </div>
