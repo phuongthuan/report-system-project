@@ -42,6 +42,7 @@ class MessageContainer extends Component {
                   <p className="d-flex justify-content-center display-4">No message</p>
                 ) : (
                   <MessagesList
+                    {...this.props}
                     addFlashMessage={addFlashMessage}
                     deleteMessage={deleteMessage}
                     messagesList={messages}

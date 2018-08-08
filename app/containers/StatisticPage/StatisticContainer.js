@@ -19,77 +19,115 @@ import { createWeeklyReport } from "../WeeklyReport/actions";
 
 class StatisticContainer extends Component {
 
+  state = {
+    action: ''
+  }
+
   componentDidMount() {
-    const {fetchAllReportsOfTeam, user} = this.props;
+    const {fetchAllReportsOfTeam, user, location} = this.props;
     if (user.role === 'team_leader') {
       fetchAllReportsOfTeam(user.division);
     }
+    if (user.role === 'group_leader' && location) {
+      if (location.state.teamName) {
+        fetchAllReportsOfTeam(location.state.teamName);
+      }
+    }
+  }
+
+  actionChange = (action) => {
+    this.setState({action});
   }
 
   render() {
-    const { user, createWeeklyReport, addFlashMessage, reportsOfTeam, loading, fetchAllReportsOfTeamByRange, fetchAllReportsOfTeamByDay} = this.props;
+    const {
+      user,
+      createWeeklyReport,
+      addFlashMessage,
+      reportsOfTeam,
+      loading,
+      fetchAllReportsOfTeamByRange,
+      fetchAllReportsOfTeamByDay
+    } = this.props;
+
     return (
-      <div>
-        <div className="row">
-          <div className="col-md-3">
-            <SideBar/>
-          </div>
-          <div className="col-md-9">
-            <div className="row">
-              <div className="col-md-4">
+      <div className="row">
+        <div className="col-md-3">
+          <SideBar/>
+        </div>
+        <div className="col-md-9">
+          <div className="row">
+            <div className="col-md-4">
+              {user.role === 'team_leader' ? (
                 <WeeklyReportModal
                   user={user}
                   addFlashMessage={addFlashMessage}
                   createWeeklyReport={createWeeklyReport}
                 />
-              </div>
-              <div className="col-md-8">
-                <FilterReport
-                  user={user}
-                  fetchAllReportsOfTeamByRange={fetchAllReportsOfTeamByRange}
-                  fetchAllReportsOfTeamByDay={fetchAllReportsOfTeamByDay}
-                />
-              </div>
+              ) : (
+                null
+              )}
             </div>
-
-            {loading && isEmpty(reportsOfTeam) ? (
-              <Spinner height="650px" style={{fontSize: 32, color: '#FFFFFF'}}/>
-            ) : (
-              <Fragment>
-                <div className="row mt-4">
-                  <div className="col-md-12">
-                    <div className="shadow-sm">
-                      <IssuePie dataSource={reportsOfTeam}/>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="row mt-4">
-                  <div className="col-md-12">
-                    <div className="shadow-sm">
-                      <IssueLine dataSource={reportsOfTeam}/>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="row mt-4">
-                  <div className="col-md-12">
-                    <div className="shadow-sm">
-                      <EmotionPie dataSource={reportsOfTeam}/>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="row mt-4">
-                  <div className="col-md-12">
-                    <div className="shadow-sm">
-                      <EmotionLine dataSource={reportsOfTeam}/>
-                    </div>
-                  </div>
-                </div>
-              </Fragment>
-            )}
+            <div className="col-md-8">
+              <FilterReport
+                actionChange={this.actionChange}
+                {...this.props}
+                user={user}
+                fetchAllReportsOfTeamByRange={fetchAllReportsOfTeamByRange}
+                fetchAllReportsOfTeamByDay={fetchAllReportsOfTeamByDay}
+              />
+            </div>
           </div>
+
+          {loading && isEmpty(reportsOfTeam) ? (
+            <Spinner height="650px" style={{fontSize: 32, color: '#FFFFFF'}}/>
+          ) : (
+            <Fragment>
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="shadow-sm">
+                    <IssuePie
+                      action={this.state.action}
+                      dataSource={reportsOfTeam}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="row mt-4">
+                <div className="col-md-12">
+                  <div className="shadow-sm">
+                    <IssueLine
+                      action={this.state.action}
+                      dataSource={reportsOfTeam}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="row mt-4">
+                <div className="col-md-12">
+                  <div className="shadow-sm">
+                    <EmotionPie
+                      action={this.state.action}
+                      dataSource={reportsOfTeam}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="row mt-4">
+                <div className="col-md-12">
+                  <div className="shadow-sm">
+                    <EmotionLine
+                      action={this.state.action}
+                      dataSource={reportsOfTeam}
+                    />
+                  </div>
+                </div>
+              </div>
+            </Fragment>
+          )}
         </div>
       </div>
     );

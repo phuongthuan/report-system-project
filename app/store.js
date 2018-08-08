@@ -7,7 +7,6 @@ import reducers from './reducers'
 const sagaMiddleware = createSagaMiddleware()
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose; // eslint-disable-line no-underscore-dangle
 
-
 const store = createStore(
   reducers,
   composeEnhancers(applyMiddleware(sagaMiddleware))

@@ -50,7 +50,7 @@ const FormikForm = ({values, handleSubmit, handleChange, isSubmitting, touched, 
       buttonName="Submit"
       type="primary"
       htmlType="submit"
-      icon="enter"
+      icon="check"
       loading={isSubmitting}
     />
   </Form>

@@ -3,12 +3,12 @@ import { connect } from 'react-redux'
 import isEmpty from 'lodash/isEmpty'
 import Spinner from 'components/Spinner'
 import PropTypes from "prop-types";
-
 import SideBar from '../../components/SideBar'
-import UpdateReportForm from "../../components/UpdateReportForm";
+import ReportForm from '../../components/ReportForm/index'
 import { selectAReport, selectError, selectReportLoading } from "./selectors";
 import { addFlashMessage } from "../FlashMessage/actions";
 import { fetchAReport, updateReport } from "./actions";
+import { selectUser } from "../Auth/selectors";
 
 class UpdateReportContainer extends Component {
 
@@ -31,19 +31,20 @@ class UpdateReportContainer extends Component {
   }
 
   render() {
-    const {updateReport, report, loading, addFlashMessage} = this.props;
+    const {updateReport, report, loading, addFlashMessage, user} = this.props;
     return (
       <div className="container">
         <div className="row">
           <div className="col-md-3">
-            <SideBar />
+            <SideBar/>
           </div>
           <div className="col-md-9">
             {loading && isEmpty(report) ? (
               <Spinner height="650px" style={{fontSize: 32, color: '#FFFFFF'}}/>
             ) : (
-              <UpdateReportForm
+              <ReportForm
                 {...this.props}
+                user={user}
                 report={report}
                 updateReport={updateReport}
                 addFlashMessage={addFlashMessage}
@@ -59,7 +60,8 @@ class UpdateReportContainer extends Component {
 const mapStateToProps = state => ({
   report: selectAReport(state),
   loading: selectReportLoading(state),
-  error: selectError(state)
+  error: selectError(state),
+  user: selectUser(state)
 });
 
 const mapDispatchToProps = dispatch => ({

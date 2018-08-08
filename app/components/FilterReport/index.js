@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import DatePickerComponent from "../DateTimePicker/DatePickerComponent";
 import RangePickerComponent from "../DateTimePicker/RangePickerComponent";
 
@@ -11,17 +10,21 @@ class FilterReport extends Component {
 
       fetchAllReportsOfTeamByDay,
       fetchAllReportsOfTeamByRange,
-      user
+      user,
+      actionChange
     } = this.props;
     return (
-      <div className="d-flex justify-content-between">
-
+      <div className="d-flex justify-content-between mb-3">
         <DatePickerComponent
+          {...this.props}
+          actionChange={actionChange}
           user={user}
           fetchAllReportsOfUserByDay={fetchAllReportsOfUserByDay}
           fetchAllReportsOfTeamByDay={fetchAllReportsOfTeamByDay}
         />
         <RangePickerComponent
+          {...this.props}
+          actionChange={actionChange}
           user={user}
           fetchAllReportsOfUserByRange={fetchAllReportsOfUserByRange}
           fetchAllReportsOfTeamByRange={fetchAllReportsOfTeamByRange}

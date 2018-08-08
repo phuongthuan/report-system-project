@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import SideBar from 'components/SideBar'
-import Navigation from 'components/Navigation'
 import PropTypes from 'prop-types';
 import isEmpty from "lodash/isEmpty";
 import TeamList from "../../components/TeamList";
@@ -9,6 +8,7 @@ import { selectTeamLoading, selectTeams } from "./selectors";
 import { fetchAllTeams } from "./actions";
 import { selectUser } from "../Auth/selectors";
 import Spinner from "../../components/Spinner";
+import FilterReport from "../../components/FilterReport";
 
 class TeamContainer extends Component {
 
@@ -27,11 +27,8 @@ class TeamContainer extends Component {
           <SideBar/>
         </div>
         <div className="col-md-9">
-
-          <Navigation/>
-
           {teamLoading && isEmpty(teams) ? (
-            <Spinner height="650px" style={{fontSize: 32, color: '#FFFFFF'}} />
+            <Spinner height="650px" style={{fontSize: 32, color: '#FFFFFF'}}/>
           ) : (
             <TeamList
               teamsList={teams}

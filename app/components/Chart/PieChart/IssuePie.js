@@ -16,7 +16,7 @@ class IssuePie extends Component {
 
   state = {
     dataSource: this.props.dataSource,
-    issues: [],
+    title: 'Issues of reports',
     data: {
       labels: [
         'Hard for Debugging',
@@ -51,6 +51,7 @@ class IssuePie extends Component {
   componentDidMount() {
     const {dataSource} = this.props;
     const issues = [];
+
     dataSource.map(report => {
       report.issues.map(issue =>
         issues.push(issue)
@@ -66,12 +67,15 @@ class IssuePie extends Component {
         ]
       }
     });
-
     this.setState(newState);
   }
 
-  componentWillReceiveProps(nextProps, state) {
+  componentWillReceiveProps(nextProps) {
     const issues = [];
+    const title = nextProps.action
+      ? `Issues of reports on (${nextProps.action})`
+      : 'Issues of reports';
+
     nextProps.dataSource.map(report => {
       report.issues.map(issue =>
         issues.push(issue)
@@ -88,6 +92,7 @@ class IssuePie extends Component {
       }
     });
     this.setState(newState);
+    this.setState({title});
   }
 
   render() {
@@ -102,7 +107,7 @@ class IssuePie extends Component {
             options={{
               title: {
                 display: this.props.displayTitle,
-                text: 'Issues of reports',
+                text: this.state.title,
                 fontSize: 25
               },
               cutoutPercentage: 10,

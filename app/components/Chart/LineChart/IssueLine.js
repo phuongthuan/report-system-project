@@ -15,9 +15,7 @@ class IssueLine extends Component {
 
   state = {
     dataSource: this.props.dataSource,
-    issues: [],
     data: {
-
       labels: ['June', 'July', 'August', 'September'],
       datasets: [
         {
@@ -132,47 +130,102 @@ class IssueLine extends Component {
 
   componentDidMount() {
     const {dataSource} = this.props;
-    const issues = [];
-
-    dataSource.map(report => {
-      report.issues.map(issue =>
-        issues.push(issue)
-      );
-    });
-
-    let newState = update(this.state, {
-      data: {
-        datasets: [
-          {
-            data: {$set: count(issues)}
-          }
-        ]
-      }
-    });
-
-    this.setState(newState);
+    this.calculateData(dataSource);
   }
 
-  // componentWillReceiveProps(nextProps, state) {
-  //   const issues = [];
-  //   nextProps.dataSource.map(report => {
-  //     report.issues.map(issue =>
-  //       issues.push(issue)
-  //     );
-  //   });
-  //
-  //   // Update state using immutability-helper:
-  //   let newState = update(this.state, {
-  //     data: {
-  //       datasets: [
-  //         {
-  //           data: {$set: count(issues)}
-  //         }
-  //       ]
-  //     }
-  //   });
-  //   this.setState(newState);
-  // }
+  calculateData = (data) => {
+
+    const issue1 = [0, 0, 0, 0];
+    const issue2 = [0, 0, 0, 0];
+    const issue3 = [0, 0, 0, 0];
+    const issue4 = [0, 0, 0, 0];
+    const issue5 = [0, 0, 0, 0];
+
+    data
+      .map(report => {
+        if (report.date >= '2018-06-01' && report.date <= '2018-06-31') {
+          report.issues.map(issue => {
+            if (issue === 'Hard for Debugging') {
+              issue1[0]++;
+            } else if (issue === 'Keeping up with Technology') {
+              issue2[0]++;
+            } else if (issue === 'Time Estimation') {
+              issue3[0]++;
+            } else if (issue === 'Communication with others') {
+              issue4[0]++;
+            } else if (issue === 'Security Threats') {
+              issue5[0]++;
+            }
+          })
+        } else if (report.date >= '2018-07-01' && report.date <= '2018-07-31') {
+          report.issues.map(issue => {
+            if (issue === 'Hard for Debugging') {
+              issue1[1]++;
+            } else if (issue === 'Keeping up with Technology') {
+              issue2[1]++;
+            } else if (issue === 'Time Estimation') {
+              issue3[1]++;
+            } else if (issue === 'Communication with others') {
+              issue4[1]++;
+            } else if (issue === 'Security Threats') {
+              issue5[1]++;
+            }
+          })
+        } else if (report.date >= '2018-08-01' && report.date <= '2018-08-31') {
+          report.issues.map(issue => {
+            if (issue === 'Hard for Debugging') {
+              issue1[2]++;
+            } else if (issue === 'Keeping up with Technology') {
+              issue2[2]++;
+            } else if (issue === 'Time Estimation') {
+              issue3[2]++;
+            } else if (issue === 'Communication with others') {
+              issue4[2]++;
+            } else if (issue === 'Security Threats') {
+              issue5[2]++;
+            }
+          })
+        } else {
+          report.issues.map(issue => {
+            if (issue === 'Hard for Debugging') {
+              issue1[3]++;
+            } else if (issue === 'Keeping up with Technology') {
+              issue2[3]++;
+            } else if (issue === 'Time Estimation') {
+              issue3[3]++;
+            } else if (issue === 'Communication with others') {
+              issue4[3]++;
+            } else if (issue === 'Security Threats') {
+              issue5[3]++;
+            }
+          })
+        }
+      })
+
+    let index = [0, 1, 2, 3, 4];
+    let newState = update(this.state, {
+      data: {
+        datasets: {
+          [index[0]]: {
+            data: {$set: issue1}
+          },
+          [index[1]]: {
+            data: {$set: issue2}
+          },
+          [index[2]]: {
+            data: {$set: issue3}
+          },
+          [index[3]]: {
+            data: {$set: issue4}
+          },
+          [index[4]]: {
+            data: {$set: issue5}
+          },
+        }
+      }
+    });
+    this.setState(newState);
+  }
 
   render() {
 

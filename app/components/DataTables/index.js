@@ -15,7 +15,6 @@ import {
   TableRow,
   Paper
 } from '@material-ui/core';
-import EnhancedTableToolbar from './EnhancedTableToolbar';
 
 const CustomTableCell = withStyles(theme => ({
   body: {
@@ -40,7 +39,6 @@ const CustomTableHead = withStyles(theme => ({
 const styles = theme => ({
   root: {
     width: '100%',
-    marginTop: theme.spacing.unit * 3,
     overflowX: 'auto',
     borderRadius: '0'
   },
@@ -80,7 +78,6 @@ class DataTables extends Component {
     return (
       <Paper className={classes.root}>
         <div className={classes.tableWrapper}>
-          <EnhancedTableToolbar user={user}/>
           <Table className={classes.table}>
             <CustomTableHead>
               <CustomTableRow>
@@ -97,14 +94,19 @@ class DataTables extends Component {
                   <CustomTableRow key={report.id}>
                     <CustomTableCell>{report.id}</CustomTableCell>
                     <CustomTableCell>
-                      <Emoji set={'emojione'} emoji={report.emotion.colons} size={24}/>
+                      <Emoji
+                        tooltip
+                        set={'emojione'}
+                        emoji={report.emotion.colons}
+                        size={24}
+                      />
                     </CustomTableCell>
                     <CustomTableCell component="th" scope="row">
                       <Link to={`/report/${report.id}`}>
                         {report.title}
                       </Link>
                     </CustomTableCell>
-                    <CustomTableCell padding="none" component="th" scope="row">
+                    <CustomTableCell padding="none" scope="row">
                       <ListItem>
                         <Avatar alt="Avatar image" src={report.userId.avatar}/>
                         <ListItemText>{report.userId.firstName}</ListItemText>
