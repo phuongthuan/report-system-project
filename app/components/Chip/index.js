@@ -3,15 +3,12 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Avatar, Chip } from '@material-ui/core';
 
-const styles = theme => ({
+const styles = () => ({
   root: {
-    display: 'flex',
+    display: 'infline',
     justifyContent: 'start',
     flexWrap: 'wrap',
-  },
-  chip: {
-    margin: theme.spacing.unit,
-  },
+  }
 });
 
 class Chips extends Component {
@@ -33,7 +30,6 @@ class Chips extends Component {
         <Chip
           avatar={<Avatar src={avatar}/>}
           label={fullName}
-          className={classes.chip}
           onClick={() => this.navigate(`/member/${userId}`)}
         />
       </div>

@@ -16,7 +16,7 @@ class EmotionPie extends Component {
 
   state = {
     dataSource: this.props.dataSource,
-    issues: [],
+    title: 'Emotions of reports',
     data: {
       labels: [
         'Positive',
@@ -93,6 +93,10 @@ class EmotionPie extends Component {
     const negativeEmotions = [];
     const otherEmotions = [];
 
+    const title = nextProps.action
+      ? `Emotions of reports on (${nextProps.action})`
+      : 'Emotions of reports';
+
     nextProps.dataSource.map(report => {
       const emoji = report.emotion.id;
       if ((emoji === 'smiley')
@@ -130,6 +134,7 @@ class EmotionPie extends Component {
       }
     });
     this.setState(newState);
+    this.setState({title});
   }
 
   render() {
@@ -144,7 +149,7 @@ class EmotionPie extends Component {
             options={{
               title: {
                 display: this.props.displayTitle,
-                text: 'Emotion of reports',
+                text: this.state.title,
                 fontSize: 25
               },
               cutoutPercentage: 10,

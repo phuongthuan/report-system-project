@@ -33,14 +33,14 @@ class TeamDetail extends Component {
             <CardBody>
               <div className="row">
                 <div className="col-md-4">
-                  <CardSubtitle className="pl-2">Team leader</CardSubtitle>
+                  <CardSubtitle className="mb-3">Team leader</CardSubtitle>
                   <Chip
                     {...this.props}
                     userInfo={userId}
                   />
                   <br/>
 
-                  <CardSubtitle className="pl-2">Members</CardSubtitle>
+                  <CardSubtitle className="mb-3">Members</CardSubtitle>
                   {members.filter(member =>
                     member.id !== team.userId.id)
                     .map(member => (

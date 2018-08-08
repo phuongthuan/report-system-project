@@ -87,11 +87,16 @@ class EmotionLine extends Component {
 
   componentDidMount() {
     const {dataSource} = this.props;
+    this.calculateData(dataSource);
+  }
+
+  calculateData = (data) => {
+
     const positiveEmotions = [0, 0, 0, 0];
     const negativeEmotions = [0, 0, 0, 0];
     const otherEmotions = [0, 0, 0, 0];
 
-    dataSource
+    data
       .map(report => {
         if (report.date >= '2018-06-01' && report.date <= '2018-06-31') {
           const emoji = report.emotion.id;

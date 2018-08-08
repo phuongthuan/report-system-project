@@ -19,6 +19,10 @@ import { createWeeklyReport } from "../WeeklyReport/actions";
 
 class StatisticContainer extends Component {
 
+  state = {
+    action: ''
+  }
+
   componentDidMount() {
     const {fetchAllReportsOfTeam, user, location} = this.props;
     if (user.role === 'team_leader') {
@@ -31,8 +35,21 @@ class StatisticContainer extends Component {
     }
   }
 
+  actionChange = (action) => {
+    this.setState({action});
+  }
+
   render() {
-    const {user, createWeeklyReport, addFlashMessage, reportsOfTeam, loading, fetchAllReportsOfTeamByRange, fetchAllReportsOfTeamByDay} = this.props;
+    const {
+      user,
+      createWeeklyReport,
+      addFlashMessage,
+      reportsOfTeam,
+      loading,
+      fetchAllReportsOfTeamByRange,
+      fetchAllReportsOfTeamByDay
+    } = this.props;
+
     return (
       <div className="row">
         <div className="col-md-3">
@@ -49,6 +66,8 @@ class StatisticContainer extends Component {
             </div>
             <div className="col-md-8">
               <FilterReport
+                actionChange={this.actionChange}
+                {...this.props}
                 user={user}
                 fetchAllReportsOfTeamByRange={fetchAllReportsOfTeamByRange}
                 fetchAllReportsOfTeamByDay={fetchAllReportsOfTeamByDay}
@@ -60,10 +79,13 @@ class StatisticContainer extends Component {
             <Spinner height="650px" style={{fontSize: 32, color: '#FFFFFF'}}/>
           ) : (
             <Fragment>
-              <div className="row mt-4">
+              <div className="row">
                 <div className="col-md-12">
                   <div className="shadow-sm">
-                    <IssuePie dataSource={reportsOfTeam}/>
+                    <IssuePie
+                      action={this.state.action}
+                      dataSource={reportsOfTeam}
+                    />
                   </div>
                 </div>
               </div>
@@ -71,7 +93,10 @@ class StatisticContainer extends Component {
               <div className="row mt-4">
                 <div className="col-md-12">
                   <div className="shadow-sm">
-                    <IssueLine dataSource={reportsOfTeam}/>
+                    <IssueLine
+                      action={this.state.action}
+                      dataSource={reportsOfTeam}
+                    />
                   </div>
                 </div>
               </div>
@@ -79,7 +104,10 @@ class StatisticContainer extends Component {
               <div className="row mt-4">
                 <div className="col-md-12">
                   <div className="shadow-sm">
-                    <EmotionPie dataSource={reportsOfTeam}/>
+                    <EmotionPie
+                      action={this.state.action}
+                      dataSource={reportsOfTeam}
+                    />
                   </div>
                 </div>
               </div>
@@ -87,7 +115,10 @@ class StatisticContainer extends Component {
               <div className="row mt-4">
                 <div className="col-md-12">
                   <div className="shadow-sm">
-                    <EmotionLine dataSource={reportsOfTeam}/>
+                    <EmotionLine
+                      action={this.state.action}
+                      dataSource={reportsOfTeam}
+                    />
                   </div>
                 </div>
               </div>

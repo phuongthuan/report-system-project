@@ -43,6 +43,10 @@ class ReportContainer extends Component {
     user: PropTypes.object.isRequired,
   };
 
+  state = {
+    action: ''
+  }
+
   componentDidMount() {
     const {user, fetchAllReportsOfUser, fetchAllReportsOfTeam} = this.props;
     if (user && user.role === 'team_leader') {
@@ -51,6 +55,10 @@ class ReportContainer extends Component {
     if (user && user.role === 'member') {
       fetchAllReportsOfUser(user.id);
     }
+  }
+
+  actionChange = (action) => {
+    this.setState({action});
   }
 
   render() {
@@ -67,10 +75,9 @@ class ReportContainer extends Component {
             <div className="col-md-8">
               <FilterReport
                 user={user}
-
+                actionChange={this.actionChange}
                 fetchAllReportsOfUserByDay={fetchAllReportsOfUserByDay}
                 fetchAllReportsOfUserByRange={fetchAllReportsOfUserByRange}
-
                 fetchAllReportsOfTeamByRange={fetchAllReportsOfTeamByRange}
                 fetchAllReportsOfTeamByDay={fetchAllReportsOfTeamByDay}
               />
@@ -97,6 +104,7 @@ class ReportContainer extends Component {
                       ) : (
                         <DataTables
                           user={user}
+                          action={this.state.action}
                           reportsList={reports}
                         />
                       )}
