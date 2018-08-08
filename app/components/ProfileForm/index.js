@@ -95,7 +95,7 @@ const FormikForm = ({values, handleSubmit, handleChange, isSubmitting, touched, 
 )
 
 const ProfileForm = withFormik({
-
+  enableReinitialize: true,
   validationSchema: Yup.object().shape({
     firstName: Yup.string().required('First name is required.'),
     lastName: Yup.string().required('Last name is required.'),

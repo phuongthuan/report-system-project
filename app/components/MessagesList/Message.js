@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from 'react'
-import { Link } from 'react-router-dom';
 import moment from 'moment'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { CardText, Card, CardBody } from 'reactstrap'
+import Chip from '../Chip/index'
 
 class Message extends Component {
 
@@ -34,15 +34,17 @@ class Message extends Component {
                 >
                   <span aria-hidden="true">&times;</span>
                 </button>
+                <Chip
+                  {...this.props}
+                  userInfo={userId}
+                />
                 <CardText>
-                  <small className="text-muted"><FontAwesomeIcon icon="envelope"/>&nbsp;
-                    Sent by&nbsp;&nbsp;
-                    <Link to={`member/${userId.id}`}>
-                      {userId.firstName} {userId.lastName}
-                    </Link>
-                    &nbsp;&nbsp;from {moment(message.date).format("dddd, MMMM Do YYYY")}
+                  <small className="text-muted">
+                    Sent from {moment(message.date).format("dddd, MMMM Do YYYY")}
                   </small>
                 </CardText>
+
+                <hr/>
                 <CardText>
                   {message.title}
                 </CardText>
