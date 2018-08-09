@@ -24,7 +24,6 @@ class Chips extends Component {
     const userId = userInfo && userInfo.id;
     const fullName = userInfo && (`${userInfo.firstName} ${userInfo.lastName}`);
 
-
     return (
       <div className={classes.root}>
         <Chip

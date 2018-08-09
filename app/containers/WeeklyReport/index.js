@@ -3,7 +3,6 @@ import { Route, Switch } from 'react-router-dom'
 import FlashMessage from 'containers/FlashMessage'
 import NoMatch from "../../utils/NoMatch";
 import WeeklyReportContainer from "./WeeklyReportContainer";
-import WeeklyReportForm from "../../components/WeeklyReportForm";
 
 class WeeklyReport extends Component {
   render() {

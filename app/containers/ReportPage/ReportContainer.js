@@ -15,7 +15,7 @@ import { getAllReportsOfTeam, getAllReportsOfTeamByDay, getAllReportsOfTeamByRan
 import { selectReportsOfTeam, selectStatisticLoading } from "../StatisticPage/selectors";
 import { addFlashMessage } from "../FlashMessage/actions";
 import FilterReport from "../../components/FilterReport";
-import DataTables from '../../components/DataTables/index'
+import ReportTable from '../../components/ReportTable/index'
 
 class ReportContainer extends Component {
 
@@ -62,7 +62,7 @@ class ReportContainer extends Component {
   }
 
   render() {
-    const {reportsOfUser, fetchAllReportsOfUserByRange, fetchAllReportsOfUserByDay, fetchAllReportsOfTeamByDay, deleteReport, reportLoading, statisticLoading, reportsOfTeam, user, fetchAllReportsOfTeamByRange} = this.props;
+    const {reportsOfUser, addFlashMessage, fetchAllReportsOfUserByRange, fetchAllReportsOfUserByDay, fetchAllReportsOfTeamByDay, deleteReport, reportLoading, statisticLoading, reportsOfTeam, user, fetchAllReportsOfTeamByRange} = this.props;
     const loading = (user.role === 'member') ? reportLoading : statisticLoading;
     const reports = (user.role === 'member') ? reportsOfUser : reportsOfTeam;
     return (
@@ -90,25 +90,16 @@ class ReportContainer extends Component {
               ) : (
                 <Fragment>
                   {reports.length === 0 ? (
-                    <p className="d-flex justify-content-center display-4">No report</p>
+                    <p className="d-flex justify-content-center display-4 text-white">No report</p>
                   ) : (
-                    <Fragment>
-                      {user && user.role === 'member' ? (
-                        <ReportsList
-                          {...this.props}
-                          user={user}
-                          addFlashMessage={addFlashMessage}
-                          deleteReport={deleteReport}
-                          reportsList={reports}
-                        />
-                      ) : (
-                        <DataTables
-                          user={user}
-                          action={this.state.action}
-                          reportsList={reports}
-                        />
-                      )}
-                    </Fragment>
+                    <ReportTable
+                      {...this.props}
+                      addFlashMessage={addFlashMessage}
+                      deleteReport={deleteReport}
+                      user={user}
+                      action={this.state.action}
+                      data={reports}
+                    />
                   )}
                 </Fragment>
               )}

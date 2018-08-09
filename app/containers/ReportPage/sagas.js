@@ -125,6 +125,7 @@ export function* fetchAllReportsOfUserByRange(action) {
 export function* fetchAReport(action) {
   try {
     const report = yield call(callFetchAReport, action.id);
+    report.userId = yield call(callGetProfile, report.userId);
     yield delay(700);
     yield put(fetchAReportSucceeded(report));
   } catch (error) {

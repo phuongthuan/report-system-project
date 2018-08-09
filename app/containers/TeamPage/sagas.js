@@ -56,6 +56,7 @@ export function* fetchTeam(action) {
     let team = yield call(callFetchTeam, action.payload);
     const {userId, name} = team;
     team.userId = yield call(callGetProfile, userId);
+    team.userId.weekly_reports = yield call(callFetchAllWeeklyReportsOfUser, team.userId.id);
     team.members = yield call(callGetMembersOfTeam, name);
     yield delay(700);
     yield put(fetchTeamSucceeded(team));

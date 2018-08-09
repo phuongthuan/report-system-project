@@ -64,7 +64,7 @@ const WeeklyReportForm = withFormik({
     summary: Yup.string().required('Summary is required.')
   }),
   mapPropsToValues: ({user}) => ({
-    date: moment().toString(),
+    date: moment().format("YYYY-MM-DD"),
     userId: user.id,
     issue: '',
     solution: '',

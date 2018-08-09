@@ -41,7 +41,6 @@ const FormikForm = ({values, handleSubmit, handleChange, isSubmitting, touched, 
           type="text"
           name="lastName"
           value={values.lastName}
-          placeholder="Solution..."
           error={touched.lastName && errors.lastName}
           onChange={handleChange}
         />
@@ -58,7 +57,6 @@ const FormikForm = ({values, handleSubmit, handleChange, isSubmitting, touched, 
           type="text"
           name="address"
           value={values.address}
-          placeholder="Summary..."
           error={touched.address && errors.address}
           onChange={handleChange}
         />
@@ -101,7 +99,7 @@ const ProfileForm = withFormik({
     lastName: Yup.string().required('Last name is required.'),
     avatar: Yup.string().matches(/(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png)/, 'Image is invalid').required('Avatar is required.'),
     address: Yup.string().required('Address is required.'),
-    phone: Yup.string().matches(/^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$/, 'Phone number is invalid.').required('Phone is required.'),
+    phone: Yup.string().matches(/(09|01[2|6|8|9])+([0-9]{8})\b/, 'Phone number is invalid.').required('Phone is required.'),
   }),
 
   mapPropsToValues: ({profile}) => ({

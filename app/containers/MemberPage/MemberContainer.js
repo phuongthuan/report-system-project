@@ -12,6 +12,7 @@ import { createMessage } from '../Message/actions'
 import { selectMemberLoading, selectMembers } from "./selectors";
 import { selectUser } from "../Auth/selectors";
 import { selectFlashMessage } from "../FlashMessage/selectors";
+import MemberTable from '../../components/MemberTable/index'
 
 const Wrapper = styled.div`
   height: 100%;
@@ -41,8 +42,35 @@ class MemberContainer extends Component {
     }
   }
 
+  membersList = () => {
+    const {members, createMessage, addFlashMessage, user} = this.props;
+    if (user.role === 'group_leader') {
+      return (
+        <MemberTable
+          addFlashMessage={addFlashMessage}
+          createMessage={createMessage}
+          {...this.props}
+          user={user}
+          data={members}
+        />
+      )
+    } else if (user.role === 'team_leader') {
+      return (
+        (
+          <MembersList
+            {...this.props}
+            user={user}
+            createMessage={createMessage}
+            addFlashMessage={addFlashMessage}
+            membersList={members}
+          />
+        )
+      )
+    }
+  }
+
   render() {
-    const {members, loading, createMessage, addFlashMessage, user} = this.props;
+    const {members, loading} = this.props;
     return (
       <Wrapper>
         <div className="row">
@@ -52,14 +80,7 @@ class MemberContainer extends Component {
           <div className="col-md-9">
             {loading && isEmpty(members) ? (
               <Spinner height="650px" style={{fontSize: 32, color: '#FFFFFF'}} />
-            ) : (
-              <MembersList
-                user={user}
-                createMessage={createMessage}
-                addFlashMessage={addFlashMessage}
-                membersList={members}
-              />
-            )}
+            ) : this.membersList()}
           </div>
         </div>
       </Wrapper>

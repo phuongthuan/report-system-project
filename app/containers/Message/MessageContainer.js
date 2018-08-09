@@ -39,7 +39,7 @@ class MessageContainer extends Component {
             ) : (
               <Fragment>
                 {messages.length === 0 ? (
-                  <p className="d-flex justify-content-center display-4">No message</p>
+                  <p className="d-flex justify-content-center display-4 text-white">No message</p>
                 ) : (
                   <MessagesList
                     {...this.props}

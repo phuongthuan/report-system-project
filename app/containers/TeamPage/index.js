@@ -7,6 +7,7 @@ import StatisticContainer from "../StatisticPage/StatisticContainer";
 import TestContainer from "../TestContainer";
 import PermissionRoute from '../../utils/PermissionRoute'
 import { GROUP_LEADER } from '../../constants/rolesType'
+import WeeklyReportContainer from "../WeeklyReport/WeeklyReportContainer";
 
 class TeamPage extends Component {
   render() {
@@ -19,9 +20,21 @@ class TeamPage extends Component {
             role={GROUP_LEADER}
             component={TeamContainer}
           />
-          <PermissionRoute role={GROUP_LEADER} path="/team/:id/statistic" component={StatisticContainer}/>
-          <PermissionRoute role={GROUP_LEADER} path="/team/:id/weekly-report" component={TestContainer}/>
-          <PermissionRoute role={GROUP_LEADER} path="/team/:id" component={TeamDetailContainer}/>
+          <PermissionRoute
+            role={GROUP_LEADER}
+            path="/team/:id/statistic"
+            component={StatisticContainer}
+          />
+          <PermissionRoute
+            role={GROUP_LEADER}
+            path="/team/:id/weekly-report"
+            component={WeeklyReportContainer}
+          />
+          <PermissionRoute
+            role={GROUP_LEADER}
+            path="/team/:id"
+            component={TeamDetailContainer}
+          />
           <Route component={NoMatch}/>
         </Switch>
       </div>

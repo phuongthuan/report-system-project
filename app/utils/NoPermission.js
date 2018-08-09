@@ -10,7 +10,7 @@ const WrapperStyled = styled.div`
 const NoPermision = ({location}) => {
   return (
     <WrapperStyled>
-      <h3>
+      <h3 className="text-white">
         You dont have permisson to access this route
         <code>{location.pathname}</code>
       </h3>
