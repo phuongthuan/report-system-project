@@ -33,12 +33,6 @@ export function* fetchAllReportsOfTeam(action) {
       }
       return null;
     });
-
-    // const results = mergedReports.filter(report => report.title.toLowerCase().includes('Ratione'))
-    //   .map(report => report.title);
-
-    // console.log('fetchAllReportsOfTeam', results);
-
     yield delay(700);
     yield put(getAllReportsOfTeamSucceeded(mergedReports));
   } catch (error) {
