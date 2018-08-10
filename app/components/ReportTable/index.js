@@ -3,19 +3,12 @@ import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Emoji } from 'emoji-mart';
-import {
-  ListItem,
-  TablePagination,
-  Avatar,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  Paper
-} from '@material-ui/core';
+import { Paper, Table, TableBody, TableCell, TableHead, TablePagination, TableRow } from '@material-ui/core';
 import { Button, Modal } from 'antd'
 import Chip from '../Chip/index'
+import SearchBox from "../SearchBox";
+import DatePickerComponent from "../DateTimePicker/DatePickerComponent";
+import RangePickerComponent from "../DateTimePicker/RangePickerComponent";
 
 const confirm = Modal.confirm;
 const CustomTableCell = withStyles(theme => ({
@@ -29,22 +22,19 @@ const CustomTableCell = withStyles(theme => ({
     paddingLeft: 10
   }
 }))(TableCell);
-
 const CustomTableRow = withStyles(theme => ({
   root: {},
 }))(TableRow);
-
 const CustomTableHead = withStyles(theme => ({
   root: {
     padding: 0
   },
 }))(TableHead);
-
 const styles = theme => ({
   root: {
     width: '100%',
     overflowX: 'auto',
-    borderRadius: '0'
+    borderRadius: 3
   },
   table: {
     minWidth: 500,
@@ -58,8 +48,9 @@ class ReportTable extends Component {
 
   state = {
     data: this.props.data,
+    searchTerm: '',
     page: 0,
-    rowsPerPage: 10,
+    rowsPerPage: 15,
   }
 
   componentWillReceiveProps(nextProps) {
@@ -78,6 +69,10 @@ class ReportTable extends Component {
   handleChangeRowsPerPage = event => {
     this.setState({rowsPerPage: event.target.value});
   };
+
+  updateSearchTerm = (searchTerm) => {
+    this.setState({searchTerm});
+  }
 
   showConfirm = (id) => {
     const {addFlashMessage, deleteReport} = this.props;
@@ -102,11 +97,52 @@ class ReportTable extends Component {
   }
 
   render() {
-    const {classes, user, match} = this.props;
-    const {data, rowsPerPage, page} = this.state;
+
+    const {
+      classes,
+      user,
+      match,
+      fetchAllReportsOfUserByDay,
+      fetchAllReportsOfUserByRange,
+
+      fetchAllReportsOfTeamByRange,
+      fetchAllReportsOfTeamByDay,
+      actionChange
+
+    } = this.props;
+
+    const {data, rowsPerPage, page, searchTerm} = this.state;
     return (
       <Paper className={classes.root}>
         <div className={classes.tableWrapper}>
+
+          <div className="card border-0">
+            <div className="col-md-12 card-body d-flex justify-content-between">
+
+              <SearchBox
+                searchTerm={searchTerm}
+                onChange={this.updateSearchTerm}
+              />
+
+              <DatePickerComponent
+                {...this.props}
+                actionChange={actionChange}
+                user={user}
+                fetchAllReportsOfUserByDay={fetchAllReportsOfUserByDay}
+                fetchAllReportsOfTeamByDay={fetchAllReportsOfTeamByDay}
+              />
+
+              <RangePickerComponent
+                {...this.props}
+                actionChange={actionChange}
+                user={user}
+                fetchAllReportsOfUserByRange={fetchAllReportsOfUserByRange}
+                fetchAllReportsOfTeamByRange={fetchAllReportsOfTeamByRange}
+              />
+
+            </div>
+          </div>
+
           <Table className={classes.table}>
             <CustomTableHead>
               <CustomTableRow>
@@ -120,18 +156,23 @@ class ReportTable extends Component {
                 {user && user.role === 'member' && (
                   <CustomTableCell>Actions</CustomTableCell>
                 )}
-
               </CustomTableRow>
             </CustomTableHead>
             <TableBody>
-              {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(report => {
-                return (
+              {data
+                .filter(report =>
+                  (report.title.toLowerCase().includes(searchTerm.toLowerCase()))
+                  || (report.date.toLowerCase().includes(searchTerm.toLowerCase()))
+                  || (report.emotion.id.includes(searchTerm.toLowerCase()))
+                )
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map(report => (
                   <CustomTableRow key={report.id}>
                     <CustomTableCell>{report.id}</CustomTableCell>
                     <CustomTableCell>
                       <Emoji
                         tooltip
-                        set={'emojione'}
+                        set="emojione"
                         emoji={report.emotion.colons}
                         size={24}
                       />
@@ -171,8 +212,7 @@ class ReportTable extends Component {
                       </CustomTableCell>
                     )}
                   </CustomTableRow>
-                );
-              })}
+                ))}
               {this.emptyRows > 0 && (
                 <TableRow style={{height: 48 * this.emptyRows}}>
                   <TableCell colSpan={6}/>

@@ -9,7 +9,7 @@ const PermissionRoute = ({component: Component, user, role, ...rest}) => {
     <Route
       {...rest}
       render={props =>
-        (user.role === role || user.role === role[0] || user.role === role[1]) ? (
+        (user.role === role || user.role === role[0] || user.role === role[1] || user.role === role[2]) ? (
           <Component {...props} />
         ) : (
           <NoPermision location={props.location}/>

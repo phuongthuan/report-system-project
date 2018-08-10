@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button } from 'antd';
-import { Modal, ModalHeader, ModalBody } from 'reactstrap';
+import { Modal, ModalBody, ModalHeader } from 'reactstrap';
 import WeeklyReportForm from '../WeeklyReportForm/index'
 
 class WeeklyReportModal extends Component {

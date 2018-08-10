@@ -10,19 +10,34 @@ class MemberDetail extends Component {
 
   tableData = () => {
     const {
+      action,
       member,
       user,
       reportsList,
       weeklysReportList,
       addFlashMessage,
-      removeWeeklyReport
+      removeWeeklyReport,
+      actionChange,
+
+      fetchAllReportsOfUserByRange,
+      fetchAllReportsOfUserByDay,
+      fetchAllReportsOfTeamByDay,
+      fetchAllReportsOfTeamByRange,
+
     } = this.props;
+
     if (member.role === 'member') {
       return (
         <ReportTable
           {...this.props}
+          action={action}
+          actionChange={actionChange}
           user={user}
           data={reportsList}
+          fetchAllReportsOfUserByDay={fetchAllReportsOfUserByDay}
+          fetchAllReportsOfUserByRange={fetchAllReportsOfUserByRange}
+          fetchAllReportsOfTeamByRange={fetchAllReportsOfTeamByRange}
+          fetchAllReportsOfTeamByDay={fetchAllReportsOfTeamByDay}
         />
       )
     } else if (member.role === 'team_leader') {

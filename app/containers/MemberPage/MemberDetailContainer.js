@@ -6,15 +6,20 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types';
 import MemberDetail from "../../components/MemberDetail";
 import { selectError, selectReportLoading, selectReports } from "../ReportPage/selectors";
-import { fetchAllReportsOfUser } from "../ReportPage/actions";
+import { fetchAllReportsOfUser, fetchAllReportsOfUserByDay, fetchAllReportsOfUserByRange } from "../ReportPage/actions";
 import { selectMember, selectMemberLoading } from "./selectors";
 import { getMemberProfile } from "./actions";
 import { selectUser } from "../Auth/selectors";
 import { deleteWeeklyReport, fetchAllWeeklyReportsOfUser } from "../WeeklyReport/actions";
 import { selectWeeklyReports } from "../WeeklyReport/selectors";
 import { addFlashMessage } from "../FlashMessage/actions";
+import { getAllReportsOfTeamByDay, getAllReportsOfTeamByRange } from "../StatisticPage/actions";
 
 class MemberDetailContainer extends Component {
+
+  state = {
+    action: ''
+  }
 
   componentDidMount() {
     const {
@@ -31,6 +36,10 @@ class MemberDetailContainer extends Component {
     fetchAllWeeklyReportsOfUser(memberId)
   }
 
+  actionChange = (action) => {
+    this.setState({action});
+  }
+
   render() {
     const {
       reports,
@@ -39,7 +48,11 @@ class MemberDetailContainer extends Component {
       memberLoading,
       member,
       user,
-      removeWeeklyReport
+      removeWeeklyReport,
+      fetchAllReportsOfUserByRange,
+      fetchAllReportsOfUserByDay,
+      fetchAllReportsOfTeamByDay,
+      fetchAllReportsOfTeamByRange,
     } = this.props;
 
     return (
@@ -53,7 +66,8 @@ class MemberDetailContainer extends Component {
           ) : (
             <MemberDetail
               {...this.props}
-
+              action={this.state.action}
+              actionChange={this.actionChange}
               user={user}
               member={member}
 
@@ -64,6 +78,11 @@ class MemberDetailContainer extends Component {
               weeklysReportList={weekly_reports}
 
               removeWeeklyReport={removeWeeklyReport}
+
+              fetchAllReportsOfUserByDay={fetchAllReportsOfUserByDay}
+              fetchAllReportsOfUserByRange={fetchAllReportsOfUserByRange}
+              fetchAllReportsOfTeamByRange={fetchAllReportsOfTeamByRange}
+              fetchAllReportsOfTeamByDay={fetchAllReportsOfTeamByDay}
             />
           )}
         </div>
@@ -96,9 +115,16 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   fetchAllReportsOfUser: userId => dispatch(fetchAllReportsOfUser(userId)),
   fetchAllWeeklyReportsOfUser: userId => dispatch(fetchAllWeeklyReportsOfUser(userId)),
+
   getMemberProfile: id => dispatch(getMemberProfile(id)),
   addFlashMessage: message => dispatch(addFlashMessage(message)),
-  removeWeeklyReport: id => dispatch(deleteWeeklyReport(id))
+  removeWeeklyReport: id => dispatch(deleteWeeklyReport(id)),
+
+  fetchAllReportsOfTeamByRange: (teamName, range) => dispatch(getAllReportsOfTeamByRange(teamName, range)),
+  fetchAllReportsOfTeamByDay: (teamName, date) => dispatch(getAllReportsOfTeamByDay(teamName, date)),
+
+  fetchAllReportsOfUserByDay: (userId, date) => dispatch(fetchAllReportsOfUserByDay(userId, date)),
+  fetchAllReportsOfUserByRange: (userId, range) => dispatch(fetchAllReportsOfUserByRange(userId, range)),
 });
 
 export default connect(

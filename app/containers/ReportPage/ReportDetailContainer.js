@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import PropTypes from 'prop-types';
 import SideBar from 'components/SideBar'
 import isEmpty from "lodash/isEmpty";
-import { addFlashMessage } from "../FlashMessage/actions";
 import { selectAReport, selectReportLoading } from "./selectors";
 import { fetchAReport } from "./actions";
 import ReportDetail from "../../components/ReportDetail";

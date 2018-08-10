@@ -5,7 +5,7 @@ import EmojiMartPicker from 'emoji-mart-picker'
 import moment from "moment/moment";
 import isEmpty from 'lodash/isEmpty'
 import { Button } from 'antd'
-import { FormGroup, Label, Input, Form, Card, CardHeader, CardFooter, CardTitle, CardBody } from 'reactstrap'
+import { Card, CardBody, CardFooter, CardHeader, CardTitle, Form, FormGroup, Input, Label } from 'reactstrap'
 import InputField from '../InputField/index'
 import AsyncButton from '../AsyncButton/index'
 import SelectBox from '../SelectBox/index'
@@ -157,12 +157,13 @@ const ReportForm = withFormik({
   },
 
   handleSubmit: (values, {props, setSubmitting}) => {
-    const {createReport, addFlashMessage, updateReport, match} = props;
+    const {createReport, addFlashMessage, updateReport, match, user} = props;
     const isReport = match.params.id;
     setSubmitting(true);
     setTimeout(() => {
       if (isReport) {
-        updateReport(values);
+        const reportUpdated = Object.assign({}, values, {userId: user.id});
+        updateReport(reportUpdated);
         addFlashMessage({
           type: 'success',
           text: 'Update Report Successful.'

@@ -4,10 +4,9 @@ import PropTypes from 'prop-types'
 import isEmpty from "lodash/isEmpty";
 import SideBar from 'components/SideBar'
 import { getAllReportsOfTeam, getAllReportsOfTeamByDay, getAllReportsOfTeamByRange } from "./actions";
-import { selectStatisticLoading, selectReportsOfTeam } from "./selectors";
+import { selectReportsOfTeam, selectStatisticLoading } from "./selectors";
 import { selectProfile } from "../ProfilePage/selectors";
 import { selectUser } from "../Auth/selectors";
-import FilterReport from '../../components/FilterReport/index'
 import Spinner from "../../components/Spinner";
 import EmotionPie from "../../components/Chart/PieChart/EmotionPie";
 import EmotionLine from "../../components/Chart/LineChart/EmotionLine";
@@ -16,6 +15,9 @@ import IssuePie from "../../components/Chart/PieChart/IssuePie";
 import WeeklyReportModal from '../../components/WeeklyReportModal/index'
 import { addFlashMessage } from "../FlashMessage/actions";
 import { createWeeklyReport } from "../WeeklyReport/actions";
+import DatePickerComponent from "../../components/DateTimePicker/DatePickerComponent";
+import RangePickerComponent from "../../components/DateTimePicker/RangePickerComponent";
+import { fetchAllReportsOfUserByDay, fetchAllReportsOfUserByRange } from "../ReportPage/actions";
 
 class StatisticContainer extends Component {
 
@@ -47,7 +49,9 @@ class StatisticContainer extends Component {
       reportsOfTeam,
       loading,
       fetchAllReportsOfTeamByRange,
-      fetchAllReportsOfTeamByDay
+      fetchAllReportsOfTeamByDay,
+      fetchAllReportsOfUserByDay,
+      fetchAllReportsOfUserByRange
     } = this.props;
 
     return (
@@ -58,24 +62,38 @@ class StatisticContainer extends Component {
         <div className="col-md-9">
           <div className="row">
             <div className="col-md-4">
-              {user.role === 'team_leader' ? (
-                <WeeklyReportModal
-                  user={user}
-                  addFlashMessage={addFlashMessage}
-                  createWeeklyReport={createWeeklyReport}
-                />
-              ) : (
-                null
-              )}
+              <div>
+                {user.role === 'team_leader' ? (
+                  <WeeklyReportModal
+                    user={user}
+                    addFlashMessage={addFlashMessage}
+                    createWeeklyReport={createWeeklyReport}
+                  />
+                ) : (
+                  null
+                )}
+              </div>
             </div>
             <div className="col-md-8">
-              <FilterReport
-                actionChange={this.actionChange}
-                {...this.props}
-                user={user}
-                fetchAllReportsOfTeamByRange={fetchAllReportsOfTeamByRange}
-                fetchAllReportsOfTeamByDay={fetchAllReportsOfTeamByDay}
-              />
+              <div className="d-flex justify-content-between mb-3">
+
+                <DatePickerComponent
+                  {...this.props}
+                  actionChange={this.actionChange}
+                  user={user}
+                  fetchAllReportsOfTeamByDay={fetchAllReportsOfTeamByDay}
+                  fetchAllReportsOfUserByDay={fetchAllReportsOfUserByDay}
+                />
+
+                <RangePickerComponent
+                  {...this.props}
+                  actionChange={this.actionChange}
+                  user={user}
+                  fetchAllReportsOfTeamByRange={fetchAllReportsOfTeamByRange}
+                  fetchAllReportsOfUserByRange={fetchAllReportsOfUserByRange}
+                />
+
+              </div>
             </div>
           </div>
 
@@ -142,6 +160,8 @@ StatisticContainer.propTypes = {
   fetchAllReportsOfTeam: PropTypes.func,
   fetchAllReportsOfTeamByRange: PropTypes.func,
   fetchAllReportsOfTeamByDay: PropTypes.func,
+  fetchAllReportsOfUserByDay: PropTypes.func,
+  fetchAllReportsOfUserByRange: PropTypes.func,
   addFlashMessage: PropTypes.func,
   createWeeklyReport: PropTypes.func,
 }
@@ -155,8 +175,13 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchAllReportsOfTeam: teamName => dispatch(getAllReportsOfTeam(teamName)),
+
   fetchAllReportsOfTeamByRange: (teamName, range) => dispatch(getAllReportsOfTeamByRange(teamName, range)),
   fetchAllReportsOfTeamByDay: (teamName, date) => dispatch(getAllReportsOfTeamByDay(teamName, date)),
+
+  fetchAllReportsOfUserByDay: (userId, date) => dispatch(fetchAllReportsOfUserByDay(userId, date)),
+  fetchAllReportsOfUserByRange: (userId, range) => dispatch(fetchAllReportsOfUserByRange(userId, range)),
+
   addFlashMessage: message => dispatch(addFlashMessage(message)),
   createWeeklyReport: payload => dispatch(createWeeklyReport(payload))
 });

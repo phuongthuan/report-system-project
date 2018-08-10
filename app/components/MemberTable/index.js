@@ -1,28 +1,18 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import {
-  TablePagination,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  Paper
-} from '@material-ui/core';
-import { Badge } from 'reactstrap'
-import { Button, Modal } from 'antd'
+import { Paper, Table, TableBody, TableCell, TableHead, TablePagination, TableRow } from '@material-ui/core';
+import { Modal } from 'antd'
 import Chip from '../Chip/index'
 import RemindModal from '../RemindModal/index'
+import TagBox from '../TagBox/index'
 
 const confirm = Modal.confirm;
 const CustomTableCell = withStyles(theme => ({
   body: {
     fontSize: 14,
     paddingRight: 0,
-    paddingLeft: 10,
-    paddingBottom: 10,
-    paddingTop: 10,
+    paddingLeft: 10
   },
   head: {
     paddingRight: 0,
@@ -44,7 +34,7 @@ const styles = theme => ({
   root: {
     width: '100%',
     overflowX: 'auto',
-    borderRadius: '0'
+    borderRadius: 3
   },
   table: {
     minWidth: 500,
@@ -59,7 +49,7 @@ class MemberTable extends Component {
   state = {
     data: this.props.data,
     page: 0,
-    rowsPerPage: 10,
+    rowsPerPage: 15,
   }
 
   componentWillReceiveProps(nextProps) {
@@ -102,7 +92,7 @@ class MemberTable extends Component {
   }
 
   render() {
-    const {classes, user, match, addFlashMessage, createMessage} = this.props;
+    const {classes, user, addFlashMessage, createMessage} = this.props;
     const {data, rowsPerPage, page} = this.state;
     return (
       <Paper className={classes.root}>
@@ -111,11 +101,11 @@ class MemberTable extends Component {
             <CustomTableHead>
               <CustomTableRow>
                 <CustomTableCell>ID</CustomTableCell>
-                <CustomTableCell>Information</CustomTableCell>
-                <CustomTableCell>Address</CustomTableCell>
+                <CustomTableCell>Name</CustomTableCell>
+                <CustomTableCell>Role</CustomTableCell>
+                <CustomTableCell>Division</CustomTableCell>
                 <CustomTableCell>Phone</CustomTableCell>
                 <CustomTableCell>Actions</CustomTableCell>
-
               </CustomTableRow>
             </CustomTableHead>
             <TableBody>
@@ -129,10 +119,25 @@ class MemberTable extends Component {
                         history={this.props.history}
                         userInfo={member}
                       />
-                      <Badge
-                        color="light"
-                      >
-                        {
+                    </CustomTableCell>
+
+                    <CustomTableCell>
+                      <TagBox
+                        color={
+                          (() => {
+                            switch (member.role) {
+                              case "member":
+                                return "green";
+                              case "team_leader":
+                                return "orange";
+                              case "group_leader":
+                                return "gold";
+                              default:
+                                return "green";
+                            }
+                          })()
+                        }
+                        name={
                           (() => {
                             switch (member.role) {
                               case "member":
@@ -146,16 +151,29 @@ class MemberTable extends Component {
                             }
                           })()
                         }
-                      </Badge>
-                      <Badge
-                        color="success"
-                      >
-                        {member.division}
-                      </Badge>
+                      />
                     </CustomTableCell>
 
-                    <CustomTableCell component="th" scope="row">
-                      {member.address}
+                    <CustomTableCell>
+                      <TagBox
+                        color={
+                          (() => {
+                            switch (member.division) {
+                              case "Front End Team 1":
+                                return "purple";
+                              case "Front End Team 2":
+                                return "geekblue";
+                              case "Front End Team 3":
+                                return "blue";
+                              case "Front End Team 4":
+                                return "cyan";
+                              default:
+                                return "blue";
+                            }
+                          })()
+                        }
+                        name={member.division}
+                      />
                     </CustomTableCell>
 
                     <CustomTableCell component="th" scope="row">

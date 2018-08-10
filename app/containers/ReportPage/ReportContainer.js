@@ -3,18 +3,18 @@ import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty'
 import { connect } from 'react-redux';
 import Spinner from 'components/Spinner'
-import ReportsList from '../../components/ReportsList'
 import SideBar from '../../components/SideBar'
 import { selectUser } from "../Auth/selectors";
 import { selectError, selectReportLoading, selectReports } from "./selectors";
 import {
-  fetchAllReportsOfUser, deleteReport, fetchAllReportsOfUserByDay,
+  deleteReport,
+  fetchAllReportsOfUser,
+  fetchAllReportsOfUserByDay,
   fetchAllReportsOfUserByRange
 } from "./actions";
 import { getAllReportsOfTeam, getAllReportsOfTeamByDay, getAllReportsOfTeamByRange } from "../StatisticPage/actions";
 import { selectReportsOfTeam, selectStatisticLoading } from "../StatisticPage/selectors";
 import { addFlashMessage } from "../FlashMessage/actions";
-import FilterReport from "../../components/FilterReport";
 import ReportTable from '../../components/ReportTable/index'
 
 class ReportContainer extends Component {
@@ -62,27 +62,29 @@ class ReportContainer extends Component {
   }
 
   render() {
-    const {reportsOfUser, addFlashMessage, fetchAllReportsOfUserByRange, fetchAllReportsOfUserByDay, fetchAllReportsOfTeamByDay, deleteReport, reportLoading, statisticLoading, reportsOfTeam, user, fetchAllReportsOfTeamByRange} = this.props;
+    const {
+      reportsOfUser,
+      addFlashMessage,
+      fetchAllReportsOfUserByRange,
+      fetchAllReportsOfUserByDay,
+      fetchAllReportsOfTeamByDay,
+      fetchAllReportsOfTeamByRange,
+      deleteReport,
+      reportLoading,
+      statisticLoading,
+      reportsOfTeam,
+      user,
+    } = this.props;
+
     const loading = (user.role === 'member') ? reportLoading : statisticLoading;
     const reports = (user.role === 'member') ? reportsOfUser : reportsOfTeam;
+
     return (
       <div className="row">
         <div className="col-md-3">
           <SideBar/>
         </div>
         <div className="col-md-9">
-          <div className="row">
-            <div className="col-md-8">
-              <FilterReport
-                user={user}
-                actionChange={this.actionChange}
-                fetchAllReportsOfUserByDay={fetchAllReportsOfUserByDay}
-                fetchAllReportsOfUserByRange={fetchAllReportsOfUserByRange}
-                fetchAllReportsOfTeamByRange={fetchAllReportsOfTeamByRange}
-                fetchAllReportsOfTeamByDay={fetchAllReportsOfTeamByDay}
-              />
-            </div>
-          </div>
           <div className="row">
             <div className="col-md-12">
               {loading && isEmpty(reports) ? (
@@ -94,11 +96,15 @@ class ReportContainer extends Component {
                   ) : (
                     <ReportTable
                       {...this.props}
-                      addFlashMessage={addFlashMessage}
-                      deleteReport={deleteReport}
                       user={user}
                       action={this.state.action}
                       data={reports}
+                      addFlashMessage={addFlashMessage}
+                      fetchAllReportsOfUserByDay={fetchAllReportsOfUserByDay}
+                      fetchAllReportsOfUserByRange={fetchAllReportsOfUserByRange}
+                      fetchAllReportsOfTeamByRange={fetchAllReportsOfTeamByRange}
+                      fetchAllReportsOfTeamByDay={fetchAllReportsOfTeamByDay}
+                      deleteReport={deleteReport}
                     />
                   )}
                 </Fragment>
@@ -121,16 +127,17 @@ export const mapStateToProps = state => ({
 });
 
 export const mapDispatchToProps = dispatch => ({
+  fetchAllReportsOfTeam: teamName => dispatch(getAllReportsOfTeam(teamName)),
   fetchAllReportsOfUser: userId => dispatch(fetchAllReportsOfUser(userId)),
-  fetchAllReportsOfUserByDay: (userId, date) => dispatch(fetchAllReportsOfUserByDay(userId, date)),
-  fetchAllReportsOfUserByRange: (userId, range) => dispatch(fetchAllReportsOfUserByRange(userId, range)),
 
   deleteReport: reportId => dispatch(deleteReport(reportId)),
   addFlashMessage: message => dispatch(addFlashMessage(message)),
 
-  fetchAllReportsOfTeam: teamName => dispatch(getAllReportsOfTeam(teamName)),
   fetchAllReportsOfTeamByRange: (teamName, range) => dispatch(getAllReportsOfTeamByRange(teamName, range)),
-  fetchAllReportsOfTeamByDay: (teamName, date) => dispatch(getAllReportsOfTeamByDay(teamName, date))
+  fetchAllReportsOfTeamByDay: (teamName, date) => dispatch(getAllReportsOfTeamByDay(teamName, date)),
+
+  fetchAllReportsOfUserByDay: (userId, date) => dispatch(fetchAllReportsOfUserByDay(userId, date)),
+  fetchAllReportsOfUserByRange: (userId, range) => dispatch(fetchAllReportsOfUserByRange(userId, range)),
 });
 
 export default connect(
