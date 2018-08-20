@@ -1,8 +1,11 @@
 import React, { PureComponent } from 'react'
 import styled from 'styled-components'
+import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import { FormattedMessage } from 'react-intl'
 import Button from 'components/Button'
 import img from '../../assests/images/neil-rosenstech-752022-unsplash.jpg'
+import { selectIsAuthenticated } from "../Auth/selectors";
 
 const AppWrapper = styled.div`
   background-image: url(${img});
@@ -19,12 +22,17 @@ export class Home extends PureComponent {
   static propTypes = {
     history: PropTypes.shape({
       push: PropTypes.func,
-    })
+    }),
+    isAuthenticated: PropTypes.bool.isRequired
   }
 
   goToReportPage = () => {
-    const {history} = this.props;
-    history.push('/profile/edit');
+    const {history, isAuthenticated} = this.props;
+    if (isAuthenticated) {
+      history.push('/profile/edit');
+    } else {
+      history.push('/');
+    }
   }
 
   render() {
@@ -36,7 +44,10 @@ export class Home extends PureComponent {
               className="mt-3"
               onClick={this.goToReportPage}
             >
-              REPORT SYSTEMS
+              <FormattedMessage
+                id="app.button.title"
+                defaultMessage="Report System"
+              />
             </Button>
           </div>
         </div>
@@ -45,4 +56,11 @@ export class Home extends PureComponent {
   }
 }
 
-export default Home;
+const mapStateToProps = state => ({
+  isAuthenticated: selectIsAuthenticated(state)
+});
+
+export default connect(
+  mapStateToProps,
+  null
+)(Home);

@@ -4,6 +4,7 @@
 
 import { combineReducers } from 'redux'
 
+import appReducer from 'containers/App/reducer'
 import reportReducer from 'containers/ReportPage/reducer'
 import authReducer from 'containers/Auth/reducer'
 import profileReducer from 'containers/ProfilePage/reducer'
@@ -14,6 +15,7 @@ import messageReducer from 'containers/Message/reducer'
 import teamReducer from 'containers/TeamPage/reducer'
 import weeklyReportReducer from 'containers/WeeklyReport/reducer'
 
+import { context as appContext } from 'containers/App/constants'
 import { context as reportpageContext } from 'containers/ReportPage/constants'
 import { context as authpageContext } from 'containers/Auth/constants'
 import { context as profilepageContext } from 'containers/ProfilePage/constants'
@@ -26,6 +28,7 @@ import { context as weeklyReport } from 'containers/WeeklyReport/constants'
 
 const reducer = combineReducers({
   [authpageContext]: authReducer,
+  [appContext]: appReducer,
   [profilepageContext]: profileReducer,
   [weeklyReport]: weeklyReportReducer,
   [teampageContext]: teamReducer,

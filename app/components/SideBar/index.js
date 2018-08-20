@@ -42,9 +42,9 @@ class SideBar extends Component {
   }
 
   logout = (e) => {
-    const {history} = this.props;
+    const {history, logout} = this.props;
     e.preventDefault();
-    this.props.logout();
+    logout();
     history.push('/');
   }
 

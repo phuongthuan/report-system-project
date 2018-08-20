@@ -4,7 +4,6 @@ import Spinner from 'components/Spinner'
 import isEmpty from 'lodash/isEmpty';
 import { connect } from "react-redux";
 import styled from 'styled-components'
-import SideBar from '../../components/SideBar'
 import ProfileForm from "../../components/ProfileForm";
 import { getUserProfile, updateProfile } from './actions'
 import { addFlashMessage } from '../FlashMessage/actions'
@@ -37,12 +36,12 @@ class ProfileContainer extends Component {
     return (
       <Wrapper>
         {authLoading && isEmpty(user) ? (
-          <Spinner height="500px" style={{fontSize: 32, color: '#FFFFFF'}}/>
+          <Spinner height="500px" style={{fontSize: 32}}/>
         ) : (
           <div className="row">
             {loading && isEmpty(profile) ? (
               <div className="col-md-12">
-                <Spinner height="500px" style={{fontSize: 32, color: '#FFFFFF'}}/>
+                <Spinner height="500px" style={{fontSize: 32}}/>
               </div>
             ) : (
               <div className="col-md-12">
