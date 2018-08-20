@@ -24,13 +24,10 @@ class WeeklyReportContainer extends Component {
     const {weekly_reportLoading, weekly_reports, removeWeeklyReport, addFlashMessage} = this.props;
     return (
       <div className="row">
-        <div className="col-md-3">
-          <SideBar />
-        </div>
         {weekly_reportLoading && isEmpty(weekly_reports) ? (
           <Spinner height="650px" style={{fontSize: 32, color: '#FFFFFF'}}/>
         ) : (
-          <div className="col-md-9">
+          <div className="col-md-12">
             <WeeklyReportTable
               addFlashMessage={addFlashMessage}
               removeWeeklyReport={removeWeeklyReport}

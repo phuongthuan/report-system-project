@@ -3,7 +3,18 @@ import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Emoji } from 'emoji-mart';
-import { Paper, Table, TableBody, TableCell, TableHead, TablePagination, TableRow } from '@material-ui/core';
+import isEmpty from 'lodash/isEmpty'
+import {
+  Paper,
+  Table,
+  TableBody,
+  TableSortLabel,
+  TableCell,
+  TableHead,
+  TablePagination,
+  TableRow,
+  Tooltip
+} from '@material-ui/core';
 import { Button, Modal } from 'antd'
 import Chip from '../Chip/index'
 import SearchBox from "../SearchBox";
@@ -44,6 +55,16 @@ const styles = theme => ({
   },
 });
 
+function getSorting(order, orderBy) {
+  return order === 'desc'
+    ? (a, b) => (typeof a[orderBy] === 'number')
+      ? b[orderBy] - a[orderBy]
+      : (a[orderBy].toUpperCase() > b[orderBy].toUpperCase()) ? -1 : (a[orderBy].toUpperCase() < b[orderBy].toUpperCase()) ? 1 : 0
+    : (a, b) => (typeof a[orderBy] === 'number')
+      ? a[orderBy] - b[orderBy]
+      : (a[orderBy].toUpperCase() < b[orderBy].toUpperCase()) ? -1 : (a[orderBy].toUpperCase() > b[orderBy].toUpperCase()) ? 1 : 0
+}
+
 class ReportTable extends Component {
 
   state = {
@@ -51,6 +72,8 @@ class ReportTable extends Component {
     searchTerm: '',
     page: 0,
     rowsPerPage: 15,
+    order: 'asc',
+    orderBy: 'title',
   }
 
   componentWillReceiveProps(nextProps) {
@@ -70,9 +93,24 @@ class ReportTable extends Component {
     this.setState({rowsPerPage: event.target.value});
   };
 
+  handleRequestSort = (event, property) => {
+    const orderBy = property;
+    let order = 'desc';
+
+    if (this.state.orderBy === property && this.state.order === 'desc') {
+      order = 'asc';
+    }
+    this.setState({order, orderBy});
+  };
+
+  createSortHandler = property => event => {
+    this.handleRequestSort(event, property);
+  };
+
   updateSearchTerm = (searchTerm) => {
     this.setState({searchTerm});
   }
+
 
   showConfirm = (id) => {
     const {addFlashMessage, deleteReport} = this.props;
@@ -111,13 +149,13 @@ class ReportTable extends Component {
 
     } = this.props;
 
-    const {data, rowsPerPage, page, searchTerm} = this.state;
+    const {data, rowsPerPage, page, searchTerm, order, orderBy} = this.state;
     return (
       <Paper className={classes.root}>
         <div className={classes.tableWrapper}>
 
           <div className="card border-0">
-            <div className="col-md-12 card-body d-flex justify-content-between">
+            <div className="col-md-6 card-body d-flex justify-content-between">
 
               <SearchBox
                 searchTerm={searchTerm}
@@ -146,13 +184,48 @@ class ReportTable extends Component {
           <Table className={classes.table}>
             <CustomTableHead>
               <CustomTableRow>
-                <CustomTableCell>ID</CustomTableCell>
+                <CustomTableCell
+                  sortDirection={orderBy === 'id' ? order : false}
+                >
+                  <TableSortLabel
+                    active={orderBy === 'id'}
+                    direction={order}
+                    onClick={this.createSortHandler('id')}
+                  >
+                    ID
+                  </TableSortLabel>
+                </CustomTableCell>
+
                 <CustomTableCell>Emotion</CustomTableCell>
-                <CustomTableCell>Title</CustomTableCell>
+                <CustomTableCell
+                  sortDirection={orderBy === 'title' ? order : false}
+                >
+                  <TableSortLabel
+                    active={orderBy === 'title'}
+                    direction={order}
+                    onClick={this.createSortHandler('title')}
+                  >
+                    Title
+                  </TableSortLabel>
+                </CustomTableCell>
+
                 {user && user.role === 'team_leader' && (
                   <CustomTableCell>Author</CustomTableCell>
                 )}
-                <CustomTableCell>Date created</CustomTableCell>
+
+
+                <CustomTableCell
+                  sortDirection={orderBy === 'date' ? order : false}
+                >
+                  <TableSortLabel
+                    active={orderBy === 'date'}
+                    direction={order}
+                    onClick={this.createSortHandler('date')}
+                  >
+                    Date
+                  </TableSortLabel>
+                </CustomTableCell>
+
                 {user && user.role === 'member' && (
                   <CustomTableCell>Actions</CustomTableCell>
                 )}
@@ -165,10 +238,12 @@ class ReportTable extends Component {
                   || (report.date.toLowerCase().includes(searchTerm.toLowerCase()))
                   || (report.emotion.id.includes(searchTerm.toLowerCase()))
                 )
+                .sort(getSorting(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map(report => (
                   <CustomTableRow key={report.id}>
                     <CustomTableCell>{report.id}</CustomTableCell>
+
                     <CustomTableCell>
                       <Emoji
                         tooltip
@@ -177,6 +252,7 @@ class ReportTable extends Component {
                         size={24}
                       />
                     </CustomTableCell>
+
                     <CustomTableCell component="th" scope="row">
                       <Link to={`/report/${report.id}`}>
                         {report.title}
@@ -191,6 +267,7 @@ class ReportTable extends Component {
                         />
                       </CustomTableCell>
                     )}
+
                     <CustomTableCell component="th" scope="row">
                       {report.date}
                     </CustomTableCell>

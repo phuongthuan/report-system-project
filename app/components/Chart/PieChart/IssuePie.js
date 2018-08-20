@@ -98,7 +98,7 @@ class IssuePie extends Component {
   render() {
     return (
       <Card
-        className="border-0 shadow-sm"
+        className="border-0"
         style={{borderRadius: '0'}}
       >
         <CardBody>

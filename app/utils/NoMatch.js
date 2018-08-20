@@ -9,7 +9,7 @@ const WrapperStyled = styled.div`
 
 const NoMatch = ({ location }) => (
   <WrapperStyled>
-    <h3 className="text-white">
+    <h3>
       Not found for <code>{location.pathname}</code>
     </h3>
   </WrapperStyled>

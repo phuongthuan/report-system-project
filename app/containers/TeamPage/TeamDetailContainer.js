@@ -25,12 +25,9 @@ class TeamDetailContainer extends Component {
     const {team, teamLoading, statisticLoading, reportsOfTeam} = this.props;
     return (
       <div className="row">
-        <div className="col-md-3">
-          <SideBar/>
-        </div>
-        <div className="col-md-9">
+        <div className="col-md-12">
           {teamLoading && statisticLoading && isEmpty(team) && isEmpty(reportsOfTeam) ? (
-            <Spinner height="650px" style={{fontSize: 32, color: '#FFFFFF'}}/>
+            <Spinner height="650px" style={{fontSize: 32}}/>
           ) : (
             <TeamDetail
               {...this.props}

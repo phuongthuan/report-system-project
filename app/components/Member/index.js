@@ -16,7 +16,7 @@ class Member extends Component {
 
   render() {
     const {member, user, createMessage, addFlashMessage} = this.props;
-    const {id, firstName, address, phone, lastName, avatar, role, division} = member;
+    const {id, firstName, phone, lastName, avatar, role, division} = member;
     const image = member ? avatar : img;
 
     return (
@@ -74,8 +74,6 @@ class Member extends Component {
                     name={division}
                   />
                 </div>
-
-                <FontAwesomeIcon icon="address-book"/>&nbsp;{address}
                 <br/>
                 <FontAwesomeIcon icon="mobile-alt"/>&nbsp;{phone}
               </div>

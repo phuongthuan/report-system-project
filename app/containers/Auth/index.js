@@ -8,8 +8,12 @@ import { addFlashMessage } from '../FlashMessage/actions'
 import { login } from './actions'
 import LoginForm from "../../components/LoginForm";
 import { selectAuthError, selectIsAuthenticated } from "./selectors";
+import img from '../../assests/images/neil-rosenstech-752022-unsplash.jpg'
 
 const AuthWrapper = styled.div`
+  background-image: url(${img});
+  background-repeat: no-repeat;
+  background-size: cover;
   display: flex;
   align-items: center;
   justify-content: center;

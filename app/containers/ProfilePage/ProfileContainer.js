@@ -40,23 +40,17 @@ class ProfileContainer extends Component {
           <Spinner height="500px" style={{fontSize: 32, color: '#FFFFFF'}}/>
         ) : (
           <div className="row">
-            <div className="col-md-3">
-              <SideBar/>
-            </div>
-
             {loading && isEmpty(profile) ? (
-              <div className="col-md-9">
+              <div className="col-md-12">
                 <Spinner height="500px" style={{fontSize: 32, color: '#FFFFFF'}}/>
               </div>
             ) : (
-              <div className="col-md-9">
-                <div className="shadow-sm">
-                  <ProfileForm
-                    profile={profile}
-                    addFlashMessage={addFlashMessage}
-                    updateProfile={updateProfile}
-                  />
-                </div>
+              <div className="col-md-12">
+                <ProfileForm
+                  profile={profile}
+                  addFlashMessage={addFlashMessage}
+                  updateProfile={updateProfile}
+                />
               </div>
             )}
           </div>

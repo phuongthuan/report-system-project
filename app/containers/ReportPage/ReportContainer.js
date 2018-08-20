@@ -81,33 +81,24 @@ class ReportContainer extends Component {
 
     return (
       <div className="row">
-        <div className="col-md-3">
-          <SideBar/>
-        </div>
-        <div className="col-md-9">
+        <div className="col-md-12">
           <div className="row">
             <div className="col-md-12">
               {loading && isEmpty(reports) ? (
-                <Spinner height="650px" style={{fontSize: 32, color: '#FFFFFF'}} />
+                <Spinner height="650px" style={{fontSize: 32}} />
               ) : (
-                <Fragment>
-                  {reports.length === 0 ? (
-                    <p className="d-flex justify-content-center display-4 text-white">No report</p>
-                  ) : (
-                    <ReportTable
-                      {...this.props}
-                      user={user}
-                      action={this.state.action}
-                      data={reports}
-                      addFlashMessage={addFlashMessage}
-                      fetchAllReportsOfUserByDay={fetchAllReportsOfUserByDay}
-                      fetchAllReportsOfUserByRange={fetchAllReportsOfUserByRange}
-                      fetchAllReportsOfTeamByRange={fetchAllReportsOfTeamByRange}
-                      fetchAllReportsOfTeamByDay={fetchAllReportsOfTeamByDay}
-                      deleteReport={deleteReport}
-                    />
-                  )}
-                </Fragment>
+                <ReportTable
+                  {...this.props}
+                  user={user}
+                  action={this.state.action}
+                  data={reports}
+                  addFlashMessage={addFlashMessage}
+                  fetchAllReportsOfUserByDay={fetchAllReportsOfUserByDay}
+                  fetchAllReportsOfUserByRange={fetchAllReportsOfUserByRange}
+                  fetchAllReportsOfTeamByRange={fetchAllReportsOfTeamByRange}
+                  fetchAllReportsOfTeamByDay={fetchAllReportsOfTeamByDay}
+                  deleteReport={deleteReport}
+                />
               )}
             </div>
           </div>

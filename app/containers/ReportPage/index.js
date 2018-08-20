@@ -12,8 +12,8 @@ import PermissionRoute from '../../utils/PermissionRoute'
 class ReportPage extends Component {
   render() {
     return (
-      <div className="container">
-        <FlashMessage />
+      <div className="container-fluid">
+        <FlashMessage/>
         <Switch>
           <PermissionRoute
             exact
@@ -23,8 +23,10 @@ class ReportPage extends Component {
           />
           <PermissionRoute role={MEMBER} path="/report/create" component={CreateReportContainer}/>
           <PermissionRoute role={MEMBER} path="/report/update/:id" component={UpdateReportContainer}/>
-          <PermissionRoute role={[MEMBER, TEAM_LEADER, GROUP_LEADER]} path="/report/:id"
-                           component={ReportDetailContainer}/>
+          <PermissionRoute
+            role={[MEMBER, TEAM_LEADER, GROUP_LEADER]}
+            path="/report/:id"
+            component={ReportDetailContainer}/>
           <Route component={NoMatch}/>
         </Switch>
       </div>

@@ -30,16 +30,13 @@ class MessageContainer extends Component {
     return (
       <Wrapper>
         <div className="row">
-          <div className="col-md-3">
-            <SideBar/>
-          </div>
-          <div className="col-md-9">
+          <div className="col-md-12">
             {loading && isEmpty(messages) ? (
-              <Spinner height="650px" style={{fontSize: 32, color: '#FFFFFF'}}/>
+              <Spinner height="650px" style={{fontSize: 32}}/>
             ) : (
               <Fragment>
                 {messages.length === 0 ? (
-                  <p className="d-flex justify-content-center display-4 text-white">No message</p>
+                  <p className="d-flex justify-content-center display-4">No message</p>
                 ) : (
                   <MessagesList
                     {...this.props}

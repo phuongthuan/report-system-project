@@ -56,10 +56,7 @@ class StatisticContainer extends Component {
 
     return (
       <div className="row">
-        <div className="col-md-3">
-          <SideBar/>
-        </div>
-        <div className="col-md-9">
+        <div className="col-md-12">
           <div className="row">
             <div className="col-md-4">
               <div>
@@ -75,7 +72,7 @@ class StatisticContainer extends Component {
               </div>
             </div>
             <div className="col-md-8">
-              <div className="d-flex justify-content-between mb-3">
+              <div className="d-flex justify-content-start mb-3">
 
                 <DatePickerComponent
                   {...this.props}

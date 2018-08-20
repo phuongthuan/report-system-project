@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Route,  Switch } from 'react-router-dom'
 import FlashMessage from "containers/FlashMessage";
 import StatisticContainer from "./StatisticContainer";
@@ -9,7 +9,7 @@ import { TEAM_LEADER } from '../../constants/rolesType'
 class StatisticPage extends Component {
   render() {
     return (
-      <div className="container">
+      <Fragment>
         <FlashMessage/>
         <Switch>
           <PermissionRoute
@@ -20,7 +20,7 @@ class StatisticPage extends Component {
           />
           <Route component={NoMatch} />
         </Switch>
-      </div>
+      </Fragment>
     );
   }
 }

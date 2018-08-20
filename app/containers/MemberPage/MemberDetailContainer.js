@@ -57,12 +57,9 @@ class MemberDetailContainer extends Component {
 
     return (
       <div className="row">
-        <div className="col-md-3">
-          <SideBar />
-        </div>
-        <div className="col-md-9">
+        <div className="col-md-12">
           {loading && isEmpty(reports) ? (
-            <Spinner height="650px" style={{fontSize: 32, color: '#FFFFFF'}} />
+            <Spinner height="650px" style={{fontSize: 32}} />
           ) : (
             <MemberDetail
               {...this.props}

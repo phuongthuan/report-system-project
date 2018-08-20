@@ -7,7 +7,7 @@ import NoMatch from "../../utils/NoMatch";
 class ProfilePage extends Component {
   render() {
     return (
-      <div className="container">
+      <div>
         <FlashMessage />
         <Switch>
           <Route exact path="/profile/edit" component={ProfileContainer} />

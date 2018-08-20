@@ -19,7 +19,7 @@ const ButtonGroup = Button.Group;
 
 const FormikForm = ({values, setFieldValue, handleSubmit, handleChange, isSubmitting, touched, errors}) => (
   <Form onSubmit={handleSubmit}>
-    <Card style={{borderRadius: '0'}} className="border-0 shadow-sm">
+    <Card className="shadow-sm" style={{borderRadius: '0', border: 0}}>
       <CardHeader>
         <CardTitle>Daily Report</CardTitle>
         <Label for="date">{moment(values.date).format("dddd, MMMM Do YYYY")}</Label>

@@ -23,7 +23,7 @@ class TeamDetail extends Component {
     return (
       <Fragment>
         {(isEmpty(team && team.userId) && isEmpty(team.members) && isEmpty(team.userId && team.userId.weekly_reports)) ? (
-          <Spinner height="650px" style={{fontSize: 32, color: '#FFFFFF'}}/>
+          <Spinner height="650px" style={{fontSize: 32}}/>
         ) : (
           <Card style={{borderRadius: '0'}} className="border-0 shadow-sm">
             <CardHeader className="text-center">
