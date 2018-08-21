@@ -29,7 +29,7 @@ class Auth extends Component {
 
     if (isAuthenticated) {
       updateAuthenticationHeader();
-      return <Redirect to='/profile/edit' />
+      return <Redirect to='/profile/edit'/>
     }
 
     return (
@@ -49,7 +49,11 @@ class Auth extends Component {
 Auth.propTypes = {
   login: PropTypes.func.isRequired,
   addFlashMessage: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool,
+  isAuthenticated: PropTypes.bool.isRequired,
+  authError: PropTypes.shape({
+    status: PropTypes.number,
+    message: PropTypes.string,
+  }).isRequired,
 }
 
 const mapStateToProps = state => ({

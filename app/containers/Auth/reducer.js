@@ -11,7 +11,7 @@ const initState = {
   user: auth ? auth.user : {},
   loading: false,
   isAuthenticated: !!auth,
-  error: null
+  error: {}
 }
 
 function authReducer(state = initState, action) {
@@ -39,7 +39,7 @@ function authReducer(state = initState, action) {
       return {
         ...state,
         error: action.error,
-        user: undefined
+        user: {}
       }
     default:
       return state

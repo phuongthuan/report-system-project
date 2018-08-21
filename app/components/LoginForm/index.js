@@ -1,7 +1,7 @@
-import React from 'react';
-import { withFormik } from 'formik'
-import AsyncButton from 'components/AsyncButton'
-import * as Yup from 'yup';
+import React, { Component } from 'react';
+import AsyncButton from 'components/AsyncButton';
+import isEmpty from 'lodash/isEmpty'
+import Validator from "validator";
 import {
   Form,
   Card,
@@ -10,78 +10,106 @@ import {
 } from 'reactstrap'
 import InputField from '../InputField/index'
 
-const LoginFormikForm = ({
-                           values,
-                           errors,
-                           handleChange,
-                           handleSubmit,
-                           touched,
-                           isSubmitting
-                         }) => (
-  <Form onSubmit={handleSubmit}>
-    <Card>
-      <CardHeader>
-        Login
-      </CardHeader>
-      <CardBody>
-        <InputField
-          type="email"
-          name="email"
-          value={values.email}
-          error={touched.email && errors.email}
-          onChange={handleChange}
-        />
-        <InputField
-          type="password"
-          name="password"
-          value={values.password}
-          error={touched.password && errors.password}
-          onChange={handleChange}
-        />
-        <AsyncButton
-          buttonName="Login"
-          htmlType="submit"
-          type="primary"
-          icon="login"
-          loading={isSubmitting}
-        />
-      </CardBody>
-    </Card>
-  </Form>
-)
+class LoginForm extends Component {
 
-const LoginForm = withFormik({
-  validationSchema: Yup.object().shape({
-    email: Yup.string()
-      .email('Invalid email address')
-      .required('Email is required!'),
-    password: Yup.string()
-      .min(6, "Password must be more than 6 characters.")
-      .required('Password is required.'),
-  }),
+  state = {
+    user: {
+      email: '',
+      password: '',
+    },
+    errors: {},
+    submitting: false,
+  }
 
-  mapPropsToValues: ({email, password}) => ({
-    email: email || '',
-    password: password || ''
-  }),
+  componentWillReceiveProps(nextProps) {
+    this.setState({ errors: nextProps.authError });
+  }
 
-  handleSubmit: (values, {props, setSubmitting}) => {
-    const {login, history, addFlashMessage, isAuthenticated} = props;
-    setSubmitting(true);
-    setTimeout(() => {
-      login(values);
+  handleChange = (e) => {
+    const { user } = this.state;
+    this.setState({
+      user: { ...user, [e.target.name]: e.target.value }
+    });
+  }
 
-      addFlashMessage({
-        type: 'success',
-        text: 'You signed in successfully. Welcome!'
-      });
-      if (isAuthenticated) {
-        history.push('/profile/edit');
-      }
-      setSubmitting(false);
-    }, 2000)
-  },
-  displayName: 'LoginForm'
-})(LoginFormikForm);
+  handleSubmit = (e) => {
+    e.preventDefault();
+    const {login, addFlashMessage } = this.props;
+    const { user } = this.state;
+
+    const payload = {
+      email: user.email,
+      password: user.password
+    }
+
+    const errors = this.validate(user);
+    this.setState({ errors });
+
+    if (isEmpty(errors)) {
+      this.setState({submitting: true});
+      setTimeout(() => {
+        login(payload);
+        addFlashMessage({
+          type: 'success',
+          text: 'You signed in successfully. Welcome!'
+        });
+        this.setState({submitting: false});
+      }, 2000)
+    }
+  }
+
+  validate = data => {
+    const errors = {};
+    if (!Validator.isEmail(data.email)) errors.email = "Invalid email";
+    if (!data.password) errors.password = "Password is required";
+    return errors;
+  };
+
+  render() {
+    const { email, password, submitting, errors } = this.state;
+    return (
+      <Form onSubmit={this.handleSubmit}>
+        <Card>
+          <CardHeader>
+            Login
+          </CardHeader>
+          <CardBody>
+            <InputField
+              type="email"
+              name="email"
+              value={email}
+              onChange={this.handleChange}
+              error={errors.email}
+            />
+            <InputField
+              type="password"
+              name="password"
+              value={password}
+              error={errors.password}
+              onChange={this.handleChange}
+            />
+            <AsyncButton
+              buttonName="Login"
+              htmlType="submit"
+              type="primary"
+              icon="login"
+              loading={submitting}
+            />
+            {errors.message && (
+              <div
+                className="mt-2"
+                style={{color: 'red'}}
+              >
+                {errors.message}
+              </div>
+            )}
+          </CardBody>
+        </Card>
+      </Form>
+    );
+  }
+}
+
+LoginForm.propTypes = {};
 
 export default LoginForm;

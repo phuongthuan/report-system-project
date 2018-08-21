@@ -1,5 +1,5 @@
 import { call, put, takeLatest, fork, all } from 'redux-saga/effects'
-import { delay } from 'redux-saga'
+import { delay } from 'redux-saga';
 import {
   AUTH_LOGIN_REQUEST,
   AUTH_LOGOUT_REQUEST
@@ -10,7 +10,8 @@ import {
   logoutSucceeded,
   logoutFailed
 } from './actions'
-import { callLogin, callLogout } from '../../requests'
+import { callLogin, callLogout } from '../../requests';
+import history from '../../utils/history'
 
 export function* loginFlow(action) {
 
@@ -25,8 +26,9 @@ export function* loginFlow(action) {
     const {user} = auth;
     localStorage.setItem('auth', JSON.stringify(auth));
     yield put(loginSucceeded(user));
+    history.push('/profile/edit');
   } catch (error) {
-    yield put(loginFailed(error.message));
+    yield put(loginFailed(error.response.data));
   }
 }
 
