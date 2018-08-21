@@ -1,9 +1,8 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty'
 import { connect } from 'react-redux';
 import Spinner from 'components/Spinner'
-import SideBar from '../../components/SideBar'
 import { selectUser } from "../Auth/selectors";
 import { selectError, selectReportLoading, selectReports } from "./selectors";
 import {
@@ -40,7 +39,10 @@ class ReportContainer extends Component {
 
     reportsOfUser: PropTypes.arrayOf(PropTypes.object).isRequired,
     reportsOfTeam: PropTypes.arrayOf(PropTypes.object).isRequired,
-    user: PropTypes.object.isRequired,
+    user: PropTypes.shape({
+      firstname: PropTypes.string,
+      lastname: PropTypes.string,
+    }).isRequired,
   };
 
   state = {
@@ -85,7 +87,7 @@ class ReportContainer extends Component {
           <div className="row">
             <div className="col-md-12">
               {loading && isEmpty(reports) ? (
-                <Spinner height="650px" style={{fontSize: 32}} />
+                <Spinner height="650px" style={{fontSize: 32}}/>
               ) : (
                 <ReportTable
                   {...this.props}

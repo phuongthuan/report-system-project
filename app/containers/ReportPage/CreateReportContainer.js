@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import SideBar from '../../components/SideBar'
 import { selectUser } from "../Auth/selectors";
 import { createReport } from "./actions";
 import { addFlashMessage } from "../FlashMessage/actions";
@@ -10,7 +9,11 @@ import ReportForm from '../../components/ReportForm/index'
 class CreateReportContainer extends Component {
 
   static propTypes = {
-    user: PropTypes.object.isRequired,
+    user: PropTypes.shape({
+      firstname: PropTypes.string,
+      lastname: PropTypes.string,
+    }).isRequired,
+
     createReport: PropTypes.func.isRequired,
     addFlashMessage: PropTypes.func.isRequired,
   };

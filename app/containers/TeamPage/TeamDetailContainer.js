@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import SideBar from 'components/SideBar'
 import { connect } from 'react-redux'
 import isEmpty from 'lodash/isEmpty'
 import PropTypes from 'prop-types';
@@ -42,7 +41,15 @@ class TeamDetailContainer extends Component {
   }
 }
 
-TeamDetailContainer.propTypes = {};
+TeamDetailContainer.propTypes = {
+  team: PropTypes.shape({
+    id: PropTypes.number,
+  }).isRequired,
+  teamLoading: PropTypes.bool.isRequired,
+  userLoading: PropTypes.bool.isRequired,
+  statisticLoading: PropTypes.bool.isRequired,
+  reportsOfTeam: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 const mapStateToProps = state => ({
   team: selectTeam(state),

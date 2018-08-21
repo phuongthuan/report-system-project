@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Router } from 'react-router-dom'
-import { addLocaleData, IntlProvider } from 'react-intl'
+import { Router, Route } from 'react-router-dom'
+import { addLocaleData } from 'react-intl'
 import en from 'react-intl/locale-data/en'
 import vi from 'react-intl/locale-data/vi'
 import { Provider } from 'react-redux'
@@ -29,27 +29,21 @@ import App from './containers/App'
 import store from './store'
 import history from './utils/history'
 
-import messages_en from "./translations/en.json";
-import messages_vi from "./translations/vi.json";
+import { setLocale } from "./containers/App/actions";
 
 addLocaleData([...en, ...vi]);
 
-const messages = {
-  'en': messages_en,
-  'vi': messages_vi,
-};
-
-const language = navigator.language.toLowerCase().split(/[-_]/)[0];  // language without region code
-
 library.add(faUserTie, faEnvelope, faClock, faCalendarAlt, faFrown, faSmile, faMobileAlt, faAddressBook, faSignOutAlt, faPencilAlt, faChartArea, faBook, faUserEdit, faSpinner, faAddressCard, faListAlt)
+
+if (localStorage.reportLang) {
+  store.dispatch(setLocale(localStorage.reportLang))
+}
 
 ReactDOM.render(
   <Provider store={store}>
-    <IntlProvider locale={language} messages={messages[language]}>
-      <Router history={history}>
-        <App/>
-      </Router>
-    </IntlProvider>
+    <Router history={history}>
+      <Route component={App}/>
+    </Router>
   </Provider>,
   document.getElementById('app')
 )

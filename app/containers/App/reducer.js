@@ -1,4 +1,4 @@
-import { SET_LOCALE } from './actions'
+import { SET_LOCALE_SUCCEEDED } from './constants'
 
 const initState = {
   lang: 'en'
@@ -6,10 +6,10 @@ const initState = {
 
 export default function (state = initState, action) {
   switch (action.type) {
-    case SET_LOCALE:
+    case SET_LOCALE_SUCCEEDED:
       return {
         ...state,
-        lang: action.lang
+        lang: action.langReceived
       }
     default:
       return state;

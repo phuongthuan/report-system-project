@@ -8,6 +8,7 @@ import { TEAM_LEADER, MEMBER } from "../../constants/rolesType";
 
 class MessagePage extends Component {
   render() {
+    const role = [TEAM_LEADER, MEMBER]
     return (
       <Fragment>
         <FlashMessage />
@@ -15,7 +16,7 @@ class MessagePage extends Component {
           <PermissionRoute
             exact
             path="/message"
-            role={[TEAM_LEADER, MEMBER]}
+            role={role}
             component={MessageContainer}
           />
           <Route component={NoMatch}/>

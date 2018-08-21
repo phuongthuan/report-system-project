@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import isEmpty from "lodash/isEmpty";
-import SideBar from 'components/SideBar'
 import Spinner from 'components/Spinner'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types';
@@ -89,14 +88,30 @@ class MemberDetailContainer extends Component {
 }
 
 MemberDetailContainer.propTypes = {
-  reports: PropTypes.array.isRequired,
+  reports: PropTypes.arrayOf(PropTypes.object).isRequired,
+  weekly_reports: PropTypes.arrayOf(PropTypes.object).isRequired,
   loading: PropTypes.bool.isRequired,
   memberLoading: PropTypes.bool.isRequired,
   error: PropTypes.bool,
-  member: PropTypes.object.isRequired,
+  member: PropTypes.shape({
+    firstname: PropTypes.string,
+    lastname: PropTypes.string,
+  }).isRequired,
+  user: PropTypes.shape({
+    firstname: PropTypes.string,
+    lastname: PropTypes.string,
+  }).isRequired,
+
   fetchAllReportsOfUser: PropTypes.func.isRequired,
   fetchAllWeeklyReportsOfUser: PropTypes.func.isRequired,
-  getMemberProfile: PropTypes.func.isRequired
+  getMemberProfile: PropTypes.func.isRequired,
+  addFlashMessage: PropTypes.func.isRequired,
+  removeWeeklyReport: PropTypes.func.isRequired,
+  fetchAllReportsOfTeamByRange: PropTypes.func.isRequired,
+  fetchAllReportsOfTeamByDay: PropTypes.func.isRequired,
+  fetchAllReportsOfUserByDay: PropTypes.func.isRequired,
+  fetchAllReportsOfUserByRange: PropTypes.func.isRequired
+
 };
 
 const mapStateToProps = state => ({

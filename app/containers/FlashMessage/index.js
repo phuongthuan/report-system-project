@@ -8,7 +8,7 @@ import { deleteFlashMessage } from './actions'
 class FlashMessageList extends Component {
 
   static propTypes = {
-    messages: PropTypes.array.isRequired,
+    messages: PropTypes.arrayOf(PropTypes.object).isRequired,
     deleteFlashMessage: PropTypes.func.isRequired
   };
 

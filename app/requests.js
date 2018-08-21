@@ -47,3 +47,5 @@ export const callUpdateReport = report => request('put', `${UPDATE_REPORT}/${rep
 export const callDeleteReport = id => request('delete', `${DELETE_REPORT}/${id}`)
 export const callDeleteMessage = id => request('delete', `${DELETE_MESSAGE}/${id}`)
 export const callDeleteWeeklyReport = id => request('delete', `${GET_WEEKLY_REPORTS}/${id}`)
+
+export const callChangeLocale = lang => localStorage.reportLang = lang;

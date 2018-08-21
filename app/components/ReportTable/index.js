@@ -155,7 +155,7 @@ class ReportTable extends Component {
         <div className={classes.tableWrapper}>
 
           <div className="card border-0">
-            <div className="col-md-6 card-body d-flex justify-content-between">
+            <div className="col-md-12 card-body d-flex justify-content-between">
 
               <SearchBox
                 searchTerm={searchTerm}

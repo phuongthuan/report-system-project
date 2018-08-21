@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux'
-import SideBar from 'components/SideBar'
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types'
 import isEmpty from "lodash/isEmpty";
 import { selectAReport, selectReportLoading } from "./selectors";
 import { fetchAReport } from "./actions";
@@ -19,13 +19,10 @@ class ReportDetailContainer extends Component {
     const {report, reportLoading} = this.props;
     return (
       <div className="row">
-        <div className="col-md-3">
-          <SideBar/>
-        </div>
         {reportLoading && isEmpty(report) ? (
-          <Spinner height="650px" style={{fontSize: 32, color: '#FFFFFF'}}/>
+          <Spinner height="650px" style={{fontSize: 32}}/>
         ) : (
-          <div className="col-md-9">
+          <div className="col-md-12">
             <ReportDetail
               {...this.props}
               report={report}
@@ -37,7 +34,14 @@ class ReportDetailContainer extends Component {
   }
 }
 
-ReportDetailContainer.propTypes = {};
+ReportDetailContainer.propTypes = {
+  report: PropTypes.shape({
+    id: PropTypes.number,
+    title: PropTypes.string,
+  }).isRequired,
+  reportLoading: PropTypes.bool.isRequired,
+  fetchAReport: PropTypes.func.isRequired,
+};
 
 const mapStateToProps = state => ({
   report: selectAReport(state),

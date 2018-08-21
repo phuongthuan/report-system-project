@@ -125,6 +125,4 @@ class ReportDetail extends Component {
   }
 }
 
-ReportDetail.propTypes = {};
-
 export default ReportDetail;

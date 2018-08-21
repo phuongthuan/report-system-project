@@ -4,7 +4,6 @@ import isEmpty from "lodash/isEmpty";
 import styled from "styled-components";
 import Spinner from 'components/Spinner'
 import PropTypes from 'prop-types'
-import SideBar from 'components/SideBar'
 import MembersList from '../../components/MembersList'
 import { fetchAllMembersOfTeam, fetchAllMembers } from './actions'
 import { addFlashMessage } from '../FlashMessage/actions'
@@ -22,9 +21,14 @@ const Wrapper = styled.div`
 class MemberContainer extends Component {
 
   static propTypes = {
-    user: PropTypes.object,
-    members: PropTypes.array,
-    loading: PropTypes.bool,
+    user: PropTypes.shape({
+      firstname: PropTypes.string,
+      lastname: PropTypes.string,
+    }).isRequired,
+    members: PropTypes.arrayOf(PropTypes.object).isRequired,
+    messages: PropTypes.arrayOf(PropTypes.object).isRequired,
+    loading: PropTypes.bool.isRequired,
+
     fetchAllMembersOfTeam: PropTypes.func,
     fetchAllMembers: PropTypes.func,
     createMessage: PropTypes.func,
@@ -76,7 +80,7 @@ class MemberContainer extends Component {
         <div className="row">
           <div className="col-md-12">
             {loading && isEmpty(members) ? (
-              <Spinner height="650px" style={{fontSize: 32}} />
+              <Spinner height="650px" style={{fontSize: 32}}/>
             ) : this.membersList()}
           </div>
         </div>

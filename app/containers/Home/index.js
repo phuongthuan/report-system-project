@@ -31,7 +31,7 @@ export class Home extends PureComponent {
     if (isAuthenticated) {
       history.push('/profile/edit');
     } else {
-      history.push('/');
+      history.push('/login');
     }
   }
 
@@ -45,7 +45,7 @@ export class Home extends PureComponent {
               onClick={this.goToReportPage}
             >
               <FormattedMessage
-                id="app.button.title"
+                id="app.title"
                 defaultMessage="Report System"
               />
             </Button>

@@ -1,8 +1,8 @@
-import React, { Component } from 'react'
+import React  from 'react'
 import { Switch, Route } from 'react-router-dom'
-import PropTypes from "prop-types";
-import { IntlProvider } from 'react-intl'
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
+import { IntlProvider } from 'react-intl'
 import Home from 'containers/Home'
 import Auth from "containers/Auth";
 import { Layout } from 'antd';
@@ -17,60 +17,49 @@ import MessagePage from "../Message";
 import TeamPage from "../TeamPage";
 import WeeklyReport from "../WeeklyReport/index";
 import { selectLocale } from "./selectors";
-import { setLocale } from './actions'
 import messages from '../../translations/messages'
 
-const {Header, Content, Footer} = Layout;
+const {Content, Footer} = Layout;
 
-class App extends Component {
+const App = ({location, locale}) => (
+  <IntlProvider locale={locale} messages={messages[locale]}>
+    <Switch>
+      <Route location={location} exact path="/" component={Home}/>
+      <Route location={location} path="/login" component={Auth}/>
 
-  static propTypes = {
-    locale: PropTypes.string.isRequired,
-  };
+      <Layout style={{minHeight: '100vh'}}>
+        <SideBar/>
+        <Layout style={{marginLeft: 200}}>
+          <Content style={{margin: '24px 16px 0', overflow: 'initial'}}>
+            <div>
+              <Switch>
+                <PrivateRoute location={location} path="/message" component={MessagePage}/>
+                <PrivateRoute location={location} path="/weekly-report" component={WeeklyReport}/>
+                <PrivateRoute location={location} path="/report" component={ReportPage}/>
+                <PrivateRoute location={location} path="/statistic" component={StatisticPage}/>
+                <PrivateRoute location={location} path="/profile" component={ProfilePage}/>
+                <PrivateRoute location={location} path="/member" component={MemberPage}/>
+                <PrivateRoute location={location} path="/team" component={TeamPage}/>
+                <Route location={location} component={NoMatch}/>
+              </Switch>
+            </div>
+          </Content>
+          <Footer style={{textAlign: 'center'}}>
+            Report System ©2018 Created by phuongthuan
+          </Footer>
+        </Layout>
+      </Layout>
+    </Switch>
+  </IntlProvider>
+)
 
-  render() {
-    const { locale } = this.props;
-    return (
-      <IntlProvider
-        locale={locale}
-        messages={messages[locale]}
-      >
-        <Switch>
-          <Route exact path="/" component={Home}/>
-          <Route path="/login" component={Auth}/>
 
-          <Layout style={{minHeight: '100vh'}}>
-            <SideBar/>
-            <Layout style={{marginLeft: 200}}>
-              {/*<Header style={{background: '#fff', padding: 0}}/>*/}
-              <Content style={{margin: '24px 16px 0', overflow: 'initial'}}>
-                <div>
-                  <Switch>
-                    <PrivateRoute path="/message" component={MessagePage}/>
-                    <PrivateRoute path="/weekly-report" component={WeeklyReport}/>
-                    <PrivateRoute path="/report" component={ReportPage}/>
-                    <PrivateRoute path="/statistic" component={StatisticPage}/>
-                    <PrivateRoute path="/profile" component={ProfilePage}/>
-                    <PrivateRoute path="/member" component={MemberPage}/>
-                    <PrivateRoute path="/team" component={TeamPage}/>
-                    <Route component={NoMatch}/>
-                  </Switch>
-                </div>
-              </Content>
-              <Footer style={{textAlign: 'center'}}>
-                Report System ©2018 Created by phuongthuan
-              </Footer>
-            </Layout>
-          </Layout>
-
-        </Switch>
-      </IntlProvider>
-    )
-  }
-}
+App.propTypes = {
+  locale: PropTypes.string.isRequired
+};
 
 const mapStateToProps = state => ({
   locale: selectLocale(state)
 });
 
-export default connect(mapStateToProps, { setLocale })(App);
+export default connect(mapStateToProps, null)(App);

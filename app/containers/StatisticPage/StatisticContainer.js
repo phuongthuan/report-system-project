@@ -2,7 +2,6 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
 import isEmpty from "lodash/isEmpty";
-import SideBar from 'components/SideBar'
 import { getAllReportsOfTeam, getAllReportsOfTeamByDay, getAllReportsOfTeamByRange } from "./actions";
 import { selectReportsOfTeam, selectStatisticLoading } from "./selectors";
 import { selectProfile } from "../ProfilePage/selectors";
@@ -72,7 +71,7 @@ class StatisticContainer extends Component {
               </div>
             </div>
             <div className="col-md-8">
-              <div className="d-flex justify-content-start mb-3">
+              <div className="d-flex justify-content-end mb-3">
 
                 <DatePickerComponent
                   {...this.props}
@@ -150,17 +149,19 @@ class StatisticContainer extends Component {
 }
 
 StatisticContainer.propTypes = {
-  reportsOfTeam: PropTypes.array,
-  profile: PropTypes.object,
-  user: PropTypes.object,
+  reportsOfTeam: PropTypes.arrayOf(PropTypes.object).isRequired,
+  user: PropTypes.shape({
+    firstname: PropTypes.string,
+    lastname: PropTypes.string,
+  }).isRequired,
   loading: PropTypes.bool,
-  fetchAllReportsOfTeam: PropTypes.func,
-  fetchAllReportsOfTeamByRange: PropTypes.func,
-  fetchAllReportsOfTeamByDay: PropTypes.func,
-  fetchAllReportsOfUserByDay: PropTypes.func,
-  fetchAllReportsOfUserByRange: PropTypes.func,
-  addFlashMessage: PropTypes.func,
-  createWeeklyReport: PropTypes.func,
+  fetchAllReportsOfTeam: PropTypes.func.isRequired,
+  fetchAllReportsOfTeamByRange: PropTypes.func.isRequired,
+  fetchAllReportsOfTeamByDay: PropTypes.func.isRequired,
+  fetchAllReportsOfUserByDay: PropTypes.func.isRequired,
+  fetchAllReportsOfUserByRange: PropTypes.func.isRequired,
+  addFlashMessage: PropTypes.func.isRequired,
+  createWeeklyReport: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({

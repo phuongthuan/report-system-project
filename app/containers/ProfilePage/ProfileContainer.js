@@ -7,7 +7,7 @@ import styled from 'styled-components'
 import ProfileForm from "../../components/ProfileForm";
 import { getUserProfile, updateProfile } from './actions'
 import { addFlashMessage } from '../FlashMessage/actions'
-import { selectAuthLoading, selectUser } from "../Auth/selectors";
+import { selectAuthLoading, selectIsAuthenticated, selectUser } from "../Auth/selectors";
 import { selectProfileLoading, selectProfile } from "./selectors";
 
 const Wrapper = styled.div`
@@ -18,15 +18,26 @@ const Wrapper = styled.div`
 class ProfileContainer extends Component {
 
   static propTypes = {
-    user: PropTypes.object,
-    profile: PropTypes.object,
-    getProfile: PropTypes.func,
-    updateProfile: PropTypes.func
+    user: PropTypes.shape({
+      firstname: PropTypes.string,
+      lastname: PropTypes.string,
+    }).isRequired,
+    profile: PropTypes.shape({
+      firstname: PropTypes.string,
+      lastname: PropTypes.string,
+    }).isRequired,
+    loading: PropTypes.bool.isRequired,
+    isAuthenticated: PropTypes.bool.isRequired,
+    authLoading: PropTypes.bool.isRequired,
+
+    getProfile: PropTypes.func.isRequired,
+    updateProfile: PropTypes.func.isRequired,
+    addFlashMessage: PropTypes.func.isRequired,
   };
 
   componentDidMount() {
-    const {getProfile, user} = this.props;
-    if (user) {
+    const {getProfile, user, isAuthenticated} = this.props;
+    if (user && isAuthenticated) {
       getProfile(user.id);
     }
   }
@@ -63,7 +74,8 @@ export const mapStateToProps = state => ({
   profile: selectProfile(state),
   user: selectUser(state),
   loading: selectProfileLoading(state),
-  authLoading: selectAuthLoading(state)
+  authLoading: selectAuthLoading(state),
+  isAuthenticated: selectIsAuthenticated(state)
 });
 
 export const mapDispatchToProps = dispatch => ({

@@ -1,4 +1,5 @@
 import React from 'react';
+import { FormattedMessage } from 'react-intl'
 import {
   Form,
   CardTitle,
@@ -17,7 +18,10 @@ const FormikForm = ({values, handleSubmit, handleChange, isSubmitting, touched, 
     <Card style={{borderRadius: '0'}} className="border-0 shadow-sm">
       <CardHeader>
         <CardTitle>
-          Update Profile
+          <FormattedMessage
+            id="report.update.form.header.title"
+            defaultMessage="Update Profile"
+          />
         </CardTitle>
       </CardHeader>
       <CardBody>
@@ -80,7 +84,7 @@ const FormikForm = ({values, handleSubmit, handleChange, isSubmitting, touched, 
 
       <CardFooter>
         <AsyncButton
-          buttonName="Save"
+          buttonName={<FormattedMessage id="report.update.form.button.save" defaultMessage="Save"/>}
           type="primary"
           htmlType="submit"
           icon="save"
@@ -113,7 +117,10 @@ const ProfileForm = withFormik({
       updateProfile(values);
       addFlashMessage({
         type: 'success',
-        text: 'Update Profile Successful'
+        text: <FormattedMessage
+          id="report.flash.message.update.success"
+          defaultMessage="Update Successful"
+        />
       });
       setSubmitting(false);
     }, 1500)

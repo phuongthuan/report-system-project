@@ -2,13 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty'
-import SideBar from 'components/SideBar'
-import { selectUser } from "../Auth/selectors";
 import WeeklyReportTable from '../../components/WeeklyReportTable/index'
 import { deleteWeeklyReport, fetchAllWeeklyReportsOfUser } from "./actions";
 import { selectWeeklyReportLoading, selectWeeklyReports } from "./selectors";
-import { getUserProfile } from "../ProfilePage/actions";
-import { selectProfile } from "../ProfilePage/selectors";
 import Spinner from "../../components/Spinner";
 import { addFlashMessage } from "../FlashMessage/actions";
 
@@ -41,16 +37,14 @@ class WeeklyReportContainer extends Component {
 }
 
 WeeklyReportContainer.propTypes = {
-  user: PropTypes.object,
-  weekly_reports: PropTypes.array,
-  fetchAllWeeklyReportsOfUser: PropTypes.func,
-  removeWeeklyReport: PropTypes.func,
-  weekly_reportLoading: PropTypes.bool,
+  weekly_reports: PropTypes.arrayOf(PropTypes.object).isRequired,
+  fetchAllWeeklyReportsOfUser: PropTypes.func.isRequired,
+  removeWeeklyReport: PropTypes.func.isRequired,
+  addFlashMessage: PropTypes.func.isRequired,
+  weekly_reportLoading: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
-  user: selectUser(state),
-  userInfo: selectProfile(state),
   weekly_reportLoading: selectWeeklyReportLoading(state),
   weekly_reports: selectWeeklyReports(state)
 });
