@@ -6,24 +6,28 @@ import CreateReportContainer from "./CreateReportContainer";
 import UpdateReportContainer from "./UpdateReportContainer";
 import NoMatch from "../../utils/NoMatch";
 import ReportDetailContainer from "./ReportDetailContainer";
-import { MEMBER, TEAM_LEADER } from "../../constants/rolesType";
+import { GROUP_LEADER, MEMBER, TEAM_LEADER } from "../../constants/rolesType";
 import PermissionRoute from '../../utils/PermissionRoute'
 
 class ReportPage extends Component {
   render() {
+    const role = [TEAM_LEADER, MEMBER];
     return (
-      <div className="container">
-        <FlashMessage />
+      <div className="container-fluid">
+        <FlashMessage/>
         <Switch>
           <PermissionRoute
             exact
             path="/report"
-            role={[TEAM_LEADER, MEMBER]}
+            role={role}
             component={ReportContainer}
           />
           <PermissionRoute role={MEMBER} path="/report/create" component={CreateReportContainer}/>
           <PermissionRoute role={MEMBER} path="/report/update/:id" component={UpdateReportContainer}/>
-          <PermissionRoute role={[MEMBER, TEAM_LEADER]} path="/report/:id" component={ReportDetailContainer}/>
+          <Route
+            path="/report/:id"
+            component={ReportDetailContainer}
+          />
           <Route component={NoMatch}/>
         </Switch>
       </div>

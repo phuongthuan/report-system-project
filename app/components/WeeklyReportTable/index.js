@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import { Emoji } from 'emoji-mart';
+import { Button, Modal } from 'antd'
 import {
-  ListItem,
   TablePagination,
-  ListItemText,
-  Avatar,
   Table,
   TableBody,
   TableCell,
@@ -16,13 +12,16 @@ import {
   Paper
 } from '@material-ui/core';
 
+const confirm = Modal.confirm;
 const CustomTableCell = withStyles(theme => ({
   body: {
     fontSize: 14,
     paddingRight: 0,
+    paddingLeft: 10
   },
   head: {
     paddingRight: 0,
+    paddingLeft: 10
   }
 }))(TableCell);
 
@@ -32,7 +31,7 @@ const CustomTableRow = withStyles(theme => ({
 
 const CustomTableHead = withStyles(theme => ({
   root: {
-    padding: '0'
+    padding: 0
   },
 }))(TableHead);
 
@@ -53,13 +52,13 @@ const styles = theme => ({
 class DataTables extends Component {
 
   state = {
-    data: this.props.reportsList,
+    data: this.props.data,
     page: 0,
     rowsPerPage: 10,
   }
 
   componentWillReceiveProps(nextProps, state) {
-    this.setState({data: nextProps.reportsList});
+    this.setState({data: nextProps.data});
   }
 
   handleChangePage = (event, page) => {
@@ -70,8 +69,25 @@ class DataTables extends Component {
     this.setState({rowsPerPage: event.target.value});
   };
 
+  showConfirm = (id) => {
+    const {addFlashMessage, removeWeeklyReport} = this.props;
+    confirm({
+      title: 'Do you want to delete this weekly report?',
+      content: 'When clicked the OK button, this weekly report will be delete immediately',
+      onOk() {
+        removeWeeklyReport(id);
+        addFlashMessage({
+          type: 'success',
+          text: 'Weekly Report Report has been deleted.'
+        });
+      },
+      onCancel() {
+      },
+    });
+  }
+
   render() {
-    const {classes, user} = this.props;
+    const {classes} = this.props;
     const {data, rowsPerPage, page} = this.state;
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
 
@@ -82,38 +98,36 @@ class DataTables extends Component {
             <CustomTableHead>
               <CustomTableRow>
                 <CustomTableCell>ID</CustomTableCell>
-                <CustomTableCell>Emotion</CustomTableCell>
-                <CustomTableCell>Title</CustomTableCell>
-                <CustomTableCell>Author</CustomTableCell>
+                <CustomTableCell>Issue</CustomTableCell>
+                <CustomTableCell>Solution</CustomTableCell>
+                <CustomTableCell>Summary</CustomTableCell>
                 <CustomTableCell>Date created</CustomTableCell>
+                <CustomTableCell>Actions</CustomTableCell>
               </CustomTableRow>
             </CustomTableHead>
             <TableBody>
-              {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(report => {
+              {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(wr => {
                 return (
-                  <CustomTableRow key={report.id}>
-                    <CustomTableCell>{report.id}</CustomTableCell>
-                    <CustomTableCell>
-                      <Emoji
-                        tooltip
-                        set={'emojione'}
-                        emoji={report.emotion.colons}
-                        size={24}
+                  <CustomTableRow key={wr.id}>
+                    <CustomTableCell>{wr.id}</CustomTableCell>
+                    <CustomTableCell component="th" scope="row">
+                      {wr.issue}
+                    </CustomTableCell>
+                    <CustomTableCell component="th" scope="row">
+                      {wr.summary}
+                    </CustomTableCell>
+                    <CustomTableCell component="th" scope="row">
+                      {wr.solution}
+                    </CustomTableCell>
+                    <CustomTableCell component="th" scope="row">
+                      {wr.date}
+                    </CustomTableCell>
+                    <CustomTableCell component="th" scope="row">
+                      <Button
+                        onClick={() => this.showConfirm(wr.id)}
+                        type="danger"
+                        icon="delete"
                       />
-                    </CustomTableCell>
-                    <CustomTableCell component="th" scope="row">
-                      <Link to={`/report/${report.id}`}>
-                        {report.title}
-                      </Link>
-                    </CustomTableCell>
-                    <CustomTableCell padding="none" scope="row">
-                      <ListItem>
-                        <Avatar alt="Avatar image" src={report.userId.avatar}/>
-                        <ListItemText>{report.userId.firstName}</ListItemText>
-                      </ListItem>
-                    </CustomTableCell>
-                    <CustomTableCell component="th" scope="row">
-                      {report.date}
                     </CustomTableCell>
                   </CustomTableRow>
                 );

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Route, Switch } from 'react-router-dom'
 import FlashMessage from "containers/FlashMessage";
 import MessageContainer from "./MessageContainer";
@@ -8,19 +8,20 @@ import { TEAM_LEADER, MEMBER } from "../../constants/rolesType";
 
 class MessagePage extends Component {
   render() {
+    const role = [TEAM_LEADER, MEMBER]
     return (
-      <div className="container">
+      <Fragment>
         <FlashMessage />
         <Switch>
           <PermissionRoute
             exact
             path="/message"
-            role={[TEAM_LEADER, MEMBER]}
+            role={role}
             component={MessageContainer}
           />
           <Route component={NoMatch}/>
         </Switch>
-      </div>
+      </Fragment>
     );
   }
 }

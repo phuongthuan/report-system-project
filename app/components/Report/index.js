@@ -56,7 +56,7 @@ class Report extends Component {
           >
             <CardBody>
               <CardTitle>{report.id} - {report.title}&nbsp;&nbsp;
-                <Emoji tooltip set={'emojione'} emoji={emoji} size={24}/>
+                <Emoji tooltip set="emojione" emoji={emoji} size={24}/>
               </CardTitle>
               <CardText>{report.achievement}</CardText>
               <CardText>{report.comment}</CardText>

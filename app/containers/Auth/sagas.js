@@ -1,15 +1,15 @@
-import { take, call, put, takeLatest, fork, all } from 'redux-saga/effects'
+import { call, put, takeLatest, fork, all } from 'redux-saga/effects'
 import { delay } from 'redux-saga'
-
 import {
-  AUTH_LOGIN_REQUEST, AUTH_LOGOUT_REQUEST
+  AUTH_LOGIN_REQUEST,
+  AUTH_LOGOUT_REQUEST
 } from './constants'
-
 import {
   loginSucceeded,
-  loginFailed, logoutSucceeded, logoutFailed
+  loginFailed,
+  logoutSucceeded,
+  logoutFailed
 } from './actions'
-
 import { callLogin, callLogout } from '../../requests'
 
 export function* loginFlow(action) {
@@ -22,7 +22,7 @@ export function* loginFlow(action) {
   try {
     const auth = yield call(callLogin, options);
     yield delay(300);
-    const { user } = auth;
+    const {user} = auth;
     localStorage.setItem('auth', JSON.stringify(auth));
     yield put(loginSucceeded(user));
   } catch (error) {

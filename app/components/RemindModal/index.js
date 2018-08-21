@@ -22,10 +22,7 @@ class RemindModal extends Component {
           icon="notification"
           type="danger"
           onClick={this.toggle}
-        >
-          Remind
-        </Button>
-
+        />
         <Modal
           isOpen={this.state.modal}
           toggle={this.toggle}

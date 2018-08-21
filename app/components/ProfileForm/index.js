@@ -1,4 +1,5 @@
 import React from 'react';
+import { FormattedMessage } from 'react-intl'
 import {
   Form,
   CardTitle,
@@ -17,7 +18,10 @@ const FormikForm = ({values, handleSubmit, handleChange, isSubmitting, touched, 
     <Card style={{borderRadius: '0'}} className="border-0 shadow-sm">
       <CardHeader>
         <CardTitle>
-          Update Profile
+          <FormattedMessage
+            id="report.update.form.header.title"
+            defaultMessage="Update Profile"
+          />
         </CardTitle>
       </CardHeader>
       <CardBody>
@@ -41,7 +45,6 @@ const FormikForm = ({values, handleSubmit, handleChange, isSubmitting, touched, 
           type="text"
           name="lastName"
           value={values.lastName}
-          placeholder="Solution..."
           error={touched.lastName && errors.lastName}
           onChange={handleChange}
         />
@@ -58,7 +61,6 @@ const FormikForm = ({values, handleSubmit, handleChange, isSubmitting, touched, 
           type="text"
           name="address"
           value={values.address}
-          placeholder="Summary..."
           error={touched.address && errors.address}
           onChange={handleChange}
         />
@@ -82,7 +84,7 @@ const FormikForm = ({values, handleSubmit, handleChange, isSubmitting, touched, 
 
       <CardFooter>
         <AsyncButton
-          buttonName="Save"
+          buttonName={<FormattedMessage id="report.update.form.button.save" defaultMessage="Save"/>}
           type="primary"
           htmlType="submit"
           icon="save"
@@ -101,7 +103,7 @@ const ProfileForm = withFormik({
     lastName: Yup.string().required('Last name is required.'),
     avatar: Yup.string().matches(/(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png)/, 'Image is invalid').required('Avatar is required.'),
     address: Yup.string().required('Address is required.'),
-    phone: Yup.string().matches(/^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$/, 'Phone number is invalid.').required('Phone is required.'),
+    phone: Yup.string().matches(/(09|01[2|6|8|9])+([0-9]{8})\b/, 'Phone number is invalid.').required('Phone is required.'),
   }),
 
   mapPropsToValues: ({profile}) => ({
@@ -115,7 +117,10 @@ const ProfileForm = withFormik({
       updateProfile(values);
       addFlashMessage({
         type: 'success',
-        text: 'Update Profile Successful'
+        text: <FormattedMessage
+          id="report.flash.message.update.success"
+          defaultMessage="Update Successful"
+        />
       });
       setSubmitting(false);
     }, 1500)

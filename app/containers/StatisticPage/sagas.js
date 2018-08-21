@@ -1,4 +1,4 @@
-import { put, call, takeLatest, fork, all } from 'redux-saga/effects'
+import { all, call, fork, put, takeLatest } from 'redux-saga/effects'
 import { delay } from 'redux-saga'
 import { GET_ALL_REPORTS_OF_TEAM, GET_ALL_REPORTS_OF_TEAM_BY_DAY, GET_ALL_REPORTS_OF_TEAM_BY_RANGE } from "./constants";
 import { callFetchAllReportsOfUser, callGetMembersOfTeam } from "../../requests";
@@ -23,6 +23,7 @@ export function* fetchAllReportsOfTeam(action) {
         return put(fetchAllReportsOfUserFailed(error));
       }
     }));
+
     const mergedReports = [].concat.apply([], reports);
 
     mergedReports.map(report => {

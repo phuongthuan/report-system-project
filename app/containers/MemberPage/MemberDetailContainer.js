@@ -1,44 +1,84 @@
 import React, { Component } from 'react';
 import isEmpty from "lodash/isEmpty";
-import SideBar from 'components/SideBar'
 import Spinner from 'components/Spinner'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types';
 import MemberDetail from "../../components/MemberDetail";
 import { selectError, selectReportLoading, selectReports } from "../ReportPage/selectors";
-import { fetchAllReportsOfUser } from "../ReportPage/actions";
+import { fetchAllReportsOfUser, fetchAllReportsOfUserByDay, fetchAllReportsOfUserByRange } from "../ReportPage/actions";
 import { selectMember, selectMemberLoading } from "./selectors";
 import { getMemberProfile } from "./actions";
 import { selectUser } from "../Auth/selectors";
+import { deleteWeeklyReport, fetchAllWeeklyReportsOfUser } from "../WeeklyReport/actions";
+import { selectWeeklyReports } from "../WeeklyReport/selectors";
+import { addFlashMessage } from "../FlashMessage/actions";
+import { getAllReportsOfTeamByDay, getAllReportsOfTeamByRange } from "../StatisticPage/actions";
 
 class MemberDetailContainer extends Component {
 
+  state = {
+    action: ''
+  }
+
   componentDidMount() {
-    const { match, fetchAllReportsOfUser, getMemberProfile } = this.props;
+    const {
+      match,
+      fetchAllReportsOfUser,
+      getMemberProfile,
+      fetchAllWeeklyReportsOfUser
+    } = this.props;
+
     const memberId = match.params.id;
+
     fetchAllReportsOfUser(memberId);
     getMemberProfile(memberId);
+    fetchAllWeeklyReportsOfUser(memberId)
+  }
+
+  actionChange = (action) => {
+    this.setState({action});
   }
 
   render() {
-    const { reports, loading, memberLoading, member, user} = this.props;
+    const {
+      reports,
+      weekly_reports,
+      loading,
+      memberLoading,
+      member,
+      user,
+      removeWeeklyReport,
+      fetchAllReportsOfUserByRange,
+      fetchAllReportsOfUserByDay,
+      fetchAllReportsOfTeamByDay,
+      fetchAllReportsOfTeamByRange,
+    } = this.props;
 
     return (
       <div className="row">
-        <div className="col-md-3">
-          <SideBar />
-        </div>
-        <div className="col-md-9">
+        <div className="col-md-12">
           {loading && isEmpty(reports) ? (
-            <Spinner height="650px" style={{fontSize: 32, color: '#FFFFFF'}} />
+            <Spinner height="650px" style={{fontSize: 32}} />
           ) : (
             <MemberDetail
-              user={user}
               {...this.props}
+              action={this.state.action}
+              actionChange={this.actionChange}
+              user={user}
               member={member}
-              reportsList={reports}
+
               loading={loading}
               memberLoading={memberLoading}
+
+              reportsList={reports}
+              weeklysReportList={weekly_reports}
+
+              removeWeeklyReport={removeWeeklyReport}
+
+              fetchAllReportsOfUserByDay={fetchAllReportsOfUserByDay}
+              fetchAllReportsOfUserByRange={fetchAllReportsOfUserByRange}
+              fetchAllReportsOfTeamByRange={fetchAllReportsOfTeamByRange}
+              fetchAllReportsOfTeamByDay={fetchAllReportsOfTeamByDay}
             />
           )}
         </div>
@@ -48,13 +88,30 @@ class MemberDetailContainer extends Component {
 }
 
 MemberDetailContainer.propTypes = {
-  reports: PropTypes.array.isRequired,
+  reports: PropTypes.arrayOf(PropTypes.object).isRequired,
+  weekly_reports: PropTypes.arrayOf(PropTypes.object).isRequired,
   loading: PropTypes.bool.isRequired,
   memberLoading: PropTypes.bool.isRequired,
   error: PropTypes.bool,
-  member: PropTypes.object.isRequired,
+  member: PropTypes.shape({
+    firstname: PropTypes.string,
+    lastname: PropTypes.string,
+  }).isRequired,
+  user: PropTypes.shape({
+    firstname: PropTypes.string,
+    lastname: PropTypes.string,
+  }).isRequired,
+
   fetchAllReportsOfUser: PropTypes.func.isRequired,
-  getMemberProfile: PropTypes.func.isRequired
+  fetchAllWeeklyReportsOfUser: PropTypes.func.isRequired,
+  getMemberProfile: PropTypes.func.isRequired,
+  addFlashMessage: PropTypes.func.isRequired,
+  removeWeeklyReport: PropTypes.func.isRequired,
+  fetchAllReportsOfTeamByRange: PropTypes.func.isRequired,
+  fetchAllReportsOfTeamByDay: PropTypes.func.isRequired,
+  fetchAllReportsOfUserByDay: PropTypes.func.isRequired,
+  fetchAllReportsOfUserByRange: PropTypes.func.isRequired
+
 };
 
 const mapStateToProps = state => ({
@@ -63,12 +120,23 @@ const mapStateToProps = state => ({
   error: selectError(state),
   user: selectUser(state),
   member: selectMember(state),
-  memberLoading: selectMemberLoading(state)
+  memberLoading: selectMemberLoading(state),
+  weekly_reports: selectWeeklyReports(state),
 });
 
 const mapDispatchToProps = dispatch => ({
   fetchAllReportsOfUser: userId => dispatch(fetchAllReportsOfUser(userId)),
-  getMemberProfile: id => dispatch(getMemberProfile(id))
+  fetchAllWeeklyReportsOfUser: userId => dispatch(fetchAllWeeklyReportsOfUser(userId)),
+
+  getMemberProfile: id => dispatch(getMemberProfile(id)),
+  addFlashMessage: message => dispatch(addFlashMessage(message)),
+  removeWeeklyReport: id => dispatch(deleteWeeklyReport(id)),
+
+  fetchAllReportsOfTeamByRange: (teamName, range) => dispatch(getAllReportsOfTeamByRange(teamName, range)),
+  fetchAllReportsOfTeamByDay: (teamName, date) => dispatch(getAllReportsOfTeamByDay(teamName, date)),
+
+  fetchAllReportsOfUserByDay: (userId, date) => dispatch(fetchAllReportsOfUserByDay(userId, date)),
+  fetchAllReportsOfUserByRange: (userId, range) => dispatch(fetchAllReportsOfUserByRange(userId, range)),
 });
 
 export default connect(

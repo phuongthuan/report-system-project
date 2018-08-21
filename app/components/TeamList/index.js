@@ -4,10 +4,7 @@ import Team from "./Team";
 const TeamList = (props) => {
   const {teamsList, fetchAllReportsOfTeam} = props;
   return (
-    <div
-      className="d-flex"
-      style={{flexWrap: 'wrap'}}
-    >
+    <div className="d-flex flex-column">
       {teamsList.map(team =>
         (
           <Team

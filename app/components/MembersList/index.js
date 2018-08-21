@@ -16,6 +16,6 @@ const MembersList = ({membersList, user, createMessage, addFlashMessage}) => (
       ))
     }
   </div>
-);
+)
 
 export default MembersList;

@@ -1,7 +1,7 @@
 import {
   CREATE_WEEKLY_REPORT,
   CREATE_WEEKLY_REPORT_FAILED,
-  CREATE_WEEKLY_REPORT_SUCCEEDED,
+  CREATE_WEEKLY_REPORT_SUCCEEDED, DELETE_WEEKLY_REPORT, DELETE_WEEKLY_REPORT_FAILED, DELETE_WEEKLY_REPORT_SUCCEEDED,
   GET_ALL_WEEKLY_REPORTS_OF_USER,
   GET_ALL_WEEKLY_REPORTS_OF_USER_FAILED,
   GET_ALL_WEEKLY_REPORTS_OF_USER_SUCCEEDED
@@ -39,5 +39,21 @@ export const createWeeklyReportSucceeded = newWeeklyReportReceived => ({
 });
 export const createWeeklyReportFailed = error => ({
   type: CREATE_WEEKLY_REPORT_FAILED,
+  error
+});
+
+/*===========================================
+ DELETE WEEKLY_REPORT
+ ===========================================*/
+export const deleteWeeklyReport = id => ({
+  type: DELETE_WEEKLY_REPORT,
+  id
+});
+export const deleteWeeklyReportSucceeded = wrId => ({
+  type: DELETE_WEEKLY_REPORT_SUCCEEDED,
+  wrId
+});
+export const deleteWeeklyReportFailed = error => ({
+  type: DELETE_WEEKLY_REPORT_FAILED,
   error
 });

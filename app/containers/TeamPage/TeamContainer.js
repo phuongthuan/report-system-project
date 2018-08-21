@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import SideBar from 'components/SideBar'
 import PropTypes from 'prop-types';
 import isEmpty from "lodash/isEmpty";
 import TeamList from "../../components/TeamList";
@@ -8,7 +7,6 @@ import { selectTeamLoading, selectTeams } from "./selectors";
 import { fetchAllTeams } from "./actions";
 import { selectUser } from "../Auth/selectors";
 import Spinner from "../../components/Spinner";
-import FilterReport from "../../components/FilterReport";
 
 class TeamContainer extends Component {
 
@@ -23,12 +21,9 @@ class TeamContainer extends Component {
     const {teams, teamLoading} = this.props;
     return (
       <div className="row">
-        <div className="col-md-3">
-          <SideBar/>
-        </div>
-        <div className="col-md-9">
+        <div className="col-md-12">
           {teamLoading && isEmpty(teams) ? (
-            <Spinner height="650px" style={{fontSize: 32, color: '#FFFFFF'}}/>
+            <Spinner height="650px" style={{fontSize: 32}}/>
           ) : (
             <TeamList
               teamsList={teams}
@@ -41,10 +36,13 @@ class TeamContainer extends Component {
 }
 
 TeamContainer.propTypes = {
-  fetchAllTeams: PropTypes.func.isRequired,
   teamLoading: PropTypes.bool.isRequired,
-  user: PropTypes.object.isRequired,
-  teams: PropTypes.array.isRequired
+  user: PropTypes.shape({
+    firstname: PropTypes.string,
+    lastname: PropTypes.string,
+  }).isRequired,
+  teams: PropTypes.arrayOf(PropTypes.object).isRequired,
+  fetchAllTeams: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({

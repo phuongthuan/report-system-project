@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import isEmpty from 'lodash/isEmpty';
+import moment from "moment/moment";
 import { Card, CardBody, CardHeader, CardTitle, CardSubtitle } from 'reactstrap'
 import { Button } from 'antd'
 import Spinner from "../Spinner";
@@ -21,8 +22,8 @@ class TeamDetail extends Component {
     const {userId, members} = team;
     return (
       <Fragment>
-        {(isEmpty(team.userId) && isEmpty(team.members)) ? (
-          <Spinner height="650px" style={{fontSize: 32, color: '#FFFFFF'}}/>
+        {(isEmpty(team && team.userId) && isEmpty(team.members) && isEmpty(team.userId && team.userId.weekly_reports)) ? (
+          <Spinner height="650px" style={{fontSize: 32}}/>
         ) : (
           <Card style={{borderRadius: '0'}} className="border-0 shadow-sm">
             <CardHeader className="text-center">
@@ -62,21 +63,46 @@ class TeamDetail extends Component {
                     </div>
                   </div>
 
+                  <hr/>
 
                   <div className="row">
                     <div className="col-md-12 pl-0">
-                      <CardSubtitle>Introduction</CardSubtitle>
+                      <CardSubtitle className="mb-3">Introduction</CardSubtitle>
                       {team.description}
                     </div>
                   </div>
 
+                  <hr/>
+
+                  <div className="row mt-4">
+                    <div className="col-md-12 pl-0">
+                      <CardSubtitle className="">Weekly report</CardSubtitle>
+                      <p>
+                        {team.userId.weekly_reports[0].issue}
+                      </p>
+                      <p>
+                        {team.userId.weekly_reports[0].solution}
+                      </p>
+                      <p>
+                        {team.userId.weekly_reports[0].description}
+                      </p>
+                      <p>
+                        {team.userId.weekly_reports[0].comment}
+                      </p>
+                      <p>
+                        {moment(team.userId.weekly_reports[0].date).format("dddd, MMMM Do YYYY")}
+                      </p>
+                    </div>
+                  </div>
+
+                  <hr/>
                   <div className="row mt-4">
                     <Button
                       onClick={() => this.navigate({
                         url: `/team/${team.id}/statistic`,
                         teamName: team.name
                       })}
-                      type="dashed"
+                      type="primary"
                       icon="pie-chart"
                     >
                       Statistic
@@ -87,10 +113,10 @@ class TeamDetail extends Component {
                     <Button
                       onClick={() => this.navigate({
                         url: `/team/${team.id}/weekly-report`,
-                        teamName: team.name
+                        teamName: (team.userId && team.userId.id)
                       })}
-                      type="dashed"
-                      icon="book"
+                      type="primary"
+                      icon="table"
                     >
                       Weekly reports
                     </Button>

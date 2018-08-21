@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { DatePicker } from 'antd'
 
-const { RangePicker } = DatePicker;
+const {RangePicker} = DatePicker;
 
 class RangePickerComponent extends Component {
 
   onChange = (date, dateString) => {
     const {
       location,
+      match,
       fetchAllReportsOfTeamByRange,
       fetchAllReportsOfUserByRange,
       user,
@@ -19,6 +19,8 @@ class RangePickerComponent extends Component {
       ? location.state.teamName
       : undefined;
 
+    const userId = match.params.id;
+
     const action = `from ${dateString[0]} to ${dateString[1]}`;
 
     if (user && user.role === 'member') {
@@ -27,22 +29,23 @@ class RangePickerComponent extends Component {
 
     if (user && user.role === 'team_leader') {
       fetchAllReportsOfTeamByRange(user.division, dateString);
+      fetchAllReportsOfUserByRange(userId, dateString)
       actionChange(action)
     }
 
     if (user && user.role === 'group_leader') {
       fetchAllReportsOfTeamByRange(teamName, dateString);
+      fetchAllReportsOfUserByRange(userId, dateString)
       actionChange(action)
     }
-
     console.log('RangePicker submitted!', dateString);
   }
 
   render() {
     return (
-      <div>
-        <RangePicker onChange={this.onChange} />
-      </div>
+      <RangePicker
+        onChange={this.onChange}
+      />
     );
   }
 }

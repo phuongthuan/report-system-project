@@ -41,7 +41,7 @@ class ProgressBar extends Component {
     });
   }
 
-  componentWillReceiveProps(nextProps, state) {
+  componentWillReceiveProps(nextProps) {
 
     var positive = 0;
     var negative = 0;

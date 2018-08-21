@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import isEmpty from "lodash/isEmpty";
 import PropTypes from 'prop-types';
 import styled from "styled-components";
-import SideBar from 'components/SideBar'
 import Spinner from 'components/Spinner'
 import MessagesList from '../../components/MessagesList/index'
 import { selectMessageLoading, selectMessages } from "./selectors";
@@ -19,23 +18,20 @@ const Wrapper = styled.div`
 class MessageContainer extends Component {
 
   componentDidMount() {
-    const { fetchAllMessages, user } = this.props;
+    const {fetchAllMessages, user} = this.props;
     if (user && user.role === 'member') {
       fetchAllMessages(user.id);
     }
   }
 
   render() {
-    const { messages, loading, deleteMessage, addFlashMessage } = this.props;
+    const {messages, loading, deleteMessage, addFlashMessage} = this.props;
     return (
       <Wrapper>
         <div className="row">
-          <div className="col-md-3">
-            <SideBar/>
-          </div>
-          <div className="col-md-9">
+          <div className="col-md-12">
             {loading && isEmpty(messages) ? (
-              <Spinner height="650px" style={{fontSize: 32, color: '#FFFFFF'}}/>
+              <Spinner height="650px" style={{fontSize: 32}}/>
             ) : (
               <Fragment>
                 {messages.length === 0 ? (
@@ -58,8 +54,13 @@ class MessageContainer extends Component {
 }
 
 MessageContainer.propTypes = {
-  messages: PropTypes.arrayOf(PropTypes.object),
-  loading: PropTypes.bool,
+  messages: PropTypes.arrayOf(PropTypes.object).isRequired,
+  loading: PropTypes.bool.isRequired,
+  user: PropTypes.shape({
+    firstname: PropTypes.string,
+    lastname: PropTypes.string,
+  }).isRequired,
+
   fetchAllMessages: PropTypes.func.isRequired,
   deleteMessage: PropTypes.func.isRequired,
   addFlashMessage: PropTypes.func.isRequired,

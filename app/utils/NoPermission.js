@@ -7,15 +7,13 @@ const WrapperStyled = styled.div`
   justify-content: center;
 `;
 
-const NoPermision = ({location}) => {
-  return (
-    <WrapperStyled>
-      <h3>
-        You dont have permisson to access this route
-        <code>{location.pathname}</code>
-      </h3>
-    </WrapperStyled>
-  );
-}
+const NoPermision = ({location}) => (
+  <WrapperStyled>
+    <h3>
+      You dont have permisson to access this route
+      <code>{location.pathname}</code>
+    </h3>
+  </WrapperStyled>
+);
 
 export default NoPermision;

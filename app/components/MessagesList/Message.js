@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react'
 import moment from 'moment'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { CardText, Card, CardBody } from 'reactstrap'
 import Chip from '../Chip/index'
 

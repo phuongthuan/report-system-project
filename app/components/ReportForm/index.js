@@ -1,11 +1,12 @@
 import React from 'react'
 import { withFormik } from 'formik'
 import * as Yup from 'yup'
+import { FormattedMessage } from 'react-intl'
 import EmojiMartPicker from 'emoji-mart-picker'
 import moment from "moment/moment";
 import isEmpty from 'lodash/isEmpty'
 import { Button } from 'antd'
-import { FormGroup, Label, Input, Form, Card, CardHeader, CardFooter, CardTitle, CardBody } from 'reactstrap'
+import { Card, CardBody, CardFooter, CardHeader, CardTitle, Form, FormGroup, Input, Label } from 'reactstrap'
 import InputField from '../InputField/index'
 import AsyncButton from '../AsyncButton/index'
 import SelectBox from '../SelectBox/index'
@@ -19,14 +20,25 @@ const ButtonGroup = Button.Group;
 
 const FormikForm = ({values, setFieldValue, handleSubmit, handleChange, isSubmitting, touched, errors}) => (
   <Form onSubmit={handleSubmit}>
-    <Card style={{borderRadius: '0'}} className="border-0 shadow-sm">
+    <Card className="shadow-sm" style={{borderRadius: '0', border: 0}}>
       <CardHeader>
-        <CardTitle>Daily Report</CardTitle>
+        <CardTitle>
+          <FormattedMessage
+            id="report.create.form.header.title"
+            defaultMessage="Daily Report"
+          />
+        </CardTitle>
         <Label for="date">{moment(values.date).format("dddd, MMMM Do YYYY")}</Label>
       </CardHeader>
       <CardBody>
 
         <FormGroup>
+          <Label for="emotion">
+            <FormattedMessage
+              id="report.create.form.field.emotion"
+              defaultMessage="Emotion"
+            />
+          </Label>
           <EmojiMartPicker
             set='emojione'
             onChange={emoji => setFieldValue('emotion', emoji)}
@@ -45,21 +57,29 @@ const FormikForm = ({values, setFieldValue, handleSubmit, handleChange, isSubmit
 
         <InputField
           type="text"
-          label="Title"
+          label={(
+            <FormattedMessage
+              id="report.create.form.field.title"
+              defaultMessage="Title"
+            />
+          )}
           name="title"
           value={values.title}
-          placeholder="Title..."
           error={touched.title && errors.title}
           onChange={handleChange}
         />
 
         <InputField
           type="textarea"
-          label="Today Achievement"
+          label={(
+            <FormattedMessage
+              id="report.create.form.field.achievement"
+              defaultMessage="Today Achievement"
+            />
+          )}
           style={{height: '100px'}}
           name="achievement"
           value={values.achievement}
-          placeholder="What achievement did you get today ?"
           error={touched.achievement && errors.achievement}
           onChange={handleChange}
         />
@@ -68,33 +88,45 @@ const FormikForm = ({values, setFieldValue, handleSubmit, handleChange, isSubmit
 
         <InputField
           type="textarea"
-          label="Planing for next day"
+          label={(
+            <FormattedMessage
+              id="report.create.form.field.planning"
+              defaultMessage="Planning for next day"
+            />
+          )}
           style={{height: '100px'}}
           name="plan"
           value={values.plan}
-          placeholder="Tomorrow I'll bla bla ..."
           error={touched.plan && errors.plan}
           onChange={handleChange}
         />
 
         <InputField
           type="textarea"
-          label="Description"
+          label={(
+            <FormattedMessage
+              id="report.create.form.field.description"
+              defaultMessage="Description"
+            />
+          )}
           style={{height: '100px'}}
           name="description"
           value={values.description}
-          placeholder="Description ..."
           error={touched.description && errors.description}
           onChange={handleChange}
         />
 
         <InputField
           type="textarea"
-          label="Comment"
+          label={(
+            <FormattedMessage
+              id="report.create.form.field.comment"
+              defaultMessage="Comment"
+            />
+          )}
           style={{height: '100px'}}
           name="comment"
           value={values.comment}
-          placeholder="Leave a comment ..."
           error={touched.comment && errors.comment}
           onChange={handleChange}
         />
@@ -103,7 +135,12 @@ const FormikForm = ({values, setFieldValue, handleSubmit, handleChange, isSubmit
       <CardFooter>
         <ButtonGroup>
           <AsyncButton
-            buttonName="Submit"
+            buttonName={(
+              <FormattedMessage
+                id="report.create.form.button.submit"
+                defaultMessage="Submit"
+              />
+            )}
             type="primary"
             htmlType="submit"
             icon="form"
@@ -113,7 +150,10 @@ const FormikForm = ({values, setFieldValue, handleSubmit, handleChange, isSubmit
           <Button
             onClick={navigate}
           >
-            Back to Report Page
+            <FormattedMessage
+              id="report.create.form.button.back"
+              defaultMessage="Back"
+            />
           </Button>
         </ButtonGroup>
       </CardFooter>
@@ -157,12 +197,13 @@ const ReportForm = withFormik({
   },
 
   handleSubmit: (values, {props, setSubmitting}) => {
-    const {createReport, addFlashMessage, updateReport, match} = props;
+    const {createReport, addFlashMessage, updateReport, match, user} = props;
     const isReport = match.params.id;
     setSubmitting(true);
     setTimeout(() => {
       if (isReport) {
-        updateReport(values);
+        const reportUpdated = Object.assign({}, values, {userId: user.id});
+        updateReport(reportUpdated);
         addFlashMessage({
           type: 'success',
           text: 'Update Report Successful.'

@@ -1,23 +1,23 @@
 import request from 'utils/request'
 
 import {
-  GET_REPORTS,
-  GET_ALL_REPORTS_OF_USER,
-  GET_A_REPORT,
+  CREATE_MESSAGE,
   CREATE_REPORT,
-  UPDATE_REPORT,
+  CREATE_WEEKLY_REPORT,
+  DELETE_MESSAGE,
   DELETE_REPORT,
-  UPDATE_USER_PROFILE,
-  GET_USER_PROFILE,
-  LOGIN,
+  GET_A_REPORT,
+  GET_ALL_REPORTS_OF_USER,
+  GET_MEMBERS,
   GET_MEMBERS_OF_TEAM,
   GET_MESSAGES,
-  CREATE_MESSAGE,
-  GET_MEMBERS,
-  DELETE_MESSAGE,
+  GET_REPORTS,
   GET_TEAMS,
-  CREATE_WEEKLY_REPORT,
-  GET_WEEKLY_REPORTS
+  GET_USER_PROFILE,
+  GET_WEEKLY_REPORTS,
+  LOGIN,
+  UPDATE_REPORT,
+  UPDATE_USER_PROFILE
 } from 'constants/API_URL'
 
 export const callFetchReports = () => request('get', GET_REPORTS);
@@ -32,6 +32,8 @@ export const callGetMembersOfTeam = payload => request('get', `${GET_MEMBERS_OF_
 export const callGetMembers = () => request('get', `${GET_MEMBERS}?_sort=role&_order=desc`)
 export const callGetMessagesToUser = payload => request('get', `${GET_MESSAGES}?toUser=${payload}&_sort=date&_order=desc`)
 export const callFetchAllWeeklyReportsOfUser = id => request('get', `${GET_WEEKLY_REPORTS}?userId=${id}`)
+export const callSearchReport = text => request('get', `${GET_REPORTS}?q=${text}`)
+export const callSearchReportOfUser = payload => request('get', `${GET_REPORTS}?userId=${payload.userId}&q=${payload.text}`)
 
 export const callCreateReport = report => request('post', CREATE_REPORT, report);
 export const callCreateMessage = message => request('post', CREATE_MESSAGE, message);
@@ -44,3 +46,6 @@ export const callUpdateReport = report => request('put', `${UPDATE_REPORT}/${rep
 
 export const callDeleteReport = id => request('delete', `${DELETE_REPORT}/${id}`)
 export const callDeleteMessage = id => request('delete', `${DELETE_MESSAGE}/${id}`)
+export const callDeleteWeeklyReport = id => request('delete', `${GET_WEEKLY_REPORTS}/${id}`)
+
+export const callChangeLocale = lang => localStorage.reportLang = lang;
