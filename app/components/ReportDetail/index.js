@@ -1,4 +1,12 @@
 import React, { Component, Fragment } from 'react';
+import {
+  FacebookShareButton,
+  FacebookIcon,
+  FacebookShareCount,
+  GooglePlusShareButton,
+  GooglePlusIcon,
+  GooglePlusShareCount
+} from 'react-share'
 import isEmpty from 'lodash/isEmpty'
 import moment from "moment/moment";
 import { Emoji } from 'emoji-mart';
@@ -24,6 +32,8 @@ class ReportDetail extends Component {
   render() {
     const {report} = this.props;
     const {emotion, userId, issues} = report;
+    const shareUrl = 'http://github.com';
+    const title = 'Report System';
     return (
       <Fragment>
         {isEmpty(report) && isEmpty(emotion) && isEmpty(userId) ? (
@@ -103,6 +113,46 @@ class ReportDetail extends Component {
                       <CardSubtitle className="mb-3">Date Created</CardSubtitle>
                       <small className="text-muted">
                         {moment(report.date).format("dddd, MMMM Do YYYY")}
+                      </small>
+                    </div>
+                  </div>
+                  <div className="row mt-3">
+                    <div className="col-md-12">
+                      <small>
+                        <FacebookShareButton
+                          url={shareUrl}
+                          quote={title}
+                          className="Demo__some-network__share-button"
+                        >
+                          <FacebookIcon
+                            size={24}
+                            round
+                          />
+                        </FacebookShareButton>
+
+                        <FacebookShareCount
+                          url={shareUrl}
+                          className="Demo__some-network__share-count"
+                        >
+                          {count => count}
+                        </FacebookShareCount>
+
+                        <GooglePlusShareButton
+                          url={shareUrl}
+                          className="Demo__some-network__share-button"
+                        >
+                          <GooglePlusIcon
+                            size={24}
+                            round
+                          />
+                        </GooglePlusShareButton>
+
+                        <GooglePlusShareCount
+                          url={shareUrl}
+                          className="Demo__some-network__share-count"
+                        >
+                          {count => count}
+                        </GooglePlusShareCount>
                       </small>
                     </div>
                   </div>
