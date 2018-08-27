@@ -15,6 +15,7 @@ import { getAllReportsOfTeam, getAllReportsOfTeamByDay, getAllReportsOfTeamByRan
 import { selectReportsOfTeam, selectStatisticLoading } from "../StatisticPage/selectors";
 import { addFlashMessage } from "../FlashMessage/actions";
 import ReportTable from '../../components/ReportTable/index'
+import Download from "../../components/Download";
 
 class ReportContainer extends Component {
 
@@ -75,7 +76,7 @@ class ReportContainer extends Component {
       reportLoading,
       statisticLoading,
       reportsOfTeam,
-      user,
+      user
     } = this.props;
 
     const loading = (user.role === 'member') ? reportLoading : statisticLoading;
@@ -85,24 +86,23 @@ class ReportContainer extends Component {
       <div className="row">
         <div className="col-md-12">
           <div className="row">
-            <div className="col-md-12">
-              {loading && isEmpty(reports) ? (
-                <Spinner height="650px" style={{fontSize: 32}}/>
-              ) : (
-                <ReportTable
-                  {...this.props}
-                  user={user}
-                  action={this.state.action}
-                  data={reports}
-                  addFlashMessage={addFlashMessage}
-                  fetchAllReportsOfUserByDay={fetchAllReportsOfUserByDay}
-                  fetchAllReportsOfUserByRange={fetchAllReportsOfUserByRange}
-                  fetchAllReportsOfTeamByRange={fetchAllReportsOfTeamByRange}
-                  fetchAllReportsOfTeamByDay={fetchAllReportsOfTeamByDay}
-                  deleteReport={deleteReport}
-                />
-              )}
-            </div>
+            {loading && isEmpty(reports) ? (
+              <Spinner height="650px" style={{fontSize: 32}}/>
+            ) : (
+              <ReportTable
+                {...this.props}
+                user={user}
+                action={this.state.action}
+                data={reports}
+                addFlashMessage={addFlashMessage}
+                fetchAllReportsOfUserByDay={fetchAllReportsOfUserByDay}
+                fetchAllReportsOfUserByRange={fetchAllReportsOfUserByRange}
+                fetchAllReportsOfTeamByRange={fetchAllReportsOfTeamByRange}
+                fetchAllReportsOfTeamByDay={fetchAllReportsOfTeamByDay}
+                deleteReport={deleteReport}
+                actionChange={this.actionChange}
+              />
+            )}
           </div>
         </div>
       </div>

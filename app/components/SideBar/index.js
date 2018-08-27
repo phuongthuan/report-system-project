@@ -16,6 +16,7 @@ import { selectMessages } from "../../containers/Message/selectors";
 import { fetchAllMessages } from "../../containers/Message/actions";
 import { fetchAllReportsOfUser } from "../../containers/ReportPage/actions";
 import { setLocale } from "../../containers/App/actions";
+import Language from "../Language";
 
 const {Sider} = Layout;
 const {Meta} = Card;
@@ -85,10 +86,10 @@ class SideBar extends Component {
                     defaultMessage="Edit Profile"
                   />
                 </small>
-                <div>
-                  <a role="button" onClick={() => changeLocale('vi')}>VI</a> |
-                  <a role="button" onClick={() => changeLocale('en')}>EN</a>
-                </div>
+                <br/>
+                <small>
+                  <Language changeLocale={changeLocale}/>
+                </small>
               </Card>
             )}
 

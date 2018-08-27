@@ -1,3 +1,4 @@
+import Immutable from 'immutable'
 import {
   CREATE_MESSAGE,
   FETCH_ALL_MESSAGES,
@@ -12,7 +13,7 @@ const initState = {
   message: {},
   loading: false,
   error: false
-}
+};
 
 function messageReducer(state = initState, action) {
   switch (action.type) {
@@ -30,6 +31,11 @@ function messageReducer(state = initState, action) {
         messages: action.messagesReceived,
         loading: false,
       }
+      //
+      // return {
+      //   messages: state.set('messages', Immutable.fromJS(action.messagesReceived)),
+      //   loading: false
+      // }
 
     case CREATE_MESSAGE_SUCCEEDED:
       return {

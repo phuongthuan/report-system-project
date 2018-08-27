@@ -14,7 +14,6 @@ class DatePickerComponent extends Component {
       match
     } = this.props;
 
-
     const teamName = (location && location.state)
       ? location.state.teamName
       : undefined;

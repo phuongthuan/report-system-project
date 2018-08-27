@@ -12,14 +12,14 @@ import {
   TableCell,
   TableHead,
   TablePagination,
-  TableRow,
-  Tooltip
+  TableRow
 } from '@material-ui/core';
 import { Button, Modal } from 'antd'
 import Chip from '../Chip/index'
 import SearchBox from "../SearchBox";
 import DatePickerComponent from "../DateTimePicker/DatePickerComponent";
 import RangePickerComponent from "../DateTimePicker/RangePickerComponent";
+import Download from "../Download";
 
 const confirm = Modal.confirm;
 const CustomTableCell = withStyles(theme => ({
@@ -45,7 +45,7 @@ const styles = theme => ({
   root: {
     width: '100%',
     overflowX: 'auto',
-    borderRadius: 3
+    borderRadius: 0
   },
   table: {
     minWidth: 500,
@@ -176,6 +176,11 @@ class ReportTable extends Component {
                 user={user}
                 fetchAllReportsOfUserByRange={fetchAllReportsOfUserByRange}
                 fetchAllReportsOfTeamByRange={fetchAllReportsOfTeamByRange}
+              />
+
+              <Download
+                user={user}
+                data={data}
               />
 
             </div>
