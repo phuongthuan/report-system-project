@@ -1,11 +1,11 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux'
+import { IntlProvider, FormattedMessage } from 'react-intl'
 import { Layout, Menu, Card, Icon } from 'antd'
 import Spinner from 'components/Spinner'
 import { withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty'
-import { FormattedMessage } from 'react-intl'
 import { Badge } from 'reactstrap';
 import imageProfile from '../../assests/images/Gabe_newell.png';
 import { selectUser } from "../../containers/Auth/selectors";
@@ -17,6 +17,7 @@ import { fetchAllMessages } from "../../containers/Message/actions";
 import { fetchAllReportsOfUser } from "../../containers/ReportPage/actions";
 import { setLocale } from "../../containers/App/actions";
 import Language from "../Language";
+import messagesLocale from "../../translations/messages";
 
 const {Sider} = Layout;
 const {Meta} = Card;
@@ -34,7 +35,7 @@ class SideBar extends Component {
   }
 
   get fullName() {
-    const { profile } = this.props;
+    const {profile} = this.props;
     return `${profile.firstName} ${profile.lastName}`
   }
 
@@ -51,10 +52,10 @@ class SideBar extends Component {
   }
 
   render() {
-    const {profile, loading, user, messages, changeLocale} = this.props;
+    const {profile, loading, user, messages, changeLocale, locale} = this.props;
     const avatar = profile ? profile.avatar : imageProfile;
     return (
-      <Fragment>
+      <IntlProvider locale={locale} messages={messagesLocale[locale]}>
         {loading && isEmpty(profile) && isEmpty(user) ? (
           <Spinner style={{fontSize: 32, color: '#071820'}}/>
         ) : (
@@ -73,7 +74,7 @@ class SideBar extends Component {
                 style={{width: 200, border: 0, borderRadius: 0, textAlign: 'center'}}
                 cover={<img style={{padding: '10px', width: 200, height: 200}} alt="example" src={avatar}/>}
               >
-                <Meta title={this.fullName} />
+                <Meta title={this.fullName}/>
                 <small
                   style={{cursor: 'pointer'}}
                   onClick={() => this.navigate('/profile/edit')}
@@ -133,7 +134,7 @@ class SideBar extends Component {
                     <FormattedMessage
                       id="report.menuitem.messenger"
                       defaultMessage="Messenger"
-                    />
+                    />&nbsp;
                     {messages.length > 0 &&
                     (
                       <Badge color="warning">{messages.length}</Badge>
@@ -174,7 +175,7 @@ class SideBar extends Component {
                 </Menu.Item>
 
                 <Menu.Item key="2">
-                  <Icon type="team" />
+                  <Icon type="team"/>
                   <span
                     onClick={() => this.navigate('/member')}
                     role="button"
@@ -277,10 +278,9 @@ class SideBar extends Component {
                 </Menu.Item>
               </Menu>
             )}
-
           </Sider>
         )}
-      </Fragment>
+      </IntlProvider>
     )
   }
 }
@@ -289,9 +289,13 @@ SideBar.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }),
-  profile: PropTypes.object,
+  profile: PropTypes.shape({
+    firstName: PropTypes.string,
+  }),
   messages: PropTypes.arrayOf(PropTypes.object),
-  user: PropTypes.object.isRequired,
+  user: PropTypes.shape({
+    firstName: PropTypes.string,
+  }).isRequired,
   logout: PropTypes.func.isRequired,
   getProfile: PropTypes.func.isRequired,
   fetchAllMessages: PropTypes.func.isRequired,

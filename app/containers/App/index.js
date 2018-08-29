@@ -6,7 +6,7 @@ import { IntlProvider } from 'react-intl'
 import Home from 'containers/Home'
 import Auth from "containers/Auth";
 import { Layout } from 'antd';
-import ReportPage from 'containers/ReportPage';
+import ReportPage from '../ReportPage';
 import NoMatch from "../../utils/NoMatch";
 import PrivateRoute from '../../utils/PrivateRoute'
 import StatisticPage from "../StatisticPage";
@@ -41,7 +41,7 @@ class App extends Component {
           <Route location={location} exact path="/" component={Home}/>
           <Route location={location} path="/login" component={Auth}/>
           <Layout style={{minHeight: '100vh'}}>
-            <SideBar/>
+            <SideBar locale={locale}/>
             <Layout style={{marginLeft: 200}}>
               <Content style={{margin: '24px 16px 0', overflow: 'initial'}}>
                 <Switch>

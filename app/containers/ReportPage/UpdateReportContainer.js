@@ -37,8 +37,8 @@ class UpdateReportContainer extends Component {
   render() {
     const {updateReport, report, loading, addFlashMessage, user} = this.props;
     return (
-      <div className="row">
-        <div className="col-md-12">
+      <div className="row mb-3">
+        <div className="col-md-12 p-0">
           {loading && isEmpty(report) ? (
             <Spinner height="650px" style={{fontSize: 32}}/>
           ) : (

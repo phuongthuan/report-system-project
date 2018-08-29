@@ -38,11 +38,12 @@ export default {
     'report.create.form.field.planning': 'Planning for next day',
 
 
-    'report.logout': 'Logout'
+    'report.logout': 'Logout',
+    'report.date.picker': 'Select date'
   },
   vi: {
     'app.title': 'Hệ thống Báo Cáo',
-    'report.button.profile.edit': 'Cập nhật',
+    'report.button.profile.edit': 'Thông tin',
     'report.menuitem.write.daily.report': 'Tạo báo cáo ngày',
     'report.menuitem.reports': 'Danh sách báo cáo',
     'report.menuitem.messenger': 'Hộp tin',
@@ -78,6 +79,7 @@ export default {
     'report.create.form.field.comment': 'Nhận xét',
     'report.create.form.field.planning': 'Kế hoạch cho ngày mai',
 
-    'report.logout': 'Đăng xuất'
+    'report.logout': 'Đăng xuất',
+    'report.date.picker': 'Chọn ngày'
   }
 }

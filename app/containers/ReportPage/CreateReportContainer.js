@@ -21,16 +21,14 @@ class CreateReportContainer extends Component {
   render() {
     const {createReport, addFlashMessage, user} = this.props;
     return (
-      <div className="container">
-        <div className="row">
-          <div className="col-md-12">
-            <ReportForm
-              {...this.props}
-              user={user}
-              createReport={createReport}
-              addFlashMessage={addFlashMessage}
-            />
-          </div>
+      <div className="row mb-3">
+        <div className="col-md-12 p-0">
+          <ReportForm
+            {...this.props}
+            user={user}
+            createReport={createReport}
+            addFlashMessage={addFlashMessage}
+          />
         </div>
       </div>
     );
