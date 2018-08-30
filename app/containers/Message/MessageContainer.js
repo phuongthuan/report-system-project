@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import { connect } from 'react-redux'
 import isEmpty from "lodash/isEmpty";
 import PropTypes from 'prop-types';
@@ -15,7 +15,7 @@ const Wrapper = styled.div`
   min-height: 100vh;
 `;
 
-class MessageContainer extends Component {
+class MessageContainer extends PureComponent {
 
   componentDidMount() {
     const {fetchAllMessages, user} = this.props;

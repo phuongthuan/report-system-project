@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import {
   FacebookShareButton,
   FacebookIcon,
@@ -17,7 +17,7 @@ import {
 import Spinner from "../Spinner";
 import Chip from '../Chip/index'
 
-class ReportDetail extends Component {
+class ReportDetail extends PureComponent {
 
   get emoji() {
     const {report} = this.props;

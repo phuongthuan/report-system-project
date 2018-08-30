@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Button, Dropdown, Menu, Icon } from 'antd'
 
-class Language extends Component {
+class Language extends PureComponent {
 
   handleMenuClick = (e) => {
     const { changeLocale } = this.props;

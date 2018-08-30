@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { Fragment } from 'react';
+import PropTypes from 'prop-types'
 import Member from '../Member/index'
 
 const MembersList = ({membersList, user, createMessage, addFlashMessage}) => (
-  <div>
+  <Fragment>
     {membersList.filter(member =>
       member.id !== user.id)
       .map(member => (
@@ -15,7 +16,18 @@ const MembersList = ({membersList, user, createMessage, addFlashMessage}) => (
         />
       ))
     }
-  </div>
+  </Fragment>
 )
+
+MembersList.propTypes = {
+  membersList: PropTypes.arrayOf(PropTypes.object).isRequired,
+  user: PropTypes.shape({
+    id: PropTypes.number,
+    firstName: PropTypes.string,
+    lastName: PropTypes.string,
+  }).isRequired,
+  createMessage: PropTypes.func.isRequired,
+  addFlashMessage: PropTypes.func.isRequired,
+}
 
 export default MembersList;

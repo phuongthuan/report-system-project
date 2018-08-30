@@ -1,8 +1,9 @@
-import React, { Component, Fragment } from 'react';
+import React, { PureComponent } from 'react';
 import 'antd/dist/antd.css';
 import { DatePicker } from 'antd';
+import moment from 'moment';
 
-class DatePickerComponent extends Component {
+class DatePickerComponent extends PureComponent {
 
   onChange = (date, dateString) => {
     const {
@@ -35,7 +36,6 @@ class DatePickerComponent extends Component {
       fetchAllReportsOfUserByDay(userId, dateString);
       actionChange(dateString);
     }
-    console.log('DatePicker submitted!', dateString);
   }
 
   render() {
@@ -43,6 +43,7 @@ class DatePickerComponent extends Component {
       <DatePicker
         onChange={this.onChange}
         placeholder="Select date"
+        value={moment()}
       />
     );
   }

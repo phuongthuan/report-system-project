@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types'
 import Team from "./Team";
 
 const TeamList = (props) => {
@@ -16,5 +17,10 @@ const TeamList = (props) => {
     </div>
   );
 };
+
+TeamList.propTypes = {
+  teamsList: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+  fetchAllReportsOfTeam: PropTypes.func.isRequired,
+}
 
 export default TeamList;

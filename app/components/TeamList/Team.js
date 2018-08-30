@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types'
 import { Card, CardBody } from 'reactstrap'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
@@ -12,7 +13,7 @@ const Image = styled.img`
   height: 64px;
 `;
 
-class Team extends Component {
+class Team extends PureComponent {
 
   render() {
     const {team} = this.props;
@@ -53,7 +54,12 @@ class Team extends Component {
   }
 }
 
-Team.propTypes = {};
+Team.propTypes = {
+  team: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+  }).isRequired,
+};
 
 const mapStateToProps = state => ({
   reportsOfTeam: selectReportsOfTeam(state),

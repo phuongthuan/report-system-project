@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import AsyncButton from 'components/AsyncButton';
 import isEmpty from 'lodash/isEmpty'
 import Validator from "validator";
@@ -10,7 +10,7 @@ import {
 } from 'reactstrap'
 import InputField from '../InputField/index'
 
-class LoginForm extends Component {
+class LoginForm extends PureComponent {
 
   state = {
     user: {

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Spinner from 'components/Spinner'
 import isEmpty from 'lodash/isEmpty';
@@ -15,7 +15,7 @@ const Wrapper = styled.div`
   min-height: 100vh;
 `;
 
-class ProfileContainer extends Component {
+class ProfileContainer extends PureComponent {
 
   static propTypes = {
     user: PropTypes.shape({

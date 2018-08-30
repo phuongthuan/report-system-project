@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import isEmpty from "lodash/isEmpty";
 import Spinner from 'components/Spinner'
 import PropTypes from 'prop-types';
 import Member from "../Member";
-import ReportTable from '../ReportTable/index'
 import WeeklyReportTable from '../WeeklyReportTable/index'
+import ReportTable from "../ReportTable";
 
-class MemberDetail extends Component {
+class MemberDetail extends PureComponent {
 
   tableData = () => {
     const {

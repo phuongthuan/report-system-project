@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
 import isEmpty from "lodash/isEmpty";
@@ -7,7 +7,7 @@ import { fetchAReport } from "./actions";
 import ReportDetail from "../../components/ReportDetail";
 import Spinner from "../../components/Spinner";
 
-class ReportDetailContainer extends Component {
+class ReportDetailContainer extends PureComponent {
 
   componentDidMount() {
     const {fetchAReport, match} = this.props;

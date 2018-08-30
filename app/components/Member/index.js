@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -12,7 +12,7 @@ const Image = styled.img`
   height: 64px;
 `;
 
-class Member extends Component {
+class Member extends PureComponent {
 
   render() {
     const {member, user, createMessage, addFlashMessage} = this.props;

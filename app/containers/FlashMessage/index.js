@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types';
 import { selectFlashMessage } from "./selectors";
 import FlashMessage from "../../components/FlashMessage";
 import { deleteFlashMessage } from './actions'
 
-class FlashMessageList extends Component {
+class FlashMessageList extends PureComponent {
 
   static propTypes = {
     messages: PropTypes.arrayOf(PropTypes.object).isRequired,

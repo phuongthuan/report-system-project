@@ -1,9 +1,9 @@
-import React, { Component, Fragment } from 'react'
+import React, { PureComponent, Fragment } from 'react'
 import moment from 'moment'
 import { CardText, Card, CardBody } from 'reactstrap'
 import Chip from '../Chip/index'
 
-class Message extends Component {
+class Message extends PureComponent {
 
   onDeleteMessage = () => {
     const {deleteMessage, addFlashMessage, message} = this.props;

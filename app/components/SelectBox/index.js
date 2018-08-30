@@ -1,6 +1,7 @@
 import React from 'react'
 import { FieldArray, Field } from 'formik'
 import { Button, FormGroup, ButtonGroup } from 'reactstrap'
+import uuidv1 from 'uuid/v1'
 
 const issues_type = [
   {value: 1, label: 'Hard for Debugging'},
@@ -17,7 +18,7 @@ const SelectBox = ({values}) => (
       <div className="row mb-3">
         {values.issues && values.issues.length > 0 ? (
           values.issues.map((issue, index) => (
-            <FormGroup className="d-flex" key={index}>
+            <FormGroup className="d-flex" key={uuidv1()}>
               <div className="col-md-8">
                 <Field component="select" name={`issues.${index}`}>
                   <option>Select issue</option>
@@ -39,14 +40,14 @@ const SelectBox = ({values}) => (
                     type="button"
                     onClick={() => arrayHelpers.remove(index)}
                   >
-                    <strong> - </strong>
+                    <b> - </b>
                   </Button>
                   <Button
                     size="sm"
                     type="button"
                     onClick={() => arrayHelpers.insert(index, '')}
                   >
-                    <strong> + </strong>
+                    <b> + </b>
                   </Button>
                 </ButtonGroup>
               </div>

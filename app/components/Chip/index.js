@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Avatar, Chip } from '@material-ui/core';
@@ -11,7 +11,7 @@ const styles = () => ({
   }
 });
 
-class Chips extends Component {
+class Chips extends PureComponent {
 
   navigate = (url) => {
     const {history} = this.props;
@@ -37,7 +37,12 @@ class Chips extends Component {
 }
 
 Chips.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.shape({
+    root: PropTypes.string,
+  }).isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 export default withStyles(styles)(Chips);

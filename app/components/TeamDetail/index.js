@@ -1,4 +1,5 @@
-import React, { Component, Fragment } from 'react';
+import React, { PureComponent, Fragment } from 'react';
+import PropTypes from 'prop-types'
 import isEmpty from 'lodash/isEmpty';
 import moment from "moment/moment";
 import { Card, CardBody, CardHeader, CardTitle, CardSubtitle } from 'reactstrap'
@@ -7,7 +8,7 @@ import Spinner from "../Spinner";
 import Chip from '../Chip/index'
 import ProgressBar from "../ProgressBar";
 
-class TeamDetail extends Component {
+class TeamDetail extends PureComponent {
 
   navigate = (payload) => {
     const {history} = this.props;
@@ -132,6 +133,19 @@ class TeamDetail extends Component {
   }
 }
 
-TeamDetail.propTypes = {};
+TeamDetail.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired
+  }).isRequired,
+  team: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    userId: PropTypes.shape({
+      id: PropTypes.number,
+      firstName: PropTypes.string,
+    }).isRequired,
+    members: PropTypes.arrayOf(PropTypes.object).isRequired,
+  }).isRequired,
+  reportsOfTeam: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 export default TeamDetail;

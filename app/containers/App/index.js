@@ -1,6 +1,5 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { Switch, Route } from 'react-router-dom'
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
 import { IntlProvider } from 'react-intl'
 import Home from 'containers/Home'
@@ -21,16 +20,16 @@ import messages from '../../translations/messages'
 
 const {Content} = Layout;
 
-class App extends Component {
+class App extends PureComponent {
 
   state = {
-    locale: this.props.locale
+    locale: ''
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      locale: nextProps.locale
-    });
+  static getDerivedStateFromProps(props) {
+    return {
+      locale: props.locale
+    };
   }
 
   render() {
@@ -41,7 +40,7 @@ class App extends Component {
           <Route location={location} exact path="/" component={Home}/>
           <Route location={location} path="/login" component={Auth}/>
           <Layout style={{minHeight: '100vh'}}>
-            <SideBar locale={locale}/>
+            <SideBar {...this.props} locale={locale}/>
             <Layout style={{marginLeft: 200}}>
               <Content style={{margin: '24px 16px 0', overflow: 'initial'}}>
                 <Switch>
@@ -62,10 +61,6 @@ class App extends Component {
     )
   }
 }
-
-App.propTypes = {
-  locale: PropTypes.string.isRequired
-};
 
 const mapStateToProps = state => ({
   locale: selectLocale(state)

@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import update from 'immutability-helper';
 import { Card, CardBody } from 'reactstrap'
 import { Line } from 'react-chartjs-2'
 
-class EmotionLine extends Component {
+class EmotionLine extends PureComponent {
 
   static defaultProps = {
-    displayName: 'Line Chart',
+    displayName: 'Emotion Chart',
     displayTitle: true,
     displayLegend: true,
     legendPosition: 'bottom',
@@ -200,7 +200,5 @@ class EmotionLine extends Component {
     );
   }
 }
-
-EmotionLine.propTypes = {};
 
 export default EmotionLine;

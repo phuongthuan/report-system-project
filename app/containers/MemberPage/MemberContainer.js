@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { connect } from 'react-redux'
 import isEmpty from "lodash/isEmpty";
 import styled from "styled-components";
@@ -18,7 +18,7 @@ const Wrapper = styled.div`
   min-height: 100vh;
 `;
 
-class MemberContainer extends Component {
+class MemberContainer extends PureComponent {
 
   static propTypes = {
     user: PropTypes.shape({

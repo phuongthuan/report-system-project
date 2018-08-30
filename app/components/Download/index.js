@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import CsvCreator from 'react-csv-creator';
 import { Button } from 'antd';
 
-class Download extends Component {
+class Download extends PureComponent {
 
   state = {
     headers: [

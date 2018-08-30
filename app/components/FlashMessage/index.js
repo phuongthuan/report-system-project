@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import styled from 'styled-components'
 import PropTypes from 'prop-types';
 import classnames from 'classnames'
@@ -13,7 +13,7 @@ const Flash = styled.div`
   z-index: 1;
 `;
 
-class FlashMessage extends Component {
+class FlashMessage extends PureComponent {
 
   static propTypes = {
     deleteFlashMessage: PropTypes.func,

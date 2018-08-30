@@ -1,10 +1,10 @@
-import React  from 'react';
+import React, { Fragment } from 'react';
 import Report from "../Report";
 
 const ReportsList = (props) => {
   const { reportsList, deleteReport, user, addFlashMessage } = props;
   return (
-    <div>
+    <Fragment>
       {reportsList.map(report =>
         (
           <Report
@@ -16,7 +16,7 @@ const ReportsList = (props) => {
             report={report}
           />
         ) )}
-    </div>
+    </Fragment>
   );
 }
 

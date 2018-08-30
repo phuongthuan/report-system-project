@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Input } from 'antd';
+import PropTypes from 'prop-types'
 
 const Search = Input.Search;
 
@@ -25,6 +26,8 @@ class SearchBox extends Component {
   }
 }
 
-SearchBox.propTypes = {};
+SearchBox.propTypes = {
+  onChange: PropTypes.func.isRequired
+};
 
 export default SearchBox;

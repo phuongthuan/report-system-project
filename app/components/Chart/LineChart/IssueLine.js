@@ -1,10 +1,9 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import update from 'immutability-helper';
 import { Card, CardBody } from 'reactstrap'
 import { Line } from 'react-chartjs-2';
-import count from '../../../utils/count'
 
-class IssueLine extends Component {
+class IssueLine extends PureComponent {
 
   static defaultProps = {
     displayName: 'Line Chart',

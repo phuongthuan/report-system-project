@@ -1,9 +1,8 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { connect } from 'react-redux'
 import { IntlProvider, FormattedMessage } from 'react-intl'
 import { Layout, Menu, Card, Icon } from 'antd'
 import Spinner from 'components/Spinner'
-import { withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty'
 import { Badge } from 'reactstrap';
@@ -22,7 +21,7 @@ import messagesLocale from "../../translations/messages";
 const {Sider} = Layout;
 const {Meta} = Card;
 
-class SideBar extends Component {
+class SideBar extends PureComponent {
 
   componentDidMount() {
     const {getProfile, user, fetchAllMessages} = this.props;
@@ -321,4 +320,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withRouter(SideBar));
+)(SideBar);

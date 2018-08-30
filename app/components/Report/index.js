@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import { Link } from 'react-router-dom'
 import { Button, Icon, Modal } from 'antd';
 import moment from 'moment'
@@ -17,7 +17,7 @@ const Image = styled.img`
 const ButtonGroup = Button.Group;
 const confirm = Modal.confirm;
 
-class Report extends Component {
+class Report extends PureComponent {
 
   showConfirm = () => {
     const {addFlashMessage, deleteReport, report} = this.props;

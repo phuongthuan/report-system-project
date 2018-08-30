@@ -1,11 +1,10 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import update from 'immutability-helper';
 import { Card, CardBody } from 'reactstrap'
 import { Pie } from 'react-chartjs-2'
 import 'chartjs-plugin-datalabels'
-import count from '../../../utils/count';
 
-class EmotionPie extends Component {
+class EmotionPie extends PureComponent {
 
   static defaultProps = {
     displayName: 'Pie Chart',
@@ -15,7 +14,7 @@ class EmotionPie extends Component {
   }
 
   state = {
-    dataSource: this.props.dataSource,
+    dataSource: [],
     title: 'Emotions of reports',
     data: {
       labels: [
@@ -84,20 +83,20 @@ class EmotionPie extends Component {
         ]
       }
     });
-
     this.setState(newState);
   }
 
-  componentWillReceiveProps(nextProps, state) {
+  static getDerivedStateFromProps(props, state) {
+
     const positiveEmotions = [];
     const negativeEmotions = [];
     const otherEmotions = [];
 
-    const title = nextProps.action
-      ? `Emotions of reports on (${nextProps.action})`
+    const title = props.action
+      ? `Emotions of reports on (${props.action})`
       : 'Emotions of reports';
 
-    nextProps.dataSource.map(report => {
+    props.dataSource.map(report => {
       const emoji = report.emotion.id;
       if ((emoji === 'smiley')
         || (emoji === 'stuck_out_tongue_winking_eye')
@@ -124,7 +123,7 @@ class EmotionPie extends Component {
       results = [positiveEmotions.length, negativeEmotions.length];
     }
 
-    let newState = update(this.state, {
+    let newState = update(state, {
       data: {
         datasets: [
           {
@@ -133,8 +132,11 @@ class EmotionPie extends Component {
         ]
       }
     });
-    this.setState(newState);
-    this.setState({title});
+
+    return {
+      dataSource: newState,
+      title: title
+    };
   }
 
   render() {
@@ -170,7 +172,5 @@ class EmotionPie extends Component {
     );
   }
 }
-
-EmotionPie.propTypes = {};
 
 export default EmotionPie;

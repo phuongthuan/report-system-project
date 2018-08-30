@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
 import Button from 'components/Button'
-import img from '../../assests/images/neil-rosenstech-752022-unsplash.jpg'
+import img from '../../assests/images/ruslan-bardash-349163-unsplash.jpg'
 import { selectIsAuthenticated } from "../Auth/selectors";
 
 const AppWrapper = styled.div`

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { connect } from 'react-redux'
 import isEmpty from 'lodash/isEmpty'
 import Spinner from 'components/Spinner'
@@ -9,7 +9,7 @@ import { addFlashMessage } from "../FlashMessage/actions";
 import { fetchAReport, updateReport } from "./actions";
 import { selectUser } from "../Auth/selectors";
 
-class UpdateReportContainer extends Component {
+class UpdateReportContainer extends PureComponent {
 
   static propTypes = {
     loading: PropTypes.bool.isRequired,

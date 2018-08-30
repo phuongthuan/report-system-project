@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import isEmpty from "lodash/isEmpty";
 import Spinner from 'components/Spinner'
 import { connect } from 'react-redux'
@@ -14,7 +14,7 @@ import { selectWeeklyReports } from "../WeeklyReport/selectors";
 import { addFlashMessage } from "../FlashMessage/actions";
 import { getAllReportsOfTeamByDay, getAllReportsOfTeamByRange } from "../StatisticPage/actions";
 
-class MemberDetailContainer extends Component {
+class MemberDetailContainer extends PureComponent {
 
   state = {
     action: ''

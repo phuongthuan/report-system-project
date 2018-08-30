@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { selectUser } from "../Auth/selectors";
@@ -6,7 +6,7 @@ import { createReport } from "./actions";
 import { addFlashMessage } from "../FlashMessage/actions";
 import ReportForm from '../../components/ReportForm/index'
 
-class CreateReportContainer extends Component {
+class CreateReportContainer extends PureComponent {
 
   static propTypes = {
     user: PropTypes.shape({

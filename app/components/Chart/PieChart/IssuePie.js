@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import update from 'immutability-helper';
 import { Card, CardBody } from 'reactstrap'
 import { Pie } from 'react-chartjs-2'
 import 'chartjs-plugin-datalabels'
 import count from '../../../utils/count'
 
-class IssuePie extends Component {
+class IssuePie extends PureComponent {
 
   static defaultProps = {
     displayName: 'Pie Chart',
@@ -15,7 +15,7 @@ class IssuePie extends Component {
   }
 
   state = {
-    dataSource: this.props.dataSource,
+    dataSource: [],
     title: 'Issues of reports',
     data: {
       labels: [
@@ -70,19 +70,19 @@ class IssuePie extends Component {
     this.setState(newState);
   }
 
-  componentWillReceiveProps(nextProps) {
+  static getDerivedStateFromProps(props, state) {
     const issues = [];
-    const title = nextProps.action
-      ? `Issues of reports on (${nextProps.action})`
+    const title = props.action
+      ? `Issues of reports on (${props.action})`
       : 'Issues of reports';
 
-    nextProps.dataSource.map(report => {
+    props.dataSource.map(report => {
       report.issues.map(issue =>
         issues.push(issue)
       );
     });
     const results = count(issues);
-    let newState = update(this.state, {
+    let newState = update(state, {
       data: {
         datasets: [
           {
@@ -91,8 +91,10 @@ class IssuePie extends Component {
         ]
       }
     });
-    this.setState(newState);
-    this.setState({title});
+
+    return {
+      dataSource: newState
+    }
   }
 
   render() {

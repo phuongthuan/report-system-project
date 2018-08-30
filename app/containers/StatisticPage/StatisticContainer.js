@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
 import isEmpty from "lodash/isEmpty";
@@ -18,7 +18,7 @@ import DatePickerComponent from "../../components/DateTimePicker/DatePickerCompo
 import RangePickerComponent from "../../components/DateTimePicker/RangePickerComponent";
 import { fetchAllReportsOfUserByDay, fetchAllReportsOfUserByRange } from "../ReportPage/actions";
 
-class StatisticContainer extends Component {
+class StatisticContainer extends PureComponent {
 
   state = {
     action: ''
@@ -58,17 +58,15 @@ class StatisticContainer extends Component {
         <div className="col-md-12">
           <div className="row">
             <div className="col-md-4">
-              <div>
-                {user.role === 'team_leader' ? (
+              <Fragment>
+                {user.role === 'team_leader' && (
                   <WeeklyReportModal
                     user={user}
                     addFlashMessage={addFlashMessage}
                     createWeeklyReport={createWeeklyReport}
                   />
-                ) : (
-                  null
                 )}
-              </div>
+              </Fragment>
             </div>
             <div className="col-md-8">
               <div className="d-flex justify-content-end mb-3">

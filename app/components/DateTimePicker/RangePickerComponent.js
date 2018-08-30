@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { DatePicker } from 'antd'
 
 const {RangePicker} = DatePicker;
 
-class RangePickerComponent extends Component {
+class RangePickerComponent extends PureComponent {
 
   onChange = (date, dateString) => {
     const {
@@ -38,7 +38,6 @@ class RangePickerComponent extends Component {
       fetchAllReportsOfUserByRange(userId, dateString)
       actionChange(action)
     }
-    console.log('RangePicker submitted!', dateString);
   }
 
   render() {
@@ -49,7 +48,5 @@ class RangePickerComponent extends Component {
     );
   }
 }
-
-RangePickerComponent.propTypes = {};
 
 export default RangePickerComponent;

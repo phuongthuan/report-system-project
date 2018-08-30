@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty'
 import { connect } from 'react-redux';
@@ -14,10 +14,9 @@ import {
 import { getAllReportsOfTeam, getAllReportsOfTeamByDay, getAllReportsOfTeamByRange } from "../StatisticPage/actions";
 import { selectReportsOfTeam, selectStatisticLoading } from "../StatisticPage/selectors";
 import { addFlashMessage } from "../FlashMessage/actions";
-import ReportTable from '../../components/ReportTable/index'
-import Download from "../../components/Download";
+import ReportTable from "../../components/ReportTable";
 
-class ReportContainer extends Component {
+class ReportContainer extends PureComponent {
 
   static propTypes = {
     fetchAllReportsOfUser: PropTypes.func.isRequired,

@@ -1,9 +1,9 @@
-import React, { Component, Fragment } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import { Button } from 'antd'
 import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 import RemindForm from '../RemindForm/index'
 
-class RemindModal extends Component {
+class RemindModal extends PureComponent {
 
   state = {
     modal: false

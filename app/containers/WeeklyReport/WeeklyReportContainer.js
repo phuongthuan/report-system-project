@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty'
@@ -8,7 +8,7 @@ import { selectWeeklyReportLoading, selectWeeklyReports } from "./selectors";
 import Spinner from "../../components/Spinner";
 import { addFlashMessage } from "../FlashMessage/actions";
 
-class WeeklyReportContainer extends Component {
+class WeeklyReportContainer extends PureComponent {
 
   componentDidMount() {
     const {fetchAllWeeklyReportsOfUser, location} = this.props;

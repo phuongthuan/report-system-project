@@ -1,116 +1,43 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom'
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import uuidv1 from 'uuid/v1'
+import { Table, Tag, Button, Modal } from 'antd';
 import { Emoji } from 'emoji-mart';
-import isEmpty from 'lodash/isEmpty'
-import {
-  Paper,
-  Table,
-  TableBody,
-  TableSortLabel,
-  TableCell,
-  TableHead,
-  TablePagination,
-  TableRow
-} from '@material-ui/core';
-import { Button, Modal } from 'antd'
-import Chip from '../Chip/index'
+import issuesType from '../../constants/issuesType'
 import SearchBox from "../SearchBox";
 import DatePickerComponent from "../DateTimePicker/DatePickerComponent";
 import RangePickerComponent from "../DateTimePicker/RangePickerComponent";
 import Download from "../Download";
+import Chip from '../Chip/index'
 
 const confirm = Modal.confirm;
-const CustomTableCell = withStyles(theme => ({
-  body: {
-    fontSize: 14,
-    paddingRight: 0,
-    paddingLeft: 10
-  },
-  head: {
-    paddingRight: 0,
-    paddingLeft: 10
-  }
-}))(TableCell);
-const CustomTableRow = withStyles(theme => ({
-  root: {},
-}))(TableRow);
-const CustomTableHead = withStyles(theme => ({
-  root: {
-    padding: 0
-  },
-}))(TableHead);
-const styles = theme => ({
-  root: {
-    width: '100%',
-    overflowX: 'auto',
-    borderRadius: 0
-  },
-  table: {
-    minWidth: 500,
-  },
-  tableWrapper: {
-    overflowX: 'auto',
-  },
-});
+const {Column} = Table;
 
-function getSorting(order, orderBy) {
-  return order === 'desc'
-    ? (a, b) => (typeof a[orderBy] === 'number')
-      ? b[orderBy] - a[orderBy]
-      : (a[orderBy].toUpperCase() > b[orderBy].toUpperCase()) ? -1 : (a[orderBy].toUpperCase() < b[orderBy].toUpperCase()) ? 1 : 0
-    : (a, b) => (typeof a[orderBy] === 'number')
-      ? a[orderBy] - b[orderBy]
-      : (a[orderBy].toUpperCase() < b[orderBy].toUpperCase()) ? -1 : (a[orderBy].toUpperCase() > b[orderBy].toUpperCase()) ? 1 : 0
-}
-
-class ReportTable extends Component {
+class ReportTable extends PureComponent {
 
   state = {
-    data: this.props.data,
     searchTerm: '',
-    page: 0,
-    rowsPerPage: 15,
-    order: 'asc',
-    orderBy: 'title',
+    data: [],
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({data: nextProps.data});
+  static getDerivedStateFromProps(props) {
+    return {
+      data: props.data.map(report => ({
+        key: uuidv1(),
+        id: report.id,
+        emotion: report.emotion,
+        title: report.title,
+        issues: report.issues.map(issue => issue),
+        userId: report.userId,
+        date: report.date
+      }))
+    };
   }
 
-  get emptyRows() {
-    const {data, rowsPerPage, page} = this.state;
-    return (rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage));
+  navigate = (url) => {
+    const {history} = this.props;
+    history.push(url);
   }
-
-  handleChangePage = (event, page) => {
-    this.setState({page});
-  };
-
-  handleChangeRowsPerPage = event => {
-    this.setState({rowsPerPage: event.target.value});
-  };
-
-  handleRequestSort = (event, property) => {
-    const orderBy = property;
-    let order = 'desc';
-
-    if (this.state.orderBy === property && this.state.order === 'desc') {
-      order = 'asc';
-    }
-    this.setState({order, orderBy});
-  };
-
-  createSortHandler = property => event => {
-    this.handleRequestSort(event, property);
-  };
-
-  updateSearchTerm = (searchTerm) => {
-    this.setState({searchTerm});
-  }
-
 
   showConfirm = (id) => {
     const {addFlashMessage, deleteReport} = this.props;
@@ -129,16 +56,16 @@ class ReportTable extends Component {
     });
   }
 
-  navigate = (url) => {
-    const {history} = this.props;
-    history.push(url);
+  updateSearchTerm = (searchTerm) => {
+    this.setState({searchTerm});
   }
 
   render() {
 
     const {
-      classes,
+      data,
       user,
+      history,
       match,
       fetchAllReportsOfUserByDay,
       fetchAllReportsOfUserByRange,
@@ -146,184 +73,160 @@ class ReportTable extends Component {
       fetchAllReportsOfTeamByRange,
       fetchAllReportsOfTeamByDay,
       actionChange
-
     } = this.props;
 
-    const {data, rowsPerPage, page, searchTerm, order, orderBy} = this.state;
+    const {searchTerm} = this.state;
+
+    const reportsFilter = data.filter(report =>
+      (report.title.toLowerCase().includes(searchTerm.toLowerCase()))
+      || (report.date.toLowerCase().includes(searchTerm.toLowerCase()))
+      || (report.emotion.id.includes(searchTerm.toLowerCase()))
+    );
+
     return (
-      <Paper className={classes.root}>
-        <div className={classes.tableWrapper}>
+      <div className="w-100">
+        <div style={{borderRadius: 0}} className="card border-0">
+          <div className="card-body d-flex justify-content-between">
+            <SearchBox
+              searchTerm={searchTerm}
+              onChange={this.updateSearchTerm}
+            />
 
-          <div className="card border-0">
-            <div className="col-md-12 card-body d-flex justify-content-between">
+            <DatePickerComponent
+              {...this.props}
+              actionChange={actionChange}
+              user={user}
+              fetchAllReportsOfUserByDay={fetchAllReportsOfUserByDay}
+              fetchAllReportsOfTeamByDay={fetchAllReportsOfTeamByDay}
+            />
 
-              <SearchBox
-                searchTerm={searchTerm}
-                onChange={this.updateSearchTerm}
-              />
+            <RangePickerComponent
+              {...this.props}
+              actionChange={actionChange}
+              user={user}
+              fetchAllReportsOfUserByRange={fetchAllReportsOfUserByRange}
+              fetchAllReportsOfTeamByRange={fetchAllReportsOfTeamByRange}
+            />
 
-              <DatePickerComponent
-                {...this.props}
-                actionChange={actionChange}
-                user={user}
-                fetchAllReportsOfUserByDay={fetchAllReportsOfUserByDay}
-                fetchAllReportsOfTeamByDay={fetchAllReportsOfTeamByDay}
-              />
-
-              <RangePickerComponent
-                {...this.props}
-                actionChange={actionChange}
-                user={user}
-                fetchAllReportsOfUserByRange={fetchAllReportsOfUserByRange}
-                fetchAllReportsOfTeamByRange={fetchAllReportsOfTeamByRange}
-              />
-
-              <Download
-                user={user}
-                data={data}
-              />
-
-            </div>
+            <Download
+              user={user}
+              data={data}
+            />
           </div>
-
-          <Table className={classes.table}>
-            <CustomTableHead>
-              <CustomTableRow>
-                <CustomTableCell
-                  sortDirection={orderBy === 'id' ? order : false}
-                >
-                  <TableSortLabel
-                    active={orderBy === 'id'}
-                    direction={order}
-                    onClick={this.createSortHandler('id')}
-                  >
-                    ID
-                  </TableSortLabel>
-                </CustomTableCell>
-
-                <CustomTableCell>Emotion</CustomTableCell>
-                <CustomTableCell
-                  sortDirection={orderBy === 'title' ? order : false}
-                >
-                  <TableSortLabel
-                    active={orderBy === 'title'}
-                    direction={order}
-                    onClick={this.createSortHandler('title')}
-                  >
-                    Title
-                  </TableSortLabel>
-                </CustomTableCell>
-
-                {user && user.role === 'team_leader' && (
-                  <CustomTableCell>Author</CustomTableCell>
-                )}
-
-
-                <CustomTableCell
-                  sortDirection={orderBy === 'date' ? order : false}
-                >
-                  <TableSortLabel
-                    active={orderBy === 'date'}
-                    direction={order}
-                    onClick={this.createSortHandler('date')}
-                  >
-                    Date
-                  </TableSortLabel>
-                </CustomTableCell>
-
-                {user && user.role === 'member' && (
-                  <CustomTableCell>Actions</CustomTableCell>
-                )}
-              </CustomTableRow>
-            </CustomTableHead>
-            <TableBody>
-              {data
-                .filter(report =>
-                  (report.title.toLowerCase().includes(searchTerm.toLowerCase()))
-                  || (report.date.toLowerCase().includes(searchTerm.toLowerCase()))
-                  || (report.emotion.id.includes(searchTerm.toLowerCase()))
-                )
-                .sort(getSorting(order, orderBy))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map(report => (
-                  <CustomTableRow key={report.id}>
-                    <CustomTableCell>{report.id}</CustomTableCell>
-
-                    <CustomTableCell>
-                      <Emoji
-                        tooltip
-                        set="emojione"
-                        emoji={report.emotion.colons}
-                        size={24}
-                      />
-                    </CustomTableCell>
-
-                    <CustomTableCell component="th" scope="row">
-                      <Link to={`/report/${report.id}`}>
-                        {report.title}
-                      </Link>
-                    </CustomTableCell>
-
-                    {user && user.role === 'team_leader' && (
-                      <CustomTableCell padding="none" scope="row">
-                        <Chip
-                          history={this.props.history}
-                          userInfo={report.userId}
-                        />
-                      </CustomTableCell>
-                    )}
-
-                    <CustomTableCell component="th" scope="row">
-                      {report.date}
-                    </CustomTableCell>
-
-                    {user && user.role === 'member' && (
-                      <CustomTableCell component="th" scope="row">
-                        <div className="d-flex">
-                          <Button
-                            onClick={() => this.navigate(`${match.url}/update/${report.id}`)}
-                            icon="edit"
-                            className="mr-1"
-                          />
-                          <Button
-                            onClick={() => this.showConfirm(report.id)}
-                            type="danger"
-                            icon="delete"
-                          />
-                        </div>
-                      </CustomTableCell>
-                    )}
-                  </CustomTableRow>
-                ))}
-              {this.emptyRows > 0 && (
-                <TableRow style={{height: 48 * this.emptyRows}}>
-                  <TableCell colSpan={6}/>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
         </div>
-        <TablePagination
-          component="div"
-          count={data.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          backIconButtonProps={{
-            'aria-label': 'Previous Page',
-          }}
-          nextIconButtonProps={{
-            'aria-label': 'Next Page',
-          }}
-          onChangePage={this.handleChangePage}
-          onChangeRowsPerPage={this.handleChangeRowsPerPage}
-        />
-      </Paper>
+
+        <Table
+          rowKey="id"
+          style={{width: '100%', backgroundColor: '#FFFFFF'}}
+          dataSource={reportsFilter}
+          pagination={{pageSize: 13}}
+          size="middle"
+        >
+          <Column
+            title="ID"
+            dataIndex="id"
+            key="id"
+            sorter={(a, b) => a.id - b.id}
+          />
+
+          <Column
+            title="Emotion"
+            dataIndex="emotion"
+            key="emotion"
+            render={(emoji) => (
+              <Emoji
+                tooltip
+                set="emojione"
+                emoji={emoji.colons}
+                size={24}
+              />
+            )}
+          />
+
+          <Column
+            title="Title"
+            dataIndex="title"
+            key="title"
+            render={(text, record) => (
+              <Link to={`/report/${record.id}`}>
+                {text}
+              </Link>)
+            }
+            sorter={(a, b) => {
+              const textA = a.title.toUpperCase();
+              const textB = b.title.toUpperCase();
+              return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+            }}
+          />
+
+          <Column
+            title="Issues"
+            dataIndex="issues"
+            key="issues"
+            render={tags => (
+              <span>
+                {tags.map(tag => <Tag color="blue" key={tag}>{tag}</Tag>)}
+              </span>
+            )}
+            filters={issuesType.map(issue => ({
+              text: issue,
+              value: issue
+            }))}
+            onFilter={(value, record) => record.issues.includes(value)}
+          />
+
+          {user && user.role === 'team_leader' && (
+            <Column
+              title="Author"
+              dataIndex="userId"
+              key="userId"
+              render={(userInfo) => (
+                <Chip
+                  userInfo={userInfo}
+                  history={history}
+                />
+              )}
+            />)
+          }
+
+          <Column
+            title="Date"
+            dataIndex="date"
+            key="date"
+            sorter={(a, b) => {
+              const textA = a.date.toUpperCase();
+              const textB = b.date.toUpperCase();
+              return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+            }}
+          />
+
+          {user && user.role === 'member' && (
+            <Column
+              title="Action"
+              dataIndex="action"
+              key="action"
+              render={(text, record) => (
+                <span>
+                  <Button
+                    onClick={() => this.navigate(`${match.url}/update/${record.id}`)}
+                    icon="edit"
+                    className="mr-1"
+                  />
+                  <Button
+                    onClick={() => this.showConfirm(record.id)}
+                    type="danger"
+                    icon="delete"
+                  />
+                </span>
+              )}
+            />)
+          }
+        </Table>
+      </div>
     );
   }
 }
 
-ReportTable.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
+ReportTable.propTypes = {};
 
-export default withStyles(styles)(ReportTable);
+export default ReportTable;

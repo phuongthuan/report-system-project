@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Progress } from 'reactstrap'
 import { Emoji } from 'emoji-mart';
 
-class ProgressBar extends Component {
+class ProgressBar extends PureComponent {
 
   state = {
     positive: 50,

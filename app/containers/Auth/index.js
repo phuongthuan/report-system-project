@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -8,7 +8,7 @@ import { addFlashMessage } from '../FlashMessage/actions'
 import { login } from './actions'
 import LoginForm from "../../components/LoginForm";
 import { selectAuthError, selectIsAuthenticated } from "./selectors";
-import img from '../../assests/images/neil-rosenstech-752022-unsplash.jpg'
+import img from '../../assests/images/ruslan-bardash-349163-unsplash.jpg'
 
 const AuthWrapper = styled.div`
   background-image: url(${img});
@@ -22,7 +22,7 @@ const AuthWrapper = styled.div`
   min-height: 100vh;
 `;
 
-class Auth extends Component {
+class Auth extends PureComponent {
 
   render() {
     const {addFlashMessage, login, authError, isAuthenticated} = this.props;

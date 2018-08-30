@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
+import React, { PureComponent, Fragment } from 'react';
+import PropTypes from 'prop-types'
 import { Button } from 'antd';
 import { Modal, ModalBody, ModalHeader } from 'reactstrap';
 import WeeklyReportForm from '../WeeklyReportForm/index'
 
-class WeeklyReportModal extends Component {
+class WeeklyReportModal extends PureComponent {
 
   state = {
     modal: false
@@ -17,7 +18,7 @@ class WeeklyReportModal extends Component {
   render() {
     const {user, addFlashMessage, createWeeklyReport} = this.props;
     return (
-      <div>
+      <Fragment>
         <Button
           icon="form"
           type="primary"
@@ -41,9 +42,18 @@ class WeeklyReportModal extends Component {
             />
           </ModalBody>
         </Modal>
-      </div>
+      </Fragment>
     );
   }
+}
+
+WeeklyReportModal.propTypes = {
+  user: PropTypes.shape({
+    id: PropTypes.number,
+    firstName: PropTypes.string,
+  }).isRequired,
+  addFlashMessage: PropTypes.func.isRequired,
+  createWeeklyReport: PropTypes.func.isRequired,
 }
 
 export default WeeklyReportModal;

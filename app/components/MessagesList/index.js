@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import Message from './Message'
 
 const MessagesList = ({messagesList, deleteMessage, addFlashMessage, ...props}) => (
-  <div>
+  <Fragment>
     {messagesList.map(message =>
       (
         <Message
@@ -13,7 +13,7 @@ const MessagesList = ({messagesList, deleteMessage, addFlashMessage, ...props}) 
           message={message}
         />
       ) )}
-  </div>
+  </Fragment>
 );
 
 export default MessagesList;
